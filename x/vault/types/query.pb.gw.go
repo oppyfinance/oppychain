@@ -849,23 +849,23 @@ func RegisterQueryHandlerClient(ctx context.Context, mux *runtime.ServeMux, clie
 }
 
 var (
-	pattern_Query_OutboundTx_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"joltify", "joltifychain", "vault", "outbound_tx", "requestID"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_OutboundTx_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"oppyfinance", "oppyChaind", "vault", "outbound_tx", "requestID"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_OutboundTxAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"joltify", "joltifychain", "vault", "outbound_tx"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_OutboundTxAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"oppyfinance", "oppyChaind", "vault", "outbound_tx"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_GetValidators_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"joltify", "joltifychain", "vault", "get_validators"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_GetValidators_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"oppyfinance", "oppyChaind", "vault", "get_validators"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_GetAllValidators_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"joltify", "joltifychain", "vault", "validators"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_GetAllValidators_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"oppyfinance", "oppyChaind", "vault", "validators"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_IssueToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"joltify", "joltifychain", "vault", "issueToken", "index"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_IssueToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"oppyfinance", "oppyChaind", "vault", "issueToken", "index"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_IssueTokenAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"joltify", "joltifychain", "vault", "issueToken"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_IssueTokenAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"oppyfinance", "oppyChaind", "vault", "issueToken"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_CreatePool_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"joltify", "joltifyChain", "vault", "createPool", "index"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_CreatePool_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"oppyfinance", "oppyChaind", "vault", "createPool", "index"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_CreatePoolAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"joltify", "joltifyChain", "vault", "createPool"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_CreatePoolAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"oppyfinance", "oppyChaind", "vault", "createPool"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_GetLastPool_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"joltify", "joltifyChain", "vault", "getLastPool"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_GetLastPool_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"oppyfinance", "oppyChaind", "vault", "getLastPool"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

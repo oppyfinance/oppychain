@@ -1,5 +1,5 @@
 syntax = "proto3";
-package joltify.joltifychain.mint.v1beta1;
+package oppyfinance.oppychain.mint.v1beta1;
 
 import "gogoproto/gogo.proto";
 import "mint/v1beta1/mint.proto";

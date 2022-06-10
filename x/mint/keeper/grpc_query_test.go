@@ -15,14 +15,14 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 )
 
 type MintTestSuite struct {
 	suite.Suite
 
-	app         *joltifyapp.App
+	app         *oppyapp.App
 	ctx         sdk.Context
 	queryClient types.QueryClient
 }
@@ -35,7 +35,7 @@ func (suite *MintTestSuite) SetupTest() {
 		err := os.RemoveAll(tempPath)
 		require.NoError(suite.T(), err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	queryHelper := baseapp.NewQueryServerTestHelper(ctx, app.InterfaceRegistry())

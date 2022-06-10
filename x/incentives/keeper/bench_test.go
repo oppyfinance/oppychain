@@ -2,15 +2,16 @@ package keeper_test
 
 import (
 	"fmt"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
-	"gitlab.com/oppy-finance/oppychain/utils"
 	"math/rand"
 	"os"
 	path2 "path"
 	"runtime"
 	"testing"
 	"time"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/utils"
 
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -82,8 +83,8 @@ func benchmarkDistributionLogic(numAccts, numDenoms, numGauges, numLockups, numD
 		}
 	}(tempPath)
 
-	app := simapp.New(tempPath).(*joltifyapp.App)
-	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "joltify-1", Time: blockStartTime})
+	app := simapp.New(tempPath).(*oppyapp.App)
+	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "oppy-1", Time: blockStartTime})
 
 	r := rand.New(rand.NewSource(10))
 

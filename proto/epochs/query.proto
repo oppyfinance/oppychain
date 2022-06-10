@@ -1,5 +1,5 @@
 syntax = "proto3";
-package joltify.joltifychain.epochs;
+package oppyfinance.oppychain.epochs;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
@@ -12,12 +12,12 @@ option go_package = "gitlab.com/oppy-finance/oppychain/x/epochs/types";
 service Query {
   // EpochInfos provide running epochInfos
   rpc EpochInfos(QueryEpochsInfoRequest) returns (QueryEpochsInfoResponse) {
-    option (google.api.http).get = "/joltify/joltifychain/epochs";
+    option (google.api.http).get = "/oppyfinance/oppyChaind/epochs";
   }
   // CurrentEpoch provide current epoch of specified identifier
   rpc CurrentEpoch(QueryCurrentEpochRequest)
       returns (QueryCurrentEpochResponse) {
-    option (google.api.http).get = "/joltify/joltifychain/epochs/current_epoch";
+    option (google.api.http).get = "/oppyfinance/oppyChaind/epochs/current_epoch";
   }
 }
 

@@ -124,7 +124,7 @@ func (k Keeper) NewUpdate(ctx sdk.Context) []abci.ValidatorUpdate {
 		ctx.EventManager().EmitEvents(sdk.Events{
 			sdk.NewEvent(
 				vaulttypes.EventTypeCompleteChurn,
-				sdk.NewAttribute(vaulttypes.AttributeValidators, "joltify_churn"),
+				sdk.NewAttribute(vaulttypes.AttributeValidators, "oppy_churn"),
 			),
 		})
 		err := k.updateValidators(ctx)

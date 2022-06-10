@@ -2,7 +2,6 @@ package keeper_test
 
 import (
 	"fmt"
-	"gitlab.com/oppy-finance/oppychain/utils"
 	"math/rand"
 	"os"
 	path2 "path"
@@ -10,7 +9,9 @@ import (
 	"testing"
 	"time"
 
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/utils"
+
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -50,8 +51,8 @@ func benchmarkResetLogic(numLockups int, b *testing.B) {
 		}
 	}(tempPath)
 
-	app := simapp.New(tempPath).(*joltifyapp.App)
-	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "joltify-1", Time: blockStartTime})
+	app := simapp.New(tempPath).(*oppyapp.App)
+	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "oppy-1", Time: blockStartTime})
 
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	numAccts := 100

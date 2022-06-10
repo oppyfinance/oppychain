@@ -2,7 +2,7 @@ package keeper_test
 
 import (
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"os"
 	path2 "path"
 	"runtime"
@@ -29,7 +29,7 @@ func TestNewQuerier(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	app.MintKeeper.SetParams(ctx, types.DefaultParams())
@@ -61,7 +61,7 @@ func TestQueryParams(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	legacyQuerierCdc := codec.NewAminoCodec(app.LegacyAmino())
@@ -84,7 +84,7 @@ func TestQueryEpochProvisions(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	legacyQuerierCdc := codec.NewAminoCodec(app.LegacyAmino())

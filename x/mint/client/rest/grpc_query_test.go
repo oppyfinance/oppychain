@@ -51,7 +51,7 @@ func (s *IntegrationTestSuite) TestQueryGRPC() {
 	}{
 		{
 			"gRPC request params",
-			fmt.Sprintf("%s/joltify/mint/v1beta1/params", baseURL),
+			fmt.Sprintf("%s/oppy/mint/v1beta1/params", baseURL),
 			map[string]string{},
 			&minttypes.QueryParamsResponse{},
 			&minttypes.QueryParamsResponse{
@@ -61,7 +61,7 @@ func (s *IntegrationTestSuite) TestQueryGRPC() {
 		},
 		{
 			"gRPC request epoch provisions",
-			fmt.Sprintf("%s/joltify/mint/v1beta1/epoch_provisions", baseURL),
+			fmt.Sprintf("%s/oppy/mint/v1beta1/epoch_provisions", baseURL),
 			map[string]string{
 				grpctypes.GRPCBlockHeightHeader: "1",
 			},

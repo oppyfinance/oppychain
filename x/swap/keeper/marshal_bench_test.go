@@ -1,7 +1,7 @@
 package keeper_test
 
 import (
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"math/rand"
 	"os"
@@ -57,7 +57,7 @@ func setupPools(maxNumPoolsToGen int) []swaptypes.PoolI {
 
 func BenchmarkSwapPoolSerialization(b *testing.B) {
 	tempDir := b.TempDir()
-	app := simapp.New(tempDir).(*joltifyapp.App)
+	app := simapp.New(tempDir).(*oppyapp.App)
 
 	defer func(tempPath string) {
 		err := os.RemoveAll(tempPath)
@@ -81,7 +81,7 @@ func BenchmarkSwapPoolSerialization(b *testing.B) {
 
 func BenchmarkSwapPoolDeserialization(b *testing.B) {
 	tempDir := b.TempDir()
-	app := simapp.New(tempDir).(*joltifyapp.App)
+	app := simapp.New(tempDir).(*oppyapp.App)
 	maxNumPoolsToGen := 5000
 	pools := setupPools(maxNumPoolsToGen)
 	marshals := make([][]byte, 0, maxNumPoolsToGen)

@@ -1,7 +1,7 @@
 package types
 
 import (
-	joltifyapp "gitlab.com/oppy-finance/oppychain/utils"
+	oppyapp "gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -11,7 +11,7 @@ import (
 )
 
 func TestMsgSwapExactAmountIn(t *testing.T) {
-	joltifyapp.SetAddressPrefixes()
+	oppyapp.SetAddressPrefixes()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
 	invalidAddr := sdk.AccAddress("invalid")
@@ -141,7 +141,7 @@ func TestMsgSwapExactAmountIn(t *testing.T) {
 }
 
 func TestMsgSwapExactAmountOut(t *testing.T) {
-	joltifyapp.SetAddressPrefixes()
+	oppyapp.SetAddressPrefixes()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
 	invalidAddr := sdk.AccAddress("invalid")
@@ -271,7 +271,7 @@ func TestMsgSwapExactAmountOut(t *testing.T) {
 }
 
 func TestMsgJoinPool(t *testing.T) {
-	joltifyapp.SetAddressPrefixes()
+	oppyapp.SetAddressPrefixes()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
 	invalidAddr := sdk.AccAddress("invalid")
@@ -371,7 +371,7 @@ func TestMsgJoinPool(t *testing.T) {
 }
 
 func TestMsgExitPool(t *testing.T) {
-	joltifyapp.SetAddressPrefixes()
+	oppyapp.SetAddressPrefixes()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
 	invalidAddr := sdk.AccAddress("invalid")
@@ -470,7 +470,7 @@ func TestMsgExitPool(t *testing.T) {
 }
 
 func TestMsgJoinSwapExternAmountIn(t *testing.T) {
-	joltifyapp.SetAddressPrefixes()
+	oppyapp.SetAddressPrefixes()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
 	invalidAddr := sdk.AccAddress("invalid")
@@ -569,7 +569,7 @@ func TestMsgJoinSwapExternAmountIn(t *testing.T) {
 }
 
 func TestMsgJoinSwapShareAmountOut(t *testing.T) {
-	joltifyapp.SetAddressPrefixes()
+	oppyapp.SetAddressPrefixes()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
 	invalidAddr := sdk.AccAddress("invalid")
@@ -669,7 +669,7 @@ func TestMsgJoinSwapShareAmountOut(t *testing.T) {
 }
 
 func TestMsgExitSwapExternAmountOut(t *testing.T) {
-	joltifyapp.SetAddressPrefixes()
+	oppyapp.SetAddressPrefixes()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
 	invalidAddr := sdk.AccAddress("invalid")
@@ -768,7 +768,7 @@ func TestMsgExitSwapExternAmountOut(t *testing.T) {
 }
 
 func TestMsgExitSwapShareAmountIn(t *testing.T) {
-	joltifyapp.SetAddressPrefixes()
+	oppyapp.SetAddressPrefixes()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
 	invalidAddr := sdk.AccAddress("invalid")

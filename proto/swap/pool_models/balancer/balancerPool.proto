@@ -1,6 +1,6 @@
 syntax = "proto3";
 // this is a temporary package setup, needs migration logic
-package joltify.joltifychain.swap.v1beta1;
+package oppyfinance.oppychain.swap.balancer.v1beta1;
 
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";

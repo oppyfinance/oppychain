@@ -199,7 +199,7 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
-		//this is joltifychain module
+		//this is oppychain module
 		vaultmoduletypes.ModuleName:      {authtypes.Minter, authtypes.Burner},
 		invoicemoduletypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
 		swapmoduletypes.ModuleName:       {authtypes.Minter, authtypes.Burner},
@@ -267,7 +267,7 @@ type App struct {
 
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
-	//this is the joltifyChain module
+	//this is the oppyChain module
 	VaultKeeper          vaultmodulekeeper.Keeper
 	InvoiceKeeper        invoicemodulekeeper.Keeper
 	EpochsKeeper         epochskeeper.Keeper
@@ -312,7 +312,7 @@ func New(
 		minttypes.StoreKey, distrtypes.StoreKey, slashingtypes.StoreKey,
 		govtypes.StoreKey, paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey, feegrant.StoreKey,
 		evidencetypes.StoreKey, ibctransfertypes.StoreKey, capabilitytypes.StoreKey, monitoringptypes.StoreKey,
-		//this is joltifychaion modules
+		//this is oppychaion modules
 		vaultmoduletypes.StoreKey,
 		invoicemoduletypes.StoreKey,
 		epochsmoduletypes.StoreKey,
@@ -396,7 +396,7 @@ func New(
 		appCodec, keys[ibchost.StoreKey], app.GetSubspace(ibchost.ModuleName), app.StakingKeeper, app.UpgradeKeeper, scopedIBCKeeper,
 	)
 
-	// joltifyChain keepers
+	// oppyChain keepers
 	app.InvoiceKeeper = *invoicemodulekeeper.NewKeeper(
 		appCodec,
 		keys[invoicemoduletypes.StoreKey],
@@ -540,7 +540,7 @@ func New(
 		params.NewAppModule(app.ParamsKeeper),
 		transferModule,
 		monitoringModule,
-		// this is joltifyChain module
+		// this is oppyChain module
 		vaultModule,
 		invoiceModule,
 		epochModule,
@@ -640,7 +640,7 @@ func New(
 		ibctransfertypes.ModuleName,
 		feegrant.ModuleName,
 		monitoringptypes.ModuleName,
-		//this is joltifychain modules
+		//this is oppychain modules
 		incentivesmoduletypes.ModuleName,
 		epochsmoduletypes.ModuleName,
 		vaultmoduletypes.ModuleName,
@@ -871,7 +871,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(ibctransfertypes.ModuleName)
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	paramsKeeper.Subspace(monitoringptypes.ModuleName)
-	//this is joltifychain module
+	//this is oppychain module
 	paramsKeeper.Subspace(vaultmoduletypes.ModuleName)
 	paramsKeeper.Subspace(invoicemoduletypes.ModuleName)
 	paramsKeeper.Subspace(epochsmoduletypes.ModuleName)

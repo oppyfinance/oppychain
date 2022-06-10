@@ -2,7 +2,7 @@ package pool_incentives_test
 
 import (
 	"github.com/tendermint/spm/cosmoscmd"
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"os"
 	path2 "path"
 	"runtime"
@@ -49,10 +49,10 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
-	encodingConfig := cosmoscmd.MakeEncodingConfig(joltifyapp.ModuleBasics)
+	encodingConfig := cosmoscmd.MakeEncodingConfig(oppyapp.ModuleBasics)
 	appCodec := encodingConfig.Marshaler
 
 	am := poolincentives.NewAppModule(appCodec, app.PoolIncentivesKeeper)
@@ -70,7 +70,7 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 			err := os.RemoveAll(tempPath)
 			require.NoError(t, err)
 		}(tempPath)
-		app := simapp.New(tempPath).(*joltifyapp.App)
+		app := simapp.New(tempPath).(*oppyapp.App)
 		ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 		ctx = ctx.WithBlockTime(now.Add(time.Second))
 		am := poolincentives.NewAppModule(appCodec, app.PoolIncentivesKeeper)
@@ -87,7 +87,7 @@ func TestInitGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 	ctx = ctx.WithBlockTime(now.Add(time.Second))
 
@@ -112,7 +112,7 @@ func TestExportGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	ctx = ctx.WithBlockTime(now.Add(time.Second))

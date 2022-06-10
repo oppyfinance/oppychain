@@ -1,5 +1,5 @@
 syntax = "proto3";
-package joltify.joltifychain.vault;
+package oppyfinance.oppychain.vault;
 
 import "vault/outbound_tx.proto";
 // this line is used by starport scaffolding # proto/tx/import

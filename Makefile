@@ -1,12 +1,12 @@
-PACKAGES=$(shell go list ./... | grep -v '/joltifyChaind')
+PACKAGES=$(shell go list ./... | grep -v '/oppychaind')
 COVERAGE="coverage.out"
 
 #VERSION := $(shell echo $(shell git describe --tags) | sed 's/^v//')
 VERSION := $(shell echo $(shell git describe --tags --first-parent) | sed 's/^v//')
 COMMIT := $(shell git log -1 --format='%H')
 
-ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=joltifyChain \
-	-X github.com/cosmos/cosmos-sdk/version.ServerName=joltifyChaind \
+ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=oppyChain \
+	-X github.com/cosmos/cosmos-sdk/version.ServerName=oppyChaind \
 	-X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
 	-X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT)
 
@@ -15,16 +15,16 @@ BUILD_FLAGS := -ldflags '$(ldflags)'
 all: build
 
 install: go.sum
-	@echo "--> Installing joltifychaind(version $(VERSION))"
-	go build -mod=readonly $(BUILD_FLAGS) ./cmd/joltifyChaind
+	@echo "--> Installing oppychaind(version $(VERSION))"
+	go build -mod=readonly $(BUILD_FLAGS) ./cmd/oppyChaind
 
 protoc:
 	@echo "--->build the protoc"
 	@starport generate proto-go
 
 build: go.sum
-	@echo "--> build joltifyChaind"
-	@go build -mod=readonly $(BUILD_FLAGS) ./cmd/joltifyChaind
+	@echo "--> build oppyChaind"
+	@go build -mod=readonly $(BUILD_FLAGS) ./cmd/oppyChaind
 
 go.sum: go.mod
 	@echo "--> Ensure dependencies have not been modified"

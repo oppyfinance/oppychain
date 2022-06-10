@@ -2,7 +2,7 @@ package keeper_test
 
 import (
 	"github.com/stretchr/testify/require"
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"os"
 	path2 "path"
@@ -18,7 +18,7 @@ import (
 type KeeperTestSuite struct {
 	suite.Suite
 	ctx     sdk.Context
-	app     *joltifyapp.App
+	app     *oppyapp.App
 	cleanup func()
 }
 
@@ -31,7 +31,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 		require.NoError(suite.T(), err)
 	}(tempPath)
 
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "oppy-1", Time: time.Now().UTC()})
 	suite.app = app
 	suite.ctx = ctx

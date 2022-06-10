@@ -1,10 +1,11 @@
 package simulation
 
 import (
-	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
-	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
 	"math/rand"
 	"time"
+
+	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
+	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 
@@ -14,7 +15,7 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 	stakingTypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	joltifysimulation "gitlab.com/oppy-finance/oppychain/x/simulation"
+	oppysimulation "gitlab.com/oppy-finance/oppychain/x/simulation"
 	"gitlab.com/oppy-finance/oppychain/x/swap/keeper"
 	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
 	"gitlab.com/oppy-finance/oppychain/x/swap/types"
@@ -158,7 +159,7 @@ func SimulateMsgCreateBalancerPool(ak stakingTypes.AccountKeeper, bk stakingType
 		spentCoins := types.PoolAssetsCoins(poolAssets)
 
 		txGen := simappparams.MakeTestEncodingConfig().TxConfig
-		return joltifysimulation.GenAndDeliverTxWithRandFees(
+		return oppysimulation.GenAndDeliverTxWithRandFees(
 			r, app, txGen, msg, spentCoins, ctx, simAccount, ak, bk, types.ModuleName)
 	}
 }
@@ -201,7 +202,7 @@ func SimulateMsgSwapExactAmountIn(ak stakingTypes.AccountKeeper, bk stakingTypes
 		}
 
 		txGen := simappparams.MakeTestEncodingConfig().TxConfig
-		return joltifysimulation.GenAndDeliverTxWithRandFees(
+		return oppysimulation.GenAndDeliverTxWithRandFees(
 			r, app, txGen, &msg, sdk.Coins{tokenIn}, ctx, simAccount, ak, bk, types.ModuleName)
 	}
 }

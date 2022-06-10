@@ -584,6 +584,21 @@ export default {
 		},
 		
 		
+		async sendMsgDelegate({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgDelegate(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgDelegate:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgDelegate:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgBeginRedelegate({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -599,18 +614,18 @@ export default {
 				}
 			}
 		},
-		async sendMsgDelegate({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgEditValidator({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgDelegate(value)
+				const msg = await txClient.msgEditValidator(value)
 				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
 	gas: "200000" }, memo})
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgDelegate:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgEditValidator:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgDelegate:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgEditValidator:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -644,22 +659,20 @@ export default {
 				}
 			}
 		},
-		async sendMsgEditValidator({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		async MsgDelegate({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgEditValidator(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
+				const msg = await txClient.msgDelegate(value)
+				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgEditValidator:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgEditValidator:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgDelegate:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgDelegate:Create Could not create message: ' + e.message)
 				}
 			}
 		},
-		
 		async MsgBeginRedelegate({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -673,16 +686,16 @@ export default {
 				}
 			}
 		},
-		async MsgDelegate({ rootGetters }, { value }) {
+		async MsgEditValidator({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgDelegate(value)
+				const msg = await txClient.msgEditValidator(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgDelegate:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgEditValidator:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgDelegate:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgEditValidator:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -709,19 +722,6 @@ export default {
 					throw new Error('TxClient:MsgCreateValidator:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgCreateValidator:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgEditValidator({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgEditValidator(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgEditValidator:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgEditValidator:Create Could not create message: ' + e.message)
 				}
 			}
 		},

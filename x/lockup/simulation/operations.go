@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
-	joltifysimulation "gitlab.com/oppy-finance/oppychain/x/simulation"
+	oppysimulation "gitlab.com/oppy-finance/oppychain/x/simulation"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"
@@ -112,7 +112,7 @@ func SimulateMsgLockTokens(ak stakingTypes.AccountKeeper, bk stakingTypes.BankKe
 		}
 
 		txGen := simappparams.MakeTestEncodingConfig().TxConfig
-		return joltifysimulation.GenAndDeliverTxWithRandFees(
+		return oppysimulation.GenAndDeliverTxWithRandFees(
 			r, app, txGen, &msg, lockTokens, ctx, simAccount, ak, bk, types.ModuleName)
 	}
 }
@@ -133,7 +133,7 @@ func SimulateMsgBeginUnlockingAll(ak stakingTypes.AccountKeeper, bk stakingTypes
 		}
 
 		txGen := simappparams.MakeTestEncodingConfig().TxConfig
-		return joltifysimulation.GenAndDeliverTxWithRandFees(
+		return oppysimulation.GenAndDeliverTxWithRandFees(
 			r, app, txGen, &msg, nil, ctx, simAccount, ak, bk, types.ModuleName)
 
 	}
@@ -162,7 +162,7 @@ func SimulateMsgBeginUnlocking(ak stakingTypes.AccountKeeper, bk stakingTypes.Ba
 		}
 
 		txGen := simappparams.MakeTestEncodingConfig().TxConfig
-		return joltifysimulation.GenAndDeliverTxWithRandFees(
+		return oppysimulation.GenAndDeliverTxWithRandFees(
 			r, app, txGen, &msg, nil, ctx, simAccount, ak, bk, types.ModuleName)
 
 	}

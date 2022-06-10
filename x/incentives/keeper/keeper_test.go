@@ -1,18 +1,19 @@
 package keeper_test
 
 import (
-	"github.com/stretchr/testify/require"
 	"os"
 	path2 "path"
 	"runtime"
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/suite"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 )
 
@@ -20,7 +21,7 @@ type KeeperTestSuite struct {
 	suite.Suite
 
 	ctx sdk.Context
-	app *joltifyapp.App
+	app *oppyapp.App
 }
 
 func (suite *KeeperTestSuite) SetupTest() {
@@ -32,8 +33,8 @@ func (suite *KeeperTestSuite) SetupTest() {
 		require.NoError(suite.T(), err)
 	}(tempPath)
 
-	app := simapp.New(tempPath).(*joltifyapp.App)
-	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "joltify-1", Time: time.Now().UTC()})
+	app := simapp.New(tempPath).(*oppyapp.App)
+	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "oppy-1", Time: time.Now().UTC()})
 	suite.app = app
 	suite.ctx = ctx
 

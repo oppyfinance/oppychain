@@ -1,5 +1,5 @@
 syntax = "proto3";
-package joltify.joltifychain.poolincentives.v1beta1;
+package oppyfinance.oppychain.poolincentives.v1beta1;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
@@ -13,33 +13,33 @@ service Query {
   // GaugeIds takes the pool id and returns the matching gauge ids and durations
   rpc GaugeIds(QueryGaugeIdsRequest) returns (QueryGaugeIdsResponse) {
     option (google.api.http).get =
-        "/joltify/pool_incentives/v1beta1/gauge-ids/{pool_id}";
+        "/oopy/pool_incentives/v1beta1/gauge-ids/{pool_id}";
   }
 
   rpc DistrInfo(QueryDistrInfoRequest) returns (QueryDistrInfoResponse) {
     option (google.api.http).get =
-        "/joltify/pool_incentives/v1beta1/distr_info";
+        "/oopy/pool_incentives/v1beta1/distr_info";
   }
 
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/joltify/pool_incentives/v1beta1/params";
+    option (google.api.http).get = "/oopy/pool_incentives/v1beta1/params";
   }
 
   rpc LockableDurations(QueryLockableDurationsRequest)
       returns (QueryLockableDurationsResponse) {
     option (google.api.http).get =
-        "/joltify/pool_incentives/v1beta1/lockable_durations";
+        "/oopy/pool_incentives/v1beta1/lockable_durations";
   }
 
   rpc IncentivizedPools(QueryIncentivizedPoolsRequest)
       returns (QueryIncentivizedPoolsResponse) {
     option (google.api.http).get =
-        "/joltify/pool_incentives/v1beta1/incentivized_pools";
+        "/oopy/pool_incentives/v1beta1/incentivized_pools";
   }
   rpc ExternalIncentiveGauges(QueryExternalIncentiveGaugesRequest)
       returns (QueryExternalIncentiveGaugesResponse) {
     option (google.api.http).get =
-        "/joltify/pool_incentives/v1beta1/external_incentive_gauges";
+        "/oopy/pool_incentives/v1beta1/external_incentive_gauges";
   }
 }
 

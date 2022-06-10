@@ -27940,10 +27940,10 @@ paths:
           format: uint64
       tags:
         - Query
-  /joltify/joltifychain/epochs:
+  /oppy/oppychain/epochs:
     get:
       summary: EpochInfos provide running epochInfos
-      operationId: JoltifyJoltifychainEpochsEpochInfos
+      operationId: oppyoppychainEpochsEpochInfos
       responses:
         '200':
           description: A successful response.
@@ -27993,10 +27993,10 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /joltify/joltifychain/epochs/current_epoch:
+  /oppy/oppychain/epochs/current_epoch:
     get:
       summary: CurrentEpoch provide current epoch of specified identifier
-      operationId: JoltifyJoltifychainEpochsCurrentEpoch
+      operationId: oppyoppychainEpochsCurrentEpoch
       responses:
         '200':
           description: A successful response.
@@ -28031,10 +28031,10 @@ paths:
           type: string
       tags:
         - Query
-  /joltify/incentives/v1beta1/active_gauges:
+  /oppy/incentives/v1beta1/active_gauges:
     get:
       summary: returns active gauges
-      operationId: JoltifyJoltifychainIncentivesActiveGauges
+      operationId: oppyoppychainIncentivesActiveGauges
       responses:
         '200':
           description: A successful response.
@@ -28222,10 +28222,10 @@ paths:
           type: boolean
       tags:
         - Query
-  /joltify/incentives/v1beta1/active_gauges_per_denom:
+  /oppy/incentives/v1beta1/active_gauges_per_denom:
     get:
       summary: returns active gauges per denom
-      operationId: JoltifyJoltifychainIncentivesActiveGaugesPerDenom
+      operationId: oppyoppychainIncentivesActiveGaugesPerDenom
       responses:
         '200':
           description: A successful response.
@@ -28417,10 +28417,10 @@ paths:
           type: boolean
       tags:
         - Query
-  '/joltify/incentives/v1beta1/gauge_by_id/{id}':
+  '/oppy/incentives/v1beta1/gauge_by_id/{id}':
     get:
       summary: returns Gauge by id
-      operationId: JoltifyJoltifychainIncentivesGaugeByID
+      operationId: oppyoppychainIncentivesGaugeByID
       responses:
         '200':
           description: A successful response.
@@ -28533,10 +28533,10 @@ paths:
           format: uint64
       tags:
         - Query
-  /joltify/incentives/v1beta1/gauges:
+  /oppy/incentives/v1beta1/gauges:
     get:
       summary: returns gauges both upcoming and active
-      operationId: JoltifyJoltifychainIncentivesGauges
+      operationId: oppyoppychainIncentivesGauges
       responses:
         '200':
           description: A successful response.
@@ -28724,10 +28724,10 @@ paths:
           type: boolean
       tags:
         - Query
-  /joltify/incentives/v1beta1/lockable_durations:
+  /oppy/incentives/v1beta1/lockable_durations:
     get:
       summary: returns lockable durations that are valid to give incentives
-      operationId: JoltifyJoltifychainIncentivesLockableDurations
+      operationId: oppyoppychainIncentivesLockableDurations
       responses:
         '200':
           description: A successful response.
@@ -28758,10 +28758,10 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /joltify/incentives/v1beta1/module_distributed_coins:
+  /oppy/incentives/v1beta1/module_distributed_coins:
     get:
       summary: returns coins that are distributed by module so far
-      operationId: JoltifyJoltifychainIncentivesModuleDistributedCoins
+      operationId: oppyoppychainIncentivesModuleDistributedCoins
       responses:
         '200':
           description: A successful response.
@@ -28805,10 +28805,10 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /joltify/incentives/v1beta1/module_to_distribute_coins:
+  /oppy/incentives/v1beta1/module_to_distribute_coins:
     get:
       summary: returns coins that is going to be distributed
-      operationId: JoltifyJoltifychainIncentivesModuleToDistributeCoins
+      operationId: oppyoppychainIncentivesModuleToDistributeCoins
       responses:
         '200':
           description: A successful response.
@@ -28852,13 +28852,13 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  '/joltify/incentives/v1beta1/rewards_est/{owner}':
+  '/oppy/incentives/v1beta1/rewards_est/{owner}':
     get:
       summary: |-
         RewardsEst returns an estimate of the rewards at a future specific time.
         The querier either provides an address or a set of locks
         for which they want to find the associated rewards.
-      operationId: JoltifyJoltifychainIncentivesRewardsEst
+      operationId: oppyoppychainIncentivesRewardsEst
       responses:
         '200':
           description: A successful response.
@@ -28920,10 +28920,10 @@ paths:
           format: int64
       tags:
         - Query
-  /joltify/incentives/v1beta1/upcoming_gauges:
+  /oppy/incentives/v1beta1/upcoming_gauges:
     get:
       summary: returns scheduled gauges
-      operationId: JoltifyJoltifychainIncentivesUpcomingGauges
+      operationId: oppyoppychainIncentivesUpcomingGauges
       responses:
         '200':
           description: A successful response.
@@ -29111,10 +29111,10 @@ paths:
           type: boolean
       tags:
         - Query
-  /joltify/incentives/v1beta1/upcoming_gauges_per_denom:
+  /oppy/incentives/v1beta1/upcoming_gauges_per_denom:
     get:
       summary: returns scheduled gauges per denom
-      operationId: JoltifyJoltifychainIncentivesUpcomingGaugesPerDenom
+      operationId: oppyoppychainIncentivesUpcomingGaugesPerDenom
       responses:
         '200':
           description: A successful response.
@@ -29315,10 +29315,10 @@ paths:
           type: boolean
       tags:
         - Query
-  /joltify/joltifychain/invoice/invoice:
+  /oppy/oppychain/invoice/invoice:
     get:
       summary: Queries a list of invoice items.
-      operationId: JoltifyJoltifychainInvoiceInvoiceAll
+      operationId: oppyoppychainInvoiceInvoiceAll
       responses:
         '200':
           description: A successful response.
@@ -29487,10 +29487,10 @@ paths:
           type: boolean
       tags:
         - Query
-  '/joltify/joltifychain/invoice/invoice/{index}':
+  '/oppy/oppychain/invoice/invoice/{index}':
     get:
       summary: Queries a invoice by index.
-      operationId: JoltifyJoltifychainInvoiceInvoice
+      operationId: oppyoppychainInvoiceInvoice
       responses:
         '200':
           description: A successful response.
@@ -29578,10 +29578,10 @@ paths:
           type: string
       tags:
         - Query
-  /joltify/joltifychain/invoice/placeOrder:
+  /oppy/oppychain/invoice/placeOrder:
     get:
       summary: Queries a list of placeOrder items.
-      operationId: JoltifyJoltifychainInvoicePlaceOrderAll
+      operationId: oppyoppychainInvoicePlaceOrderAll
       responses:
         '200':
           description: A successful response.
@@ -29713,10 +29713,10 @@ paths:
           type: boolean
       tags:
         - Query
-  '/joltify/joltifychain/invoice/placeOrder/{index}':
+  '/oppy/oppychain/invoice/placeOrder/{index}':
     get:
       summary: Queries a placeOrder by index.
-      operationId: JoltifyJoltifychainInvoicePlaceOrder
+      operationId: oppyoppychainInvoicePlaceOrder
       responses:
         '200':
           description: A successful response.
@@ -29767,10 +29767,10 @@ paths:
           type: string
       tags:
         - Query
-  /joltify/joltifychain/invoice/sellOrder:
+  /oppy/oppychain/invoice/sellOrder:
     get:
       summary: Queries a list of sellOrder items.
-      operationId: JoltifyJoltifychainInvoiceSellOrderAll
+      operationId: oppyoppychainInvoiceSellOrderAll
       responses:
         '200':
           description: A successful response.
@@ -29911,10 +29911,10 @@ paths:
           type: boolean
       tags:
         - Query
-  '/joltify/joltifychain/invoice/sellOrder/{index}':
+  '/oppy/oppychain/invoice/sellOrder/{index}':
     get:
       summary: Queries a sellOrder by index.
-      operationId: JoltifyJoltifychainInvoiceSellOrder
+      operationId: oppyoppychainInvoiceSellOrder
       responses:
         '200':
           description: A successful response.
@@ -29974,10 +29974,10 @@ paths:
           type: string
       tags:
         - Query
-  '/joltify/lockup/v1beta1/account_locked_coins/{owner}':
+  '/oppy/lockup/v1beta1/account_locked_coins/{owner}':
     get:
       summary: Return a locked coins that can't be withdrawn
-      operationId: JoltifyJoltifychainLockupAccountLockedCoins
+      operationId: oppyoppychainLockupAccountLockedCoins
       responses:
         '200':
           description: A successful response.
@@ -30026,10 +30026,10 @@ paths:
           type: string
       tags:
         - Query
-  '/joltify/lockup/v1beta1/account_locked_longer_duration/{owner}':
+  '/oppy/lockup/v1beta1/account_locked_longer_duration/{owner}':
     get:
       summary: Returns account locked records with longer duration
-      operationId: JoltifyJoltifychainLockupAccountLockedLongerDuration
+      operationId: oppyoppychainLockupAccountLockedLongerDuration
       responses:
         '200':
           description: A successful response.
@@ -30106,10 +30106,10 @@ paths:
           type: string
       tags:
         - Query
-  '/joltify/lockup/v1beta1/account_locked_longer_duration_denom/{owner}':
+  '/oppy/lockup/v1beta1/account_locked_longer_duration_denom/{owner}':
     get:
       summary: Returns account's locked records for a denom with longer duration
-      operationId: JoltifyJoltifychainLockupAccountLockedLongerDurationDenom
+      operationId: oppyoppychainLockupAccountLockedLongerDurationDenom
       responses:
         '200':
           description: A successful response.
@@ -30190,12 +30190,12 @@ paths:
           type: string
       tags:
         - Query
-  '/joltify/lockup/v1beta1/account_locked_longer_duration_not_unlocking_only/{owner}':
+  '/oppy/lockup/v1beta1/account_locked_longer_duration_not_unlocking_only/{owner}':
     get:
       summary: |-
         Returns account locked records with longer duration excluding tokens
         started unlocking
-      operationId: JoltifyJoltifychainLockupAccountLockedLongerDurationNotUnlockingOnly
+      operationId: oppyoppychainLockupAccountLockedLongerDurationNotUnlockingOnly
       responses:
         '200':
           description: A successful response.
@@ -30272,10 +30272,10 @@ paths:
           type: string
       tags:
         - Query
-  '/joltify/lockup/v1beta1/account_locked_pasttime/{owner}':
+  '/oppy/lockup/v1beta1/account_locked_pasttime/{owner}':
     get:
       summary: Returns locked records of an account with unlock time beyond timestamp
-      operationId: JoltifyJoltifychainLockupAccountLockedPastTime
+      operationId: oppyoppychainLockupAccountLockedPastTime
       responses:
         '200':
           description: A successful response.
@@ -30353,10 +30353,10 @@ paths:
           format: date-time
       tags:
         - Query
-  '/joltify/lockup/v1beta1/account_locked_pasttime_denom/{owner}':
+  '/oppy/lockup/v1beta1/account_locked_pasttime_denom/{owner}':
     get:
       summary: 'Returns lock records by address, timestamp, denom'
-      operationId: JoltifyJoltifychainLockupAccountLockedPastTimeDenom
+      operationId: oppyoppychainLockupAccountLockedPastTimeDenom
       responses:
         '200':
           description: A successful response.
@@ -30438,12 +30438,12 @@ paths:
           type: string
       tags:
         - Query
-  '/joltify/lockup/v1beta1/account_locked_pasttime_not_unlocking_only/{owner}':
+  '/oppy/lockup/v1beta1/account_locked_pasttime_not_unlocking_only/{owner}':
     get:
       summary: |-
         Returns locked records of an account with unlock time beyond timestamp
         excluding tokens started unlocking
-      operationId: JoltifyJoltifychainLockupAccountLockedPastTimeNotUnlockingOnly
+      operationId: oppyoppychainLockupAccountLockedPastTimeNotUnlockingOnly
       responses:
         '200':
           description: A successful response.
@@ -30521,10 +30521,10 @@ paths:
           format: date-time
       tags:
         - Query
-  '/joltify/lockup/v1beta1/account_unlockable_coins/{owner}':
+  '/oppy/lockup/v1beta1/account_unlockable_coins/{owner}':
     get:
       summary: Returns unlockable coins which are not withdrawn yet
-      operationId: JoltifyJoltifychainLockupAccountUnlockableCoins
+      operationId: oppyoppychainLockupAccountUnlockableCoins
       responses:
         '200':
           description: A successful response.
@@ -30573,10 +30573,10 @@ paths:
           type: string
       tags:
         - Query
-  '/joltify/lockup/v1beta1/account_unlocked_before_time/{owner}':
+  '/oppy/lockup/v1beta1/account_unlocked_before_time/{owner}':
     get:
       summary: Returns unlocked records with unlock time before timestamp
-      operationId: JoltifyJoltifychainLockupAccountUnlockedBeforeTime
+      operationId: oppyoppychainLockupAccountUnlockedBeforeTime
       responses:
         '200':
           description: A successful response.
@@ -30654,10 +30654,10 @@ paths:
           format: date-time
       tags:
         - Query
-  '/joltify/lockup/v1beta1/account_unlocking_coins/{owner}':
+  '/oppy/lockup/v1beta1/account_unlocking_coins/{owner}':
     get:
       summary: Returns unlocking coins
-      operationId: JoltifyJoltifychainLockupAccountUnlockingCoins
+      operationId: oppyoppychainLockupAccountUnlockingCoins
       responses:
         '200':
           description: A successful response.
@@ -30706,10 +30706,10 @@ paths:
           type: string
       tags:
         - Query
-  '/joltify/lockup/v1beta1/locked_by_id/{lock_id}':
+  '/oppy/lockup/v1beta1/locked_by_id/{lock_id}':
     get:
       summary: Returns lock record by id
-      operationId: JoltifyJoltifychainLockupLockedByID
+      operationId: oppyoppychainLockupLockedByID
       responses:
         '200':
           description: A successful response.
@@ -30780,10 +30780,10 @@ paths:
           format: uint64
       tags:
         - Query
-  /joltify/lockup/v1beta1/locked_denom:
+  /oppy/lockup/v1beta1/locked_denom:
     get:
       summary: Returns total locked per denom with longer past given time
-      operationId: JoltifyJoltifychainLockupLockedDenom
+      operationId: oppyoppychainLockupLockedDenom
       responses:
         '200':
           description: A successful response.
@@ -30821,10 +30821,10 @@ paths:
           type: string
       tags:
         - Query
-  /joltify/lockup/v1beta1/module_balance:
+  /oppy/lockup/v1beta1/module_balance:
     get:
       summary: Return full balance of the module
-      operationId: JoltifyJoltifychainLockupModuleBalance
+      operationId: oppyoppychainLockupModuleBalance
       responses:
         '200':
           description: A successful response.
@@ -30868,10 +30868,10 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /joltify/lockup/v1beta1/module_locked_amount:
+  /oppy/lockup/v1beta1/module_locked_amount:
     get:
       summary: Return locked balance of the module
-      operationId: JoltifyJoltifychainLockupModuleLockedAmount
+      operationId: oppyoppychainLockupModuleLockedAmount
       responses:
         '200':
           description: A successful response.
@@ -30915,10 +30915,10 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  '/joltify/lockup/v1beta1/synthetic_lockups_by_lock_id/{lock_id}':
+  '/oppy/lockup/v1beta1/synthetic_lockups_by_lock_id/{lock_id}':
     get:
       summary: Returns synthetic lockups by native lockup id
-      operationId: JoltifyJoltifychainLockupSyntheticLockupsByLockupID
+      operationId: oppyoppychainLockupSyntheticLockupsByLockupID
       responses:
         '200':
           description: A successful response.
@@ -31005,10 +31005,10 @@ paths:
           format: uint64
       tags:
         - Query
-  /joltify/mint/v1beta1/epoch_provisions:
+  /oppy/mint/v1beta1/epoch_provisions:
     get:
       summary: EpochProvisions current minting epoch provisions value.
-      operationId: JoltifyJoltifychainMintV1Beta1EpochProvisions
+      operationId: oppyoppychainMintV1Beta1EpochProvisions
       responses:
         '200':
           description: A successful response.
@@ -31211,10 +31211,10 @@ paths:
                         }
       tags:
         - Query
-  /joltify/mint/v1beta1/params:
+  /oppy/mint/v1beta1/params:
     get:
       summary: Params returns the total set of minting parameters.
-      operationId: JoltifyJoltifychainMintV1Beta1Params
+      operationId: oppyoppychainMintV1Beta1Params
       responses:
         '200':
           description: A successful response.
@@ -31479,9 +31479,9 @@ paths:
                         }
       tags:
         - Query
-  /joltify/pool_incentives/v1beta1/distr_info:
+  /oppy/pool_incentives/v1beta1/distr_info:
     get:
-      operationId: JoltifyJoltifychainPoolincentivesV1Beta1DistrInfo
+      operationId: oppyoppychainPoolincentivesV1Beta1DistrInfo
       responses:
         '200':
           description: A successful response.
@@ -31523,9 +31523,9 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /joltify/pool_incentives/v1beta1/external_incentive_gauges:
+  /oppy/pool_incentives/v1beta1/external_incentive_gauges:
     get:
-      operationId: JoltifyJoltifychainPoolincentivesV1Beta1ExternalIncentiveGauges
+      operationId: oppyoppychainPoolincentivesV1Beta1ExternalIncentiveGauges
       responses:
         '200':
           description: A successful response.
@@ -31638,12 +31638,12 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  '/joltify/pool_incentives/v1beta1/gauge-ids/{pool_id}':
+  '/oppy/pool_incentives/v1beta1/gauge-ids/{pool_id}':
     get:
       summary: >-
         GaugeIds takes the pool id and returns the matching gauge ids and
         durations
-      operationId: JoltifyJoltifychainPoolincentivesV1Beta1GaugeIds
+      operationId: oppyoppychainPoolincentivesV1Beta1GaugeIds
       responses:
         '200':
           description: A successful response.
@@ -31686,9 +31686,9 @@ paths:
           format: uint64
       tags:
         - Query
-  /joltify/pool_incentives/v1beta1/incentivized_pools:
+  /oppy/pool_incentives/v1beta1/incentivized_pools:
     get:
-      operationId: JoltifyJoltifychainPoolincentivesV1Beta1IncentivizedPools
+      operationId: oppyoppychainPoolincentivesV1Beta1IncentivizedPools
       responses:
         '200':
           description: A successful response.
@@ -31728,9 +31728,9 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /joltify/pool_incentives/v1beta1/lockable_durations:
+  /oppy/pool_incentives/v1beta1/lockable_durations:
     get:
-      operationId: JoltifyJoltifychainPoolincentivesV1Beta1LockableDurations
+      operationId: oppyoppychainPoolincentivesV1Beta1LockableDurations
       responses:
         '200':
           description: A successful response.
@@ -31761,9 +31761,9 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /joltify/pool_incentives/v1beta1/params:
+  /oppy/pool_incentives/v1beta1/params:
     get:
-      operationId: JoltifyJoltifychainPoolincentivesV1Beta1Params
+      operationId: oppyoppychainPoolincentivesV1Beta1Params
       responses:
         '200':
           description: A successful response.
@@ -31806,10 +31806,10 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /joltify/joltifyChain/vault/createPool:
+  /oppy/oppyChain/vault/createPool:
     get:
       summary: Queries a list of createPool items.
-      operationId: JoltifyJoltifychainVaultCreatePoolAll
+      operationId: oppyoppychainVaultCreatePoolAll
       responses:
         '200':
           description: A successful response.
@@ -31935,10 +31935,10 @@ paths:
           type: boolean
       tags:
         - Query
-  '/joltify/joltifyChain/vault/createPool/{index}':
+  '/oppy/oppyChain/vault/createPool/{index}':
     get:
       summary: Queries a createPool by index.
-      operationId: JoltifyJoltifychainVaultCreatePool
+      operationId: oppyoppychainVaultCreatePool
       responses:
         '200':
           description: A successful response.
@@ -31983,10 +31983,10 @@ paths:
           type: string
       tags:
         - Query
-  /joltify/joltifyChain/vault/getLastPool:
+  /oppy/oppyChain/vault/getLastPool:
     get:
       summary: Queries a createPool by index.
-      operationId: JoltifyJoltifychainVaultGetLastPool
+      operationId: oppyoppychainVaultGetLastPool
       responses:
         '200':
           description: A successful response.
@@ -32090,10 +32090,10 @@ paths:
           type: boolean
       tags:
         - Query
-  /joltify/joltifychain/vault/get_validators:
+  /oppy/oppychain/vault/get_validators:
     get:
       summary: Queries a list of GetValidators items.
-      operationId: JoltifyJoltifychainVaultGetValidators
+      operationId: oppyoppychainVaultGetValidators
       responses:
         '200':
           description: A successful response.
@@ -32142,10 +32142,10 @@ paths:
           type: string
       tags:
         - Query
-  /joltify/joltifychain/vault/issueToken:
+  /oppy/oppychain/vault/issueToken:
     get:
       summary: Queries a list of issueToken items.
-      operationId: JoltifyJoltifychainVaultIssueTokenAll
+      operationId: oppyoppychainVaultIssueTokenAll
       responses:
         '200':
           description: A successful response.
@@ -32272,10 +32272,10 @@ paths:
           type: boolean
       tags:
         - Query
-  '/joltify/joltifychain/vault/issueToken/{index}':
+  '/oppy/oppychain/vault/issueToken/{index}':
     get:
       summary: Queries a issueToken by index.
-      operationId: JoltifyJoltifychainVaultIssueToken
+      operationId: oppyoppychainVaultIssueToken
       responses:
         '200':
           description: A successful response.
@@ -32321,10 +32321,10 @@ paths:
           type: string
       tags:
         - Query
-  /joltify/joltifychain/vault/outbound_tx:
+  /oppy/oppychain/vault/outbound_tx:
     get:
       summary: Queries a list of OutboundTx items.
-      operationId: JoltifyJoltifychainVaultOutboundTxAll
+      operationId: oppyoppychainVaultOutboundTxAll
       responses:
         '200':
           description: A successful response.
@@ -32452,10 +32452,10 @@ paths:
           type: boolean
       tags:
         - Query
-  '/joltify/joltifychain/vault/outbound_tx/{requestID}':
+  '/oppy/oppychain/vault/outbound_tx/{requestID}':
     get:
       summary: Queries a OutboundTx by index.
-      operationId: JoltifyJoltifychainVaultOutboundTx
+      operationId: oppyoppychainVaultOutboundTx
       responses:
         '200':
           description: A successful response.
@@ -32502,10 +32502,10 @@ paths:
           type: string
       tags:
         - Query
-  /joltify/joltifychain/vault/validators:
+  /oppy/oppychain/vault/validators:
     get:
       summary: Queries a list of GetValidators items.
-      operationId: JoltifyJoltifychainVaultGetAllValidators
+      operationId: oppyoppychainVaultGetAllValidators
       responses:
         '200':
           description: A successful response.
@@ -52739,7 +52739,7 @@ definitions:
     description: >-
       QueryAppVersionResponse is the response type for the Query/AppVersion RPC
       method.
-  joltify.joltifychain.epochs.EpochInfo:
+  oppy.oppychain.epochs.EpochInfo:
     type: object
     properties:
       identifier:
@@ -52760,13 +52760,13 @@ definitions:
       current_epoch_start_height:
         type: string
         format: int64
-  joltify.joltifychain.epochs.QueryCurrentEpochResponse:
+  oppy.oppychain.epochs.QueryCurrentEpochResponse:
     type: object
     properties:
       current_epoch:
         type: string
         format: int64
-  joltify.joltifychain.epochs.QueryEpochsInfoResponse:
+  oppy.oppychain.epochs.QueryEpochsInfoResponse:
     type: object
     properties:
       epochs:
@@ -52792,7 +52792,7 @@ definitions:
             current_epoch_start_height:
               type: string
               format: int64
-  joltify.joltifychain.incentives.ActiveGaugesPerDenomResponse:
+  oppy.oppychain.incentives.ActiveGaugesPerDenomResponse:
     type: object
     properties:
       data:
@@ -52895,7 +52895,7 @@ definitions:
               PageRequest.count_total
 
               was set, its value is undefined otherwise
-  joltify.joltifychain.incentives.ActiveGaugesResponse:
+  oppy.oppychain.incentives.ActiveGaugesResponse:
     type: object
     properties:
       data:
@@ -52998,7 +52998,7 @@ definitions:
               PageRequest.count_total
 
               was set, its value is undefined otherwise
-  joltify.joltifychain.incentives.Gauge:
+  oppy.oppychain.incentives.Gauge:
     type: object
     properties:
       id:
@@ -53072,7 +53072,7 @@ definitions:
 
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
-  joltify.joltifychain.incentives.GaugeByIDResponse:
+  oppy.oppychain.incentives.GaugeByIDResponse:
     type: object
     properties:
       gauge:
@@ -53155,7 +53155,7 @@ definitions:
                 method
 
                 signatures required by gogoproto.
-  joltify.joltifychain.incentives.GaugesResponse:
+  oppy.oppychain.incentives.GaugesResponse:
     type: object
     properties:
       data:
@@ -53258,7 +53258,7 @@ definitions:
               PageRequest.count_total
 
               was set, its value is undefined otherwise
-  joltify.joltifychain.incentives.ModuleDistributedCoinsResponse:
+  oppy.oppychain.incentives.ModuleDistributedCoinsResponse:
     type: object
     properties:
       coins:
@@ -53275,7 +53275,7 @@ definitions:
 
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
-  joltify.joltifychain.incentives.ModuleToDistributeCoinsResponse:
+  oppy.oppychain.incentives.ModuleToDistributeCoinsResponse:
     type: object
     properties:
       coins:
@@ -53292,18 +53292,18 @@ definitions:
 
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
-  joltify.joltifychain.incentives.MsgAddToGaugeResponse:
+  oppy.oppychain.incentives.MsgAddToGaugeResponse:
     type: object
-  joltify.joltifychain.incentives.MsgCreateGaugeResponse:
+  oppy.oppychain.incentives.MsgCreateGaugeResponse:
     type: object
-  joltify.joltifychain.incentives.QueryLockableDurationsResponse:
+  oppy.oppychain.incentives.QueryLockableDurationsResponse:
     type: object
     properties:
       lockable_durations:
         type: array
         items:
           type: string
-  joltify.joltifychain.incentives.RewardsEstResponse:
+  oppy.oppychain.incentives.RewardsEstResponse:
     type: object
     properties:
       coins:
@@ -53320,7 +53320,7 @@ definitions:
 
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
-  joltify.joltifychain.incentives.UpcomingGaugesPerDenomResponse:
+  oppy.oppychain.incentives.UpcomingGaugesPerDenomResponse:
     type: object
     properties:
       upcoming_gauges:
@@ -53430,7 +53430,7 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  joltify.joltifychain.incentives.UpcomingGaugesResponse:
+  oppy.oppychain.incentives.UpcomingGaugesResponse:
     type: object
     properties:
       data:
@@ -53533,13 +53533,13 @@ definitions:
               PageRequest.count_total
 
               was set, its value is undefined otherwise
-  joltify.joltifychain.lockup.LockQueryType:
+  oppy.oppychain.lockup.LockQueryType:
     type: string
     enum:
       - ByDuration
       - ByTime
     default: ByDuration
-  joltify.joltifychain.lockup.QueryCondition:
+  oppy.oppychain.lockup.QueryCondition:
     type: object
     properties:
       lock_query_type:
@@ -53559,7 +53559,7 @@ definitions:
         type: string
         format: date-time
         title: valid when query condition is ByTime
-  joltify.joltifychain.invoice.Invoice:
+  oppy.oppychain.invoice.Invoice:
     type: object
     properties:
       invoiceID:
@@ -53615,7 +53615,7 @@ definitions:
         type: boolean
       isListedForSell:
         type: boolean
-  joltify.joltifychain.invoice.InvoiceBase:
+  oppy.oppychain.invoice.InvoiceBase:
     type: object
     properties:
       creator:
@@ -53630,7 +53630,7 @@ definitions:
       origOwner:
         type: string
         format: byte
-  joltify.joltifychain.invoice.InvoiceFinance:
+  oppy.oppychain.invoice.InvoiceFinance:
     type: object
     properties:
       denom:
@@ -53644,7 +53644,7 @@ definitions:
       apy:
         type: number
         format: float
-  joltify.joltifychain.invoice.InvoiceMember:
+  oppy.oppychain.invoice.InvoiceMember:
     type: object
     properties:
       invoiceID:
@@ -53655,26 +53655,26 @@ definitions:
       invoiceHolder:
         type: string
         format: byte
-  joltify.joltifychain.invoice.MsgCreateInvoiceResponse:
+  oppy.oppychain.invoice.MsgCreateInvoiceResponse:
     type: object
     properties:
       invoiceID:
         type: string
-  joltify.joltifychain.invoice.MsgCreatePlaceOrderResponse:
+  oppy.oppychain.invoice.MsgCreatePlaceOrderResponse:
     type: object
     properties:
       placeOrderID:
         type: string
-  joltify.joltifychain.invoice.MsgCreateSellOrderResponse:
+  oppy.oppychain.invoice.MsgCreateSellOrderResponse:
     type: object
     properties:
       orderID:
         type: string
-  joltify.joltifychain.invoice.MsgDeleteInvoiceResponse:
+  oppy.oppychain.invoice.MsgDeleteInvoiceResponse:
     type: object
-  joltify.joltifychain.invoice.MsgDeleteSellOrderResponse:
+  oppy.oppychain.invoice.MsgDeleteSellOrderResponse:
     type: object
-  joltify.joltifychain.invoice.PlaceOrder:
+  oppy.oppychain.invoice.PlaceOrder:
     type: object
     properties:
       creator:
@@ -53693,7 +53693,7 @@ definitions:
       createdTime:
         type: string
         format: date-time
-  joltify.joltifychain.invoice.QueryAllInvoiceResponse:
+  oppy.oppychain.invoice.QueryAllInvoiceResponse:
     type: object
     properties:
       Invoice:
@@ -53779,7 +53779,7 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  joltify.joltifychain.invoice.QueryAllPlaceOrderResponse:
+  oppy.oppychain.invoice.QueryAllPlaceOrderResponse:
     type: object
     properties:
       PlaceOrder:
@@ -53828,7 +53828,7 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  joltify.joltifychain.invoice.QueryAllSellOrderResponse:
+  oppy.oppychain.invoice.QueryAllSellOrderResponse:
     type: object
     properties:
       SellOrder:
@@ -53886,7 +53886,7 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  joltify.joltifychain.invoice.QueryGetInvoiceResponse:
+  oppy.oppychain.invoice.QueryGetInvoiceResponse:
     type: object
     properties:
       Invoice:
@@ -53945,7 +53945,7 @@ definitions:
             type: boolean
           isListedForSell:
             type: boolean
-  joltify.joltifychain.invoice.QueryGetPlaceOrderResponse:
+  oppy.oppychain.invoice.QueryGetPlaceOrderResponse:
     type: object
     properties:
       PlaceOrder:
@@ -53967,7 +53967,7 @@ definitions:
           createdTime:
             type: string
             format: date-time
-  joltify.joltifychain.invoice.QueryGetSellOrderResponse:
+  oppy.oppychain.invoice.QueryGetSellOrderResponse:
     type: object
     properties:
       SellOrder:
@@ -53998,7 +53998,7 @@ definitions:
             format: date-time
           isDeleted:
             type: boolean
-  joltify.joltifychain.invoice.SellOrder:
+  oppy.oppychain.invoice.SellOrder:
     type: object
     properties:
       creator:
@@ -54026,7 +54026,7 @@ definitions:
         format: date-time
       isDeleted:
         type: boolean
-  joltify.joltifychain.lockup.AccountLockedCoinsResponse:
+  oppy.oppychain.lockup.AccountLockedCoinsResponse:
     type: object
     properties:
       coins:
@@ -54043,7 +54043,7 @@ definitions:
 
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
-  joltify.joltifychain.lockup.AccountLockedLongerDurationDenomResponse:
+  oppy.oppychain.lockup.AccountLockedLongerDurationDenomResponse:
     type: object
     properties:
       locks:
@@ -54086,7 +54086,7 @@ definitions:
             amount of
 
             coins locked.
-  joltify.joltifychain.lockup.AccountLockedLongerDurationNotUnlockingOnlyResponse:
+  oppy.oppychain.lockup.AccountLockedLongerDurationNotUnlockingOnlyResponse:
     type: object
     properties:
       locks:
@@ -54129,7 +54129,7 @@ definitions:
             amount of
 
             coins locked.
-  joltify.joltifychain.lockup.AccountLockedLongerDurationResponse:
+  oppy.oppychain.lockup.AccountLockedLongerDurationResponse:
     type: object
     properties:
       locks:
@@ -54172,7 +54172,7 @@ definitions:
             amount of
 
             coins locked.
-  joltify.joltifychain.lockup.AccountLockedPastTimeDenomResponse:
+  oppy.oppychain.lockup.AccountLockedPastTimeDenomResponse:
     type: object
     properties:
       locks:
@@ -54215,7 +54215,7 @@ definitions:
             amount of
 
             coins locked.
-  joltify.joltifychain.lockup.AccountLockedPastTimeNotUnlockingOnlyResponse:
+  oppy.oppychain.lockup.AccountLockedPastTimeNotUnlockingOnlyResponse:
     type: object
     properties:
       locks:
@@ -54258,7 +54258,7 @@ definitions:
             amount of
 
             coins locked.
-  joltify.joltifychain.lockup.AccountLockedPastTimeResponse:
+  oppy.oppychain.lockup.AccountLockedPastTimeResponse:
     type: object
     properties:
       locks:
@@ -54301,7 +54301,7 @@ definitions:
             amount of
 
             coins locked.
-  joltify.joltifychain.lockup.AccountUnlockableCoinsResponse:
+  oppy.oppychain.lockup.AccountUnlockableCoinsResponse:
     type: object
     properties:
       coins:
@@ -54318,7 +54318,7 @@ definitions:
 
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
-  joltify.joltifychain.lockup.AccountUnlockedBeforeTimeResponse:
+  oppy.oppychain.lockup.AccountUnlockedBeforeTimeResponse:
     type: object
     properties:
       locks:
@@ -54361,7 +54361,7 @@ definitions:
             amount of
 
             coins locked.
-  joltify.joltifychain.lockup.AccountUnlockingCoinsResponse:
+  oppy.oppychain.lockup.AccountUnlockingCoinsResponse:
     type: object
     properties:
       coins:
@@ -54378,12 +54378,12 @@ definitions:
 
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
-  joltify.joltifychain.lockup.LockedDenomResponse:
+  oppy.oppychain.lockup.LockedDenomResponse:
     type: object
     properties:
       amount:
         type: string
-  joltify.joltifychain.lockup.LockedResponse:
+  oppy.oppychain.lockup.LockedResponse:
     type: object
     properties:
       lock:
@@ -54424,7 +54424,7 @@ definitions:
           amount of
 
           coins locked.
-  joltify.joltifychain.lockup.ModuleBalanceResponse:
+  oppy.oppychain.lockup.ModuleBalanceResponse:
     type: object
     properties:
       coins:
@@ -54441,7 +54441,7 @@ definitions:
 
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
-  joltify.joltifychain.lockup.ModuleLockedAmountResponse:
+  oppy.oppychain.lockup.ModuleLockedAmountResponse:
     type: object
     properties:
       coins:
@@ -54458,7 +54458,7 @@ definitions:
 
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
-  joltify.joltifychain.lockup.MsgBeginUnlockingAllResponse:
+  oppy.oppychain.lockup.MsgBeginUnlockingAllResponse:
     type: object
     properties:
       unlocks:
@@ -54501,18 +54501,18 @@ definitions:
             amount of
 
             coins locked.
-  joltify.joltifychain.lockup.MsgBeginUnlockingResponse:
+  oppy.oppychain.lockup.MsgBeginUnlockingResponse:
     type: object
     properties:
       success:
         type: boolean
-  joltify.joltifychain.lockup.MsgLockTokensResponse:
+  oppy.oppychain.lockup.MsgLockTokensResponse:
     type: object
     properties:
       ID:
         type: string
         format: uint64
-  joltify.joltifychain.lockup.PeriodLock:
+  oppy.oppychain.lockup.PeriodLock:
     type: object
     properties:
       ID:
@@ -54547,7 +54547,7 @@ definitions:
       of
 
       coins locked.
-  joltify.joltifychain.lockup.SyntheticLock:
+  oppy.oppychain.lockup.SyntheticLock:
     type: object
     properties:
       underlying_lock_id:
@@ -54596,7 +54596,7 @@ definitions:
       is. Constrained coin field can be a #post-v7 feature, since we aren't
 
       allowing partial unlocks of synthetic lockups.
-  joltify.joltifychain.lockup.SyntheticLockupsByLockupIDResponse:
+  oppy.oppychain.lockup.SyntheticLockupsByLockupIDResponse:
     type: object
     properties:
       synthetic_locks:
@@ -54653,7 +54653,7 @@ definitions:
             aren't
 
             allowing partial unlocks of synthetic lockups.
-  joltify.joltifychain.mint.v1beta1.DistributionProportions:
+  oppy.oppychain.mint.v1beta1.DistributionProportions:
     type: object
     properties:
       staking:
@@ -54684,7 +54684,7 @@ definitions:
           is
 
           to be allocated to the community pool.
-  joltify.joltifychain.mint.v1beta1.Params:
+  oppy.oppychain.mint.v1beta1.Params:
     type: object
     properties:
       mint_denom:
@@ -54750,7 +54750,7 @@ definitions:
         format: int64
         title: start epoch to distribute minting rewards
     description: Params holds parameters for the mint module.
-  joltify.joltifychain.mint.v1beta1.QueryEpochProvisionsResponse:
+  oppy.oppychain.mint.v1beta1.QueryEpochProvisionsResponse:
     type: object
     properties:
       epoch_provisions:
@@ -54760,7 +54760,7 @@ definitions:
     description: |-
       QueryEpochProvisionsResponse is the response type for the
       Query/EpochProvisions RPC method.
-  joltify.joltifychain.mint.v1beta1.QueryParamsResponse:
+  oppy.oppychain.mint.v1beta1.QueryParamsResponse:
     type: object
     properties:
       params:
@@ -54832,14 +54832,14 @@ definitions:
             format: int64
             title: start epoch to distribute minting rewards
     description: QueryParamsResponse is the response type for the Query/Params RPC method.
-  joltify.joltifychain.mint.v1beta1.WeightedAddress:
+  oppy.oppychain.mint.v1beta1.WeightedAddress:
     type: object
     properties:
       address:
         type: string
       weight:
         type: string
-  joltify.joltifychain.poolincentives.v1beta1.DistrInfo:
+  oppy.oppychain.poolincentives.v1beta1.DistrInfo:
     type: object
     properties:
       total_weight:
@@ -54854,7 +54854,7 @@ definitions:
               format: uint64
             weight:
               type: string
-  joltify.joltifychain.poolincentives.v1beta1.DistrRecord:
+  oppy.oppychain.poolincentives.v1beta1.DistrRecord:
     type: object
     properties:
       gauge_id:
@@ -54862,7 +54862,7 @@ definitions:
         format: uint64
       weight:
         type: string
-  joltify.joltifychain.poolincentives.v1beta1.IncentivizedPool:
+  oppy.oppychain.poolincentives.v1beta1.IncentivizedPool:
     type: object
     properties:
       pool_id:
@@ -54873,7 +54873,7 @@ definitions:
       gauge_id:
         type: string
         format: uint64
-  joltify.joltifychain.poolincentives.v1beta1.Params:
+  oppy.oppychain.poolincentives.v1beta1.Params:
     type: object
     properties:
       minted_denom:
@@ -54887,7 +54887,7 @@ definitions:
           itself, but rather manages the distribution of coins that matches the
 
           defined minted_denom.
-  joltify.joltifychain.poolincentives.v1beta1.QueryDistrInfoResponse:
+  oppy.oppychain.poolincentives.v1beta1.QueryDistrInfoResponse:
     type: object
     properties:
       distr_info:
@@ -54905,7 +54905,7 @@ definitions:
                   format: uint64
                 weight:
                   type: string
-  joltify.joltifychain.poolincentives.v1beta1.QueryExternalIncentiveGaugesResponse:
+  oppy.oppychain.poolincentives.v1beta1.QueryExternalIncentiveGaugesResponse:
     type: object
     properties:
       data:
@@ -54990,7 +54990,7 @@ definitions:
                   method
 
                   signatures required by gogoproto.
-  joltify.joltifychain.poolincentives.v1beta1.QueryGaugeIdsResponse:
+  oppy.oppychain.poolincentives.v1beta1.QueryGaugeIdsResponse:
     type: object
     properties:
       gauge_ids_with_duration:
@@ -55003,7 +55003,7 @@ definitions:
               format: uint64
             duration:
               type: string
-  joltify.joltifychain.poolincentives.v1beta1.QueryGaugeIdsResponse.GaugeIdWithDuration:
+  oppy.oppychain.poolincentives.v1beta1.QueryGaugeIdsResponse.GaugeIdWithDuration:
     type: object
     properties:
       gauge_id:
@@ -55011,7 +55011,7 @@ definitions:
         format: uint64
       duration:
         type: string
-  joltify.joltifychain.poolincentives.v1beta1.QueryIncentivizedPoolsResponse:
+  oppy.oppychain.poolincentives.v1beta1.QueryIncentivizedPoolsResponse:
     type: object
     properties:
       incentivized_pools:
@@ -55027,14 +55027,14 @@ definitions:
             gauge_id:
               type: string
               format: uint64
-  joltify.joltifychain.poolincentives.v1beta1.QueryLockableDurationsResponse:
+  oppy.oppychain.poolincentives.v1beta1.QueryLockableDurationsResponse:
     type: object
     properties:
       lockable_durations:
         type: array
         items:
           type: string
-  joltify.joltifychain.poolincentives.v1beta1.QueryParamsResponse:
+  oppy.oppychain.poolincentives.v1beta1.QueryParamsResponse:
     type: object
     properties:
       params:
@@ -55053,9 +55053,9 @@ definitions:
               the
 
               defined minted_denom.
-  joltify.joltifychain.swap.v1beta1.MsgCreateBalancerPoolResponse:
+  oppy.oppychain.swap.v1beta1.MsgCreateBalancerPoolResponse:
     type: object
-  joltify.joltifychain.swap.v1beta1.PoolAsset:
+  oppy.oppychain.swap.v1beta1.PoolAsset:
     type: object
     properties:
       token:
@@ -55071,7 +55071,7 @@ definitions:
       weight:
         type: string
         title: Weight that is not normalized. This weight must be less than 2^50
-  joltify.joltifychain.swap.v1beta1.PoolParams:
+  oppy.oppychain.swap.v1beta1.PoolParams:
     type: object
     properties:
       swapFee:
@@ -55179,7 +55179,7 @@ definitions:
       governance in the future. This params are not managed by the chain
       governance. Instead they will be managed by the token holders of the pool.
       The pool's token holders are specified in future_pool_governor.
-  joltify.joltifychain.swap.v1beta1.SmoothWeightChangeParams:
+  oppy.oppychain.swap.v1beta1.SmoothWeightChangeParams:
     type: object
     properties:
       start_time:
@@ -55268,7 +55268,7 @@ definitions:
           w(t) = initial_pool_weights + (t - start_time) *
             (target_pool_weights - initial_pool_weights) / (duration)
         t > start_time + duration: w(t) = target_pool_weights
-  joltify.joltifychain.vault.IssueToken:
+  oppy.oppychain.vault.IssueToken:
     type: object
     properties:
       creator:
@@ -55282,22 +55282,22 @@ definitions:
       receiver:
         type: string
         format: byte
-  joltify.joltifychain.vault.MsgCreateCreatePoolResponse:
+  oppy.oppychain.vault.MsgCreateCreatePoolResponse:
     type: object
     properties:
       successful:
         type: boolean
-  joltify.joltifychain.vault.MsgCreateIssueTokenResponse:
+  oppy.oppychain.vault.MsgCreateIssueTokenResponse:
     type: object
     properties:
       successful:
         type: boolean
-  joltify.joltifychain.vault.MsgCreateOutboundTxResponse:
+  oppy.oppychain.vault.MsgCreateOutboundTxResponse:
     type: object
     properties:
       successful:
         type: boolean
-  joltify.joltifychain.vault.OutboundTx:
+  oppy.oppychain.vault.OutboundTx:
     type: object
     properties:
       index:
@@ -55312,7 +55312,7 @@ definitions:
               items:
                 type: string
                 format: byte
-  joltify.joltifychain.vault.PoolProposal:
+  oppy.oppychain.vault.PoolProposal:
     type: object
     properties:
       poolPubKey:
@@ -55325,7 +55325,7 @@ definitions:
         items:
           type: string
           format: byte
-  joltify.joltifychain.vault.QueryAllCreatePoolResponse:
+  oppy.oppychain.vault.QueryAllCreatePoolResponse:
     type: object
     properties:
       CreatePool:
@@ -55368,7 +55368,7 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  joltify.joltifychain.vault.QueryAllIssueTokenResponse:
+  oppy.oppychain.vault.QueryAllIssueTokenResponse:
     type: object
     properties:
       IssueToken:
@@ -55412,7 +55412,7 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  joltify.joltifychain.vault.QueryAllOutboundTxResponse:
+  oppy.oppychain.vault.QueryAllOutboundTxResponse:
     type: object
     properties:
       outboundTx:
@@ -55457,7 +55457,7 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  joltify.joltifychain.vault.QueryAllValidatorsResponse:
+  oppy.oppychain.vault.QueryAllValidatorsResponse:
     type: object
     properties:
       all_validators:
@@ -55504,7 +55504,7 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  joltify.joltifychain.vault.QueryGetCreatePoolResponse:
+  oppy.oppychain.vault.QueryGetCreatePoolResponse:
     type: object
     properties:
       CreatePool:
@@ -55520,7 +55520,7 @@ definitions:
             items:
               type: string
               format: byte
-  joltify.joltifychain.vault.QueryGetIssueTokenResponse:
+  oppy.oppychain.vault.QueryGetIssueTokenResponse:
     type: object
     properties:
       IssueToken:
@@ -55537,7 +55537,7 @@ definitions:
           receiver:
             type: string
             format: byte
-  joltify.joltifychain.vault.QueryGetOutboundTxResponse:
+  oppy.oppychain.vault.QueryGetOutboundTxResponse:
     type: object
     properties:
       outboundTx:
@@ -55555,7 +55555,7 @@ definitions:
                   items:
                     type: string
                     format: byte
-  joltify.joltifychain.vault.QueryGetValidatorsResponse:
+  oppy.oppychain.vault.QueryGetValidatorsResponse:
     type: object
     properties:
       validators:
@@ -55575,7 +55575,7 @@ definitions:
           height:
             type: string
             format: int64
-  joltify.joltifychain.vault.QueryLastPoolResponse:
+  oppy.oppychain.vault.QueryLastPoolResponse:
     type: object
     properties:
       pools:
@@ -55598,7 +55598,7 @@ definitions:
                   items:
                     type: string
                     format: byte
-  joltify.joltifychain.vault.Validator:
+  oppy.oppychain.vault.Validator:
     type: object
     properties:
       pubkey:
@@ -55607,7 +55607,7 @@ definitions:
       power:
         type: string
         format: int64
-  joltify.joltifychain.vault.Validators:
+  oppy.oppychain.vault.Validators:
     type: object
     properties:
       all_validators:
@@ -55624,7 +55624,7 @@ definitions:
       height:
         type: string
         format: int64
-  joltify.joltifychain.vault.address:
+  oppy.oppychain.vault.address:
     type: object
     properties:
       address:
@@ -55632,7 +55632,7 @@ definitions:
         items:
           type: string
           format: byte
-  joltify.joltifychain.vault.poolInfo:
+  oppy.oppychain.vault.poolInfo:
     type: object
     properties:
       BlockHeight:

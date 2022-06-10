@@ -1,5 +1,5 @@
 syntax = "proto3";
-package joltify.joltifychain.poolincentives.v1beta1;
+package oppyfinance.oppychain.poolincentives.v1beta1;
 
 import "gogoproto/gogo.proto";
 import "pool_incentives/v1beta1/incentives.proto";

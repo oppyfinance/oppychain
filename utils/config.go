@@ -10,7 +10,7 @@ const (
 	DefaultBondDenom = BaseCoinUnit
 
 	// Bech32PrefixAccAddr defines the Bech32 prefix of an account's address
-	Bech32PrefixAccAddr = "jolt"
+	Bech32PrefixAccAddr = "oppy"
 
 	HumanCoinUnit = "oppy"
 	BaseCoinUnit  = "poppy"

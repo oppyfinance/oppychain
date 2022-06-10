@@ -12,14 +12,14 @@ import (
 // RegisterLegacyAminoCodec registers the necessary x/swap interfaces and concrete types
 // on the provided LegacyAmino codec. These types are used for Amino JSON serialization.
 func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
-	cdc.RegisterConcrete(&Pool{}, "joltify/swap/BalancerPool", nil)
-	cdc.RegisterConcrete(&MsgCreateBalancerPool{}, "joltify/swap/create-balancer-pool", nil)
-	cdc.RegisterConcrete(&PoolParams{}, "joltify/swap/BalancerPoolParams", nil)
+	cdc.RegisterConcrete(&Pool{}, "oppy/swap/BalancerPool", nil)
+	cdc.RegisterConcrete(&MsgCreateBalancerPool{}, "oppy/swap/create-balancer-pool", nil)
+	cdc.RegisterConcrete(&PoolParams{}, "oppy/swap/BalancerPoolParams", nil)
 }
 
 func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 	registry.RegisterInterface(
-		"jolt.joltifychain.swap.v1beta1.PoolI",
+		"jolt.oppychain.swap.v1beta1.PoolI",
 		(*types.PoolI)(nil),
 		&Pool{},
 	)

@@ -134,7 +134,7 @@ func (k Keeper) GetProportions(ctx sdk.Context, mintedCoin sdk.Coin, ratio sdk.D
 }
 
 // DistributeMintedCoins implements distribution of minted coins from mint to external modules.
-// "gitlab.com/oppy-finance/oppychain/x/swap/types", we do not need to have the developer vesting account
+// "gitlab.com/oppy-finance/oppyChaind/x/swap/types", we do not need to have the developer vesting account
 func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error {
 	params := k.GetParams(ctx)
 	proportions := params.DistributionProportions
