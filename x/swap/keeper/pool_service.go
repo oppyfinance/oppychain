@@ -8,8 +8,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 
-	"gitlab.com/joltify/joltifychain/x/swap/pool_models/balancer"
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 func (k Keeper) CreateBalancerPool(

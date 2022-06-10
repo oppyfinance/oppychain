@@ -5,7 +5,7 @@ import "gogoproto/gogo.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/epochs/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/epochs/types";
 
 message EpochInfo {
   string identifier = 1;

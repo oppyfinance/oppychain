@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 )
 
 // GetLastGaugeID returns ID used last time

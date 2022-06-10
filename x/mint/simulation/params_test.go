@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"gitlab.com/joltify/joltifychain/x/mint/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/mint/simulation"
 )
 
 func TestParamChanges(t *testing.T) {

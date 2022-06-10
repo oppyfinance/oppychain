@@ -6,7 +6,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/types/kv"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 // NewDecodeStore returns a decoder function closure that umarshals the KVPair's

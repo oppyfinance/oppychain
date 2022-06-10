@@ -11,7 +11,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/bech32/legacybech32" //nolint
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 // fixme need to confirm which is correct

@@ -5,8 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
-	epochstypes "gitlab.com/joltify/joltifychain/x/epochs/types"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	epochstypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 // BankKeeper defines the expected interface needed to retrieve account balances.

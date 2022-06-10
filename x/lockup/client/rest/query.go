@@ -11,7 +11,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/rest"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 func registerQueryRoutes(clientCtx client.Context, r *mux.Router) {

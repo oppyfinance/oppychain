@@ -3,8 +3,8 @@ package pool_incentives
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/keeper"
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState *types.GenesisState) {

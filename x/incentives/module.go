@@ -19,11 +19,11 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	"gitlab.com/joltify/joltifychain/x/incentives/client/cli"
-	"gitlab.com/joltify/joltifychain/x/incentives/client/rest"
-	"gitlab.com/joltify/joltifychain/x/incentives/keeper"
-	"gitlab.com/joltify/joltifychain/x/incentives/simulation"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/client/rest"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 )
 
 var (

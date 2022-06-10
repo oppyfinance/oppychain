@@ -8,7 +8,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/types/rest"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 func registerQueryRoutes(clientCtx client.Context, r *mux.Router) {

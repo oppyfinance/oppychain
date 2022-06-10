@@ -4,8 +4,8 @@ import (
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/epochs/keeper"
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

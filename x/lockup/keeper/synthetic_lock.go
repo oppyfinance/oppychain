@@ -6,7 +6,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/gogo/protobuf/proto"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 func (k Keeper) setSyntheticLockupObject(ctx sdk.Context, synthLock *types.SyntheticLock) error {

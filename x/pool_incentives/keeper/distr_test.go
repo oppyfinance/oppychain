@@ -6,8 +6,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/distribution"
 	distrtypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	abci "github.com/tendermint/tendermint/abci/types"
-	minttypes "gitlab.com/joltify/joltifychain/x/mint/types"
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/types"
+	minttypes "gitlab.com/oppy-finance/oppychain/x/mint/types"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 func (suite *KeeperTestSuite) TestAllocateAssetToCommunityPoolWhenNoDistrRecords() {

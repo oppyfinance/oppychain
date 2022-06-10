@@ -1,4 +1,4 @@
-module gitlab.com/joltify/joltifychain
+module gitlab.com/oppy-finance/oppychain
 
 go 1.16
 

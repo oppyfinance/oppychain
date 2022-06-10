@@ -7,7 +7,7 @@ import "cosmos/base/v1beta1/coin.proto";
 import "incentives/gauge.proto";
 import "lockup/lock.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/incentives/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/incentives/types";
 
 service Msg {
   rpc CreateGauge(MsgCreateGauge) returns (MsgCreateGaugeResponse);

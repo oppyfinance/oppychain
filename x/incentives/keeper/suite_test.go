@@ -7,8 +7,8 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 var (

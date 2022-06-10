@@ -10,8 +10,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/spf13/cobra"
-	"gitlab.com/joltify/joltifychain/x/swap/pool_models/balancer"
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 	"gopkg.in/yaml.v2"
 )
 

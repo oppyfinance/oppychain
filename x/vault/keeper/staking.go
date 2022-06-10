@@ -12,7 +12,7 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	vaulttypes "gitlab.com/joltify/joltifychain/x/vault/types"
+	vaulttypes "gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 func (k Keeper) StakingInfo(ctx sdk.Context) {

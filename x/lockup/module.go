@@ -17,11 +17,11 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
-	"gitlab.com/joltify/joltifychain/x/lockup/client/cli"
-	"gitlab.com/joltify/joltifychain/x/lockup/client/rest"
-	"gitlab.com/joltify/joltifychain/x/lockup/keeper"
-	"gitlab.com/joltify/joltifychain/x/lockup/simulation"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/client/rest"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 var (

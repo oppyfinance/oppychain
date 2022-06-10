@@ -4,7 +4,7 @@ import (
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 )
 
 func findIndex(IDs []uint64, ID uint64) int {

@@ -2,7 +2,7 @@ package network
 
 import (
 	"fmt"
-	"gitlab.com/joltify/joltifychain/utils"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 	"time"
 
@@ -19,7 +19,7 @@ import (
 	tmrand "github.com/tendermint/tendermint/libs/rand"
 	tmdb "github.com/tendermint/tm-db"
 
-	"gitlab.com/joltify/joltifychain/app"
+	"gitlab.com/oppy-finance/oppychain/app"
 )
 
 type (

@@ -10,9 +10,9 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	keepertest "gitlab.com/joltify/joltifychain/testutil/keeper"
-	"gitlab.com/joltify/joltifychain/testutil/nullify"
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
+	"gitlab.com/oppy-finance/oppychain/testutil/nullify"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 // Prevent strconv unused error

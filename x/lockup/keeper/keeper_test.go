@@ -2,8 +2,8 @@ package keeper_test
 
 import (
 	"github.com/stretchr/testify/require"
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"os"
 	path2 "path"
 	"runtime"

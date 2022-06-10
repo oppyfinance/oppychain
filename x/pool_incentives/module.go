@@ -18,9 +18,9 @@ import (
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/client/cli"
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/keeper"
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 var (

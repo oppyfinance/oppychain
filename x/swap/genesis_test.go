@@ -6,9 +6,9 @@ import (
 	"runtime"
 	"testing"
 
-	"gitlab.com/joltify/joltifychain/utils"
-	"gitlab.com/joltify/joltifychain/x/swap"
-	"gitlab.com/joltify/joltifychain/x/swap/simulation"
+	"gitlab.com/oppy-finance/oppychain/utils"
+	"gitlab.com/oppy-finance/oppychain/x/swap"
+	"gitlab.com/oppy-finance/oppychain/x/swap/simulation"
 
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -17,10 +17,10 @@ import (
 	"github.com/tendermint/spm/cosmoscmd"
 	"github.com/tendermint/tendermint/crypto/ed25519"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
-	"gitlab.com/joltify/joltifychain/x/swap/pool_models/balancer"
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 func TestSwapInitGenesis(t *testing.T) {

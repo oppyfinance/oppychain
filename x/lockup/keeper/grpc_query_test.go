@@ -4,8 +4,8 @@ import (
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 func (suite *KeeperTestSuite) LockTokens(addr sdk.AccAddress, coins sdk.Coins, duration time.Duration) {

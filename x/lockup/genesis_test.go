@@ -13,10 +13,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
-	"gitlab.com/joltify/joltifychain/x/lockup"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/x/lockup"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 var now = time.Now().UTC()

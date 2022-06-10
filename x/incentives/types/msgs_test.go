@@ -7,7 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 	"github.com/tendermint/tendermint/crypto/ed25519"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 func TestMsgCreatePool(t *testing.T) {

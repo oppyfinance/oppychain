@@ -9,8 +9,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"gitlab.com/joltify/joltifychain/x/invoice/tools"
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/tools"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func (k msgServer) createInvoiceBase(invoiceCrater, invoiceOwner sdk.AccAddress, name, url, denom string, amount sdk.Int, apyStr string) (types.InvoiceBase, types.InvoiceFinance, error) {

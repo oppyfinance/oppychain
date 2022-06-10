@@ -9,8 +9,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
-	"gitlab.com/joltify/joltifychain/x/vault/keeper"
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
 )

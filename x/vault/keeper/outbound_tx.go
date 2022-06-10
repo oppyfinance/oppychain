@@ -3,7 +3,7 @@ package keeper
 import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 // SetOutboundTx set a specific outboundTx in the store from its index

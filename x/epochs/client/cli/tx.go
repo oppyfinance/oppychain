@@ -8,7 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 
 	// "github.com/cosmos/cosmos-sdk/client/flags"
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 // GetTxCmd returns the transaction commands for this module

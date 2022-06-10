@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 type msgServer struct {

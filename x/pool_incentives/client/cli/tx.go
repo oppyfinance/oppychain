@@ -2,7 +2,7 @@ package cli
 
 import (
 	"fmt"
-	"gitlab.com/joltify/joltifychain/utils"
+	"gitlab.com/oppy-finance/oppychain/utils"
 
 	"github.com/cosmos/cosmos-sdk/client/tx"
 
@@ -13,7 +13,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/gov/client/cli"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 func NewTxCmd() *cobra.Command {

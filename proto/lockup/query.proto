@@ -8,7 +8,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 import "lockup/lock.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/lockup/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/lockup/types";
 
 // Query defines the gRPC querier service.
 service Query {

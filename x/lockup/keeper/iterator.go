@@ -6,7 +6,7 @@ import (
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	db "github.com/tendermint/tm-db"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 func unlockingPrefix(isUnlocking bool) []byte {

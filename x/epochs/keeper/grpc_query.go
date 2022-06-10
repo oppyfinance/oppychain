@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 var _ types.QueryServer = Keeper{}

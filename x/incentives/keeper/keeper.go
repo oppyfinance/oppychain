@@ -8,7 +8,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/tendermint/tendermint/libs/log"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 )
 
 type Keeper struct {

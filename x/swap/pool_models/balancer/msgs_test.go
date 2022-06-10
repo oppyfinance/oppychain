@@ -1,7 +1,7 @@
 package balancer
 
 import (
-	"gitlab.com/joltify/joltifychain/utils"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -9,7 +9,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 func TestMsgCreateBalancerPool(t *testing.T) {

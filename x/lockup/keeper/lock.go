@@ -9,8 +9,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/gogo/protobuf/proto"
 
-	"gitlab.com/joltify/joltifychain/store"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/store"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 // TODO: Reorganize functions in this file

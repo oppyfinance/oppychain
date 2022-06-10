@@ -11,8 +11,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/spf13/cobra"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 // GetTxCmd returns the transaction commands for this module

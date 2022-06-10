@@ -5,7 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/gogo/protobuf/proto"
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 // GetEpochInfo returns epoch info by identifier

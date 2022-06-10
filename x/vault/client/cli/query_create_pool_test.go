@@ -19,9 +19,9 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"gitlab.com/joltify/joltifychain/testutil/network"
-	"gitlab.com/joltify/joltifychain/x/vault/client/cli"
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/testutil/network"
+	"gitlab.com/oppy-finance/oppychain/x/vault/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 func networkWithCreatePoolObjects(t *testing.T, n int, maxValidator uint32) (*network.Network, []*types.CreatePool) {

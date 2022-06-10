@@ -9,9 +9,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/gogo/protobuf/proto"
 	db "github.com/tendermint/tm-db"
-	epochtypes "gitlab.com/joltify/joltifychain/x/epochs/types"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	epochtypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 // Iterate over everything in a gauges iterator, until it reaches the end. Return all gauges iterated over.

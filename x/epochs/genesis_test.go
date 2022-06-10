@@ -1,7 +1,7 @@
 package epochs_test
 
 import (
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
 	"os"
 	path2 "path"
 	"testing"
@@ -9,9 +9,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
-	"gitlab.com/joltify/joltifychain/x/epochs"
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/x/epochs"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 func TestEpochsExportGenesis(t *testing.T) {

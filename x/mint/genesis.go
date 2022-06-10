@@ -2,8 +2,8 @@ package mint
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/mint/keeper"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 // InitGenesis new mint genesis

@@ -3,8 +3,8 @@ package keeper_test
 import (
 	"fmt"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
-	"gitlab.com/joltify/joltifychain/utils"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"math/rand"
 	"os"
 	path2 "path"
@@ -16,9 +16,9 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"github.com/tendermint/tendermint/crypto/secp256k1"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 func Min(x, y int) int {

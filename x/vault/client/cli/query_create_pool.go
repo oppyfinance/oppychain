@@ -6,7 +6,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 func CmdListCreatePool() *cobra.Command {

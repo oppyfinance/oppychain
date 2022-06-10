@@ -2,7 +2,7 @@ package pool_incentives_test
 
 import (
 	"github.com/tendermint/spm/cosmoscmd"
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
 	"os"
 	path2 "path"
 	"runtime"
@@ -11,13 +11,13 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	poolincentives "gitlab.com/joltify/joltifychain/x/pool_incentives"
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/types"
+	poolincentives "gitlab.com/oppy-finance/oppychain/x/pool_incentives"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 var now = time.Now().UTC()

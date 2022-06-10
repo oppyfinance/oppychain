@@ -2,7 +2,7 @@ package keeper
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/math"
+	"gitlab.com/oppy-finance/oppychain/math"
 )
 
 // Don't EVER change after initializing

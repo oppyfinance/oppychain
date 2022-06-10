@@ -6,8 +6,8 @@ import (
 	"fmt"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"gitlab.com/joltify/joltifychain/x/invoice/tools"
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/tools"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func createChildInvoice(newOwner sdk.AccAddress, share sdk.Int, invoice *types.Invoice) (types.Invoice, error) {

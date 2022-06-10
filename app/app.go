@@ -6,17 +6,17 @@ import (
 	"os"
 	"path/filepath"
 
-	poolincentives "gitlab.com/joltify/joltifychain/x/pool_incentives"
+	poolincentives "gitlab.com/oppy-finance/oppychain/x/pool_incentives"
 
-	v1 "gitlab.com/joltify/joltifychain/upgrade/v1"
-	"gitlab.com/joltify/joltifychain/x/epochs"
-	"gitlab.com/joltify/joltifychain/x/incentives"
-	incentivesmoduletypes "gitlab.com/joltify/joltifychain/x/incentives/types"
-	"gitlab.com/joltify/joltifychain/x/lockup"
-	lockupmoduletypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	v1 "gitlab.com/oppy-finance/oppychain/upgrade/v1"
+	"gitlab.com/oppy-finance/oppychain/x/epochs"
+	"gitlab.com/oppy-finance/oppychain/x/incentives"
+	incentivesmoduletypes "gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/lockup"
+	lockupmoduletypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 
-	"gitlab.com/joltify/joltifychain/x/swap"
-	swapmoduletypes "gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap"
+	swapmoduletypes "gitlab.com/oppy-finance/oppychain/x/swap/types"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -97,12 +97,12 @@ import (
 	"github.com/tendermint/tendermint/libs/log"
 	tmos "github.com/tendermint/tendermint/libs/os"
 	dbm "github.com/tendermint/tm-db"
-	epochskeeper "gitlab.com/joltify/joltifychain/x/epochs/keeper"
-	epochsmoduletypes "gitlab.com/joltify/joltifychain/x/epochs/types"
-	"gitlab.com/joltify/joltifychain/x/mint"
-	mintkeeper "gitlab.com/joltify/joltifychain/x/mint/keeper"
-	minttypes "gitlab.com/joltify/joltifychain/x/mint/types"
-	poolincentiveclient "gitlab.com/joltify/joltifychain/x/pool_incentives/client"
+	epochskeeper "gitlab.com/oppy-finance/oppychain/x/epochs/keeper"
+	epochsmoduletypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint"
+	mintkeeper "gitlab.com/oppy-finance/oppychain/x/mint/keeper"
+	minttypes "gitlab.com/oppy-finance/oppychain/x/mint/types"
+	poolincentiveclient "gitlab.com/oppy-finance/oppychain/x/pool_incentives/client"
 
 	"github.com/ignite-hq/cli/ignite/pkg/cosmoscmd"
 	"github.com/ignite-hq/cli/ignite/pkg/openapiconsole"
@@ -111,27 +111,27 @@ import (
 	monitoringpkeeper "github.com/tendermint/spn/x/monitoringp/keeper"
 	monitoringptypes "github.com/tendermint/spn/x/monitoringp/types"
 
-	"gitlab.com/joltify/joltifychain/docs"
+	"gitlab.com/oppy-finance/oppychain/docs"
 
-	invoicemodule "gitlab.com/joltify/joltifychain/x/invoice"
-	invoicemodulekeeper "gitlab.com/joltify/joltifychain/x/invoice/keeper"
-	invoicemoduletypes "gitlab.com/joltify/joltifychain/x/invoice/types"
-	vaultmodule "gitlab.com/joltify/joltifychain/x/vault"
-	vaultmodulekeeper "gitlab.com/joltify/joltifychain/x/vault/keeper"
-	vaultmoduletypes "gitlab.com/joltify/joltifychain/x/vault/types"
+	invoicemodule "gitlab.com/oppy-finance/oppychain/x/invoice"
+	invoicemodulekeeper "gitlab.com/oppy-finance/oppychain/x/invoice/keeper"
+	invoicemoduletypes "gitlab.com/oppy-finance/oppychain/x/invoice/types"
+	vaultmodule "gitlab.com/oppy-finance/oppychain/x/vault"
+	vaultmodulekeeper "gitlab.com/oppy-finance/oppychain/x/vault/keeper"
+	vaultmoduletypes "gitlab.com/oppy-finance/oppychain/x/vault/types"
 
-	incentiveskeeper "gitlab.com/joltify/joltifychain/x/incentives/keeper"
+	incentiveskeeper "gitlab.com/oppy-finance/oppychain/x/incentives/keeper"
 
-	lockupkeeper "gitlab.com/joltify/joltifychain/x/lockup/keeper"
-	swapkeeper "gitlab.com/joltify/joltifychain/x/swap/keeper"
+	lockupkeeper "gitlab.com/oppy-finance/oppychain/x/lockup/keeper"
+	swapkeeper "gitlab.com/oppy-finance/oppychain/x/swap/keeper"
 
-	poolincentiveskeeper "gitlab.com/joltify/joltifychain/x/pool_incentives/keeper"
-	poolincentivestypes "gitlab.com/joltify/joltifychain/x/pool_incentives/types"
+	poolincentiveskeeper "gitlab.com/oppy-finance/oppychain/x/pool_incentives/keeper"
+	poolincentivestypes "gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 const (
-	AccountAddressPrefix = "jolt"
-	Name                 = "joltifyChain"
+	AccountAddressPrefix = "oppy"
+	Name                 = "oppyChain"
 )
 
 // this line is used by starport scaffolding # stargate/wasm/app/enabledProposals

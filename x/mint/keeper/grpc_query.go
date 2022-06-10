@@ -4,7 +4,7 @@ import (
 	"context"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 var _ types.QueryServer = Keeper{}

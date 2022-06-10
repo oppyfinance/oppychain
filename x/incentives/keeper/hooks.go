@@ -2,9 +2,9 @@ package keeper
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	epochstypes "gitlab.com/joltify/joltifychain/x/epochs/types"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	epochstypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 func (k Keeper) BeforeEpochStart(ctx sdk.Context, epochIdentifier string, epochNumber int64) {

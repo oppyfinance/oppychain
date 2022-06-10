@@ -11,8 +11,8 @@ import (
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
-	"gitlab.com/joltify/joltifychain/x/mint/simulation"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 // TestRandomizedGenState tests the normal scenario of applying RandomizedGenState.

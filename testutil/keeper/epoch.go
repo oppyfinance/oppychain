@@ -9,8 +9,8 @@ import (
 	"github.com/tendermint/tendermint/libs/log"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	tmdb "github.com/tendermint/tm-db"
-	"gitlab.com/joltify/joltifychain/x/epochs/keeper"
-	epochtypes "gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/keeper"
+	epochtypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
 	"testing"
 )
 

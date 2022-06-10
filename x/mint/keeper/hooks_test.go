@@ -11,10 +11,10 @@ import (
 	"github.com/stretchr/testify/require"
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 func TestEndOfEpochMintedCoinDistribution(t *testing.T) {

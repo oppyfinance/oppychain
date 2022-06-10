@@ -15,7 +15,7 @@ import (
 	iavlstore "github.com/cosmos/cosmos-sdk/store/iavl"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.com/joltify/joltifychain/store"
+	"gitlab.com/oppy-finance/oppychain/store"
 )
 
 type TreeTestSuite struct {

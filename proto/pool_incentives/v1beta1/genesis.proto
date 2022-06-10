@@ -5,7 +5,7 @@ import "gogoproto/gogo.proto";
 import "google/protobuf/duration.proto";
 import "pool_incentives/v1beta1/incentives.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/pool_incentives/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/pool_incentives/types";
 
 // GenesisState defines the pool incentives module's genesis state.
 message GenesisState {

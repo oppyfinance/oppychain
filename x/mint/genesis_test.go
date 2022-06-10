@@ -6,13 +6,13 @@ import (
 	"runtime"
 	"testing"
 
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
 
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 func TestMintInitGenesis(t *testing.T) {

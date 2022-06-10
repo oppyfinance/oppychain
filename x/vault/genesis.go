@@ -4,8 +4,8 @@ import (
 	"strconv"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/vault/keeper"
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

@@ -16,13 +16,13 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
-	"gitlab.com/joltify/joltifychain/x/swap/pool_models/balancer"
-	gammtypes "gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
+	gammtypes "gitlab.com/oppy-finance/oppychain/x/swap/types"
 
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 type KeeperTestSuite struct {

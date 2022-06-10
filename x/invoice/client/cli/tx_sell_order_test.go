@@ -12,10 +12,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/require"
-	"gitlab.com/joltify/joltifychain/testutil/network"
-	"gitlab.com/joltify/joltifychain/x/invoice/client/cli"
-	"gitlab.com/joltify/joltifychain/x/invoice/tools"
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/testutil/network"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/tools"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func TestCreateSellOrderUnauthorized(t *testing.T) {

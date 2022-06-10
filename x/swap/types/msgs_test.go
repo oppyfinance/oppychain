@@ -1,7 +1,7 @@
 package types
 
 import (
-	joltifyapp "gitlab.com/joltify/joltifychain/utils"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 
 	"github.com/stretchr/testify/require"

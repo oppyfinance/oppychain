@@ -6,8 +6,8 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/telemetry"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/epochs/keeper"
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 // BeginBlocker of epochs module

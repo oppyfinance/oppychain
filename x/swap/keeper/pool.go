@@ -9,8 +9,8 @@ import (
 
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	"gitlab.com/joltify/joltifychain/x/swap/pool_models/balancer"
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 func (k Keeper) MarshalPool(pool types.PoolI) ([]byte, error) {

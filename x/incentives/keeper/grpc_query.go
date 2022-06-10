@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -13,7 +13,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 )
 
 var _ types.QueryServer = Keeper{}

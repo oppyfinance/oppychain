@@ -2,7 +2,7 @@ package types
 
 import (
 	"fmt"
-	"gitlab.com/joltify/joltifychain/utils"
+	"gitlab.com/oppy-finance/oppychain/utils"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"

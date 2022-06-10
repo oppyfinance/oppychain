@@ -9,10 +9,10 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/tendermint/tendermint/libs/log"
-	incentivestypes "gitlab.com/joltify/joltifychain/x/incentives/types"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/types"
-	gammtypes "gitlab.com/joltify/joltifychain/x/swap/types"
+	incentivestypes "gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
+	gammtypes "gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 type Keeper struct {

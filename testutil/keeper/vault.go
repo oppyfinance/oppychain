@@ -3,10 +3,10 @@ package keeper
 import (
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"testing"
 
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	"os"
 	path2 "path"
@@ -112,7 +112,7 @@ func (t testVaultStaking) BondDenom(ctx sdk.Context) (res string) {
 }
 
 // setup the general vault app
-func SetupVaultApp(t testing.TB) (*joltifyapp.App, sdk.Context) {
+func SetupVaultApp(t testing.TB) (*oppyapp.App, sdk.Context) {
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
@@ -120,7 +120,7 @@ func SetupVaultApp(t testing.TB) (*joltifyapp.App, sdk.Context) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 10, Time: time.Now().UTC()})
 	params := app.StakingKeeper.GetParams(ctx)
 	params.MaxValidators = 3

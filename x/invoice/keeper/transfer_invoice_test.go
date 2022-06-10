@@ -5,15 +5,15 @@ import (
 	"testing"
 
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
-	"gitlab.com/joltify/joltifychain/x/invoice/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/keeper"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/stretchr/testify/require"
-	"gitlab.com/joltify/joltifychain/x/invoice/tools"
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/tools"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 
-	keepertest "gitlab.com/joltify/joltifychain/testutil/keeper"
+	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
 )
 
 func NewRootInvoice(t *testing.T, creator sdk.AccAddress, invoiceName string) (types.Invoice, sdk.Context, *keeper.Keeper) {

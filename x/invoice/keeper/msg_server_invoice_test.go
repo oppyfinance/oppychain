@@ -11,11 +11,11 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"gitlab.com/joltify/joltifychain/x/invoice/tools"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/tools"
 
-	keepertest "gitlab.com/joltify/joltifychain/testutil/keeper"
-	"gitlab.com/joltify/joltifychain/x/invoice/keeper"
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func setupBech32Prefix() {

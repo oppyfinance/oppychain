@@ -1,12 +1,12 @@
 package keeper_test
 
 import (
-	"gitlab.com/joltify/joltifychain/x/lockup/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/keeper"
 	"time"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 // TODO: Make table driven

@@ -17,12 +17,12 @@ import (
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"gitlab.com/joltify/joltifychain/x/swap/client/cli"
-	"gitlab.com/joltify/joltifychain/x/swap/client/rest"
-	"gitlab.com/joltify/joltifychain/x/swap/keeper"
-	"gitlab.com/joltify/joltifychain/x/swap/pool_models/balancer"
-	"gitlab.com/joltify/joltifychain/x/swap/simulation"
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/swap/client/rest"
+	"gitlab.com/oppy-finance/oppychain/x/swap/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
+	"gitlab.com/oppy-finance/oppychain/x/swap/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 var (

@@ -7,7 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 func (k msgServer) CreateIssueToken(goCtx context.Context, msg *types.MsgCreateIssueToken) (*types.MsgCreateIssueTokenResponse, error) {

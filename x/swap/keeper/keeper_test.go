@@ -8,10 +8,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	"gitlab.com/joltify/joltifychain/x/swap/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/swap/simulation"
 
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	"github.com/stretchr/testify/suite"
 
@@ -19,10 +19,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/tendermint/tendermint/crypto/ed25519"
 
-	"gitlab.com/joltify/joltifychain/app"
+	"gitlab.com/oppy-finance/oppychain/app"
 
-	"gitlab.com/joltify/joltifychain/x/swap/pool_models/balancer"
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 type KeeperTestSuite struct {

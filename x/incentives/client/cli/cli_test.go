@@ -5,9 +5,9 @@ import (
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
-	"gitlab.com/joltify/joltifychain/testutil/network"
-	"gitlab.com/joltify/joltifychain/x/incentives/client/cli"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
+	"gitlab.com/oppy-finance/oppychain/testutil/network"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 )
 
 type IntegrationTestSuite struct {

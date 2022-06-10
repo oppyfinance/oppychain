@@ -3,7 +3,7 @@ package types // noalias
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
-	epochstypes "gitlab.com/joltify/joltifychain/x/epochs/types"
+	epochstypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 // AccountKeeper defines the contract required for account APIs.

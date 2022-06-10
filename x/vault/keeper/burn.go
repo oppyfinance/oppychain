@@ -4,7 +4,7 @@ import (
 	"html"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 func (k Keeper) BurnTokens(ctx sdk.Context, addr sdk.AccAddress) error {

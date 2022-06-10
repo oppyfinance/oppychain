@@ -3,8 +3,8 @@ package swap
 import (
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/swap/keeper"
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

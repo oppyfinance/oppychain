@@ -1,15 +1,15 @@
 package keeper_test
 
 import (
-	"gitlab.com/joltify/joltifychain/app"
-	tsimapp "gitlab.com/joltify/joltifychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/app"
+	tsimapp "gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"testing"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/suite"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 type KeeperTestSuite struct {

@@ -2,7 +2,7 @@ package cli_test
 
 import (
 	"fmt"
-	"gitlab.com/joltify/joltifychain/utils"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 	"time"
 
@@ -16,10 +16,10 @@ import (
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktestutil "github.com/cosmos/cosmos-sdk/x/bank/client/testutil"
-	"gitlab.com/joltify/joltifychain/testutil/network"
-	"gitlab.com/joltify/joltifychain/x/lockup/client/cli"
-	lockuptestutil "gitlab.com/joltify/joltifychain/x/lockup/client/testutil"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/testutil/network"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/client/cli"
+	lockuptestutil "gitlab.com/oppy-finance/oppychain/x/lockup/client/testutil"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 type IntegrationTestSuite struct {

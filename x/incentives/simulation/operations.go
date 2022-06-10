@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
-	osmo_simulation "gitlab.com/joltify/joltifychain/x/simulation"
+	osmo_simulation "gitlab.com/oppy-finance/oppychain/x/simulation"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"
@@ -13,9 +13,9 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 	stakingTypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	"gitlab.com/joltify/joltifychain/x/incentives/keeper"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 // Simulation operation weights constants

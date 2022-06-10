@@ -11,9 +11,9 @@ import (
 
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 func TestItCreatesModuleAccountOnInitBlock(t *testing.T) {

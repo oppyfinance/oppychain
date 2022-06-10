@@ -11,7 +11,7 @@ import (
 	"github.com/ignite-hq/cli/ignite/pkg/cosmoscmd"
 	"github.com/stretchr/testify/require"
 	abci "github.com/tendermint/tendermint/abci/types"
-	"gitlab.com/joltify/joltifychain/app"
+	"gitlab.com/oppy-finance/oppychain/app"
 	"os"
 	"testing"
 )

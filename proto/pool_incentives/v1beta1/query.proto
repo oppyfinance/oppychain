@@ -7,7 +7,7 @@ import "google/protobuf/duration.proto";
 import "incentives/gauge.proto";
 import "pool_incentives/v1beta1/incentives.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/pool_incentives/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/pool_incentives/types";
 
 service Query {
   // GaugeIds takes the pool id and returns the matching gauge ids and durations

@@ -13,7 +13,7 @@ import "cosmos/base/v1beta1/coin.proto";
 
 import "swap/v1beta1/pool.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/swap/pool_models/balancer";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer";
 // Parameters for changing the weights in a balancer pool smoothly from
 // a start weight and end weight over a period of time.
 // Currently, the only smooth change supported is linear changing between

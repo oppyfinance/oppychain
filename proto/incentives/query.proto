@@ -9,7 +9,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "incentives/gauge.proto";
 import "lockup/lock.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/incentives/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/incentives/types";
 
 // Query defines the gRPC querier service.
 service Query {

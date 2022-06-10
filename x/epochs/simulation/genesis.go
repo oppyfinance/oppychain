@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 // RandomizedGenState generates a random GenesisState for mint

@@ -6,7 +6,7 @@ import "google/protobuf/duration.proto";
 import "incentives/params.proto";
 import "incentives/gauge.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/incentives/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/incentives/types";
 
 // GenesisState defines the incentives module's genesis state.
 message GenesisState {

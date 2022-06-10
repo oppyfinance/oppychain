@@ -4,10 +4,10 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	keepertest "gitlab.com/joltify/joltifychain/testutil/keeper"
-	"gitlab.com/joltify/joltifychain/testutil/nullify"
-	"gitlab.com/joltify/joltifychain/x/vault"
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
+	"gitlab.com/oppy-finance/oppychain/testutil/nullify"
+	"gitlab.com/oppy-finance/oppychain/x/vault"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 func TestGenesis(t *testing.T) {

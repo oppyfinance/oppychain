@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "epochs/genesis.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/epochs/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/epochs/types";
 
 // Query defines the gRPC querier service.
 service Query {

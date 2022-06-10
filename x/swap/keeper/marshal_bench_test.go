@@ -1,8 +1,8 @@
 package keeper_test
 
 import (
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"math/rand"
 	"os"
 	"testing"
@@ -10,8 +10,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
-	"gitlab.com/joltify/joltifychain/x/swap/pool_models/balancer"
-	swaptypes "gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
+	swaptypes "gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 func genPoolAssets(r *rand.Rand) []swaptypes.PoolAsset {

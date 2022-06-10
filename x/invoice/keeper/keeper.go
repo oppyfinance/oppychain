@@ -7,7 +7,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 	// this line is used by starport scaffolding # ibc/keeper/import
 )
 

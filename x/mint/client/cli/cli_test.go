@@ -13,8 +13,8 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
-	"gitlab.com/joltify/joltifychain/testutil/network"
-	"gitlab.com/joltify/joltifychain/x/mint/client/cli"
+	"gitlab.com/oppy-finance/oppychain/testutil/network"
+	"gitlab.com/oppy-finance/oppychain/x/mint/client/cli"
 )
 
 type IntegrationTestSuite struct {

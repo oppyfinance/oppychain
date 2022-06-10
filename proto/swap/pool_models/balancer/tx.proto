@@ -4,7 +4,7 @@ package joltify.joltifychain.swap.v1beta1;
 import "gogoproto/gogo.proto";
 import "swap/v1beta1/pool.proto";
 import "swap/pool_models/balancer/balancerPool.proto";
-option go_package = "gitlab.com/joltify/joltifychain/x/swap/pool_models/balancer";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer";
 
 service Msg {
   rpc CreateBalancerPool(MsgCreateBalancerPool)

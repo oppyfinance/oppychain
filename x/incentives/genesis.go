@@ -2,8 +2,8 @@ package incentives
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/incentives/keeper"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

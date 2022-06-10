@@ -2,7 +2,7 @@ package keeper_test
 
 import (
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	joltifyapp "gitlab.com/joltify/joltifychain/app"
+	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
 	"os"
 	path2 "path"
 	"runtime"
@@ -13,10 +13,10 @@ import (
 	"github.com/stretchr/testify/require"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	keep "gitlab.com/joltify/joltifychain/x/mint/keeper"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	keep "gitlab.com/oppy-finance/oppychain/x/mint/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 
-	"gitlab.com/joltify/joltifychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	abci "github.com/tendermint/tendermint/abci/types"
 )

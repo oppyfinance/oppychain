@@ -1,10 +1,10 @@
 package app
 
 import (
-	epochtypes "gitlab.com/joltify/joltifychain/x/epochs/types"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
-	minttypes "gitlab.com/joltify/joltifychain/x/mint/types"
-	swaptypes "gitlab.com/joltify/joltifychain/x/swap/types"
+	epochtypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
+	minttypes "gitlab.com/oppy-finance/oppychain/x/mint/types"
+	swaptypes "gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 func (app *App) setupHooks() {

@@ -14,7 +14,7 @@ import (
 	proto "github.com/gogo/protobuf/proto"
 	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"
 	_ "github.com/regen-network/cosmos-proto"
-	types "gitlab.com/joltify/joltifychain/x/swap/types"
+	types "gitlab.com/oppy-finance/oppychain/x/swap/types"
 	_ "google.golang.org/protobuf/types/known/durationpb"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
 	io "io"

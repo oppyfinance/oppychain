@@ -6,9 +6,9 @@ import (
 	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/math"
+	"gitlab.com/oppy-finance/oppychain/math"
 
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 const poolBalanceInvariantName = "pool-account-balance-equals-expected"

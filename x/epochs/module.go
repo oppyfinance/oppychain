@@ -19,11 +19,11 @@ import (
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"gitlab.com/joltify/joltifychain/x/epochs/client/cli"
-	"gitlab.com/joltify/joltifychain/x/epochs/client/rest"
-	"gitlab.com/joltify/joltifychain/x/epochs/keeper"
-	"gitlab.com/joltify/joltifychain/x/epochs/simulation"
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/client/rest"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 var (

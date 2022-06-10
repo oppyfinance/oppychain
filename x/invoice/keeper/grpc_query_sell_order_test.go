@@ -7,11 +7,11 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	keepertest "gitlab.com/joltify/joltifychain/testutil/keeper"
+	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func TestSellOrderQuerySingle(t *testing.T) {

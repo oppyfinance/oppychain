@@ -5,8 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"gitlab.com/joltify/joltifychain/x/lockup/keeper"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 // NewHandler returns a handler for "lockup" type messages.

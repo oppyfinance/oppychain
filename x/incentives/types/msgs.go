@@ -5,7 +5,7 @@ import (
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 // constants

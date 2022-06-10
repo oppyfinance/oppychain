@@ -10,7 +10,7 @@ import (
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"
-	types "gitlab.com/joltify/joltifychain/x/lockup/types"
+	types "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 	_ "google.golang.org/protobuf/types/known/durationpb"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
 	io "io"

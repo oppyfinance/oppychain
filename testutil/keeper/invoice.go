@@ -13,8 +13,8 @@ import (
 	"github.com/tendermint/tendermint/libs/log"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	tmdb "github.com/tendermint/tm-db"
-	"gitlab.com/joltify/joltifychain/x/invoice/keeper"
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 type testBank struct {

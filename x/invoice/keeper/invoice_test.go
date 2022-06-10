@@ -7,10 +7,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/assert"
 
-	keepertest "gitlab.com/joltify/joltifychain/testutil/keeper"
+	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
 
-	"gitlab.com/joltify/joltifychain/x/invoice/keeper"
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func createNInvoice(k *keeper.Keeper, ctx sdk.Context, n int) []types.Invoice {

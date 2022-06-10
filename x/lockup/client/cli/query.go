@@ -16,7 +16,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module

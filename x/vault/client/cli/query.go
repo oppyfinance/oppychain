@@ -10,7 +10,7 @@ import (
 	// "github.com/cosmos/cosmos-sdk/client/flags"
 	// sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module

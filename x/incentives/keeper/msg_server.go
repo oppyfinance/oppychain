@@ -5,8 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
-	"gitlab.com/joltify/joltifychain/x/swap/utils"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/utils"
 )
 
 type msgServer struct {

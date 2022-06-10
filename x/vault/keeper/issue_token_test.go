@@ -6,9 +6,9 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/assert"
-	keepertest "gitlab.com/joltify/joltifychain/testutil/keeper"
-	"gitlab.com/joltify/joltifychain/x/vault/keeper"
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/vault/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 func createNIssueToken(keeper *keeper.Keeper, ctx sdk.Context, n int) ([]types.IssueToken, error) {

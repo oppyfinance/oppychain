@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"gitlab.com/joltify/joltifychain/utils"
-	"gitlab.com/joltify/joltifychain/x/swap/client/cli"
+	"gitlab.com/oppy-finance/oppychain/utils"
+	"gitlab.com/oppy-finance/oppychain/x/swap/client/cli"
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
@@ -18,9 +18,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktestutil "github.com/cosmos/cosmos-sdk/x/bank/client/testutil"
 	tmcli "github.com/tendermint/tendermint/libs/cli"
-	"gitlab.com/joltify/joltifychain/testutil/network"
-	joltifytestutil "gitlab.com/joltify/joltifychain/x/swap/client/testutil"
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/testutil/network"
+	joltifytestutil "gitlab.com/oppy-finance/oppychain/x/swap/client/testutil"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 type IntegrationTestSuite struct {

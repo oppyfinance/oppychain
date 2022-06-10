@@ -5,8 +5,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/tendermint/tendermint/libs/log"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
-	poolincentivestypes "gitlab.com/joltify/joltifychain/x/pool_incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
+	poolincentivestypes "gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 // Keeper of the mint store
@@ -134,7 +134,7 @@ func (k Keeper) GetProportions(ctx sdk.Context, mintedCoin sdk.Coin, ratio sdk.D
 }
 
 // DistributeMintedCoins implements distribution of minted coins from mint to external modules.
-// "gitlab.com/joltify/joltifychain/x/swap/types", we do not need to have the developer vesting account
+// "gitlab.com/oppy-finance/oppychain/x/swap/types", we do not need to have the developer vesting account
 func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error {
 	params := k.GetParams(ctx)
 	proportions := params.DistributionProportions

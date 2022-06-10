@@ -15,7 +15,7 @@ import (
 	"github.com/stretchr/testify/suite"
 
 	"github.com/cosmos/cosmos-sdk/testutil/network"
-	minttypes "gitlab.com/joltify/joltifychain/x/mint/types"
+	minttypes "gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 type IntegrationTestSuite struct {

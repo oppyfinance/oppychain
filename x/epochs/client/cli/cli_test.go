@@ -5,8 +5,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/testutil/network"
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
-	"gitlab.com/joltify/joltifychain/x/epochs/client/cli"
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 type IntegrationTestSuite struct {

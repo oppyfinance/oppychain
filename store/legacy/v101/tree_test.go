@@ -18,8 +18,8 @@ import (
 	iavlstore "github.com/cosmos/cosmos-sdk/store/iavl"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.com/joltify/joltifychain/store"
-	v101 "gitlab.com/joltify/joltifychain/store/legacy/v101"
+	"gitlab.com/oppy-finance/oppychain/store"
+	v101 "gitlab.com/oppy-finance/oppychain/store/legacy/v101"
 )
 
 func setupStore() sdk.KVStore {

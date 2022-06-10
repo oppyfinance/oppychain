@@ -9,7 +9,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/testutil"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	swapcli "gitlab.com/joltify/joltifychain/x/swap/client/cli"
+	swapcli "gitlab.com/oppy-finance/oppychain/x/swap/client/cli"
 )
 
 // commonArgs is args for CLI test commands

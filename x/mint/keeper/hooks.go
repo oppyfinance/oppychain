@@ -5,8 +5,8 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/telemetry"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	epochstypes "gitlab.com/joltify/joltifychain/x/epochs/types"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	epochstypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 func (k Keeper) BeforeEpochStart(ctx sdk.Context, epochIdentifier string, epochNumber int64) {

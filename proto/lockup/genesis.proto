@@ -4,7 +4,7 @@ package joltify.joltifychain.lockup;
 import "gogoproto/gogo.proto";
 import "lockup/lock.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/lockup/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/lockup/types";
 
 // GenesisState defines the lockup module's genesis state.
 message GenesisState {

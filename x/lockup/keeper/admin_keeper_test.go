@@ -5,8 +5,8 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/lockup/keeper"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 func (suite *KeeperTestSuite) TestRelock() {

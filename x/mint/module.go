@@ -17,11 +17,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
-	"gitlab.com/joltify/joltifychain/x/mint/client/cli"
-	"gitlab.com/joltify/joltifychain/x/mint/client/rest"
-	"gitlab.com/joltify/joltifychain/x/mint/keeper"
-	"gitlab.com/joltify/joltifychain/x/mint/simulation"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/mint/client/rest"
+	"gitlab.com/oppy-finance/oppychain/x/mint/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/mint/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 var (

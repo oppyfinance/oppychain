@@ -2,7 +2,7 @@ package types
 
 import (
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
-	epochtypes "gitlab.com/joltify/joltifychain/x/epochs/types"
+	epochtypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 // Parameter store keys

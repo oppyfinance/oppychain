@@ -14,10 +14,10 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 	stakingTypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	joltifysimulation "gitlab.com/joltify/joltifychain/x/simulation"
-	"gitlab.com/joltify/joltifychain/x/swap/keeper"
-	"gitlab.com/joltify/joltifychain/x/swap/pool_models/balancer"
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	joltifysimulation "gitlab.com/oppy-finance/oppychain/x/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/swap/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 // Simulation operation weights constants

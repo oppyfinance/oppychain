@@ -4,13 +4,13 @@ import (
 	"testing"
 
 	"github.com/tendermint/tendermint/crypto/ed25519"
-	"gitlab.com/joltify/joltifychain/x/invoice/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/keeper"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func TestPlaceOrderMsgServerCreate(t *testing.T) {

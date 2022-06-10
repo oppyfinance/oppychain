@@ -10,7 +10,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/types/module"
 
-	"gitlab.com/joltify/joltifychain/x/incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 )
 
 // Simulation parameter constants

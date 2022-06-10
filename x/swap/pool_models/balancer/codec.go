@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/msgservice"
 	proto "github.com/gogo/protobuf/proto"
-	types "gitlab.com/joltify/joltifychain/x/swap/types"
+	types "gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 // RegisterLegacyAminoCodec registers the necessary x/swap interfaces and concrete types

@@ -11,8 +11,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.com/joltify/joltifychain/x/invoice/keeper"
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func TestSellOrderMsgServerCreate(t *testing.T) {

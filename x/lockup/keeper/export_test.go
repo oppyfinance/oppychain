@@ -2,7 +2,7 @@ package keeper
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 func (k Keeper) AddLockRefByKey(ctx sdk.Context, key []byte, lockID uint64) error {

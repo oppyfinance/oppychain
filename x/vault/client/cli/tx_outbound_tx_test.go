@@ -11,7 +11,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.com/joltify/joltifychain/x/vault/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/vault/client/cli"
 )
 
 // Prevent strconv unused error

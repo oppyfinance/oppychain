@@ -10,8 +10,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/kv"
-	"gitlab.com/joltify/joltifychain/x/mint/simulation"
-	"gitlab.com/joltify/joltifychain/x/mint/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 func TestDecodeStore(t *testing.T) {

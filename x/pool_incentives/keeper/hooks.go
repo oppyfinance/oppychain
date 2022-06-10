@@ -3,7 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	gammtypes "gitlab.com/joltify/joltifychain/x/swap/types"
+	gammtypes "gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 type Hooks struct {

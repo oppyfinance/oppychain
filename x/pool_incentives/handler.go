@@ -5,8 +5,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/keeper"
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 func NewPoolIncentivesProposalHandler(k keeper.Keeper) govtypes.Handler {

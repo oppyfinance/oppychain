@@ -3,7 +3,7 @@ package types
 import (
 	"errors"
 	"fmt"
-	"gitlab.com/joltify/joltifychain/utils"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"strings"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"

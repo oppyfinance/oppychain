@@ -9,8 +9,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	incentivetypes "gitlab.com/joltify/joltifychain/x/incentives/types"
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/types"
+	incentivetypes "gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 var _ types.QueryServer = Keeper{}

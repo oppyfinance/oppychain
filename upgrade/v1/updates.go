@@ -4,7 +4,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	vaultkeeper "gitlab.com/joltify/joltifychain/x/vault/keeper"
+	vaultkeeper "gitlab.com/oppy-finance/oppychain/x/vault/keeper"
 )
 
 const UpgradeName = "remove_parameter_module"

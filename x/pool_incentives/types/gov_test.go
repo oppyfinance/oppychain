@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	proto "github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/require"
-	"gitlab.com/joltify/joltifychain/x/pool_incentives/types"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 func TestUpdatePoolIncentivesProposalMarshalUnmarshal(t *testing.T) {

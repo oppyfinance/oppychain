@@ -4,7 +4,7 @@ package joltify.joltifychain.swap.v1beta1;
 import "gogoproto/gogo.proto";
 import "cosmos/base/v1beta1/coin.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/swap/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/swap/types";
 
 service Msg {
   rpc JoinPool(MsgJoinPool) returns (MsgJoinPoolResponse);

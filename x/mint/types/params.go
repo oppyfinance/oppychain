@@ -7,8 +7,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
-	"gitlab.com/joltify/joltifychain/utils"
-	epochtypes "gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/utils"
+	epochtypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
 	yaml "gopkg.in/yaml.v2"
 )
 

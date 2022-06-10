@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 func TestPoolJson(t *testing.T) {

@@ -6,7 +6,7 @@ import (
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/lockup/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/keeper"
 )
 
 func (suite *KeeperTestSuite) TestLockupMergeMigration() {

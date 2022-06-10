@@ -10,8 +10,8 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	keepertest "gitlab.com/joltify/joltifychain/testutil/keeper"
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func TestPlaceOrderQuerySingle(t *testing.T) {

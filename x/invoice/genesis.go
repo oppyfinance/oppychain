@@ -2,8 +2,8 @@ package invoice
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/invoice/keeper"
-	"gitlab.com/joltify/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

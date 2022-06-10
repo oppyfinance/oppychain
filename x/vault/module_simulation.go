@@ -9,9 +9,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
-	"gitlab.com/joltify/joltifychain/testutil/sample"
-	vaultsimulation "gitlab.com/joltify/joltifychain/x/vault/simulation"
-	"gitlab.com/joltify/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/testutil/sample"
+	vaultsimulation "gitlab.com/oppy-finance/oppychain/x/vault/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 // avoid unused import issue

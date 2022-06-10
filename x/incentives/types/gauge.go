@@ -4,7 +4,7 @@ import (
 	time "time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	lockuptypes "gitlab.com/joltify/joltifychain/x/lockup/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 func NewGauge(id uint64, isPerpetual bool, distrTo lockuptypes.QueryCondition, coins sdk.Coins, startTime time.Time, numEpochsPaidOver uint64, filledEpochs uint64, distrCoins sdk.Coins) Gauge {

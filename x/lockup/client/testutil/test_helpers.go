@@ -8,7 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/testutil"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	lockupcli "gitlab.com/joltify/joltifychain/x/lockup/client/cli"
+	lockupcli "gitlab.com/oppy-finance/oppychain/x/lockup/client/cli"
 )
 
 // commonArgs is args for CLI test commands

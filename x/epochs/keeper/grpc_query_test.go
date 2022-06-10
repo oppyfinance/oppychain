@@ -4,7 +4,7 @@ import (
 	gocontext "context"
 	"time"
 
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 func (suite *KeeperTestSuite) TestQueryEpochInfos() {

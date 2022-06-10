@@ -4,7 +4,7 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/x/lockup/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/keeper"
 )
 
 // BeginBlocker is called on every block

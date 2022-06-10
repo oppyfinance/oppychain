@@ -11,7 +11,7 @@ import "invoice/sell_order.proto";
 import "gogoproto/gogo.proto";
 import "google/protobuf/duration.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/invoice/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/invoice/types";
 
 // Msg defines the Msg service.
 service Msg {

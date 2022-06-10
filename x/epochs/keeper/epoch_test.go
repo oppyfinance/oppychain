@@ -3,7 +3,7 @@ package keeper_test
 import (
 	"time"
 
-	"gitlab.com/joltify/joltifychain/x/epochs/types"
+	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 func (suite *KeeperTestSuite) TestEpochLifeCycle() {

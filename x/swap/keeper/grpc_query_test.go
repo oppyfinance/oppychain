@@ -7,7 +7,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/types/query"
 
-	"gitlab.com/joltify/joltifychain/x/swap/types"
+	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 func (suite *KeeperTestSuite) TestQueryPool() {

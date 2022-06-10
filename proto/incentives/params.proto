@@ -3,7 +3,7 @@ package joltify.joltifychain.incentives;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "gitlab.com/joltify/joltifychain/x/incentives/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/incentives/types";
 
 // Params holds parameters for the incentives module
 message Params {

@@ -1,7 +1,7 @@
 syntax = "proto3";
 package joltify.joltifychain.mint.v1beta1;
 
-option go_package = "gitlab.com/joltify/joltifychain/x/mint/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/mint/types";
 
 import "gogoproto/gogo.proto";
 import "google/protobuf/timestamp.proto";
