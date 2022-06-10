@@ -1,5 +1,5 @@
 syntax = "proto3";
-package joltify.joltifychain.vault;
+package oppyfinance.oppychain.vault;
 
 import "gogoproto/gogo.proto";
 

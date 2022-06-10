@@ -13,7 +13,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"gitlab.com/oppy-finance/oppychain/x/lockup"
 	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
@@ -57,7 +57,7 @@ func TestInitGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	genesis := testGenesis
@@ -85,7 +85,7 @@ func TestExportGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	ctx = ctx.WithBlockTime(now.Add(time.Second))
@@ -142,11 +142,11 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 	ctx = ctx.WithBlockTime(now.Add(time.Second))
 
-	encodingConfig := cosmoscmd.MakeEncodingConfig(joltifyapp.ModuleBasics)
+	encodingConfig := cosmoscmd.MakeEncodingConfig(oppyapp.ModuleBasics)
 
 	appCodec := encodingConfig.Marshaler
 
@@ -166,7 +166,7 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 			err := os.RemoveAll(tempPath)
 			require.NoError(t, err)
 		}(tempPath)
-		app := simapp.New(tempPath).(*joltifyapp.App)
+		app := simapp.New(tempPath).(*oppyapp.App)
 		ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 		ctx = ctx.WithBlockTime(now.Add(time.Second))
 		am := lockup.NewAppModule(appCodec, app.LockupKeeper, app.AccountKeeper, app.BankKeeper)

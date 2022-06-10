@@ -16,7 +16,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
@@ -28,7 +28,7 @@ import (
 type KeeperTestSuite struct {
 	suite.Suite
 
-	app         *joltifyapp.App
+	app         *oppyapp.App
 	ctx         sdk.Context
 	queryClient types.QueryClient
 }
@@ -42,7 +42,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 		require.NoError(suite.T(), err)
 	}(tempPath)
 
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, Time: time.Now().UTC()})
 	suite.app = app
 	suite.ctx = ctx

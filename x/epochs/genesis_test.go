@@ -1,7 +1,7 @@
 package epochs_test
 
 import (
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"os"
 	path2 "path"
 	"testing"
@@ -21,7 +21,7 @@ func TestEpochsExportGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	chainStartTime := ctx.BlockTime()
@@ -51,7 +51,7 @@ func TestEpochsInitGenesis(t *testing.T) {
 	defer func(p string) {
 		os.RemoveAll(p)
 	}(p)
-	app := simapp.New(p).(*joltifyapp.App)
+	app := simapp.New(p).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	// On init genesis, default epochs information is set

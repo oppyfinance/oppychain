@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/require"
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 	"gitlab.com/oppy-finance/oppychain/x/mint/types"
@@ -25,7 +25,7 @@ func TestEndOfEpochMintedCoinDistribution(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	header := tmproto.Header{Height: app.LastBlockHeight() + 1}
@@ -115,7 +115,7 @@ func TestEndOfEpochNoDistributionWhenIsNotYetStartTime(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	mintParams := app.MintKeeper.GetParams(ctx)
@@ -154,7 +154,7 @@ func TestEndOfEpochNoDistributionWhenIsNotYetStartTime(t *testing.T) {
 	require.Equal(t, lastHalvenPeriod, mintParams.MintingRewardsDistributionStartEpoch)
 }
 
-func setupGaugeForLPIncentives(t *testing.T, app *joltifyapp.App, ctx sdk.Context) {
+func setupGaugeForLPIncentives(t *testing.T, app *oppyapp.App, ctx sdk.Context) {
 	addr := sdk.AccAddress([]byte("addr1---------------"))
 	coins := sdk.Coins{sdk.NewInt64Coin("stake", 10000)}
 	err := simapp.FundAccount(app.BankKeeper, ctx, addr, coins)

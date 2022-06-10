@@ -1,5 +1,5 @@
 syntax = "proto3";
-package joltify.joltifychain.mint.v1beta1;
+package oppyfinance.oppychain.mint.v1beta1;
 
 option go_package = "gitlab.com/oppy-finance/oppychain/x/mint/types";
 

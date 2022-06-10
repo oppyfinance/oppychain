@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -26,7 +26,7 @@ func TestPerpetualGaugeNotExpireAfterDistribution(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	addr := sdk.AccAddress([]byte("addr1---------------"))
@@ -71,7 +71,7 @@ func TestNonPerpetualGaugeExpireAfterDistribution(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	addr := sdk.AccAddress([]byte("addr1---------------"))

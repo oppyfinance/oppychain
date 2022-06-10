@@ -10,7 +10,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"gitlab.com/oppy-finance/oppychain/x/incentives"
 	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
@@ -26,7 +26,7 @@ func TestIncentivesExportGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	genesis := incentives.ExportGenesis(ctx, app.IncentivesKeeper)
@@ -77,7 +77,7 @@ func TestIncentivesInitGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	validateGenesis := types.DefaultGenesis().Params.Validate()

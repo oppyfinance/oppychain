@@ -2,7 +2,7 @@ package keeper_test
 
 import (
 	"context"
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"testing"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -11,7 +11,7 @@ import (
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
-func setupMsgServer(t testing.TB) (*joltifyapp.App, types.MsgServer, context.Context) {
+func setupMsgServer(t testing.TB) (*oppyapp.App, types.MsgServer, context.Context) {
 	app, ctx := keepertest.SetupVaultApp(t)
 	return app, keeper.NewMsgServerImpl(app.VaultKeeper), sdk.WrapSDKContext(ctx)
 }

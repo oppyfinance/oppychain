@@ -1,5 +1,5 @@
 syntax = "proto3";
-package joltify.joltifychain.epochs;
+package oppyfinance.oppychain.epochs;
 
 import "gogoproto/gogo.proto";
 import "google/protobuf/duration.proto";

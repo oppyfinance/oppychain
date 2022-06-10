@@ -10,7 +10,7 @@ import (
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	"gitlab.com/oppy-finance/oppychain/x/swap/simulation"
 
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	"github.com/stretchr/testify/suite"
@@ -42,7 +42,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 		require.NoError(suite.T(), err)
 	}(tempPath)
 
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 	suite.app = app
 	suite.ctx = ctx

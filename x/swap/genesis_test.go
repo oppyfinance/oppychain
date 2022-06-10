@@ -17,7 +17,7 @@ import (
 	"github.com/tendermint/spm/cosmoscmd"
 	"github.com/tendermint/tendermint/crypto/ed25519"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
 	"gitlab.com/oppy-finance/oppychain/x/swap/types"
@@ -31,7 +31,7 @@ func TestSwapInitGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	balancerPool, err := balancer.NewBalancerPool(1, balancer.PoolParams{
@@ -87,7 +87,7 @@ func TestSwapExportGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	acc1 := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address().Bytes())
@@ -135,10 +135,10 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
-	encodingConfig := cosmoscmd.MakeEncodingConfig(joltifyapp.ModuleBasics)
+	encodingConfig := cosmoscmd.MakeEncodingConfig(oppyapp.ModuleBasics)
 
 	appCodec := encodingConfig.Marshaler
 

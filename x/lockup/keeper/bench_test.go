@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	joltifyapp "gitlab.com/oppy-finance/oppychain/app"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -50,7 +50,7 @@ func benchmarkResetLogic(numLockups int, b *testing.B) {
 		}
 	}(tempPath)
 
-	app := simapp.New(tempPath).(*joltifyapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "joltify-1", Time: blockStartTime})
 
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
