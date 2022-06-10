@@ -1,4 +1,4 @@
-package keeper
+package keeper_test
 
 import (
 	"testing"
@@ -10,11 +10,12 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/types"
+	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func TestPlaceOrderQuerySingle(t *testing.T) {
-	keeper, ctx := setupKeeper(t)
+	keeper, ctx := keepertest.SetupKeeper(t)
 	wctx := sdk.WrapSDKContext(ctx)
 	msgs := createNPlaceOrder(keeper, ctx, 2)
 	for _, tc := range []struct {
@@ -56,7 +57,7 @@ func TestPlaceOrderQuerySingle(t *testing.T) {
 }
 
 func TestPlaceOrderQueryPaginated(t *testing.T) {
-	keeper, ctx := setupKeeper(t)
+	keeper, ctx := keepertest.SetupKeeper(t)
 	wctx := sdk.WrapSDKContext(ctx)
 	msgs := createNPlaceOrder(keeper, ctx, 5)
 

@@ -5,8 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/vault/keeper"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 // NewHandler ...
@@ -17,7 +17,10 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		ctx = ctx.WithEventManager(sdk.NewEventManager())
 
 		switch msg := msg.(type) {
-		// this line is used by starport scaffolding # 1
+		case *types.MsgCreateOutboundTx:
+			res, err := msgServer.CreateOutboundTx(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+			// this line is used by starport scaffolding # 1
 		case *types.MsgCreateIssueToken:
 			res, err := msgServer.CreateIssueToken(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)

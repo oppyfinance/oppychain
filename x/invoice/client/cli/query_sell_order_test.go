@@ -3,21 +3,22 @@ package cli_test
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/stretchr/testify/assert"
-	tmcli "github.com/tendermint/tendermint/libs/cli"
-	"google.golang.org/grpc/codes"
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	tmcli "github.com/tendermint/tendermint/libs/cli"
+	"google.golang.org/grpc/codes"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
-	"gitlab.com/joltify/joltifychain/joltifychain/testutil/network"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/client/cli"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/tools"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/testutil/network"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/tools"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 	"google.golang.org/grpc/status"
 )
 
@@ -48,7 +49,6 @@ func networkWithSellOrderObjects(t *testing.T, n int) (*network.Network, []*type
 }
 
 func TestShowSellOrder(t *testing.T) {
-
 	net, objs := networkWithSellOrderObjects(t, 2)
 	ctx := net.Validators[0].ClientCtx
 	common := []string{
@@ -76,7 +76,7 @@ func TestShowSellOrder(t *testing.T) {
 	} {
 		tc := tc
 		t.Run(tc.desc, func(t *testing.T) {
-			args := append([]string{tc.id})
+			args := []string{tc.id}
 			out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdShowSellOrder(), args)
 			if tc.err != nil {
 				stat, ok := status.FromError(tc.err)
@@ -139,7 +139,7 @@ func TestCmdListSellOrderAndQuerySellOrder(t *testing.T) {
 	out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdListSellOrder(), []string{})
 	require.Nil(t, err)
 	var listResp types.QueryAllSellOrderResponse
-	require.NoError(t, ctx.JSONMarshaler.UnmarshalJSON(out.Bytes(), &listResp))
+	require.NoError(t, ctx.Codec.UnmarshalJSON(out.Bytes(), &listResp))
 	require.Len(t, listResp.SellOrder, 3)
 	queryID := listResp.SellOrder[0].SellOrderID
 	_, err = clitestutil.ExecTestCLICmd(ctx, cli.CmdShowSellOrder(), []string{"invalid"})

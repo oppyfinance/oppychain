@@ -12,10 +12,10 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.com/joltify/joltifychain/joltifychain/testutil/network"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/client/cli"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/tools"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/testutil/network"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/client/cli"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/tools"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func TestCreatePlaceOrder(t *testing.T) {
@@ -41,13 +41,13 @@ func TestCreatePlaceOrder(t *testing.T) {
 		require.Nil(t, err)
 
 		var resp1 sdk.TxResponse
-		require.NoError(t, ctx.JSONMarshaler.UnmarshalJSON(invoiceResp.Bytes(), &resp1))
+		require.NoError(t, ctx.Codec.UnmarshalJSON(invoiceResp.Bytes(), &resp1))
 		args2 := append(createSellBookFields, basicArgs...)
 		out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdCreateSellOrder(), args2)
 		require.Nil(t, err)
 
 		var resp sdk.TxResponse
-		require.NoError(t, ctx.JSONMarshaler.UnmarshalJSON(out.Bytes(), &resp))
+		require.NoError(t, ctx.Codec.UnmarshalJSON(out.Bytes(), &resp))
 		outbb, _ := hex.DecodeString(resp.Data)
 		var respOrder types.MsgCreateSellOrderResponse
 		err = proto.Unmarshal(outbb, &respOrder)
@@ -58,6 +58,5 @@ func TestCreatePlaceOrder(t *testing.T) {
 		args = append(args, basicArgs...)
 		_, err = clitestutil.ExecTestCLICmd(ctx, cli.CmdCreatePlaceOrder(), args)
 		require.Nil(t, err)
-
 	})
 }

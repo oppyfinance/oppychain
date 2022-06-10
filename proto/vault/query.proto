@@ -1,44 +1,104 @@
 syntax = "proto3";
-package joltify.joltifychain.vault;
+package oppyfinance.oppychain.vault;
 
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
+import "vault/outbound_tx.proto";
 // this line is used by starport scaffolding # 1
+import "gogoproto/gogo.proto";
 import "vault/issue_token.proto";
 import "vault/create_pool.proto";
+import "vault/staking.proto";
 
-option go_package = "github.com/joltify/joltifyChain/x/vault/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
 
 // Query defines the gRPC querier service.
 service Query {
-    // this line is used by starport scaffolding # 2
+    // Queries a OutboundTx by index.
+	rpc OutboundTx(QueryGetOutboundTxRequest) returns (QueryGetOutboundTxResponse) {
+		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/outbound_tx/{requestID}";
+	}
+
+	// Queries a list of OutboundTx items.
+	rpc OutboundTxAll(QueryAllOutboundTxRequest) returns (QueryAllOutboundTxResponse) {
+		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/outbound_tx";
+	}
+
+// Queries a list of GetValidators items.
+	rpc GetValidators(QueryGetValidatorsRequest) returns (QueryGetValidatorsResponse) {
+		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/get_validators";
+	}
+
+	// Queries a list of GetValidators items.
+	rpc GetAllValidators(QueryAllValidatorsRequest) returns (QueryAllValidatorsResponse) {
+		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/validators";
+	}
+
+// this line is used by starport scaffolding # 2
 
 	// Queries a issueToken by index.
 	rpc IssueToken(QueryGetIssueTokenRequest) returns (QueryGetIssueTokenResponse) {
-		option (google.api.http).get = "/joltify/joltifychain/vault/issueToken/{index}";
+		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/issueToken/{index}";
 	}
 
 	// Queries a list of issueToken items.
 	rpc IssueTokenAll(QueryAllIssueTokenRequest) returns (QueryAllIssueTokenResponse) {
-		option (google.api.http).get = "/joltify/joltifychain/vault/issueToken";
+		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/issueToken";
 	}
 
 
 	// Queries a createPool by index.
 	rpc CreatePool(QueryGetCreatePoolRequest) returns (QueryGetCreatePoolResponse) {
-		option (google.api.http).get = "/joltify/joltifyChain/vault/createPool/{index}";
+		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/createPool/{index}";
 	}
 
 	// Queries a list of createPool items.
 	rpc CreatePoolAll(QueryAllCreatePoolRequest) returns (QueryAllCreatePoolResponse) {
-		option (google.api.http).get = "/joltify/joltifyChain/vault/createPool";
+		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/createPool";
 	}
 
 	// Queries a createPool by index.
 	rpc GetLastPool(QueryLatestPoolRequest) returns (QueryLastPoolResponse) {
-		option (google.api.http).get = "/joltify/joltifyChain/vault/getLastPool";
+		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/getLastPool";
 	}
 
+}
+
+message QueryGetOutboundTxRequest {
+	  string requestID = 1;
+
+}
+
+message QueryGetOutboundTxResponse {
+	OutboundTx outboundTx = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllOutboundTxRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllOutboundTxResponse {
+	repeated OutboundTx outboundTx = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+
+
+message QueryGetValidatorsRequest {
+	string height = 1;
+}
+
+message QueryGetValidatorsResponse {
+   Validators validators = 1;
+}
+
+message QueryAllValidatorsRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllValidatorsResponse{
+	repeated Validators all_validators = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3

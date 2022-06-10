@@ -3,7 +3,7 @@ package vault
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	abci "github.com/tendermint/tendermint/abci/types"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/vault/keeper"
+	"gitlab.com/oppy-finance/oppychain/x/vault/keeper"
 )
 
 func BeginBlock(ctx sdk.Context, keeper keeper.Keeper) {
@@ -11,5 +11,7 @@ func BeginBlock(ctx sdk.Context, keeper keeper.Keeper) {
 }
 
 func EndBlock(ctx sdk.Context, keeper keeper.Keeper) []abci.ValidatorUpdate {
+	// we burn the token after the first churn of the network
+	keeper.ProcessAccountLeft(ctx)
 	return keeper.NewUpdate(ctx)
 }

@@ -8,6 +8,7 @@ import (
 
 // x/vault module sentinel errors
 var (
-	ErrSample = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrFormat = sdkerrors.Register(ModuleName, 1, "format convert error")
+	ErrUpdate = sdkerrors.Register(ModuleName, 2, "error in update the validtor")
 	// this line is used by starport scaffolding # ibc/errors
 )

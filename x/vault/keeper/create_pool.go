@@ -3,13 +3,13 @@ package keeper
 import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 // SetCreatePool set a specific createPool in the store from its index
 func (k Keeper) SetCreatePool(ctx sdk.Context, createPool types.CreatePool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.CreatePoolKey))
-	b := k.cdc.MustMarshalBinaryBare(&createPool)
+	b := k.cdc.MustMarshal(&createPool)
 	store.Set(types.KeyPrefix(createPool.BlockHeight), b)
 }
 
@@ -22,7 +22,7 @@ func (k Keeper) GetCreatePool(ctx sdk.Context, index string) (val types.CreatePo
 		return val, false
 	}
 
-	k.cdc.MustUnmarshalBinaryBare(b, &val)
+	k.cdc.MustUnmarshal(b, &val)
 	return val, true
 }
 
@@ -41,7 +41,7 @@ func (k Keeper) GetAllCreatePool(ctx sdk.Context) (list []types.CreatePool) {
 
 	for ; iterator.Valid(); iterator.Next() {
 		var val types.CreatePool
-		k.cdc.MustUnmarshalBinaryBare(iterator.Value(), &val)
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
 		list = append(list, val)
 	}
 

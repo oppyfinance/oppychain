@@ -8,14 +8,10 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	// "github.com/cosmos/cosmos-sdk/client/flags"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 var DefaultRelativePacketTimeoutTimestamp = uint64((time.Duration(10) * time.Minute).Nanoseconds())
-
-const (
-	flagPacketTimeoutTimestamp = "packet-timeout-timestamp"
-)
 
 // GetTxCmd returns the transaction commands for this module
 func GetTxCmd() *cobra.Command {

@@ -612,17 +612,17 @@ func RegisterQueryHandlerClient(ctx context.Context, mux *runtime.ServeMux, clie
 }
 
 var (
-	pattern_Query_PlaceOrder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"joltify", "joltifychain", "invoice", "placeOrder", "index"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_PlaceOrder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"oppyfinance", "oppyChaind", "invoice", "placeOrder", "index"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_PlaceOrderAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"joltify", "joltifychain", "invoice", "placeOrder"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_PlaceOrderAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"oppyfinance", "oppyChaind", "invoice", "placeOrder"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_SellOrder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"joltify", "joltifychain", "invoice", "sellOrder", "index"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_SellOrder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"oppyfinance", "oppyChaind", "invoice", "sellOrder", "index"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_SellOrderAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"joltify", "joltifychain", "invoice", "sellOrder"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_SellOrderAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"oppyfinance", "oppyChaind", "invoice", "sellOrder"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_Invoice_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"joltify", "joltifychain", "invoice", "index"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Invoice_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"oppyfinance", "oppyChaind", "invoice", "index"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_InvoiceAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 2}, []string{"joltify", "joltifychain", "invoice"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_InvoiceAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 2}, []string{"oppyfinance", "oppyChaind", "invoice"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

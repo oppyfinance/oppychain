@@ -6,13 +6,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 // SetSellOrder set a specific sellOrder in the store from its index
 func (k Keeper) SetSellOrder(ctx sdk.Context, sellOrder types.SellOrder) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.SellOrderKey))
-	b := k.cdc.MustMarshalBinaryBare(&sellOrder)
+	b := k.cdc.MustMarshal(&sellOrder)
 	store.Set(types.KeyPrefix(sellOrder.SellOrderID), b)
 }
 
@@ -25,7 +25,7 @@ func (k Keeper) GetSellOrder(ctx sdk.Context, index string) (val types.SellOrder
 		return val, false
 	}
 
-	k.cdc.MustUnmarshalBinaryBare(b, &val)
+	k.cdc.MustUnmarshal(b, &val)
 	return val, true
 }
 
@@ -44,7 +44,7 @@ func (k Keeper) GetAllSellOrder(ctx sdk.Context) (list []types.SellOrder) {
 
 	for ; iterator.Valid(); iterator.Next() {
 		var val types.SellOrder
-		k.cdc.MustUnmarshalBinaryBare(iterator.Value(), &val)
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
 		list = append(list, val)
 	}
 

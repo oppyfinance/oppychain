@@ -6,7 +6,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -24,14 +24,13 @@ func (k Keeper) InvoiceAll(c context.Context, req *types.QueryAllInvoiceRequest)
 
 	pageRes, err := query.Paginate(invoiceStore, req.Pagination, func(key []byte, value []byte) error {
 		var invoice types.Invoice
-		if err := k.cdc.UnmarshalBinaryBare(value, &invoice); err != nil {
+		if err := k.cdc.Unmarshal(value, &invoice); err != nil {
 			return err
 		}
 
 		invoices = append(invoices, &invoice)
 		return nil
 	})
-
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}

@@ -10,7 +10,7 @@ import (
 	// "github.com/cosmos/cosmos-sdk/client/flags"
 	// sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.com/joltify/joltifychain/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module
@@ -23,6 +23,11 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 		SuggestionsMinimumDistance: 2,
 		RunE:                       client.ValidateCmd,
 	}
+
+	cmd.AddCommand(CmdListOutboundTx())
+	cmd.AddCommand(CmdShowOutboundTx())
+	cmd.AddCommand(CmdGetValidators())
+	cmd.AddCommand(CmdGetValidatorByHeight())
 
 	// this line is used by starport scaffolding # 1
 

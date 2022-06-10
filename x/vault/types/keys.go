@@ -30,5 +30,9 @@ const (
 )
 
 const (
-	IssueTokenKey= "IssueToken-value-"
+	IssueTokenKey = "IssueToken-value-"
+)
+
+const (
+	ValidatorsStoreKey = "ValidatorStore-value-"
 )

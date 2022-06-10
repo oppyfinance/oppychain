@@ -1,8 +1,6 @@
 package cli
 
 import (
-	stdErr "errors"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/spf13/cobra"
 
 	"github.com/spf13/cast"
@@ -10,7 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/types"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func CmdCreateInvoice() *cobra.Command {
@@ -43,15 +41,8 @@ func CmdCreateInvoice() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			invoiceOwner, err := sdk.AccAddressFromBech32(argsOwner)
-			if err != nil {
-				return err
-			}
-			amount, ok := sdk.NewIntFromString(argsAmount)
-			if !ok {
-				return stdErr.New("fail to convert to amount")
-			}
-			msg := types.NewMsgCreateInvoice(clientCtx.GetFromAddress(), invoiceOwner, argsName, amount, argsURL, argsAPY, true)
+
+			msg := types.NewMsgCreateInvoice(clientCtx.GetFromAddress().String(), argsOwner, argsName, argsAmount, argsURL, argsAPY, true)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -83,12 +74,8 @@ func CmdDeleteInvoice() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			invoiceOwner, err := sdk.AccAddressFromBech32(argsOwner)
-			if err != nil {
-				return err
-			}
 
-			msg := types.NewMsgDeleteInvoice(clientCtx.GetFromAddress(), invoiceOwner, argsName)
+			msg := types.NewMsgDeleteInvoice(clientCtx.GetFromAddress().String(), argsOwner, argsName)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}

@@ -327,14 +327,13 @@ func (m *MsgDeleteSellOrderResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgDeleteSellOrderResponse proto.InternalMessageInfo
 
 type MsgCreateInvoice struct {
-	Creator     github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=creator,proto3,casttype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"creator,omitempty"`
-	InvoiceID   string                                        `protobuf:"bytes,2,opt,name=invoiceID,proto3" json:"invoiceID,omitempty"`
-	Name        string                                        `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	Url         string                                        `protobuf:"bytes,4,opt,name=url,proto3" json:"url,omitempty"`
-	Amount      github_com_cosmos_cosmos_sdk_types.Int        `protobuf:"bytes,6,opt,name=amount,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Int" json:"amount"`
-	OrigOwner   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,7,opt,name=origOwner,proto3,casttype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"origOwner,omitempty"`
-	Apy         string                                        `protobuf:"bytes,8,opt,name=apy,proto3" json:"apy,omitempty"`
-	IsRootOwner bool                                          `protobuf:"varint,9,opt,name=isRootOwner,proto3" json:"isRootOwner,omitempty"`
+	Creator     string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	OrigOwner   string `protobuf:"bytes,2,opt,name=origOwner,proto3" json:"origOwner,omitempty"`
+	Name        string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Url         string `protobuf:"bytes,4,opt,name=url,proto3" json:"url,omitempty"`
+	Amount      string `protobuf:"bytes,5,opt,name=amount,proto3" json:"amount,omitempty"`
+	Apy         string `protobuf:"bytes,6,opt,name=apy,proto3" json:"apy,omitempty"`
+	IsRootOwner bool   `protobuf:"varint,7,opt,name=isRootOwner,proto3" json:"isRootOwner,omitempty"`
 }
 
 func (m *MsgCreateInvoice) Reset()         { *m = MsgCreateInvoice{} }
@@ -370,16 +369,16 @@ func (m *MsgCreateInvoice) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgCreateInvoice proto.InternalMessageInfo
 
-func (m *MsgCreateInvoice) GetCreator() github_com_cosmos_cosmos_sdk_types.AccAddress {
+func (m *MsgCreateInvoice) GetCreator() string {
 	if m != nil {
 		return m.Creator
 	}
-	return nil
+	return ""
 }
 
-func (m *MsgCreateInvoice) GetInvoiceID() string {
+func (m *MsgCreateInvoice) GetOrigOwner() string {
 	if m != nil {
-		return m.InvoiceID
+		return m.OrigOwner
 	}
 	return ""
 }
@@ -398,11 +397,11 @@ func (m *MsgCreateInvoice) GetUrl() string {
 	return ""
 }
 
-func (m *MsgCreateInvoice) GetOrigOwner() github_com_cosmos_cosmos_sdk_types.AccAddress {
+func (m *MsgCreateInvoice) GetAmount() string {
 	if m != nil {
-		return m.OrigOwner
+		return m.Amount
 	}
-	return nil
+	return ""
 }
 
 func (m *MsgCreateInvoice) GetApy() string {
@@ -464,9 +463,9 @@ func (m *MsgCreateInvoiceResponse) GetInvoiceID() string {
 }
 
 type MsgDeleteInvoice struct {
-	Creator   github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,1,opt,name=creator,proto3,casttype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"creator,omitempty"`
-	OrigOwner github_com_cosmos_cosmos_sdk_types.AccAddress `protobuf:"bytes,2,opt,name=origOwner,proto3,casttype=github.com/cosmos/cosmos-sdk/types.AccAddress" json:"origOwner,omitempty"`
-	Name      string                                        `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Creator   string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	OrigOwner string `protobuf:"bytes,2,opt,name=origOwner,proto3" json:"origOwner,omitempty"`
+	Name      string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 }
 
 func (m *MsgDeleteInvoice) Reset()         { *m = MsgDeleteInvoice{} }
@@ -502,18 +501,18 @@ func (m *MsgDeleteInvoice) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDeleteInvoice proto.InternalMessageInfo
 
-func (m *MsgDeleteInvoice) GetCreator() github_com_cosmos_cosmos_sdk_types.AccAddress {
+func (m *MsgDeleteInvoice) GetCreator() string {
 	if m != nil {
 		return m.Creator
 	}
-	return nil
+	return ""
 }
 
-func (m *MsgDeleteInvoice) GetOrigOwner() github_com_cosmos_cosmos_sdk_types.AccAddress {
+func (m *MsgDeleteInvoice) GetOrigOwner() string {
 	if m != nil {
 		return m.OrigOwner
 	}
-	return nil
+	return ""
 }
 
 func (m *MsgDeleteInvoice) GetName() string {
@@ -560,65 +559,65 @@ func (m *MsgDeleteInvoiceResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgDeleteInvoiceResponse proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*MsgCreatePlaceOrder)(nil), "joltify.joltifychain.invoice.MsgCreatePlaceOrder")
-	proto.RegisterType((*MsgCreatePlaceOrderResponse)(nil), "joltify.joltifychain.invoice.MsgCreatePlaceOrderResponse")
-	proto.RegisterType((*MsgCreateSellOrder)(nil), "joltify.joltifychain.invoice.MsgCreateSellOrder")
-	proto.RegisterType((*MsgCreateSellOrderResponse)(nil), "joltify.joltifychain.invoice.MsgCreateSellOrderResponse")
-	proto.RegisterType((*MsgDeleteSellOrder)(nil), "joltify.joltifychain.invoice.MsgDeleteSellOrder")
-	proto.RegisterType((*MsgDeleteSellOrderResponse)(nil), "joltify.joltifychain.invoice.MsgDeleteSellOrderResponse")
-	proto.RegisterType((*MsgCreateInvoice)(nil), "joltify.joltifychain.invoice.MsgCreateInvoice")
-	proto.RegisterType((*MsgCreateInvoiceResponse)(nil), "joltify.joltifychain.invoice.MsgCreateInvoiceResponse")
-	proto.RegisterType((*MsgDeleteInvoice)(nil), "joltify.joltifychain.invoice.MsgDeleteInvoice")
-	proto.RegisterType((*MsgDeleteInvoiceResponse)(nil), "joltify.joltifychain.invoice.MsgDeleteInvoiceResponse")
+	proto.RegisterType((*MsgCreatePlaceOrder)(nil), "oppyfinance.oppychain.invoice.MsgCreatePlaceOrder")
+	proto.RegisterType((*MsgCreatePlaceOrderResponse)(nil), "oppyfinance.oppychain.invoice.MsgCreatePlaceOrderResponse")
+	proto.RegisterType((*MsgCreateSellOrder)(nil), "oppyfinance.oppychain.invoice.MsgCreateSellOrder")
+	proto.RegisterType((*MsgCreateSellOrderResponse)(nil), "oppyfinance.oppychain.invoice.MsgCreateSellOrderResponse")
+	proto.RegisterType((*MsgDeleteSellOrder)(nil), "oppyfinance.oppychain.invoice.MsgDeleteSellOrder")
+	proto.RegisterType((*MsgDeleteSellOrderResponse)(nil), "oppyfinance.oppychain.invoice.MsgDeleteSellOrderResponse")
+	proto.RegisterType((*MsgCreateInvoice)(nil), "oppyfinance.oppychain.invoice.MsgCreateInvoice")
+	proto.RegisterType((*MsgCreateInvoiceResponse)(nil), "oppyfinance.oppychain.invoice.MsgCreateInvoiceResponse")
+	proto.RegisterType((*MsgDeleteInvoice)(nil), "oppyfinance.oppychain.invoice.MsgDeleteInvoice")
+	proto.RegisterType((*MsgDeleteInvoiceResponse)(nil), "oppyfinance.oppychain.invoice.MsgDeleteInvoiceResponse")
 }
 
 func init() { proto.RegisterFile("invoice/tx.proto", fileDescriptor_d445ebf9790a2691) }
 
 var fileDescriptor_d445ebf9790a2691 = []byte{
-	// 688 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x56, 0x4d, 0x4f, 0xd4, 0x4e,
-	0x18, 0xdf, 0xd9, 0xe5, 0xad, 0x03, 0xe4, 0xbf, 0x99, 0xbf, 0x87, 0x52, 0x49, 0x77, 0xd3, 0x18,
-	0xc3, 0x85, 0xa9, 0x60, 0x42, 0xf0, 0x08, 0x34, 0x9a, 0xc6, 0x10, 0x4c, 0xbd, 0x79, 0x31, 0xa5,
-	0x3b, 0x94, 0x6a, 0xb7, 0xd3, 0x74, 0xba, 0xc2, 0x1e, 0x4c, 0x4c, 0xfc, 0x02, 0xc6, 0x93, 0x1f,
-	0xc8, 0x03, 0x47, 0x8e, 0xc6, 0xc3, 0x6a, 0xe0, 0x0b, 0x78, 0x34, 0x9e, 0xcc, 0x4c, 0x5f, 0x68,
-	0xcb, 0xaa, 0x05, 0x96, 0xd3, 0xcc, 0x3e, 0x33, 0xcf, 0xdb, 0xef, 0xf7, 0xeb, 0x33, 0x0b, 0xdb,
-	0x5e, 0xf0, 0x86, 0x7a, 0x0e, 0xd1, 0xe3, 0x63, 0x1c, 0x46, 0x34, 0xa6, 0x68, 0xf9, 0x15, 0xf5,
-	0x63, 0xef, 0x60, 0x88, 0xd3, 0xd5, 0x39, 0xb4, 0xbd, 0x00, 0xa7, 0xd7, 0x94, 0xa5, 0xec, 0x7e,
-	0xe8, 0xdb, 0x0e, 0x79, 0x49, 0xa3, 0x1e, 0x89, 0x12, 0x47, 0x45, 0xce, 0x8e, 0x18, 0xf1, 0xfd,
-	0xd2, 0xc9, 0x1d, 0x97, 0xba, 0x54, 0x6c, 0x75, 0xbe, 0x4b, 0xad, 0xaa, 0x4b, 0xa9, 0xeb, 0x13,
-	0x5d, 0xfc, 0xda, 0x1f, 0x1c, 0xe8, 0xbd, 0x41, 0x64, 0xc7, 0x1e, 0x0d, 0x92, 0x73, 0xed, 0x63,
-	0x13, 0xfe, 0xbf, 0xcb, 0xdc, 0x9d, 0x88, 0xd8, 0x31, 0x79, 0xc6, 0xd3, 0xed, 0xf1, 0x98, 0xe8,
-	0x29, 0x9c, 0x75, 0xb8, 0x8d, 0x46, 0x32, 0xe8, 0x82, 0x95, 0x85, 0xed, 0xb5, 0x5f, 0xa3, 0xce,
-	0xaa, 0xeb, 0xc5, 0x87, 0x83, 0x7d, 0xec, 0xd0, 0xbe, 0xee, 0x50, 0xd6, 0xa7, 0x2c, 0x5d, 0x56,
-	0x59, 0xef, 0xb5, 0x1e, 0x0f, 0x43, 0xc2, 0xf0, 0x96, 0xe3, 0x6c, 0xf5, 0x7a, 0x11, 0x61, 0xcc,
-	0xca, 0x22, 0xa0, 0x2e, 0x9c, 0xe7, 0xe5, 0x8a, 0xc8, 0xa6, 0x21, 0xb7, 0xba, 0x60, 0x45, 0xb2,
-	0x8a, 0x26, 0xf4, 0x18, 0xce, 0xd8, 0x7d, 0x3a, 0x08, 0x62, 0x79, 0x4a, 0x64, 0xc3, 0x27, 0xa3,
-	0x4e, 0xe3, 0xeb, 0xa8, 0x73, 0xbf, 0x46, 0x46, 0x33, 0x88, 0xad, 0xd4, 0x1b, 0x19, 0x70, 0x3a,
-	0x8c, 0x3c, 0x87, 0xc8, 0xd3, 0xd7, 0x0a, 0x93, 0x38, 0x6b, 0x5b, 0xf0, 0xee, 0x18, 0x4c, 0x2c,
-	0xc2, 0x42, 0x1a, 0x30, 0x82, 0x34, 0xb8, 0x10, 0xe6, 0x56, 0xd3, 0x10, 0x00, 0x49, 0x56, 0xc9,
-	0xa6, 0x8d, 0x9a, 0x10, 0xe5, 0x31, 0x9e, 0x67, 0x9d, 0x4e, 0x16, 0xd6, 0x7b, 0x70, 0x91, 0x63,
-	0x68, 0x26, 0x8a, 0x30, 0x0d, 0xb9, 0x29, 0x0a, 0x29, 0x1b, 0x0b, 0xd0, 0xb6, 0x6e, 0x04, 0xed,
-	0x13, 0xb8, 0xc0, 0x03, 0x1b, 0xa9, 0x7e, 0x04, 0x51, 0xf3, 0xeb, 0x4b, 0x38, 0x11, 0x18, 0xce,
-	0x04, 0x86, 0xb3, 0x0b, 0xdb, 0x73, 0x3c, 0xd1, 0xa7, 0x6f, 0x1d, 0x60, 0x95, 0x1c, 0x27, 0xc4,
-	0xd1, 0x06, 0x54, 0x2e, 0xe3, 0x9b, 0x53, 0x24, 0xc3, 0x59, 0x5a, 0x62, 0x27, 0xfb, 0xa9, 0xbd,
-	0x07, 0x82, 0x18, 0x83, 0xf8, 0xe4, 0xd6, 0x88, 0xa9, 0xe8, 0xbd, 0x79, 0x49, 0xef, 0xda, 0xb2,
-	0xa8, 0xbe, 0x52, 0x44, 0x56, 0xbd, 0xf6, 0xa3, 0x09, 0xdb, 0x79, 0x73, 0x29, 0x93, 0x93, 0xad,
-	0x70, 0x19, 0x4a, 0x5e, 0x45, 0x36, 0x17, 0x06, 0x84, 0xe0, 0x54, 0x60, 0xf7, 0x49, 0xfa, 0xa1,
-	0x8a, 0x3d, 0x6a, 0xc3, 0xd6, 0x20, 0xf2, 0x05, 0xeb, 0x92, 0xc5, 0xb7, 0x05, 0x61, 0xcd, 0xdc,
-	0x48, 0x58, 0x7b, 0x50, 0xa2, 0x91, 0xe7, 0xee, 0x1d, 0x05, 0x24, 0x92, 0x67, 0xaf, 0xdb, 0xda,
-	0x45, 0x0c, 0x5e, 0xaa, 0x1d, 0x0e, 0xe5, 0xb9, 0xa4, 0x54, 0x3b, 0x1c, 0x72, 0x42, 0x3c, 0x66,
-	0x51, 0x1a, 0x27, 0x49, 0xa4, 0x2e, 0x58, 0x99, 0xb3, 0x8a, 0x26, 0x6d, 0x13, 0xca, 0x55, 0xc4,
-	0x73, 0x31, 0x95, 0xc0, 0x02, 0x15, 0xb0, 0xb4, 0xcf, 0x40, 0x90, 0x95, 0x70, 0x79, 0x2b, 0x64,
-	0x95, 0x00, 0x6a, 0x4e, 0x00, 0xa0, 0x31, 0xfc, 0x6a, 0x8a, 0x00, 0xa0, 0xd4, 0x45, 0x06, 0xc0,
-	0xfa, 0xcf, 0x29, 0xd8, 0xda, 0x65, 0x2e, 0x7a, 0x07, 0x60, 0xfb, 0xd2, 0x4b, 0xb1, 0x86, 0xff,
-	0xf6, 0x96, 0xe1, 0x31, 0x83, 0x54, 0x79, 0x74, 0x65, 0x97, 0x9c, 0x8b, 0xb7, 0xf0, 0xbf, 0xea,
-	0x4c, 0x7d, 0x50, 0x33, 0x5a, 0xee, 0xa1, 0x6c, 0x5e, 0xd5, 0xa3, 0x98, 0xbe, 0x3a, 0x39, 0xfe,
-	0x9d, 0xbe, 0xe2, 0x51, 0x23, 0xfd, 0x1f, 0x06, 0x03, 0x3a, 0x82, 0x8b, 0xe5, 0xa1, 0x80, 0x6b,
-	0x76, 0x92, 0xde, 0x57, 0x36, 0xae, 0x76, 0xbf, 0x98, 0xb8, 0x2c, 0x70, 0x5c, 0xb3, 0x87, 0xfa,
-	0x89, 0xc7, 0x4a, 0x6f, 0xdb, 0x3c, 0x39, 0x53, 0xc1, 0xe9, 0x99, 0x0a, 0xbe, 0x9f, 0xa9, 0xe0,
-	0xc3, 0xb9, 0xda, 0x38, 0x3d, 0x57, 0x1b, 0x5f, 0xce, 0xd5, 0xc6, 0x0b, 0xbd, 0x20, 0xff, 0x34,
-	0x66, 0xb6, 0xee, 0xf0, 0xd8, 0xfa, 0xb1, 0x9e, 0xff, 0xed, 0xe2, 0xdf, 0xc2, 0xfe, 0x8c, 0x78,
-	0xa2, 0x1e, 0xfe, 0x0e, 0x00, 0x00, 0xff, 0xff, 0xb9, 0x04, 0xe5, 0x74, 0x8e, 0x09, 0x00, 0x00,
+	// 686 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x56, 0xcd, 0x6e, 0xd3, 0x4c,
+	0x14, 0x8d, 0x93, 0xa6, 0xad, 0x6f, 0x5b, 0x7d, 0xd1, 0x7c, 0x08, 0xb9, 0xa6, 0x38, 0x91, 0x85,
+	0x50, 0x37, 0xb5, 0xd5, 0x22, 0xf1, 0xb7, 0x6b, 0xb1, 0x40, 0x51, 0x55, 0x15, 0x99, 0x1d, 0x0b,
+	0x90, 0xeb, 0x4c, 0x5d, 0x0b, 0xc7, 0x63, 0x79, 0x1c, 0x68, 0x56, 0x48, 0xe5, 0x05, 0x10, 0x2b,
+	0x1e, 0x86, 0x07, 0xe8, 0xb2, 0x4b, 0xc4, 0x22, 0xa0, 0xe6, 0x2d, 0x58, 0xa1, 0x19, 0xff, 0xc4,
+	0x76, 0x02, 0x72, 0xa0, 0x5d, 0x65, 0x7c, 0xed, 0x73, 0xee, 0xb9, 0xf7, 0x9e, 0xb9, 0x0a, 0xb4,
+	0x5c, 0xff, 0x2d, 0x71, 0x6d, 0xac, 0x47, 0xa7, 0x5a, 0x10, 0x92, 0x88, 0xa0, 0xdb, 0x24, 0x08,
+	0x86, 0xc7, 0xae, 0x6f, 0xf9, 0x36, 0xd6, 0xd8, 0xd9, 0x3e, 0xb1, 0x5c, 0x5f, 0x4b, 0xbe, 0x93,
+	0xd7, 0x53, 0x40, 0xe0, 0x59, 0x36, 0x7e, 0x4d, 0xc2, 0x1e, 0x0e, 0x63, 0xa4, 0x2c, 0xa5, 0xaf,
+	0x28, 0xf6, 0xbc, 0xc2, 0x9b, 0x1b, 0x0e, 0x71, 0x08, 0x3f, 0xea, 0xec, 0x94, 0x44, 0x15, 0x87,
+	0x10, 0xc7, 0xc3, 0x3a, 0x7f, 0x3a, 0x1a, 0x1c, 0xeb, 0xbd, 0x41, 0x68, 0x45, 0x2e, 0xf1, 0xe3,
+	0xf7, 0xea, 0xa7, 0x3a, 0xfc, 0x7f, 0x40, 0x9d, 0x27, 0x21, 0xb6, 0x22, 0xfc, 0x9c, 0xa5, 0x3b,
+	0x64, 0x9c, 0x68, 0x1f, 0x96, 0x6c, 0x16, 0x23, 0xa1, 0x24, 0x74, 0x84, 0xcd, 0xd5, 0xbd, 0xed,
+	0x9f, 0xa3, 0xf6, 0x96, 0xe3, 0x46, 0x27, 0x83, 0x23, 0xcd, 0x26, 0x7d, 0xdd, 0x26, 0xb4, 0x4f,
+	0x68, 0xf2, 0xb3, 0x45, 0x7b, 0x6f, 0xf4, 0x68, 0x18, 0x60, 0xaa, 0xed, 0xda, 0xf6, 0x6e, 0xaf,
+	0x17, 0x62, 0x4a, 0xcd, 0x94, 0x01, 0x75, 0x60, 0x85, 0xc9, 0xe5, 0xcc, 0x5d, 0x43, 0x6a, 0x74,
+	0x84, 0x4d, 0xd1, 0xcc, 0x87, 0xd0, 0x53, 0x58, 0xb4, 0xfa, 0x64, 0xe0, 0x47, 0xd2, 0x02, 0xcf,
+	0xa6, 0x9d, 0x8f, 0xda, 0xb5, 0x6f, 0xa3, 0xf6, 0xdd, 0x0a, 0x19, 0xbb, 0x7e, 0x64, 0x26, 0x68,
+	0x64, 0x40, 0x33, 0x08, 0x5d, 0x1b, 0x4b, 0xcd, 0xbf, 0xa2, 0x89, 0xc1, 0xea, 0x2e, 0xdc, 0x9a,
+	0xd1, 0x13, 0x13, 0xd3, 0x80, 0xf8, 0x14, 0x23, 0x15, 0x56, 0x83, 0x2c, 0xda, 0x35, 0x78, 0x83,
+	0x44, 0xb3, 0x10, 0x53, 0x47, 0x75, 0x40, 0x19, 0xc7, 0x8b, 0xb4, 0xd2, 0xab, 0x6d, 0xeb, 0x1d,
+	0x58, 0x63, 0x3d, 0xec, 0xc6, 0x8e, 0xe8, 0x1a, 0x52, 0x9d, 0x0b, 0x29, 0x06, 0x73, 0xad, 0x6d,
+	0xfc, 0x53, 0x6b, 0x9f, 0xc1, 0x2a, 0x23, 0x36, 0x12, 0xff, 0xf0, 0x41, 0xad, 0xec, 0xac, 0x6b,
+	0xb1, 0xc1, 0xb4, 0xd4, 0x60, 0x5a, 0xfa, 0xc1, 0xde, 0x32, 0x4b, 0xf4, 0xf9, 0x7b, 0x5b, 0x30,
+	0x0b, 0xc0, 0x2b, 0x9a, 0xd1, 0x7d, 0x90, 0xa7, 0xfb, 0x9b, 0x8d, 0x48, 0x82, 0x25, 0x52, 0x98,
+	0x4e, 0xfa, 0xa8, 0x7e, 0x10, 0xf8, 0x60, 0x0c, 0xec, 0xe1, 0x6b, 0x1b, 0x4c, 0xc9, 0xef, 0xf5,
+	0x29, 0xbf, 0xab, 0x1b, 0x5c, 0x7d, 0x49, 0x44, 0xaa, 0x5e, 0xfd, 0x22, 0x40, 0x2b, 0x2b, 0x2e,
+	0x99, 0x24, 0x2b, 0x29, 0xaf, 0x50, 0x9c, 0xa4, 0xdb, 0x00, 0x91, 0x84, 0xae, 0x73, 0xf8, 0xce,
+	0xc7, 0x61, 0x92, 0x6c, 0x12, 0x40, 0x08, 0x16, 0x7c, 0xab, 0x8f, 0x93, 0x5b, 0xc7, 0xcf, 0xa8,
+	0x05, 0x8d, 0x41, 0xe8, 0xf1, 0x11, 0x8a, 0x26, 0x3b, 0xa2, 0x9b, 0x99, 0x4b, 0x9a, 0x3c, 0x98,
+	0x4e, 0xbd, 0x05, 0x0d, 0x2b, 0x18, 0x4a, 0x8b, 0xf1, 0x97, 0x56, 0x30, 0x64, 0xc5, 0xb9, 0xd4,
+	0x24, 0x24, 0x8a, 0xf3, 0x2d, 0x75, 0x84, 0xcd, 0x65, 0x33, 0x1f, 0x52, 0x1f, 0x82, 0x54, 0x56,
+	0x9f, 0x0d, 0x66, 0x03, 0x44, 0x37, 0xf3, 0x6b, 0x5c, 0xc7, 0x24, 0xa0, 0xbe, 0xe2, 0x75, 0xc7,
+	0x6d, 0xb9, 0x86, 0xba, 0x55, 0x99, 0x2b, 0x2b, 0xf0, 0xa7, 0xca, 0x76, 0xce, 0x9a, 0xd0, 0x38,
+	0xa0, 0x0e, 0x3a, 0x13, 0xa0, 0x35, 0xb5, 0x0e, 0x77, 0xb4, 0x3f, 0x6e, 0x6c, 0x6d, 0xc6, 0xba,
+	0x90, 0x1f, 0xcf, 0x8f, 0xc9, 0xda, 0xf4, 0x1e, 0xfe, 0x2b, 0xaf, 0x8e, 0xed, 0xaa, 0x74, 0x19,
+	0x44, 0x7e, 0x34, 0x37, 0x24, 0x2f, 0xa0, 0x7c, 0x45, 0x2a, 0x08, 0x28, 0x41, 0xaa, 0x08, 0xf8,
+	0xcd, 0x1d, 0x40, 0x43, 0x58, 0x2b, 0xfa, 0x5f, 0xaf, 0x5a, 0x4c, 0x02, 0x90, 0x1f, 0xcc, 0x09,
+	0xc8, 0xa7, 0x2e, 0x5a, 0x50, 0xaf, 0x5a, 0xc6, 0x1c, 0xa9, 0x67, 0x9a, 0x70, 0x6f, 0xff, 0xfc,
+	0x52, 0x11, 0x2e, 0x2e, 0x15, 0xe1, 0xc7, 0xa5, 0x22, 0x7c, 0x1c, 0x2b, 0xb5, 0x8b, 0xb1, 0x52,
+	0xfb, 0x3a, 0x56, 0x6a, 0x2f, 0xb7, 0x1d, 0x37, 0xf2, 0xac, 0x78, 0x17, 0x31, 0xc2, 0xad, 0x84,
+	0x5d, 0xcf, 0xd8, 0xf5, 0x53, 0x3d, 0xfb, 0xa3, 0xc1, 0x56, 0xd3, 0xd1, 0x22, 0xdf, 0xc9, 0xf7,
+	0x7e, 0x05, 0x00, 0x00, 0xff, 0xff, 0x65, 0xe3, 0x0d, 0xd3, 0x80, 0x08, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -651,7 +650,7 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 
 func (c *msgClient) CreatePlaceOrder(ctx context.Context, in *MsgCreatePlaceOrder, opts ...grpc.CallOption) (*MsgCreatePlaceOrderResponse, error) {
 	out := new(MsgCreatePlaceOrderResponse)
-	err := c.cc.Invoke(ctx, "/joltify.joltifychain.invoice.Msg/CreatePlaceOrder", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/oppyfinance.oppychain.invoice.Msg/CreatePlaceOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -660,7 +659,7 @@ func (c *msgClient) CreatePlaceOrder(ctx context.Context, in *MsgCreatePlaceOrde
 
 func (c *msgClient) CreateSellOrder(ctx context.Context, in *MsgCreateSellOrder, opts ...grpc.CallOption) (*MsgCreateSellOrderResponse, error) {
 	out := new(MsgCreateSellOrderResponse)
-	err := c.cc.Invoke(ctx, "/joltify.joltifychain.invoice.Msg/CreateSellOrder", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/oppyfinance.oppychain.invoice.Msg/CreateSellOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -669,7 +668,7 @@ func (c *msgClient) CreateSellOrder(ctx context.Context, in *MsgCreateSellOrder,
 
 func (c *msgClient) DeleteSellOrder(ctx context.Context, in *MsgDeleteSellOrder, opts ...grpc.CallOption) (*MsgDeleteSellOrderResponse, error) {
 	out := new(MsgDeleteSellOrderResponse)
-	err := c.cc.Invoke(ctx, "/joltify.joltifychain.invoice.Msg/DeleteSellOrder", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/oppyfinance.oppychain.invoice.Msg/DeleteSellOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -678,7 +677,7 @@ func (c *msgClient) DeleteSellOrder(ctx context.Context, in *MsgDeleteSellOrder,
 
 func (c *msgClient) CreateInvoice(ctx context.Context, in *MsgCreateInvoice, opts ...grpc.CallOption) (*MsgCreateInvoiceResponse, error) {
 	out := new(MsgCreateInvoiceResponse)
-	err := c.cc.Invoke(ctx, "/joltify.joltifychain.invoice.Msg/CreateInvoice", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/oppyfinance.oppychain.invoice.Msg/CreateInvoice", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -687,7 +686,7 @@ func (c *msgClient) CreateInvoice(ctx context.Context, in *MsgCreateInvoice, opt
 
 func (c *msgClient) DeleteInvoice(ctx context.Context, in *MsgDeleteInvoice, opts ...grpc.CallOption) (*MsgDeleteInvoiceResponse, error) {
 	out := new(MsgDeleteInvoiceResponse)
-	err := c.cc.Invoke(ctx, "/joltify.joltifychain.invoice.Msg/DeleteInvoice", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/oppyfinance.oppychain.invoice.Msg/DeleteInvoice", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -738,7 +737,7 @@ func _Msg_CreatePlaceOrder_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/joltify.joltifychain.invoice.Msg/CreatePlaceOrder",
+		FullMethod: "/oppyfinance.oppychain.invoice.Msg/CreatePlaceOrder",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).CreatePlaceOrder(ctx, req.(*MsgCreatePlaceOrder))
@@ -756,7 +755,7 @@ func _Msg_CreateSellOrder_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/joltify.joltifychain.invoice.Msg/CreateSellOrder",
+		FullMethod: "/oppyfinance.oppychain.invoice.Msg/CreateSellOrder",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).CreateSellOrder(ctx, req.(*MsgCreateSellOrder))
@@ -774,7 +773,7 @@ func _Msg_DeleteSellOrder_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/joltify.joltifychain.invoice.Msg/DeleteSellOrder",
+		FullMethod: "/oppyfinance.oppychain.invoice.Msg/DeleteSellOrder",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).DeleteSellOrder(ctx, req.(*MsgDeleteSellOrder))
@@ -792,7 +791,7 @@ func _Msg_CreateInvoice_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/joltify.joltifychain.invoice.Msg/CreateInvoice",
+		FullMethod: "/oppyfinance.oppychain.invoice.Msg/CreateInvoice",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).CreateInvoice(ctx, req.(*MsgCreateInvoice))
@@ -810,7 +809,7 @@ func _Msg_DeleteInvoice_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/joltify.joltifychain.invoice.Msg/DeleteInvoice",
+		FullMethod: "/oppyfinance.oppychain.invoice.Msg/DeleteInvoice",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).DeleteInvoice(ctx, req.(*MsgDeleteInvoice))
@@ -819,7 +818,7 @@ func _Msg_DeleteInvoice_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 var _Msg_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "joltify.joltifychain.invoice.Msg",
+	ServiceName: "oppyfinance.oppychain.invoice.Msg",
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -1117,32 +1116,22 @@ func (m *MsgCreateInvoice) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0
 		}
 		i--
-		dAtA[i] = 0x48
+		dAtA[i] = 0x38
 	}
 	if len(m.Apy) > 0 {
 		i -= len(m.Apy)
 		copy(dAtA[i:], m.Apy)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.Apy)))
 		i--
-		dAtA[i] = 0x42
+		dAtA[i] = 0x32
 	}
-	if len(m.OrigOwner) > 0 {
-		i -= len(m.OrigOwner)
-		copy(dAtA[i:], m.OrigOwner)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.OrigOwner)))
+	if len(m.Amount) > 0 {
+		i -= len(m.Amount)
+		copy(dAtA[i:], m.Amount)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Amount)))
 		i--
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x2a
 	}
-	{
-		size := m.Amount.Size()
-		i -= size
-		if _, err := m.Amount.MarshalTo(dAtA[i:]); err != nil {
-			return 0, err
-		}
-		i = encodeVarintTx(dAtA, i, uint64(size))
-	}
-	i--
-	dAtA[i] = 0x32
 	if len(m.Url) > 0 {
 		i -= len(m.Url)
 		copy(dAtA[i:], m.Url)
@@ -1157,10 +1146,10 @@ func (m *MsgCreateInvoice) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.InvoiceID) > 0 {
-		i -= len(m.InvoiceID)
-		copy(dAtA[i:], m.InvoiceID)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.InvoiceID)))
+	if len(m.OrigOwner) > 0 {
+		i -= len(m.OrigOwner)
+		copy(dAtA[i:], m.OrigOwner)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.OrigOwner)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1388,7 +1377,7 @@ func (m *MsgCreateInvoice) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.InvoiceID)
+	l = len(m.OrigOwner)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1400,9 +1389,7 @@ func (m *MsgCreateInvoice) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = m.Amount.Size()
-	n += 1 + l + sovTx(uint64(l))
-	l = len(m.OrigOwner)
+	l = len(m.Amount)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -2225,7 +2212,7 @@ func (m *MsgCreateInvoice) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
 			}
-			var byteLen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTx
@@ -2235,29 +2222,27 @@ func (m *MsgCreateInvoice) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if byteLen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthTx
 			}
-			postIndex := iNdEx + byteLen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthTx
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Creator = append(m.Creator[:0], dAtA[iNdEx:postIndex]...)
-			if m.Creator == nil {
-				m.Creator = []byte{}
-			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field InvoiceID", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field OrigOwner", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2285,7 +2270,7 @@ func (m *MsgCreateInvoice) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.InvoiceID = string(dAtA[iNdEx:postIndex])
+			m.OrigOwner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -2351,11 +2336,11 @@ func (m *MsgCreateInvoice) Unmarshal(dAtA []byte) error {
 			}
 			m.Url = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
-			var byteLen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTx
@@ -2365,60 +2350,25 @@ func (m *MsgCreateInvoice) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if byteLen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthTx
 			}
-			postIndex := iNdEx + byteLen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthTx
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Amount = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OrigOwner", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.OrigOwner = append(m.OrigOwner[:0], dAtA[iNdEx:postIndex]...)
-			if m.OrigOwner == nil {
-				m.OrigOwner = []byte{}
-			}
-			iNdEx = postIndex
-		case 8:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Apy", wireType)
 			}
@@ -2450,7 +2400,7 @@ func (m *MsgCreateInvoice) Unmarshal(dAtA []byte) error {
 			}
 			m.Apy = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 9:
+		case 7:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field IsRootOwner", wireType)
 			}
@@ -2606,7 +2556,7 @@ func (m *MsgDeleteInvoice) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
 			}
-			var byteLen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTx
@@ -2616,31 +2566,29 @@ func (m *MsgDeleteInvoice) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if byteLen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthTx
 			}
-			postIndex := iNdEx + byteLen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthTx
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Creator = append(m.Creator[:0], dAtA[iNdEx:postIndex]...)
-			if m.Creator == nil {
-				m.Creator = []byte{}
-			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OrigOwner", wireType)
 			}
-			var byteLen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTx
@@ -2650,25 +2598,23 @@ func (m *MsgDeleteInvoice) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if byteLen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthTx
 			}
-			postIndex := iNdEx + byteLen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthTx
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.OrigOwner = append(m.OrigOwner[:0], dAtA[iNdEx:postIndex]...)
-			if m.OrigOwner == nil {
-				m.OrigOwner = []byte{}
-			}
+			m.OrigOwner = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {

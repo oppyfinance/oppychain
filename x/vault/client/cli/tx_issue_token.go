@@ -8,7 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 func CmdCreateIssueToken() *cobra.Command {
@@ -31,7 +31,6 @@ func CmdCreateIssueToken() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
 			msg, err := types.NewMsgCreateIssueToken(clientCtx.GetFromAddress().String(), index, argsCoin, argsReceiver)
 			if err != nil {
 				return err

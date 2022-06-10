@@ -1,6 +1,6 @@
 syntax = "proto3";
-package joltify.joltifychain.invoice;
-option go_package = "github.com/joltify/joltifyChain/x/invoice/types";
+package oppyfinance.oppychain.invoice;
+option go_package = "gitlab.com/oppy-finance/oppychain/x/invoice/types";
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";

@@ -1,14 +1,6 @@
-package keeper
+package keeper_test
 
-import (
-	"context"
-	"testing"
-
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/types"
-)
-
-func setupMsgServer(t testing.TB) (types.MsgServer, context.Context) {
-	keeper, ctx := setupKeeper(t)
-	return NewMsgServerImpl(*keeper), sdk.WrapSDKContext(ctx)
-}
+//func setupMsgServer(t testing.TB) (types.MsgServer, context.Context) {
+//	k, ctx := keepertest.SetupKeeper(t)
+//	return keeper.NewMsgServerImpl(*k), sdk.WrapSDKContext(ctx)
+//}

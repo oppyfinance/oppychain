@@ -1,18 +1,29 @@
 syntax = "proto3";
-package joltify.joltifychain.vault;
+package oppyfinance.oppychain.vault;
 
+import "vault/outbound_tx.proto";
 // this line is used by starport scaffolding # proto/tx/import
 //import "vault/create_pool.proto";
 
-option go_package = "github.com/joltify/joltifyChain/x/vault/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
 
 import "gogoproto/gogo.proto";
 // Msg defines the Msg service.
 service Msg {
-    // this line is used by starport scaffolding # proto/tx/rpc
+      rpc CreateOutboundTx(MsgCreateOutboundTx) returns (MsgCreateOutboundTxResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
   rpc CreateIssueToken(MsgCreateIssueToken) returns (MsgCreateIssueTokenResponse);
   rpc CreateCreatePool(MsgCreateCreatePool) returns (MsgCreateCreatePoolResponse);
 }
+
+message MsgCreateOutboundTx {
+  bytes creator = 1  [(gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress"];
+  string requestID = 2;
+  string outboundTx = 3;
+  string blockHeight =4;
+}
+
+message MsgCreateOutboundTxResponse {bool successful = 1;}
 
 // this line is used by starport scaffolding # proto/tx/message
 message MsgCreateIssueToken {

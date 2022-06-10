@@ -1,9 +1,9 @@
 syntax = "proto3";
-package joltify.joltifychain.vault;
+package oppyfinance.oppychain.vault;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "github.com/joltify/joltifyChain/x/vault/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
 
 message Params{
   option (gogoproto.equal)            = true;
@@ -17,4 +17,14 @@ message Params{
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable)   = false
   ];
+}
+
+message Validator{
+  bytes pubkey = 1;
+  int64 power = 2;
+}
+
+message Validators {
+  repeated Validator all_validators=1;
+  int64 height = 2;
 }

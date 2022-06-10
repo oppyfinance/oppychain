@@ -1,55 +1,82 @@
-package keeper
+package keeper_test
 
 import (
-	"fmt"
+	"encoding/hex"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
+	types2 "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"testing"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-
-	"gitlab.com/joltify/joltifychain/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 func setupBech32Prefix() {
 	config := sdk.GetConfig()
-	config.SetBech32PrefixForAccount("inv", "invpub")
-	config.SetBech32PrefixForValidator("invvaloper", "invvpub")
-	config.SetBech32PrefixForConsensusNode("invc", "invcpub")
+	config.SetBech32PrefixForAccount("jolt", "joltpub")
+	config.SetBech32PrefixForValidator("joltval", "joltvpub")
+	config.SetBech32PrefixForConsensusNode("joltvalcons", "joltcpub")
 }
 
 func TestCreatePoolMsgServerCreate(t *testing.T) {
 	setupBech32Prefix()
-	keeper, ctx := setupKeeper(t)
-	srv := NewMsgServerImpl(*keeper)
-	wctx := sdk.WrapSDKContext(ctx)
+	app, srv, wctx := setupMsgServer(t)
+	k := &app.VaultKeeper
 
-	creatorStr := "inv12k0nzax6dr3d9tssxne7ygmhdpj79rpx797a4k"
+	sk := ed25519.GenPrivKey()
+	desc := types2.NewDescription("tester", "testId", "www.test.com", "aaa", "aaa")
+	creatorStr := "jolt1f0atl7egduue8a07j42hyklct0sqa68wxem3lg"
 	creator, err := sdk.AccAddressFromBech32(creatorStr)
 	assert.Nil(t, err)
-	for i := 0; i < 5; i++ {
-		blockHeight := fmt.Sprintf("%d", i)
-		expected := &types.MsgCreateCreatePool{Creator: creator, BlockHeight: blockHeight, PoolPubKey: creatorStr}
-		_, err := srv.CreateCreatePool(wctx, expected)
-		require.NoError(t, err)
-		rst, found := keeper.GetCreatePool(ctx, expected.BlockHeight)
-		require.True(t, found)
-		assert.Equal(t, expected.PoolPubKey, rst.Proposal[0].PoolPubKey)
+	valAddr, err := sdk.ValAddressFromHex(hex.EncodeToString(creator.Bytes()))
+	assert.Nil(t, err)
+	testValidator, err := types2.NewValidator(valAddr, sk.PubKey(), desc)
+	require.NoError(t, err)
+
+	pubkey := "joltpub1zcjduepqhxmegjjucngmkkqjhs04u2z034943xslr3je678dxvt77pa5hqjskqd2eh"
+
+	ctx := sdk.UnwrapSDKContext(wctx)
+	historyInfo := types2.HistoricalInfo{
+		Valset: types2.Validators{testValidator},
 	}
+	app.StakingKeeper.SetHistoricalInfo(ctx, int64(1), &historyInfo)
+
+	expected := &types.MsgCreateCreatePool{Creator: creator, BlockHeight: "1", PoolPubKey: pubkey}
+	_, err = srv.CreateCreatePool(wctx, expected)
+	require.NoError(t, err)
+
+	rst, found := k.GetCreatePool(ctx, expected.BlockHeight)
+	require.True(t, found)
+	assert.Equal(t, expected.PoolPubKey, rst.Proposal[0].PoolPubKey)
 }
 
 func TestCreatePoolMsgServerCreateNotValidator(t *testing.T) {
 	setupBech32Prefix()
-	keeper, ctx := setupKeeper(t)
-	srv := NewMsgServerImpl(*keeper)
-	wctx := sdk.WrapSDKContext(ctx)
+	app, srv, wctx := setupMsgServer(t)
+	k := &app.VaultKeeper
+	ctx := sdk.UnwrapSDKContext(wctx)
 
-	creatorStr := "inv1tese9f53eatrggvmg0nrex3820k7t22ktd7yw4"
+	sk := ed25519.GenPrivKey()
+	desc := types2.NewDescription("tester", "testId", "www.test.com", "aaa", "aaa")
+	operatorStr := "jolt1f0atl7egduue8a07j42hyklct0sqa68wxem3lg"
+	operator, err := sdk.AccAddressFromBech32(operatorStr)
+	assert.Nil(t, err)
+	valAddr, err := sdk.ValAddressFromHex(hex.EncodeToString(operator.Bytes()))
+	assert.Nil(t, err)
+	testValidator, err := types2.NewValidator(valAddr, sk.PubKey(), desc)
+	require.NoError(t, err)
+	historyInfo := types2.HistoricalInfo{
+		Valset: types2.Validators{testValidator},
+	}
+	app.StakingKeeper.SetHistoricalInfo(ctx, int64(1), &historyInfo)
+
+	creatorStr := "jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg"
 	creator, err := sdk.AccAddressFromBech32(creatorStr)
 	assert.Nil(t, err)
 	expected := &types.MsgCreateCreatePool{Creator: creator, BlockHeight: "1", PoolPubKey: creatorStr}
 	_, err = srv.CreateCreatePool(wctx, expected)
 	require.NoError(t, err)
-	_, found := keeper.GetCreatePool(ctx, expected.BlockHeight)
+	_, found := k.GetCreatePool(ctx, expected.BlockHeight)
 	require.False(t, found)
 }

@@ -3,11 +3,10 @@ package keeper
 import (
 	"context"
 	"encoding/hex"
-
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
-	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/bech32/legacybech32" //nolint
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
 func (k msgServer) checkAddressInPool(pool []cryptotypes.Address, creator []byte) bool {
@@ -22,12 +21,13 @@ func (k msgServer) checkAddressInPool(pool []cryptotypes.Address, creator []byte
 func (k msgServer) getLastTwoPools(goCtx context.Context) ([]cryptotypes.Address, error) {
 	req := types.QueryLatestPoolRequest{}
 	lastTwoPools := make([]cryptotypes.Address, 2)
+
 	lastPoolsInfo, err := k.GetLastPool(goCtx, &req)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "fail to get the last pool address")
 	}
 
-	pk, err := sdk.GetPubKeyFromBech32(sdk.Bech32PubKeyTypeAccPub, lastPoolsInfo.GetPools()[0].GetCreatePool().PoolPubKey)
+	pk, err := legacybech32.UnmarshalPubKey(legacybech32.AccPK, lastPoolsInfo.GetPools()[0].GetCreatePool().PoolPubKey) //nolint
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func (k msgServer) getLastTwoPools(goCtx context.Context) ([]cryptotypes.Address
 
 	// now we get the pool address before the last
 	if len(lastPoolsInfo.GetPools()) == 2 {
-		pk, err := sdk.GetPubKeyFromBech32(sdk.Bech32PubKeyTypeAccPub, lastPoolsInfo.GetPools()[1].GetCreatePool().PoolPubKey)
+		pk, err := legacybech32.UnmarshalPubKey(legacybech32.AccPK, lastPoolsInfo.GetPools()[1].GetCreatePool().PoolPubKey) //nolint
 		if err != nil {
 			return nil, err
 		}

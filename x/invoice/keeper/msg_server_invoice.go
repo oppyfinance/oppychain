@@ -5,11 +5,12 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"strconv"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/tools"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/invoice/types"
-	"strconv"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/tools"
+	"gitlab.com/oppy-finance/oppychain/x/invoice/types"
 )
 
 func (k msgServer) createInvoiceBase(invoiceCrater, invoiceOwner sdk.AccAddress, name, url, denom string, amount sdk.Int, apyStr string) (types.InvoiceBase, types.InvoiceFinance, error) {
@@ -66,7 +67,7 @@ func (k msgServer) doCreateInvoice(ctx sdk.Context, creator, origOwner sdk.AccAd
 
 	invoiceBase, invoiceFinance, err := k.createInvoiceBase(creator, origOwner, name, url, denom, amount, apy)
 	if err != nil {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, fmt.Sprintf("fail to construct the invoice basic"))
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "fail to construct the invoice basic")
 	}
 	currentMember := types.InvoiceMember{
 		InvoiceID:     invoiceID,
@@ -92,7 +93,20 @@ func (k msgServer) doCreateInvoice(ctx sdk.Context, creator, origOwner sdk.AccAd
 
 func (k msgServer) CreateInvoice(goCtx context.Context, msg *types.MsgCreateInvoice) (*types.MsgCreateInvoiceResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	return k.doCreateInvoice(ctx, msg.Creator, msg.OrigOwner, msg.Name, msg.Amount, msg.Url, msg.Apy, msg.IsRootOwner)
+	amount, err := sdk.NewDecFromStr(msg.Amount)
+	if err != nil {
+		return nil, err
+	}
+	creator, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, err
+	}
+	originalOwner, err := sdk.AccAddressFromBech32(msg.OrigOwner)
+	if err != nil {
+		return nil, err
+	}
+
+	return k.doCreateInvoice(ctx, creator, originalOwner, msg.Name, amount.RoundInt(), msg.Url, msg.Apy, msg.IsRootOwner)
 }
 
 func (k msgServer) DeleteInvoice(goCtx context.Context, msg *types.MsgDeleteInvoice) (*types.MsgDeleteInvoiceResponse, error) {
@@ -101,7 +115,7 @@ func (k msgServer) DeleteInvoice(goCtx context.Context, msg *types.MsgDeleteInvo
 	// the invoice has no members except itself.
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	invoiceIDByte, err := tools.GenHash([]string{msg.Creator.String(), msg.OrigOwner.String(), msg.Name})
+	invoiceIDByte, err := tools.GenHash([]string{msg.Creator, msg.OrigOwner, msg.Name})
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, fmt.Sprintf("fail to hash the invoice data %v", err))
 	}
@@ -113,14 +127,16 @@ func (k msgServer) DeleteInvoice(goCtx context.Context, msg *types.MsgDeleteInvo
 	if !isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("the given invoice can not be found with ID:%v", invoiceID))
 	}
-
-	// Checks if the the msg sender is the same as the curre2t owner
-	if !msg.Creator.Equals(invFound.InvoiceBase.Creator) {
+	creator, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("the given invoice can not be found with ID:%v", invoiceID))
+	}
+	// Checks if the the msg sender is the same as the current owner
+	if !creator.Equals(invFound.InvoiceBase.Creator) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 	// burn the tokens
-
-	err = k.burnTokens(ctx, invFound.GetInvoiceFinance().Denom, invFound.GetInvoiceFinance().Amount, msg.Creator)
+	err = k.burnTokens(ctx, invFound.GetInvoiceFinance().Denom, invFound.GetInvoiceFinance().Amount, creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, fmt.Sprintf("fail to  burn the coins with error %v", err))
 	}

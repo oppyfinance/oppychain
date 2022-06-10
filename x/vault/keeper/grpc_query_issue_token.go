@@ -6,7 +6,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
-	"gitlab.com/joltify/joltifychain/joltifychain/x/vault/types"
+	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -24,14 +24,13 @@ func (k Keeper) IssueTokenAll(c context.Context, req *types.QueryAllIssueTokenRe
 
 	pageRes, err := query.Paginate(issueTokenStore, req.Pagination, func(key []byte, value []byte) error {
 		var issueToken types.IssueToken
-		if err := k.cdc.UnmarshalBinaryBare(value, &issueToken); err != nil {
+		if err := k.cdc.Unmarshal(value, &issueToken); err != nil {
 			return err
 		}
 
 		issueTokens = append(issueTokens, &issueToken)
 		return nil
 	})
-
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}

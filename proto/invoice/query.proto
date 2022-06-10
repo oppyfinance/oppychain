@@ -1,5 +1,5 @@
 syntax = "proto3";
-package joltify.joltifychain.invoice;
+package oppyfinance.oppychain.invoice;
 
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
@@ -8,7 +8,7 @@ import "invoice/place_order.proto";
 import "invoice/sell_order.proto";
 import "invoice/invoice.proto";
 
-option go_package = "github.com/joltify/joltifyChain/x/invoice/types";
+option go_package = "gitlab.com/oppy-finance/oppychain/x/invoice/types";
 
 // Query defines the gRPC querier service.
 service Query {
@@ -16,34 +16,34 @@ service Query {
 
 	// Queries a placeOrder by index.
 	rpc PlaceOrder(QueryGetPlaceOrderRequest) returns (QueryGetPlaceOrderResponse) {
-		option (google.api.http).get = "/joltify/joltifychain/invoice/placeOrder/{index}";
+		option (google.api.http).get = "/oppyfinance/oppyChaind/invoice/placeOrder/{index}";
 	}
 
 	// Queries a list of placeOrder items.
 	rpc PlaceOrderAll(QueryAllPlaceOrderRequest) returns (QueryAllPlaceOrderResponse) {
-		option (google.api.http).get = "/joltify/joltifychain/invoice/placeOrder";
+		option (google.api.http).get = "/oppyfinance/oppyChaind/invoice/placeOrder";
 	}
 
 
 	// Queries a sellOrder by index.
 	rpc SellOrder(QueryGetSellOrderRequest) returns (QueryGetSellOrderResponse) {
-		option (google.api.http).get = "/joltify/joltifychain/invoice/sellOrder/{index}";
+		option (google.api.http).get = "/oppyfinance/oppyChaind/invoice/sellOrder/{index}";
 	}
 
 	// Queries a list of sellOrder items.
 	rpc SellOrderAll(QueryAllSellOrderRequest) returns (QueryAllSellOrderResponse) {
-		option (google.api.http).get = "/joltify/joltifychain/invoice/sellOrder";
+		option (google.api.http).get = "/oppyfinance/oppyChaind/invoice/sellOrder";
 	}
 
 
 	// Queries a invoice by index.
 	rpc Invoice(QueryGetInvoiceRequest) returns (QueryGetInvoiceResponse) {
-		option (google.api.http).get = "/joltify/joltifychain/invoice/invoice/{index}";
+		option (google.api.http).get = "/oppyfinance/oppyChaind/invoice/invoice/{index}";
 	}
 
 	// Queries a list of invoice items.
 	rpc InvoiceAll(QueryAllInvoiceRequest) returns (QueryAllInvoiceResponse) {
-		option (google.api.http).get = "/joltify/joltifychain/invoice/invoice";
+		option (google.api.http).get = "/oppyfinance/oppyChaind/invoice/invoice";
 	}
 
 }

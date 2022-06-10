@@ -1,0 +1,34 @@
+package mint_test
+
+import (
+	"os"
+	path2 "path"
+	"runtime"
+	"testing"
+
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
+
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+
+	"github.com/stretchr/testify/require"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
+)
+
+func TestMintInitGenesis(t *testing.T) {
+
+	dir := os.TempDir()
+	pc, _, _, _ := runtime.Caller(1)
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
+	defer func(tempPath string) {
+		err := os.RemoveAll(tempPath)
+		require.NoError(t, err)
+	}(tempPath)
+	app := simapp.New(tempPath).(*oppyapp.App)
+	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
+
+	validateGenesis := types.ValidateGenesis(*types.DefaultGenesisState())
+	require.NoError(t, validateGenesis)
+
+	require.Equal(t, int64(0), app.MintKeeper.GetLastHalvenEpochNum(ctx))
+}
