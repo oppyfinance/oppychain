@@ -353,11 +353,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryAccountLockedCoins
    * @summary Return a locked coins that can't be withdrawn
-   * @request GET:/oopy/lockup/v1beta1/account_locked_coins/{owner}
+   * @request GET:/oppy/lockup/v1beta1/account_locked_coins/{owner}
    */
   queryAccountLockedCoins = (owner: string, params: RequestParams = {}) =>
     this.request<LockupAccountLockedCoinsResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/account_locked_coins/${owner}`,
+      path: `/oppy/lockup/v1beta1/account_locked_coins/${owner}`,
       method: "GET",
       format: "json",
       ...params,
@@ -369,11 +369,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryAccountLockedLongerDuration
    * @summary Returns account locked records with longer duration
-   * @request GET:/oopy/lockup/v1beta1/account_locked_longer_duration/{owner}
+   * @request GET:/oppy/lockup/v1beta1/account_locked_longer_duration/{owner}
    */
   queryAccountLockedLongerDuration = (owner: string, query?: { duration?: string }, params: RequestParams = {}) =>
     this.request<LockupAccountLockedLongerDurationResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/account_locked_longer_duration/${owner}`,
+      path: `/oppy/lockup/v1beta1/account_locked_longer_duration/${owner}`,
       method: "GET",
       query: query,
       format: "json",
@@ -386,7 +386,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryAccountLockedLongerDurationDenom
    * @summary Returns account's locked records for a denom with longer duration
-   * @request GET:/oopy/lockup/v1beta1/account_locked_longer_duration_denom/{owner}
+   * @request GET:/oppy/lockup/v1beta1/account_locked_longer_duration_denom/{owner}
    */
   queryAccountLockedLongerDurationDenom = (
     owner: string,
@@ -394,7 +394,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<LockupAccountLockedLongerDurationDenomResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/account_locked_longer_duration_denom/${owner}`,
+      path: `/oppy/lockup/v1beta1/account_locked_longer_duration_denom/${owner}`,
       method: "GET",
       query: query,
       format: "json",
@@ -408,7 +408,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
  * @name QueryAccountLockedLongerDurationNotUnlockingOnly
  * @summary Returns account locked records with longer duration excluding tokens
 started unlocking
- * @request GET:/oopy/lockup/v1beta1/account_locked_longer_duration_not_unlocking_only/{owner}
+ * @request GET:/oppy/lockup/v1beta1/account_locked_longer_duration_not_unlocking_only/{owner}
  */
   queryAccountLockedLongerDurationNotUnlockingOnly = (
     owner: string,
@@ -416,7 +416,7 @@ started unlocking
     params: RequestParams = {},
   ) =>
     this.request<LockupAccountLockedLongerDurationNotUnlockingOnlyResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/account_locked_longer_duration_not_unlocking_only/${owner}`,
+      path: `/oppy/lockup/v1beta1/account_locked_longer_duration_not_unlocking_only/${owner}`,
       method: "GET",
       query: query,
       format: "json",
@@ -429,11 +429,11 @@ started unlocking
    * @tags Query
    * @name QueryAccountLockedPastTime
    * @summary Returns locked records of an account with unlock time beyond timestamp
-   * @request GET:/oopy/lockup/v1beta1/account_locked_pasttime/{owner}
+   * @request GET:/oppy/lockup/v1beta1/account_locked_pasttime/{owner}
    */
   queryAccountLockedPastTime = (owner: string, query?: { timestamp?: string }, params: RequestParams = {}) =>
     this.request<LockupAccountLockedPastTimeResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/account_locked_pasttime/${owner}`,
+      path: `/oppy/lockup/v1beta1/account_locked_pasttime/${owner}`,
       method: "GET",
       query: query,
       format: "json",
@@ -446,7 +446,7 @@ started unlocking
    * @tags Query
    * @name QueryAccountLockedPastTimeDenom
    * @summary Returns lock records by address, timestamp, denom
-   * @request GET:/oopy/lockup/v1beta1/account_locked_pasttime_denom/{owner}
+   * @request GET:/oppy/lockup/v1beta1/account_locked_pasttime_denom/{owner}
    */
   queryAccountLockedPastTimeDenom = (
     owner: string,
@@ -454,7 +454,7 @@ started unlocking
     params: RequestParams = {},
   ) =>
     this.request<LockupAccountLockedPastTimeDenomResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/account_locked_pasttime_denom/${owner}`,
+      path: `/oppy/lockup/v1beta1/account_locked_pasttime_denom/${owner}`,
       method: "GET",
       query: query,
       format: "json",
@@ -468,7 +468,7 @@ started unlocking
  * @name QueryAccountLockedPastTimeNotUnlockingOnly
  * @summary Returns locked records of an account with unlock time beyond timestamp
 excluding tokens started unlocking
- * @request GET:/oopy/lockup/v1beta1/account_locked_pasttime_not_unlocking_only/{owner}
+ * @request GET:/oppy/lockup/v1beta1/account_locked_pasttime_not_unlocking_only/{owner}
  */
   queryAccountLockedPastTimeNotUnlockingOnly = (
     owner: string,
@@ -476,7 +476,7 @@ excluding tokens started unlocking
     params: RequestParams = {},
   ) =>
     this.request<LockupAccountLockedPastTimeNotUnlockingOnlyResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/account_locked_pasttime_not_unlocking_only/${owner}`,
+      path: `/oppy/lockup/v1beta1/account_locked_pasttime_not_unlocking_only/${owner}`,
       method: "GET",
       query: query,
       format: "json",
@@ -489,11 +489,11 @@ excluding tokens started unlocking
    * @tags Query
    * @name QueryAccountUnlockableCoins
    * @summary Returns unlockable coins which are not withdrawn yet
-   * @request GET:/oopy/lockup/v1beta1/account_unlockable_coins/{owner}
+   * @request GET:/oppy/lockup/v1beta1/account_unlockable_coins/{owner}
    */
   queryAccountUnlockableCoins = (owner: string, params: RequestParams = {}) =>
     this.request<LockupAccountUnlockableCoinsResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/account_unlockable_coins/${owner}`,
+      path: `/oppy/lockup/v1beta1/account_unlockable_coins/${owner}`,
       method: "GET",
       format: "json",
       ...params,
@@ -505,11 +505,11 @@ excluding tokens started unlocking
    * @tags Query
    * @name QueryAccountUnlockedBeforeTime
    * @summary Returns unlocked records with unlock time before timestamp
-   * @request GET:/oopy/lockup/v1beta1/account_unlocked_before_time/{owner}
+   * @request GET:/oppy/lockup/v1beta1/account_unlocked_before_time/{owner}
    */
   queryAccountUnlockedBeforeTime = (owner: string, query?: { timestamp?: string }, params: RequestParams = {}) =>
     this.request<LockupAccountUnlockedBeforeTimeResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/account_unlocked_before_time/${owner}`,
+      path: `/oppy/lockup/v1beta1/account_unlocked_before_time/${owner}`,
       method: "GET",
       query: query,
       format: "json",
@@ -522,11 +522,11 @@ excluding tokens started unlocking
    * @tags Query
    * @name QueryAccountUnlockingCoins
    * @summary Returns unlocking coins
-   * @request GET:/oopy/lockup/v1beta1/account_unlocking_coins/{owner}
+   * @request GET:/oppy/lockup/v1beta1/account_unlocking_coins/{owner}
    */
   queryAccountUnlockingCoins = (owner: string, params: RequestParams = {}) =>
     this.request<LockupAccountUnlockingCoinsResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/account_unlocking_coins/${owner}`,
+      path: `/oppy/lockup/v1beta1/account_unlocking_coins/${owner}`,
       method: "GET",
       format: "json",
       ...params,
@@ -538,11 +538,11 @@ excluding tokens started unlocking
    * @tags Query
    * @name QueryLockedById
    * @summary Returns lock record by id
-   * @request GET:/oopy/lockup/v1beta1/locked_by_id/{lock_id}
+   * @request GET:/oppy/lockup/v1beta1/locked_by_id/{lock_id}
    */
   queryLockedById = (lock_id: string, params: RequestParams = {}) =>
     this.request<LockupLockedResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/locked_by_id/${lock_id}`,
+      path: `/oppy/lockup/v1beta1/locked_by_id/${lock_id}`,
       method: "GET",
       format: "json",
       ...params,
@@ -554,11 +554,11 @@ excluding tokens started unlocking
    * @tags Query
    * @name QueryLockedDenom
    * @summary Returns total locked per denom with longer past given time
-   * @request GET:/oopy/lockup/v1beta1/locked_denom
+   * @request GET:/oppy/lockup/v1beta1/locked_denom
    */
   queryLockedDenom = (query?: { denom?: string; duration?: string }, params: RequestParams = {}) =>
     this.request<LockupLockedDenomResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/locked_denom`,
+      path: `/oppy/lockup/v1beta1/locked_denom`,
       method: "GET",
       query: query,
       format: "json",
@@ -571,11 +571,11 @@ excluding tokens started unlocking
    * @tags Query
    * @name QueryModuleBalance
    * @summary Return full balance of the module
-   * @request GET:/oopy/lockup/v1beta1/module_balance
+   * @request GET:/oppy/lockup/v1beta1/module_balance
    */
   queryModuleBalance = (params: RequestParams = {}) =>
     this.request<LockupModuleBalanceResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/module_balance`,
+      path: `/oppy/lockup/v1beta1/module_balance`,
       method: "GET",
       format: "json",
       ...params,
@@ -587,11 +587,11 @@ excluding tokens started unlocking
    * @tags Query
    * @name QueryModuleLockedAmount
    * @summary Return locked balance of the module
-   * @request GET:/oopy/lockup/v1beta1/module_locked_amount
+   * @request GET:/oppy/lockup/v1beta1/module_locked_amount
    */
   queryModuleLockedAmount = (params: RequestParams = {}) =>
     this.request<LockupModuleLockedAmountResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/module_locked_amount`,
+      path: `/oppy/lockup/v1beta1/module_locked_amount`,
       method: "GET",
       format: "json",
       ...params,
@@ -603,11 +603,11 @@ excluding tokens started unlocking
    * @tags Query
    * @name QuerySyntheticLockupsByLockupId
    * @summary Returns synthetic lockups by native lockup id
-   * @request GET:/oopy/lockup/v1beta1/synthetic_lockups_by_lock_id/{lock_id}
+   * @request GET:/oppy/lockup/v1beta1/synthetic_lockups_by_lock_id/{lock_id}
    */
   querySyntheticLockupsByLockupId = (lock_id: string, params: RequestParams = {}) =>
     this.request<LockupSyntheticLockupsByLockupIDResponse, RpcStatus>({
-      path: `/oopy/lockup/v1beta1/synthetic_lockups_by_lock_id/${lock_id}`,
+      path: `/oppy/lockup/v1beta1/synthetic_lockups_by_lock_id/${lock_id}`,
       method: "GET",
       format: "json",
       ...params,

@@ -397,7 +397,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryActiveGauges
    * @summary returns active gauges
-   * @request GET:/oopy/incentives/v1beta1/active_gauges
+   * @request GET:/oppy/incentives/v1beta1/active_gauges
    */
   queryActiveGauges = (
     query?: {
@@ -410,7 +410,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<IncentivesActiveGaugesResponse, RpcStatus>({
-      path: `/oopy/incentives/v1beta1/active_gauges`,
+      path: `/oppy/incentives/v1beta1/active_gauges`,
       method: "GET",
       query: query,
       format: "json",
@@ -423,7 +423,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryActiveGaugesPerDenom
    * @summary returns active gauges per denom
-   * @request GET:/oopy/incentives/v1beta1/active_gauges_per_denom
+   * @request GET:/oppy/incentives/v1beta1/active_gauges_per_denom
    */
   queryActiveGaugesPerDenom = (
     query?: {
@@ -437,7 +437,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<IncentivesActiveGaugesPerDenomResponse, RpcStatus>({
-      path: `/oopy/incentives/v1beta1/active_gauges_per_denom`,
+      path: `/oppy/incentives/v1beta1/active_gauges_per_denom`,
       method: "GET",
       query: query,
       format: "json",
@@ -450,11 +450,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryGaugeById
    * @summary returns Gauge by id
-   * @request GET:/oopy/incentives/v1beta1/gauge_by_id/{id}
+   * @request GET:/oppy/incentives/v1beta1/gauge_by_id/{id}
    */
   queryGaugeById = (id: string, params: RequestParams = {}) =>
     this.request<IncentivesGaugeByIDResponse, RpcStatus>({
-      path: `/oopy/incentives/v1beta1/gauge_by_id/${id}`,
+      path: `/oppy/incentives/v1beta1/gauge_by_id/${id}`,
       method: "GET",
       format: "json",
       ...params,
@@ -466,7 +466,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryGauges
    * @summary returns gauges both upcoming and active
-   * @request GET:/oopy/incentives/v1beta1/gauges
+   * @request GET:/oppy/incentives/v1beta1/gauges
    */
   queryGauges = (
     query?: {
@@ -479,7 +479,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<IncentivesGaugesResponse, RpcStatus>({
-      path: `/oopy/incentives/v1beta1/gauges`,
+      path: `/oppy/incentives/v1beta1/gauges`,
       method: "GET",
       query: query,
       format: "json",
@@ -492,11 +492,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryLockableDurations
    * @summary returns lockable durations that are valid to give incentives
-   * @request GET:/oopy/incentives/v1beta1/lockable_durations
+   * @request GET:/oppy/incentives/v1beta1/lockable_durations
    */
   queryLockableDurations = (params: RequestParams = {}) =>
     this.request<IncentivesQueryLockableDurationsResponse, RpcStatus>({
-      path: `/oopy/incentives/v1beta1/lockable_durations`,
+      path: `/oppy/incentives/v1beta1/lockable_durations`,
       method: "GET",
       format: "json",
       ...params,
@@ -508,11 +508,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryModuleDistributedCoins
    * @summary returns coins that are distributed by module so far
-   * @request GET:/oopy/incentives/v1beta1/module_distributed_coins
+   * @request GET:/oppy/incentives/v1beta1/module_distributed_coins
    */
   queryModuleDistributedCoins = (params: RequestParams = {}) =>
     this.request<IncentivesModuleDistributedCoinsResponse, RpcStatus>({
-      path: `/oopy/incentives/v1beta1/module_distributed_coins`,
+      path: `/oppy/incentives/v1beta1/module_distributed_coins`,
       method: "GET",
       format: "json",
       ...params,
@@ -524,11 +524,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryModuleToDistributeCoins
    * @summary returns coins that is going to be distributed
-   * @request GET:/oopy/incentives/v1beta1/module_to_distribute_coins
+   * @request GET:/oppy/incentives/v1beta1/module_to_distribute_coins
    */
   queryModuleToDistributeCoins = (params: RequestParams = {}) =>
     this.request<IncentivesModuleToDistributeCoinsResponse, RpcStatus>({
-      path: `/oopy/incentives/v1beta1/module_to_distribute_coins`,
+      path: `/oppy/incentives/v1beta1/module_to_distribute_coins`,
       method: "GET",
       format: "json",
       ...params,
@@ -542,11 +542,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
  * @summary RewardsEst returns an estimate of the rewards at a future specific time.
 The querier either provides an address or a set of locks
 for which they want to find the associated rewards.
- * @request GET:/oopy/incentives/v1beta1/rewards_est/{owner}
+ * @request GET:/oppy/incentives/v1beta1/rewards_est/{owner}
  */
   queryRewardsEst = (owner: string, query?: { lock_ids?: string[]; end_epoch?: string }, params: RequestParams = {}) =>
     this.request<IncentivesRewardsEstResponse, RpcStatus>({
-      path: `/oopy/incentives/v1beta1/rewards_est/${owner}`,
+      path: `/oppy/incentives/v1beta1/rewards_est/${owner}`,
       method: "GET",
       query: query,
       format: "json",
@@ -559,7 +559,7 @@ for which they want to find the associated rewards.
    * @tags Query
    * @name QueryUpcomingGauges
    * @summary returns scheduled gauges
-   * @request GET:/oopy/incentives/v1beta1/upcoming_gauges
+   * @request GET:/oppy/incentives/v1beta1/upcoming_gauges
    */
   queryUpcomingGauges = (
     query?: {
@@ -572,7 +572,7 @@ for which they want to find the associated rewards.
     params: RequestParams = {},
   ) =>
     this.request<IncentivesUpcomingGaugesResponse, RpcStatus>({
-      path: `/oopy/incentives/v1beta1/upcoming_gauges`,
+      path: `/oppy/incentives/v1beta1/upcoming_gauges`,
       method: "GET",
       query: query,
       format: "json",
@@ -585,7 +585,7 @@ for which they want to find the associated rewards.
    * @tags Query
    * @name QueryUpcomingGaugesPerDenom
    * @summary returns scheduled gauges per denom
-   * @request GET:/oopy/incentives/v1beta1/upcoming_gauges_per_denom
+   * @request GET:/oppy/incentives/v1beta1/upcoming_gauges_per_denom
    */
   queryUpcomingGaugesPerDenom = (
     query?: {
@@ -599,7 +599,7 @@ for which they want to find the associated rewards.
     params: RequestParams = {},
   ) =>
     this.request<IncentivesUpcomingGaugesPerDenomResponse, RpcStatus>({
-      path: `/oopy/incentives/v1beta1/upcoming_gauges_per_denom`,
+      path: `/oppy/incentives/v1beta1/upcoming_gauges_per_denom`,
       method: "GET",
       query: query,
       format: "json",

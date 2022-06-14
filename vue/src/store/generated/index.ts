@@ -14,11 +14,6 @@ import CosmosCosmosSdkCosmosStakingV1Beta1 from './cosmos/cosmos-sdk/cosmos.stak
 import CosmosCosmosSdkCosmosTxV1Beta1 from './cosmos/cosmos-sdk/cosmos.tx.v1beta1'
 import CosmosCosmosSdkCosmosUpgradeV1Beta1 from './cosmos/cosmos-sdk/cosmos.upgrade.v1beta1'
 import CosmosCosmosSdkCosmosVestingV1Beta1 from './cosmos/cosmos-sdk/cosmos.vesting.v1beta1'
-import CosmosIbcGoIbcApplicationsTransferV1 from './cosmos/ibc-go/ibc.applications.transfer.v1'
-import CosmosIbcGoIbcCoreChannelV1 from './cosmos/ibc-go/ibc.core.channel.v1'
-import CosmosIbcGoIbcCoreClientV1 from './cosmos/ibc-go/ibc.core.client.v1'
-import CosmosIbcGoIbcCoreConnectionV1 from './cosmos/ibc-go/ibc.core.connection.v1'
-import CosmosIbcGoIbcCorePortV1 from './cosmos/ibc-go/ibc.core.port.v1'
 import IbcGoV2IbcApplicationsTransferV1 from './ibc-go/v2/ibc.applications.transfer.v1'
 import IbcGoV2IbcCoreChannelV1 from './ibc-go/v2/ibc.core.channel.v1'
 import IbcGoV2IbcCoreClientV1 from './ibc-go/v2/ibc.core.client.v1'
@@ -51,11 +46,6 @@ export default {
   CosmosCosmosSdkCosmosTxV1Beta1: load(CosmosCosmosSdkCosmosTxV1Beta1, 'cosmos.tx.v1beta1'),
   CosmosCosmosSdkCosmosUpgradeV1Beta1: load(CosmosCosmosSdkCosmosUpgradeV1Beta1, 'cosmos.upgrade.v1beta1'),
   CosmosCosmosSdkCosmosVestingV1Beta1: load(CosmosCosmosSdkCosmosVestingV1Beta1, 'cosmos.vesting.v1beta1'),
-  CosmosIbcGoIbcApplicationsTransferV1: load(CosmosIbcGoIbcApplicationsTransferV1, 'ibc.applications.transfer.v1'),
-  CosmosIbcGoIbcCoreChannelV1: load(CosmosIbcGoIbcCoreChannelV1, 'ibc.core.channel.v1'),
-  CosmosIbcGoIbcCoreClientV1: load(CosmosIbcGoIbcCoreClientV1, 'ibc.core.client.v1'),
-  CosmosIbcGoIbcCoreConnectionV1: load(CosmosIbcGoIbcCoreConnectionV1, 'ibc.core.connection.v1'),
-  CosmosIbcGoIbcCorePortV1: load(CosmosIbcGoIbcCorePortV1, 'ibc.core.port.v1'),
   IbcGoV2IbcApplicationsTransferV1: load(IbcGoV2IbcApplicationsTransferV1, 'ibc.applications.transfer.v1'),
   IbcGoV2IbcCoreChannelV1: load(IbcGoV2IbcCoreChannelV1, 'ibc.core.channel.v1'),
   IbcGoV2IbcCoreClientV1: load(IbcGoV2IbcCoreClientV1, 'ibc.core.client.v1'),

@@ -404,11 +404,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryEpochProvisions
    * @summary EpochProvisions current minting epoch provisions value.
-   * @request GET:/oopy/mint/v1beta1/epoch_provisions
+   * @request GET:/oppy/mint/v1beta1/epoch_provisions
    */
   queryEpochProvisions = (params: RequestParams = {}) =>
     this.request<V1Beta1QueryEpochProvisionsResponse, RpcStatus>({
-      path: `/oopy/mint/v1beta1/epoch_provisions`,
+      path: `/oppy/mint/v1beta1/epoch_provisions`,
       method: "GET",
       format: "json",
       ...params,
@@ -420,11 +420,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryParams
    * @summary Params returns the total set of minting parameters.
-   * @request GET:/oopy/mint/v1beta1/params
+   * @request GET:/oppy/mint/v1beta1/params
    */
   queryParams = (params: RequestParams = {}) =>
     this.request<V1Beta1QueryParamsResponse, RpcStatus>({
-      path: `/oopy/mint/v1beta1/params`,
+      path: `/oppy/mint/v1beta1/params`,
       method: "GET",
       format: "json",
       ...params,

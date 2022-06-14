@@ -4,19 +4,19 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgDeleteInvoice } from "./types/invoice/tx";
 import { MsgDeleteSellOrder } from "./types/invoice/tx";
-import { MsgCreatePlaceOrder } from "./types/invoice/tx";
 import { MsgCreateInvoice } from "./types/invoice/tx";
 import { MsgCreateSellOrder } from "./types/invoice/tx";
+import { MsgCreatePlaceOrder } from "./types/invoice/tx";
+import { MsgDeleteInvoice } from "./types/invoice/tx";
 
 
 const types = [
-  ["/oppyfinance.oppychain.invoice.MsgDeleteInvoice", MsgDeleteInvoice],
   ["/oppyfinance.oppychain.invoice.MsgDeleteSellOrder", MsgDeleteSellOrder],
-  ["/oppyfinance.oppychain.invoice.MsgCreatePlaceOrder", MsgCreatePlaceOrder],
   ["/oppyfinance.oppychain.invoice.MsgCreateInvoice", MsgCreateInvoice],
   ["/oppyfinance.oppychain.invoice.MsgCreateSellOrder", MsgCreateSellOrder],
+  ["/oppyfinance.oppychain.invoice.MsgCreatePlaceOrder", MsgCreatePlaceOrder],
+  ["/oppyfinance.oppychain.invoice.MsgDeleteInvoice", MsgDeleteInvoice],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -49,11 +49,11 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgDeleteInvoice: (data: MsgDeleteInvoice): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.invoice.MsgDeleteInvoice", value: MsgDeleteInvoice.fromPartial( data ) }),
     msgDeleteSellOrder: (data: MsgDeleteSellOrder): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.invoice.MsgDeleteSellOrder", value: MsgDeleteSellOrder.fromPartial( data ) }),
-    msgCreatePlaceOrder: (data: MsgCreatePlaceOrder): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.invoice.MsgCreatePlaceOrder", value: MsgCreatePlaceOrder.fromPartial( data ) }),
     msgCreateInvoice: (data: MsgCreateInvoice): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.invoice.MsgCreateInvoice", value: MsgCreateInvoice.fromPartial( data ) }),
     msgCreateSellOrder: (data: MsgCreateSellOrder): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.invoice.MsgCreateSellOrder", value: MsgCreateSellOrder.fromPartial( data ) }),
+    msgCreatePlaceOrder: (data: MsgCreatePlaceOrder): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.invoice.MsgCreatePlaceOrder", value: MsgCreatePlaceOrder.fromPartial( data ) }),
+    msgDeleteInvoice: (data: MsgDeleteInvoice): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.invoice.MsgDeleteInvoice", value: MsgDeleteInvoice.fromPartial( data ) }),
     
   };
 };

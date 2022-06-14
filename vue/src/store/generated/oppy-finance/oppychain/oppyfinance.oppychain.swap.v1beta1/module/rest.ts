@@ -663,11 +663,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryNumPools
-   * @request GET:/oopy/swap/v1beta1/num_pools
+   * @request GET:/oppy/swap/v1beta1/num_pools
    */
   queryNumPools = (params: RequestParams = {}) =>
     this.request<V1Beta1QueryNumPoolsResponse, RpcStatus>({
-      path: `/oopy/swap/v1beta1/num_pools`,
+      path: `/oppy/swap/v1beta1/num_pools`,
       method: "GET",
       format: "json",
       ...params,
@@ -678,7 +678,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryPools
-   * @request GET:/oopy/swap/v1beta1/pools
+   * @request GET:/oppy/swap/v1beta1/pools
    */
   queryPools = (
     query?: {
@@ -691,7 +691,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<V1Beta1QueryPoolsResponse, RpcStatus>({
-      path: `/oopy/swap/v1beta1/pools`,
+      path: `/oppy/swap/v1beta1/pools`,
       method: "GET",
       query: query,
       format: "json",
@@ -704,11 +704,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryPool
    * @summary Per Pool gRPC Endpoints
-   * @request GET:/oopy/swap/v1beta1/pools/{poolId}
+   * @request GET:/oppy/swap/v1beta1/pools/{poolId}
    */
   queryPool = (poolId: string, params: RequestParams = {}) =>
     this.request<V1Beta1QueryPoolResponse, RpcStatus>({
-      path: `/oopy/swap/v1beta1/pools/${poolId}`,
+      path: `/oppy/swap/v1beta1/pools/${poolId}`,
       method: "GET",
       format: "json",
       ...params,
@@ -719,11 +719,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryPoolParams
-   * @request GET:/oopy/swap/v1beta1/pools/{poolId}/params
+   * @request GET:/oppy/swap/v1beta1/pools/{poolId}/params
    */
   queryPoolParams = (poolId: string, params: RequestParams = {}) =>
     this.request<V1Beta1QueryPoolParamsResponse, RpcStatus>({
-      path: `/oopy/swap/v1beta1/pools/${poolId}/params`,
+      path: `/oppy/swap/v1beta1/pools/${poolId}/params`,
       method: "GET",
       format: "json",
       ...params,
@@ -734,7 +734,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QuerySpotPrice
-   * @request GET:/oopy/swap/v1beta1/pools/{poolId}/prices
+   * @request GET:/oppy/swap/v1beta1/pools/{poolId}/prices
    */
   querySpotPrice = (
     poolId: string,
@@ -742,7 +742,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<V1Beta1QuerySpotPriceResponse, RpcStatus>({
-      path: `/oopy/swap/v1beta1/pools/${poolId}/prices`,
+      path: `/oppy/swap/v1beta1/pools/${poolId}/prices`,
       method: "GET",
       query: query,
       format: "json",
@@ -754,11 +754,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryPoolAssets
-   * @request GET:/oopy/swap/v1beta1/pools/{poolId}/tokens
+   * @request GET:/oppy/swap/v1beta1/pools/{poolId}/tokens
    */
   queryPoolAssets = (poolId: string, params: RequestParams = {}) =>
     this.request<V1Beta1QueryPoolAssetsResponse, RpcStatus>({
-      path: `/oopy/swap/v1beta1/pools/${poolId}/tokens`,
+      path: `/oppy/swap/v1beta1/pools/${poolId}/tokens`,
       method: "GET",
       format: "json",
       ...params,
@@ -769,11 +769,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryTotalShares
-   * @request GET:/oopy/swap/v1beta1/pools/{poolId}/total_shares
+   * @request GET:/oppy/swap/v1beta1/pools/{poolId}/total_shares
    */
   queryTotalShares = (poolId: string, params: RequestParams = {}) =>
     this.request<V1Beta1QueryTotalSharesResponse, RpcStatus>({
-      path: `/oopy/swap/v1beta1/pools/${poolId}/total_shares`,
+      path: `/oppy/swap/v1beta1/pools/${poolId}/total_shares`,
       method: "GET",
       format: "json",
       ...params,
@@ -784,11 +784,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryTotalLiquidity
-   * @request GET:/oopy/swap/v1beta1/total_liquidity
+   * @request GET:/oppy/swap/v1beta1/total_liquidity
    */
   queryTotalLiquidity = (params: RequestParams = {}) =>
     this.request<V1Beta1QueryTotalLiquidityResponse, RpcStatus>({
-      path: `/oopy/swap/v1beta1/total_liquidity`,
+      path: `/oppy/swap/v1beta1/total_liquidity`,
       method: "GET",
       format: "json",
       ...params,
@@ -800,7 +800,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryEstimateSwapExactAmountIn
    * @summary Estimate the swap.
-   * @request GET:/oopy/swap/v1beta1/{poolId}/estimate/swap_exact_amount_in
+   * @request GET:/oppy/swap/v1beta1/{poolId}/estimate/swap_exact_amount_in
    */
   queryEstimateSwapExactAmountIn = (
     poolId: string,
@@ -808,7 +808,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<V1Beta1QuerySwapExactAmountInResponse, RpcStatus>({
-      path: `/oopy/swap/v1beta1/${poolId}/estimate/swap_exact_amount_in`,
+      path: `/oppy/swap/v1beta1/${poolId}/estimate/swap_exact_amount_in`,
       method: "GET",
       query: query,
       format: "json",
@@ -820,7 +820,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryEstimateSwapExactAmountOut
-   * @request GET:/oopy/swap/v1beta1/{poolId}/estimate/swap_exact_amount_out
+   * @request GET:/oppy/swap/v1beta1/{poolId}/estimate/swap_exact_amount_out
    */
   queryEstimateSwapExactAmountOut = (
     poolId: string,
@@ -828,7 +828,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<V1Beta1QuerySwapExactAmountOutResponse, RpcStatus>({
-      path: `/oopy/swap/v1beta1/${poolId}/estimate/swap_exact_amount_out`,
+      path: `/oppy/swap/v1beta1/${poolId}/estimate/swap_exact_amount_out`,
       method: "GET",
       query: query,
       format: "json",

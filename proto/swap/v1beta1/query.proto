@@ -15,48 +15,48 @@ option go_package = "gitlab.com/oppy-finance/oppychain/x/swap/types";
 
 service Query {
   rpc Pools(QueryPoolsRequest) returns (QueryPoolsResponse) {
-    option (google.api.http).get = "/oopy/swap/v1beta1/pools";
+    option (google.api.http).get = "/oppy/swap/v1beta1/pools";
   }
   rpc NumPools(QueryNumPoolsRequest) returns (QueryNumPoolsResponse) {
-    option (google.api.http).get = "/oopy/swap/v1beta1/num_pools";
+    option (google.api.http).get = "/oppy/swap/v1beta1/num_pools";
   }
   rpc TotalLiquidity(QueryTotalLiquidityRequest)
       returns (QueryTotalLiquidityResponse) {
-    option (google.api.http).get = "/oopy/swap/v1beta1/total_liquidity";
+    option (google.api.http).get = "/oppy/swap/v1beta1/total_liquidity";
   }
 
   // Per Pool gRPC Endpoints
   rpc Pool(QueryPoolRequest) returns (QueryPoolResponse) {
-    option (google.api.http).get = "/oopy/swap/v1beta1/pools/{poolId}";
+    option (google.api.http).get = "/oppy/swap/v1beta1/pools/{poolId}";
   }
   rpc PoolParams(QueryPoolParamsRequest) returns (QueryPoolParamsResponse) {
     option (google.api.http).get =
-        "/oopy/swap/v1beta1/pools/{poolId}/params";
+        "/oppy/swap/v1beta1/pools/{poolId}/params";
   }
 
   rpc TotalShares(QueryTotalSharesRequest) returns (QueryTotalSharesResponse) {
     option (google.api.http).get =
-        "/oopy/swap/v1beta1/pools/{poolId}/total_shares";
+        "/oppy/swap/v1beta1/pools/{poolId}/total_shares";
   }
   rpc PoolAssets(QueryPoolAssetsRequest) returns (QueryPoolAssetsResponse) {
     option (google.api.http).get =
-        "/oopy/swap/v1beta1/pools/{poolId}/tokens";
+        "/oppy/swap/v1beta1/pools/{poolId}/tokens";
   }
   rpc SpotPrice(QuerySpotPriceRequest) returns (QuerySpotPriceResponse) {
     option (google.api.http).get =
-        "/oopy/swap/v1beta1/pools/{poolId}/prices";
+        "/oppy/swap/v1beta1/pools/{poolId}/prices";
   }
 
   // Estimate the swap.
   rpc EstimateSwapExactAmountIn(QuerySwapExactAmountInRequest)
       returns (QuerySwapExactAmountInResponse) {
     option (google.api.http).get =
-        "/oopy/swap/v1beta1/{poolId}/estimate/swap_exact_amount_in";
+        "/oppy/swap/v1beta1/{poolId}/estimate/swap_exact_amount_in";
   }
   rpc EstimateSwapExactAmountOut(QuerySwapExactAmountOutRequest)
       returns (QuerySwapExactAmountOutResponse) {
     option (google.api.http).get =
-        "/oopy/swap/v1beta1/{poolId}/estimate/swap_exact_amount_out";
+        "/oppy/swap/v1beta1/{poolId}/estimate/swap_exact_amount_out";
   }
 }
 

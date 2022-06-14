@@ -4,15 +4,15 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgLockTokens } from "./types/lockup/tx";
 import { MsgBeginUnlockingAll } from "./types/lockup/tx";
 import { MsgBeginUnlocking } from "./types/lockup/tx";
+import { MsgLockTokens } from "./types/lockup/tx";
 
 
 const types = [
-  ["/oppyfinance.oppychain.lockup.MsgLockTokens", MsgLockTokens],
   ["/oppyfinance.oppychain.lockup.MsgBeginUnlockingAll", MsgBeginUnlockingAll],
   ["/oppyfinance.oppychain.lockup.MsgBeginUnlocking", MsgBeginUnlocking],
+  ["/oppyfinance.oppychain.lockup.MsgLockTokens", MsgLockTokens],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -45,9 +45,9 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgLockTokens: (data: MsgLockTokens): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.lockup.MsgLockTokens", value: MsgLockTokens.fromPartial( data ) }),
     msgBeginUnlockingAll: (data: MsgBeginUnlockingAll): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.lockup.MsgBeginUnlockingAll", value: MsgBeginUnlockingAll.fromPartial( data ) }),
     msgBeginUnlocking: (data: MsgBeginUnlocking): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.lockup.MsgBeginUnlocking", value: MsgBeginUnlocking.fromPartial( data ) }),
+    msgLockTokens: (data: MsgLockTokens): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.lockup.MsgLockTokens", value: MsgLockTokens.fromPartial( data ) }),
     
   };
 };

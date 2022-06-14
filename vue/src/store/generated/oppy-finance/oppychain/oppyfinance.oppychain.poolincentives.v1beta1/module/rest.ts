@@ -326,11 +326,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryDistrInfo
-   * @request GET:/oopy/pool_incentives/v1beta1/distr_info
+   * @request GET:/oppy/pool_incentives/v1beta1/distr_info
    */
   queryDistrInfo = (params: RequestParams = {}) =>
     this.request<V1Beta1QueryDistrInfoResponse, RpcStatus>({
-      path: `/oopy/pool_incentives/v1beta1/distr_info`,
+      path: `/oppy/pool_incentives/v1beta1/distr_info`,
       method: "GET",
       format: "json",
       ...params,
@@ -341,11 +341,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryExternalIncentiveGauges
-   * @request GET:/oopy/pool_incentives/v1beta1/external_incentive_gauges
+   * @request GET:/oppy/pool_incentives/v1beta1/external_incentive_gauges
    */
   queryExternalIncentiveGauges = (params: RequestParams = {}) =>
     this.request<V1Beta1QueryExternalIncentiveGaugesResponse, RpcStatus>({
-      path: `/oopy/pool_incentives/v1beta1/external_incentive_gauges`,
+      path: `/oppy/pool_incentives/v1beta1/external_incentive_gauges`,
       method: "GET",
       format: "json",
       ...params,
@@ -357,11 +357,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryGaugeIds
    * @summary GaugeIds takes the pool id and returns the matching gauge ids and durations
-   * @request GET:/oopy/pool_incentives/v1beta1/gauge-ids/{pool_id}
+   * @request GET:/oppy/pool_incentives/v1beta1/gauge-ids/{pool_id}
    */
   queryGaugeIds = (pool_id: string, params: RequestParams = {}) =>
     this.request<V1Beta1QueryGaugeIdsResponse, RpcStatus>({
-      path: `/oopy/pool_incentives/v1beta1/gauge-ids/${pool_id}`,
+      path: `/oppy/pool_incentives/v1beta1/gauge-ids/${pool_id}`,
       method: "GET",
       format: "json",
       ...params,
@@ -372,11 +372,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryIncentivizedPools
-   * @request GET:/oopy/pool_incentives/v1beta1/incentivized_pools
+   * @request GET:/oppy/pool_incentives/v1beta1/incentivized_pools
    */
   queryIncentivizedPools = (params: RequestParams = {}) =>
     this.request<V1Beta1QueryIncentivizedPoolsResponse, RpcStatus>({
-      path: `/oopy/pool_incentives/v1beta1/incentivized_pools`,
+      path: `/oppy/pool_incentives/v1beta1/incentivized_pools`,
       method: "GET",
       format: "json",
       ...params,
@@ -387,11 +387,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryLockableDurations
-   * @request GET:/oopy/pool_incentives/v1beta1/lockable_durations
+   * @request GET:/oppy/pool_incentives/v1beta1/lockable_durations
    */
   queryLockableDurations = (params: RequestParams = {}) =>
     this.request<V1Beta1QueryLockableDurationsResponse, RpcStatus>({
-      path: `/oopy/pool_incentives/v1beta1/lockable_durations`,
+      path: `/oppy/pool_incentives/v1beta1/lockable_durations`,
       method: "GET",
       format: "json",
       ...params,
@@ -402,11 +402,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    *
    * @tags Query
    * @name QueryParams
-   * @request GET:/oopy/pool_incentives/v1beta1/params
+   * @request GET:/oppy/pool_incentives/v1beta1/params
    */
   queryParams = (params: RequestParams = {}) =>
     this.request<V1Beta1QueryParamsResponse, RpcStatus>({
-      path: `/oopy/pool_incentives/v1beta1/params`,
+      path: `/oppy/pool_incentives/v1beta1/params`,
       method: "GET",
       format: "json",
       ...params,
