@@ -120,7 +120,7 @@ func (k Keeper) NewUpdate(ctx sdk.Context) []abci.ValidatorUpdate {
 
 	// blockHeight := k.GetParams(ctx).BlockChurnInterval
 	// if ctx.BlockHeight() > 10 && ctx.BlockHeight()%blockHeight == 0 {
-	if ctx.BlockHeight() == 20 || ctx.BlockHeight() == 40 || ctx.BlockHeight() == 60 {
+	if ctx.BlockHeight() == 80 || ctx.BlockHeight() == 100 || ctx.BlockHeight() == 120 {
 		ctx.EventManager().EmitEvents(sdk.Events{
 			sdk.NewEvent(
 				vaulttypes.EventTypeCompleteChurn,
