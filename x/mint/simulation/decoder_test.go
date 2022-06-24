@@ -2,16 +2,17 @@ package simulation_test
 
 import (
 	"fmt"
-	"testing"
-
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
+	"testing"
+
 	"github.com/stretchr/testify/require"
+
+	"gitlab.com/oppy-finance/oppychain/x/mint/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/kv"
-	"gitlab.com/oppy-finance/oppychain/x/mint/simulation"
-	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 func TestDecodeStore(t *testing.T) {

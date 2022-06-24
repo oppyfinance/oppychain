@@ -1,10 +1,11 @@
 package keeper
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	epochstypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
 	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 func (k Keeper) BeforeEpochStart(ctx sdk.Context, epochIdentifier string, epochNumber int64) {
@@ -17,13 +18,14 @@ func (k Keeper) AfterEpochEnd(ctx sdk.Context, epochIdentifier string, epochNumb
 		gauges := k.GetUpcomingGauges(ctx)
 		for _, gauge := range gauges {
 			if !ctx.BlockTime().Before(gauge.StartTime) {
-				if err := k.BeginDistribution(ctx, gauge); err != nil {
+				if err := k.moveUpcomingGaugeToActiveGauge(ctx, gauge); err != nil {
 					panic(err)
 				}
 			}
 		}
 
 		// distribute due to epoch event
+		//TODO we disable the increate the capacity of the event manager
 		//ctx.EventManager().IncreaseCapacity(2e6)
 		gauges = k.GetActiveGauges(ctx)
 		// only distribute to active gauges that are for native denoms
@@ -46,19 +48,19 @@ func (k Keeper) AfterEpochEnd(ctx sdk.Context, epochIdentifier string, epochNumb
 
 // ___________________________________________________________________________________________________
 
-// Hooks wrapper struct for incentives keeper
+// Hooks wrapper struct for incentives keeper.
 type Hooks struct {
 	k Keeper
 }
 
 var _ epochstypes.EpochHooks = Hooks{}
 
-// Return the wrapper struct
+// Return the wrapper struct.
 func (k Keeper) Hooks() Hooks {
 	return Hooks{k}
 }
 
-// epochs hooks
+// epochs hooks.
 func (h Hooks) BeforeEpochStart(ctx sdk.Context, epochIdentifier string, epochNumber int64) {
 	h.k.BeforeEpochStart(ctx, epochIdentifier, epochNumber)
 }

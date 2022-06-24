@@ -7,12 +7,13 @@ import (
 
 	"github.com/stretchr/testify/require"
 
+	"gitlab.com/oppy-finance/oppychain/x/mint/simulation"
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
-	"gitlab.com/oppy-finance/oppychain/x/mint/simulation"
-	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 // TestRandomizedGenState tests the normal scenario of applying RandomizedGenState.

@@ -1,7 +1,6 @@
 package types
 
 import (
-	"fmt"
 	"math/rand"
 	"testing"
 
@@ -40,10 +39,4 @@ func BenchmarkNextEpochProvisions(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		minter.NextEpochProvisions(params)
 	}
-}
-
-func BenchmarkDefaultInitialMinter2(b *testing.B) {
-	a, _ := sdk.NewDecFromStr("0.12")
-	fmt.Printf(">>>>>>>>%v\n", a.String())
-
 }

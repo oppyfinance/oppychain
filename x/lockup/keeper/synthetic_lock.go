@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/gogo/protobuf/proto"
+
 	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 func (k Keeper) setSyntheticLockupObject(ctx sdk.Context, synthLock *types.SyntheticLock) error {
@@ -101,7 +103,7 @@ func (k Keeper) GetAllSyntheticLockups(ctx sdk.Context) []types.SyntheticLock {
 	return synthLocks
 }
 
-// CreateSyntheticLockup create synthetic lockup with lock id and synthdenom
+// CreateSyntheticLockup create synthetic lockup with lock id and synthdenom.
 func (k Keeper) CreateSyntheticLockup(ctx sdk.Context, lockID uint64, synthDenom string, unlockDuration time.Duration, isUnlocking bool) error {
 	// Note: synthetic lockup is doing everything same as lockup except coin movement
 	// There is no relationship between unbonding and bonding synthetic lockup, it's managed separately
@@ -152,7 +154,7 @@ func (k Keeper) CreateSyntheticLockup(ctx sdk.Context, lockID uint64, synthDenom
 	return nil
 }
 
-// DeleteSyntheticLockup delete synthetic lockup with lock id and synthdenom
+// DeleteSyntheticLockup delete synthetic lockup with lock id and synthdenom.
 func (k Keeper) DeleteSyntheticLockup(ctx sdk.Context, lockID uint64, synthdenom string) error {
 	synthLock, err := k.GetSyntheticLockup(ctx, lockID, synthdenom)
 	if err != nil {

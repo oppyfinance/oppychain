@@ -1,8 +1,10 @@
 package keeper_test
 
 import (
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 
+	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/stretchr/testify/assert"
@@ -14,15 +16,16 @@ import (
 )
 
 func TestCreatePoolQuerySingle(t *testing.T) {
+	utils.SetAddressPrefixes()
 	app, _, wctx := setupMsgServer(t)
 	k := &app.VaultKeeper
 	ctx := sdk.UnwrapSDKContext(wctx)
-	addressesStr := []string{"jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d", "jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg", "jolt17fczazdur0g04jtedlwp837r0vzktvwc0gx0fg"}
-	addresses := make([]sdk.AccAddress, 3)
-	var err error
+
+	var addresses []sdk.AccAddress
 	for i := 0; i < 3; i++ {
-		addresses[i], err = sdk.AccAddressFromBech32(addressesStr[i])
-		assert.Nil(t, err)
+		sk := ed25519.GenPrivKey()
+		addr := sk.PubKey().Address().Bytes()
+		addresses = append(addresses, addr)
 	}
 
 	msgs := createNCreatePool(k, ctx, 2, addresses)
@@ -65,13 +68,14 @@ func TestCreatePoolQuerySingle(t *testing.T) {
 }
 
 func TestCreatePoolQueryPaginated(t *testing.T) {
-	addressesStr := []string{"jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d", "jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg", "jolt17fczazdur0g04jtedlwp837r0vzktvwc0gx0fg"}
-	addresses := make([]sdk.AccAddress, 3)
-	var err error
+
+	var addresses []sdk.AccAddress
 	for i := 0; i < 3; i++ {
-		addresses[i], err = sdk.AccAddressFromBech32(addressesStr[i])
-		assert.Nil(t, err)
+		sk := ed25519.GenPrivKey()
+		addr := sk.PubKey().Address().Bytes()
+		addresses = append(addresses, addr)
 	}
+
 	app, _, wctx := setupMsgServer(t)
 	ctx := sdk.UnwrapSDKContext(wctx)
 	k := &app.VaultKeeper

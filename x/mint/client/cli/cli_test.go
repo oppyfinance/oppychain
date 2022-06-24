@@ -11,10 +11,12 @@ import (
 	"github.com/stretchr/testify/suite"
 	tmcli "github.com/tendermint/tendermint/libs/cli"
 
+	"gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/x/mint/client/cli"
+
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
-	"gitlab.com/oppy-finance/oppychain/testutil/network"
-	"gitlab.com/oppy-finance/oppychain/x/mint/client/cli"
+	"github.com/cosmos/cosmos-sdk/testutil/network"
 )
 
 type IntegrationTestSuite struct {
@@ -27,7 +29,7 @@ type IntegrationTestSuite struct {
 func (s *IntegrationTestSuite) SetupSuite() {
 	s.T().Log("setting up integration test suite")
 
-	s.cfg = network.DefaultConfig()
+	s.cfg = app.DefaultConfig()
 
 	s.network = network.New(s.T(), s.cfg)
 
@@ -37,6 +39,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 
 func (s *IntegrationTestSuite) TearDownSuite() {
 	s.T().Log("tearing down integration test suite")
+	s.network.Cleanup()
 }
 
 func (s *IntegrationTestSuite) TestGetCmdQueryParams() {
@@ -50,14 +53,14 @@ func (s *IntegrationTestSuite) TestGetCmdQueryParams() {
 		{
 			"json output",
 			[]string{fmt.Sprintf("--%s=1", flags.FlagHeight), fmt.Sprintf("--%s=json", tmcli.OutputFlag)},
-			`{"mint_denom":"stake","genesis_epoch_provisions":"5000000.000000000000000000","epoch_identifier":"week","reduction_period_in_epochs":"156","reduction_factor":"0.500000000000000000","distribution_proportions":{"staking":"0.400000000000000000","pool_incentives":"0.300000000000000000","developer_rewards":"0.000000000000000000","community_pool":"0.300000000000000000"},"weighted_developer_rewards_receivers":[],"minting_rewards_distribution_start_epoch":"0"}`,
+			`{"mint_denom":"stake","genesis_epoch_provisions":"5000000.000000000000000000","epoch_identifier":"week","reduction_period_in_epochs":"156","reduction_factor":"0.500000000000000000","distribution_proportions":{"staking":"0.400000000000000000","pool_incentives":"0.300000000000000000","developer_rewards":"0.200000000000000000","community_pool":"0.100000000000000000"},"weighted_developer_rewards_receivers":[],"minting_rewards_distribution_start_epoch":"0"}`,
 		},
 		{
 			"text output",
 			[]string{fmt.Sprintf("--%s=1", flags.FlagHeight), fmt.Sprintf("--%s=text", tmcli.OutputFlag)},
 			`distribution_proportions:
-  community_pool: "0.300000000000000000"
-  developer_rewards: "0.000000000000000000"
+  community_pool: "0.100000000000000000"
+  developer_rewards: "0.200000000000000000"
   pool_incentives: "0.300000000000000000"
   staking: "0.400000000000000000"
 epoch_identifier: week

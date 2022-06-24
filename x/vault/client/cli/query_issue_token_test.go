@@ -2,6 +2,7 @@ package cli_test
 
 import (
 	"fmt"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"strconv"
 	"testing"
 
@@ -22,13 +23,13 @@ import (
 )
 
 func networkWithIssueTokenObjects(t *testing.T, n int) (*network.Network, []*types.IssueToken) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	t.Helper()
 	cfg := network.DefaultConfig()
 	state := types.GenesisState{}
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[types.ModuleName], &state))
 
-	addr, err := sdk.AccAddressFromBech32("jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg")
+	addr, err := sdk.AccAddressFromBech32("oppy1txtsnx4gr4effr8542778fsxc20j5vzq7wu7r7")
 	require.Nil(t, err)
 
 	for i := 0; i < n; i++ {

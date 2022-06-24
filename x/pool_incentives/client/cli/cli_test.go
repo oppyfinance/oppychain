@@ -1,12 +1,14 @@
 package cli_test
 
 import (
-	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
-	"gitlab.com/oppy-finance/oppychain/testutil/network"
+
 	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/client/cli"
 	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
+
+	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
+	"github.com/cosmos/cosmos-sdk/testutil/network"
 )
 
 type IntegrationTestSuite struct {
@@ -20,6 +22,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 	s.T().Log("setting up integration test suite")
 
 	s.cfg = network.DefaultConfig()
+
 	s.network = network.New(s.T(), s.cfg)
 
 	_, err := s.network.WaitForHeight(1)
@@ -28,6 +31,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 
 func (s *IntegrationTestSuite) TearDownSuite() {
 	s.T().Log("tearing down integration test suite")
+	s.network.Cleanup()
 }
 
 func (s *IntegrationTestSuite) TestGetCmdGaugeIds() {

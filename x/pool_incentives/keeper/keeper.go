@@ -4,15 +4,17 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/tendermint/tendermint/libs/log"
+
+	incentivestypes "gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
+	swaptypes "gitlab.com/oppy-finance/oppychain/x/swap/types"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
-	"github.com/tendermint/tendermint/libs/log"
-	incentivestypes "gitlab.com/oppy-finance/oppychain/x/incentives/types"
-	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
-	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
-	gammtypes "gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 type Keeper struct {
@@ -72,7 +74,7 @@ func (k Keeper) CreatePoolGauges(ctx sdk.Context, poolId uint64) error {
 			sdk.Coins{},
 			lockuptypes.QueryCondition{
 				LockQueryType: lockuptypes.ByDuration,
-				Denom:         gammtypes.GetPoolShareDenom(poolId),
+				Denom:         swaptypes.GetPoolShareDenom(poolId),
 				Duration:      lockableDuration,
 				Timestamp:     time.Time{},
 			},
@@ -148,9 +150,4 @@ func (k Keeper) GetLockableDurations(ctx sdk.Context) []time.Duration {
 func (k Keeper) GetAllGauges(ctx sdk.Context) []incentivestypes.Gauge {
 	gauges := k.incentivesKeeper.GetGauges(ctx)
 	return gauges
-}
-
-func (k Keeper) ExportGenesis(ctx sdk.Context) interface{} {
-	fmt.Println("you have hit a very silly placeholder, smartly suggested by the IDE")
-	return nil
 }

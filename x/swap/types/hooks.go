@@ -13,35 +13,35 @@ type SwapHooks interface {
 	AfterSwap(ctx sdk.Context, sender sdk.AccAddress, poolId uint64, input sdk.Coins, output sdk.Coins)
 }
 
-var _ SwapHooks = MultiGammHooks{}
+var _ SwapHooks = MultiswapHooks{}
 
-// combine multiple swap hooks, all hook functions are run in array sequence
-type MultiGammHooks []SwapHooks
+// combine multiple swap hooks, all hook functions are run in array sequence.
+type MultiswapHooks []SwapHooks
 
-// Creates hooks for the swap Module
-func NewMultiSwapHooks(hooks ...SwapHooks) MultiGammHooks {
+// Creates hooks for the swap Module.
+func NewMultiSwapHooks(hooks ...SwapHooks) MultiswapHooks {
 	return hooks
 }
 
-func (h MultiGammHooks) AfterPoolCreated(ctx sdk.Context, sender sdk.AccAddress, poolId uint64) {
+func (h MultiswapHooks) AfterPoolCreated(ctx sdk.Context, sender sdk.AccAddress, poolId uint64) {
 	for i := range h {
 		h[i].AfterPoolCreated(ctx, sender, poolId)
 	}
 }
 
-func (h MultiGammHooks) AfterJoinPool(ctx sdk.Context, sender sdk.AccAddress, poolId uint64, enterCoins sdk.Coins, shareOutAmount sdk.Int) {
+func (h MultiswapHooks) AfterJoinPool(ctx sdk.Context, sender sdk.AccAddress, poolId uint64, enterCoins sdk.Coins, shareOutAmount sdk.Int) {
 	for i := range h {
 		h[i].AfterJoinPool(ctx, sender, poolId, enterCoins, shareOutAmount)
 	}
 }
 
-func (h MultiGammHooks) AfterExitPool(ctx sdk.Context, sender sdk.AccAddress, poolId uint64, shareInAmount sdk.Int, exitCoins sdk.Coins) {
+func (h MultiswapHooks) AfterExitPool(ctx sdk.Context, sender sdk.AccAddress, poolId uint64, shareInAmount sdk.Int, exitCoins sdk.Coins) {
 	for i := range h {
 		h[i].AfterExitPool(ctx, sender, poolId, shareInAmount, exitCoins)
 	}
 }
 
-func (h MultiGammHooks) AfterSwap(ctx sdk.Context, sender sdk.AccAddress, poolId uint64, input sdk.Coins, output sdk.Coins) {
+func (h MultiswapHooks) AfterSwap(ctx sdk.Context, sender sdk.AccAddress, poolId uint64, input sdk.Coins, output sdk.Coins) {
 	for i := range h {
 		h[i].AfterSwap(ctx, sender, poolId, input, output)
 	}

@@ -13,12 +13,12 @@ import (
 	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 )
 
-// Simulation parameter constants
+// Simulation parameter constants.
 const (
 	ParamsDistrEpochIdentifier = "distr_epoch_identifier"
 )
 
-// RandomizedGenState generates a random GenesisState for gov
+// RandomizedGenState generates a random GenesisState for gov.
 func RandomizedGenState(simState *module.SimulationState) {
 	// Parameter for how often rewards get distributed
 	var distrEpochIdentifier string

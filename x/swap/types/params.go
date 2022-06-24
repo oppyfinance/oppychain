@@ -2,13 +2,12 @@ package types
 
 import (
 	"fmt"
-	"gitlab.com/oppy-finance/oppychain/utils"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 )
 
-// Parameter store keys
+// Parameter store keys.
 var (
 	KeyPoolCreationFee = []byte("PoolCreationFee")
 )
@@ -24,24 +23,23 @@ func NewParams(poolCreationFee sdk.Coins) Params {
 	}
 }
 
-// default swap module parameters
+// default swap module parameters.
 func DefaultParams() Params {
 	return Params{
-		PoolCreationFee: sdk.Coins{sdk.NewInt64Coin(utils.BaseCoinUnit, 1000_000_000)}, // 1000 OSMO
+		PoolCreationFee: sdk.Coins{sdk.NewInt64Coin("uoppy", 1000_000_000)}, // 1000 OSMO
 	}
 }
 
-// validate params
+// validate params.
 func (p Params) Validate() error {
 	if err := validatePoolCreationFee(p.PoolCreationFee); err != nil {
 		return err
 	}
 
 	return nil
-
 }
 
-// Implements params.ParamSet
+// Implements params.ParamSet.
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	return paramtypes.ParamSetPairs{
 		paramtypes.NewParamSetPair(KeyPoolCreationFee, &p.PoolCreationFee, validatePoolCreationFee),

@@ -2,13 +2,17 @@ package cli_test
 
 import (
 	"fmt"
-	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 	"time"
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
 	tmcli "github.com/tendermint/tendermint/libs/cli"
+
+	"gitlab.com/oppy-finance/oppychain/tools"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/client/cli"
+	lockuptestutil "gitlab.com/oppy-finance/oppychain/x/lockup/client/testutil"
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/crypto/hd"
@@ -17,9 +21,6 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktestutil "github.com/cosmos/cosmos-sdk/x/bank/client/testutil"
 	"gitlab.com/oppy-finance/oppychain/testutil/network"
-	"gitlab.com/oppy-finance/oppychain/x/lockup/client/cli"
-	lockuptestutil "gitlab.com/oppy-finance/oppychain/x/lockup/client/testutil"
-	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 type IntegrationTestSuite struct {
@@ -34,6 +35,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 	s.T().Log("setting up integration test suite")
 
 	s.cfg = network.DefaultConfig()
+	s.cfg.MinGasPrices = "0stake"
 	s.network = network.New(s.T(), s.cfg)
 
 	_, err := s.network.WaitForHeight(1)
@@ -105,7 +107,7 @@ func (s *IntegrationTestSuite) TestNewLockTokensCmd() {
 			[]string{
 				sdk.NewCoins(sdk.NewCoin(s.cfg.BondDenom, sdk.NewInt(201))).String(),
 				fmt.Sprintf("--%s=%s", cli.FlagDuration, "24h"),
-				fmt.Sprintf("--%s=%s", flags.FlagFrom, newAddr),
+				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address),
 				// common args
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
@@ -151,7 +153,7 @@ func (s *IntegrationTestSuite) TestBeginUnlockingCmd() {
 		newAddr,
 		sdk.NewCoins(sdk.NewCoin(s.cfg.BondDenom, sdk.NewInt(20000))), fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 		fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-		utils.DefaultFeeString(s.cfg),
+		tools.DefaultFeeString(s.cfg),
 	)
 	s.Require().NoError(err)
 
@@ -219,7 +221,7 @@ func (s *IntegrationTestSuite) TestNewBeginUnlockPeriodLockCmd() {
 		newAddr,
 		sdk.NewCoins(sdk.NewCoin(s.cfg.BondDenom, sdk.NewInt(20000))), fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 		fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-		utils.DefaultFeeString(s.cfg),
+		tools.DefaultFeeString(s.cfg),
 	)
 	s.Require().NoError(err)
 

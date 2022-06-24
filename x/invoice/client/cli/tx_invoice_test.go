@@ -16,11 +16,13 @@ import (
 
 func TestCreateInvoice(t *testing.T) {
 	setupBech32Prefix()
-	net := network.New(t)
+	cfg := network.DefaultConfig()
+	cfg.MinGasPrices = "0poppy"
+	net := network.New(t, cfg)
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 
-	fields := []string{"xyz", "jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d", "100000", "10", "xyz"}
+	fields := []string{"xyz", "oppy1txtsnx4gr4effr8542778fsxc20j5vzq7wu7r7", "100000", "10", "xyz"}
 	for _, tc := range []struct {
 		desc string
 		args []string
@@ -33,7 +35,7 @@ func TestCreateInvoice(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 	} {
@@ -60,7 +62,7 @@ func TestCreateInvoiceInvalid(t *testing.T) {
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 
-	fields := []string{"xyzaaaa", "jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d", "1000", "10", "xyz"}
+	fields := []string{"xyzaaaa", "oppy1txtsnx4gr4effr8542778fsxc20j5vzq7wu7r7", "1000", "10", "xyz"}
 	for _, tc := range []struct {
 		desc string
 		args []string
@@ -89,17 +91,18 @@ func TestCreateInvoiceInvalid(t *testing.T) {
 
 func TestDeleteInvoice(t *testing.T) {
 	setupBech32Prefix()
-	net := network.New(t)
+	cfg := network.DefaultConfig()
+	cfg.MinGasPrices = "0poppy"
+	net := network.New(t, cfg)
 
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 
-	fields := []string{"xyz", "jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d", "100000", "10", "xyz"}
+	fields := []string{"xyz", "oppy1fase3jev95k9lsj6hn0echk4e37kyhpspmluqd", "100000", "10", "xyz"}
 	common := []string{
 		fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 		fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 		fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-		fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 	}
 	args := fields
 	args = append(args, common...)
@@ -108,7 +111,7 @@ func TestDeleteInvoice(t *testing.T) {
 	var resp sdk.TxResponse
 	require.NoError(t, ctx.Codec.UnmarshalJSON(ret.Bytes(), &resp))
 
-	deleteArgsUser := []string{"xyz", "jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d"}
+	deleteArgsUser := []string{"xyz", "oppy1fase3jev95k9lsj6hn0echk4e37kyhpspmluqd"}
 	deleteArgs := append(deleteArgsUser, common...)
 	for _, tc := range []struct {
 		name string
@@ -135,6 +138,7 @@ func TestDeleteInvoice(t *testing.T) {
 			if tc.err != nil {
 				require.ErrorIs(t, err, tc.err)
 			} else {
+				fmt.Printf(">>>>>>>>>>>%v\n", out.String())
 				require.NoError(t, err)
 				var resp sdk.TxResponse
 				require.NoError(t, ctx.Codec.UnmarshalJSON(out.Bytes(), &resp))

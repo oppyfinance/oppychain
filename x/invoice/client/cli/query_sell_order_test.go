@@ -28,7 +28,7 @@ func networkWithSellOrderObjects(t *testing.T, n int) (*network.Network, []*type
 	cfg := network.DefaultConfig()
 	state := types.GenesisState{}
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[types.ModuleName], &state))
-	creatorStr := "jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d"
+	creatorStr := "oppy1txtsnx4gr4effr8542778fsxc20j5vzq7wu7r7"
 	creator, err := sdk.AccAddressFromBech32(creatorStr)
 	assert.Nil(t, err)
 
@@ -96,7 +96,10 @@ func TestShowSellOrder(t *testing.T) {
 
 func TestCmdListSellOrderAndQuerySellOrder(t *testing.T) {
 	setupBech32Prefix()
-	net := network.New(t)
+
+	cfg := network.DefaultConfig()
+	cfg.MinGasPrices = "0poppy"
+	net := network.New(t, cfg)
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 
@@ -119,7 +122,7 @@ func TestCmdListSellOrderAndQuerySellOrder(t *testing.T) {
 			fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 			fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 			fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-			fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+			//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 		},
 	}
 	createInvoiceArg := append(createInvoiceFields, tcs.args...)

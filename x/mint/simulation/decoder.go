@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"fmt"
 
+	"gitlab.com/oppy-finance/oppychain/x/mint/types"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/types/kv"
-	"gitlab.com/oppy-finance/oppychain/x/mint/types"
 )
 
 // NewDecodeStore returns a decoder function closure that umarshals the KVPair's

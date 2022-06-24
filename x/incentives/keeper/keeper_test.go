@@ -1,46 +1,29 @@
 package keeper_test
 
 import (
-	"os"
-	path2 "path"
-	"runtime"
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/require"
-
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/suite"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	oppyapp "gitlab.com/oppy-finance/oppychain/app"
-	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+	"gitlab.com/oppy-finance/oppychain/app/apptesting"
+	"gitlab.com/oppy-finance/oppychain/x/incentives/keeper"
 )
 
 type KeeperTestSuite struct {
-	suite.Suite
+	apptesting.KeeperTestHelper
 
-	ctx sdk.Context
-	app *oppyapp.App
+	querier keeper.Querier
 }
 
 func (suite *KeeperTestSuite) SetupTest() {
-	dir := os.TempDir()
-	pc, _, _, _ := runtime.Caller(1)
-	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
-	defer func(tempPath string) {
-		err := os.RemoveAll(tempPath)
-		require.NoError(suite.T(), err)
-	}(tempPath)
+	suite.Setup()
 
-	app := simapp.New(tempPath).(*oppyapp.App)
-	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "oppy-1", Time: time.Now().UTC()})
-	suite.app = app
-	suite.ctx = ctx
+	suite.querier = keeper.NewQuerier(suite.App.IncentivesKeeper)
 
-	lockableDurations := suite.app.IncentivesKeeper.GetLockableDurations(suite.ctx)
+	lockableDurations := suite.App.IncentivesKeeper.GetLockableDurations(suite.Ctx)
 	lockableDurations = append(lockableDurations, 2*time.Second)
-	suite.app.IncentivesKeeper.SetLockableDurations(suite.ctx, lockableDurations)
+	suite.App.IncentivesKeeper.SetLockableDurations(suite.Ctx, lockableDurations)
 }
 
 func TestKeeperTestSuite(t *testing.T) {

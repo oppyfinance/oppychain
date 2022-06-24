@@ -1,22 +1,27 @@
 package epochs_test
 
 import (
-	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"os"
 	path2 "path"
+	"runtime"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+
 	"gitlab.com/oppy-finance/oppychain/x/epochs"
 	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
 func TestEpochsExportGenesis(t *testing.T) {
+
 	dir := os.TempDir()
-	tempPath := path2.Join(dir, "testgen")
+	pc, _, _, _ := runtime.Caller(1)
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
 	defer func(tempPath string) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
@@ -37,6 +42,14 @@ func TestEpochsExportGenesis(t *testing.T) {
 	require.Equal(t, genesis.Epochs[0].CurrentEpochStartHeight, chainStartHeight)
 	require.Equal(t, genesis.Epochs[0].CurrentEpochStartTime, chainStartTime)
 	require.Equal(t, genesis.Epochs[0].EpochCountingStarted, false)
+	require.Equal(t, genesis.Epochs[1].Identifier, "minute")
+	require.Equal(t, genesis.Epochs[1].StartTime, chainStartTime)
+	require.Equal(t, genesis.Epochs[1].Duration, time.Minute)
+	require.Equal(t, genesis.Epochs[1].CurrentEpoch, int64(0))
+	require.Equal(t, genesis.Epochs[1].CurrentEpochStartHeight, chainStartHeight)
+	require.Equal(t, genesis.Epochs[1].CurrentEpochStartTime, chainStartTime)
+	require.Equal(t, genesis.Epochs[1].EpochCountingStarted, false)
+
 	require.Equal(t, genesis.Epochs[2].Identifier, "week")
 	require.Equal(t, genesis.Epochs[2].StartTime, chainStartTime)
 	require.Equal(t, genesis.Epochs[2].Duration, time.Hour*24*7)
@@ -47,11 +60,15 @@ func TestEpochsExportGenesis(t *testing.T) {
 }
 
 func TestEpochsInitGenesis(t *testing.T) {
-	p := path2.Join(os.TempDir(), "init")
-	defer func(p string) {
-		os.RemoveAll(p)
-	}(p)
-	app := simapp.New(p).(*oppyapp.App)
+
+	dir := os.TempDir()
+	pc, _, _, _ := runtime.Caller(1)
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
+	defer func(tempPath string) {
+		err := os.RemoveAll(tempPath)
+		require.NoError(t, err)
+	}(tempPath)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	// On init genesis, default epochs information is set

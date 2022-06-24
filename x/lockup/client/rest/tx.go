@@ -6,10 +6,11 @@ import (
 
 	"github.com/gorilla/mux"
 
+	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/cosmos/cosmos-sdk/types/rest"
-	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
 func registerTxHandlers(clientCtx client.Context, r *mux.Router) {

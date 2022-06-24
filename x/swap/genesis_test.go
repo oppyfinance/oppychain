@@ -6,19 +6,19 @@ import (
 	"runtime"
 	"testing"
 
-	"gitlab.com/oppy-finance/oppychain/utils"
+	"github.com/tendermint/spm/cosmoscmd"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
+
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"gitlab.com/oppy-finance/oppychain/x/swap"
-	"gitlab.com/oppy-finance/oppychain/x/swap/simulation"
 
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/tendermint/spm/cosmoscmd"
 	"github.com/tendermint/tendermint/crypto/ed25519"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	oppyapp "gitlab.com/oppy-finance/oppychain/app"
-	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+
 	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
 	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
@@ -37,10 +37,10 @@ func TestSwapInitGenesis(t *testing.T) {
 	balancerPool, err := balancer.NewBalancerPool(1, balancer.PoolParams{
 		SwapFee: sdk.NewDecWithPrec(1, 2),
 		ExitFee: sdk.NewDecWithPrec(1, 2),
-	}, []types.PoolAsset{
+	}, []balancer.PoolAsset{
 		{
 			Weight: sdk.NewInt(1),
-			Token:  sdk.NewInt64Coin(utils.DefaultBondDenom, 10),
+			Token:  sdk.NewInt64Coin(sdk.DefaultBondDenom, 10),
 		},
 		{
 			Weight: sdk.NewInt(1),
@@ -56,30 +56,31 @@ func TestSwapInitGenesis(t *testing.T) {
 		Pools:          []*codectypes.Any{any},
 		NextPoolNumber: 2,
 		Params: types.Params{
-			PoolCreationFee: sdk.Coins{sdk.NewInt64Coin(utils.BaseCoinUnit, 1000_000_000)},
+			PoolCreationFee: sdk.Coins{sdk.NewInt64Coin(sdk.DefaultBondDenom, 1000_000_000)},
 		},
 	}, app.AppCodec())
 
 	require.Equal(t, app.SwapKeeper.GetNextPoolNumberAndIncrement(ctx), uint64(2))
-	poolStored, err := app.SwapKeeper.GetPool(ctx, 1)
+	poolStored, err := app.SwapKeeper.GetPoolAndPoke(ctx, 1)
 	require.NoError(t, err)
 	require.Equal(t, balancerPool.GetId(), poolStored.GetId())
 	require.Equal(t, balancerPool.GetAddress(), poolStored.GetAddress())
-	require.Equal(t, balancerPool.GetPoolSwapFee(), poolStored.GetPoolSwapFee())
-	require.Equal(t, balancerPool.GetPoolExitFee(), poolStored.GetPoolExitFee())
-	require.Equal(t, balancerPool.GetTotalWeight(), poolStored.GetTotalWeight())
+	require.Equal(t, balancerPool.GetSwapFee(ctx), poolStored.GetSwapFee(ctx))
+	require.Equal(t, balancerPool.GetExitFee(ctx), poolStored.GetExitFee(ctx))
+	// require.Equal(t, balancerPool.GetTotalWeight(), sdk.Nw)
 	require.Equal(t, balancerPool.GetTotalShares(), poolStored.GetTotalShares())
-	require.Equal(t, balancerPool.GetAllPoolAssets(), poolStored.GetAllPoolAssets())
+	// require.Equal(t, balancerPool.GetAllPoolAssets(), poolStored.GetAllPoolAssets())
 	require.Equal(t, balancerPool.String(), poolStored.String())
 
-	_, err = app.SwapKeeper.GetPool(ctx, 2)
+	_, err = app.SwapKeeper.GetPoolAndPoke(ctx, 2)
 	require.Error(t, err)
 
 	liquidity := app.SwapKeeper.GetTotalLiquidity(ctx)
-	require.Equal(t, liquidity, sdk.Coins{sdk.NewInt64Coin("nodetoken", 10), sdk.NewInt64Coin(utils.DefaultBondDenom, 10)})
+	require.Equal(t, liquidity, sdk.Coins{sdk.NewInt64Coin("nodetoken", 10), sdk.NewInt64Coin(sdk.DefaultBondDenom, 10)})
 }
 
-func TestSwapExportGenesis(t *testing.T) {
+func TestGammExportGenesis(t *testing.T) {
+
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
@@ -91,35 +92,37 @@ func TestSwapExportGenesis(t *testing.T) {
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	acc1 := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address().Bytes())
-	err := simulation.FundAccount(app.BankKeeper, ctx, acc1, sdk.NewCoins(
-		sdk.NewCoin("ujolt", sdk.NewInt(10000000000)),
+	err := simapp.FundAccount(app.BankKeeper, ctx, acc1, sdk.NewCoins(
+		sdk.NewCoin("uoppy", sdk.NewInt(10000000000)),
 		sdk.NewInt64Coin("foo", 100000),
 		sdk.NewInt64Coin("bar", 100000),
 	))
 	require.NoError(t, err)
 
-	_, err = app.SwapKeeper.CreateBalancerPool(ctx, acc1, balancer.PoolParams{
+	msg := balancer.NewMsgCreateBalancerPool(acc1, balancer.PoolParams{
 		SwapFee: sdk.NewDecWithPrec(1, 2),
 		ExitFee: sdk.NewDecWithPrec(1, 2),
-	}, []types.PoolAsset{{
+	}, []balancer.PoolAsset{{
 		Weight: sdk.NewInt(100),
 		Token:  sdk.NewCoin("foo", sdk.NewInt(10000)),
 	}, {
 		Weight: sdk.NewInt(100),
 		Token:  sdk.NewCoin("bar", sdk.NewInt(10000)),
 	}}, "")
+	_, err = app.SwapKeeper.CreatePool(ctx, msg)
 	require.NoError(t, err)
 
-	_, err = app.SwapKeeper.CreateBalancerPool(ctx, acc1, balancer.PoolParams{
+	msg = balancer.NewMsgCreateBalancerPool(acc1, balancer.PoolParams{
 		SwapFee: sdk.NewDecWithPrec(1, 2),
 		ExitFee: sdk.NewDecWithPrec(1, 2),
-	}, []types.PoolAsset{{
+	}, []balancer.PoolAsset{{
 		Weight: sdk.NewInt(70),
 		Token:  sdk.NewCoin("foo", sdk.NewInt(10000)),
 	}, {
 		Weight: sdk.NewInt(100),
 		Token:  sdk.NewCoin("bar", sdk.NewInt(10000)),
 	}}, "")
+	_, err = app.SwapKeeper.CreatePool(ctx, msg)
 	require.NoError(t, err)
 
 	genesis := swap.ExportGenesis(ctx, app.SwapKeeper)
@@ -128,6 +131,7 @@ func TestSwapExportGenesis(t *testing.T) {
 }
 
 func TestMarshalUnmarshalGenesis(t *testing.T) {
+
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
@@ -139,28 +143,27 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	encodingConfig := cosmoscmd.MakeEncodingConfig(oppyapp.ModuleBasics)
-
 	appCodec := encodingConfig.Marshaler
-
 	am := swap.NewAppModule(appCodec, app.SwapKeeper, app.AccountKeeper, app.BankKeeper)
 	acc1 := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address().Bytes())
-	err := simulation.FundAccount(app.BankKeeper, ctx, acc1, sdk.NewCoins(
-		sdk.NewCoin("ujolt", sdk.NewInt(10000000000)),
+	err := simapp.FundAccount(app.BankKeeper, ctx, acc1, sdk.NewCoins(
+		sdk.NewCoin("uoppy", sdk.NewInt(10000000000)),
 		sdk.NewInt64Coin("foo", 100000),
 		sdk.NewInt64Coin("bar", 100000),
 	))
 	require.NoError(t, err)
 
-	_, err = app.SwapKeeper.CreateBalancerPool(ctx, acc1, balancer.PoolParams{
+	msg := balancer.NewMsgCreateBalancerPool(acc1, balancer.PoolParams{
 		SwapFee: sdk.NewDecWithPrec(1, 2),
 		ExitFee: sdk.NewDecWithPrec(1, 2),
-	}, []types.PoolAsset{{
+	}, []balancer.PoolAsset{{
 		Weight: sdk.NewInt(100),
 		Token:  sdk.NewCoin("foo", sdk.NewInt(10000)),
 	}, {
 		Weight: sdk.NewInt(100),
 		Token:  sdk.NewCoin("bar", sdk.NewInt(10000)),
 	}}, "")
+	_, err = app.SwapKeeper.CreatePool(ctx, msg)
 	require.NoError(t, err)
 
 	genesis := am.ExportGenesis(ctx, appCodec)

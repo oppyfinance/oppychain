@@ -7,11 +7,11 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 
-	// "github.com/cosmos/cosmos-sdk/client/flags"
+	// "github.com/cosmos/cosmos-sdk/client/flags".
 	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
 )
 
-// GetTxCmd returns the transaction commands for this module
+// GetTxCmd returns the transaction commands for this module.
 func GetTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:                        types.ModuleName,

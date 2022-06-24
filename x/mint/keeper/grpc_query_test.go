@@ -2,54 +2,25 @@ package keeper_test
 
 import (
 	gocontext "context"
-	"github.com/stretchr/testify/require"
-	"os"
-	path2 "path"
-	"runtime"
+	"gitlab.com/oppy-finance/oppychain/app/apptesting"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-
-	"github.com/cosmos/cosmos-sdk/baseapp"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"gitlab.com/oppy-finance/oppychain/x/mint/types"
-
-	oppyapp "gitlab.com/oppy-finance/oppychain/app"
-	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 )
 
 type MintTestSuite struct {
-	suite.Suite
-
-	app         *oppyapp.App
-	ctx         sdk.Context
+	apptesting.KeeperTestHelper
 	queryClient types.QueryClient
 }
 
 func (suite *MintTestSuite) SetupTest() {
-	dir := os.TempDir()
-	pc, _, _, _ := runtime.Caller(1)
-	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
-	defer func(tempPath string) {
-		err := os.RemoveAll(tempPath)
-		require.NoError(suite.T(), err)
-	}(tempPath)
-	app := simapp.New(tempPath).(*oppyapp.App)
-	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
-
-	queryHelper := baseapp.NewQueryServerTestHelper(ctx, app.InterfaceRegistry())
-	types.RegisterQueryServer(queryHelper, app.MintKeeper)
-	queryClient := types.NewQueryClient(queryHelper)
-
-	suite.app = app
-	suite.ctx = ctx
-
-	suite.queryClient = queryClient
+	suite.Setup()
+	suite.queryClient = types.NewQueryClient(suite.QueryHelper)
 }
 
 func (suite *MintTestSuite) TestGRPCParams() {
-	_, _, queryClient := suite.app, suite.ctx, suite.queryClient
+	_, _, queryClient := suite.App, suite.Ctx, suite.queryClient
 
 	_, err := queryClient.Params(gocontext.Background(), &types.QueryParamsRequest{})
 	suite.Require().NoError(err)

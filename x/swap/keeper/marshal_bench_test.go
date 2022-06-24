@@ -1,27 +1,32 @@
 package keeper_test
 
 import (
+	"github.com/stretchr/testify/require"
 	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"math/rand"
 	"os"
+	path2 "path"
+	"runtime"
 	"testing"
 	"time"
 
+	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
+	balancertypes "gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
+	swaptypes "gitlab.com/oppy-finance/oppychain/x/swap/types"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
-	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
-	swaptypes "gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
-func genPoolAssets(r *rand.Rand) []swaptypes.PoolAsset {
+func genPoolAssets(r *rand.Rand) []balancertypes.PoolAsset {
 	denoms := []string{"IBC/0123456789ABCDEF012346789ABCDEF", "IBC/denom56789ABCDEF012346789ABCDEF"}
-	assets := []swaptypes.PoolAsset{}
+	assets := []balancertypes.PoolAsset{}
 	for _, denom := range denoms {
 		amt, _ := simtypes.RandPositiveInt(r, sdk.NewIntWithDecimal(1, 40))
 		reserveAmt := sdk.NewCoin(denom, amt)
 		weight := sdk.NewInt(r.Int63n(9) + 1)
-		assets = append(assets, swaptypes.PoolAsset{Token: reserveAmt, Weight: weight})
+		assets = append(assets, balancertypes.PoolAsset{Token: reserveAmt, Weight: weight})
 	}
 
 	return assets
@@ -55,16 +60,16 @@ func setupPools(maxNumPoolsToGen int) []swaptypes.PoolI {
 	return pools
 }
 
-func BenchmarkSwapPoolSerialization(b *testing.B) {
-	tempDir := b.TempDir()
-	app := simapp.New(tempDir).(*oppyapp.App)
+func BenchmarkswapPoolSerialization(b *testing.B) {
 
+	dir := os.TempDir()
+	pc, _, _, _ := runtime.Caller(1)
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
 	defer func(tempPath string) {
 		err := os.RemoveAll(tempPath)
-		if err != nil {
-			b.Fatalf("error in remote files")
-		}
-	}(tempDir)
+		require.NoError(b, err)
+	}(tempPath)
+	app := simapp.New(tempPath).(*oppyapp.App)
 
 	maxNumPoolsToGen := 5000
 	pools := setupPools(maxNumPoolsToGen)
@@ -72,16 +77,21 @@ func BenchmarkSwapPoolSerialization(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		j := i % maxNumPoolsToGen
-		_, err := app.SwapKeeper.MarshalPool(pools[j])
-		if err != nil {
-			panic(err)
-		}
+		app.SwapKeeper.MarshalPool(pools[j])
 	}
 }
 
-func BenchmarkSwapPoolDeserialization(b *testing.B) {
-	tempDir := b.TempDir()
-	app := simapp.New(tempDir).(*oppyapp.App)
+func BenchmarkswapPoolDeserialization(b *testing.B) {
+
+	dir := os.TempDir()
+	pc, _, _, _ := runtime.Caller(1)
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
+	defer func(tempPath string) {
+		err := os.RemoveAll(tempPath)
+		require.NoError(b, err)
+	}(tempPath)
+	app := simapp.New(tempPath).(*oppyapp.App)
+
 	maxNumPoolsToGen := 5000
 	pools := setupPools(maxNumPoolsToGen)
 	marshals := make([][]byte, 0, maxNumPoolsToGen)
@@ -93,9 +103,6 @@ func BenchmarkSwapPoolDeserialization(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		j := i % maxNumPoolsToGen
-		_, err := app.SwapKeeper.UnmarshalPool(marshals[j])
-		if err != nil {
-			panic(err)
-		}
+		app.SwapKeeper.UnmarshalPool(marshals[j])
 	}
 }

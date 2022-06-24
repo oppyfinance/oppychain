@@ -97,7 +97,7 @@ func (k *Keeper) createRemoveLiquidityEvent(ctx sdk.Context, sender sdk.AccAddre
 	})
 }
 
-// Set the swap hooks
+// Set the swap hooks.
 func (k *Keeper) SetHooks(gh types.SwapHooks) *Keeper {
 	if k.hooks != nil {
 		panic("cannot set swap hooks twice")

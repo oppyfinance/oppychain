@@ -26,7 +26,7 @@ func networkWithPlaceOrderObjects(t *testing.T, n int) (*network.Network, []*typ
 	state := types.GenesisState{}
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[types.ModuleName], &state))
 
-	creatorStr := "jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d"
+	creatorStr := "oppy1txtsnx4gr4effr8542778fsxc20j5vzq7wu7r7"
 	creator, err := sdk.AccAddressFromBech32(creatorStr)
 	assert.Nil(t, err)
 	for i := 0; i < n; i++ {

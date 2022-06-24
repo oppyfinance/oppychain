@@ -3,17 +3,18 @@ package keeper
 import (
 	"context"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 	"gitlab.com/oppy-finance/oppychain/x/swap/utils"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 type msgServer struct {
 	keeper *Keeper
 }
 
-// NewMsgServerImpl returns an instance of MsgServer
+// NewMsgServerImpl returns an instance of MsgServer.
 func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 	return &msgServer{
 		keeper: keeper,

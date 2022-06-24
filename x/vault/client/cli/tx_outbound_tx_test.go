@@ -2,6 +2,7 @@ package cli_test
 
 import (
 	"fmt"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"strconv"
 	"testing"
 	"time"
@@ -18,7 +19,7 @@ import (
 var _ = strconv.IntSize
 
 func TestCreateOutboundTx(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	net, _ := preparePool(t)
 	val := net.Validators[0]
 	ctx := val.ClientCtx
@@ -44,7 +45,6 @@ func TestCreateOutboundTx(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 	} {
@@ -65,6 +65,7 @@ func TestCreateOutboundTx(t *testing.T) {
 			} else {
 				require.NoError(t, err)
 				var resp sdk.TxResponse
+				fmt.Printf(">>>>>.%v\n", out.String())
 				require.NoError(t, ctx.Codec.UnmarshalJSON(out.Bytes(), &resp))
 				require.Equal(t, tc.code, resp.Code)
 			}

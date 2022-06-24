@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
 	"gitlab.com/oppy-finance/oppychain/testutil/nullify"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"gitlab.com/oppy-finance/oppychain/x/vault/keeper"
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 	"math/rand"
@@ -34,7 +35,7 @@ func createNOutboundTx(keeper *keeper.Keeper, ctx sdk.Context, n int) []types.Ou
 }
 
 func TestOutboundTxGet(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	app, ctx := keepertest.SetupVaultApp(t)
 	items := createNOutboundTx(&app.VaultKeeper, ctx, 10)
 	for _, item := range items {

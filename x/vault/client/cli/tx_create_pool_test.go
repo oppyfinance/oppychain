@@ -4,6 +4,7 @@ import (
 	stderr "errors"
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -18,19 +19,11 @@ import (
 	"gitlab.com/oppy-finance/oppychain/x/vault/client/cli"
 )
 
-func setupBech32Prefix() {
-	config := sdk.GetConfig()
-	// thorchain will import go-tss as a library , thus this is not needed, we copy the prefix here to avoid go-tss to import thorchain
-
-	config.SetBech32PrefixForAccount("jolt", "joltpub")
-	config.SetBech32PrefixForValidator("joltval", "joltvpub")
-	config.SetBech32PrefixForConsensusNode("joltvalcons", "joltcpub")
-}
-
 func TestCreateCreatePool(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 
 	cfg := network.DefaultConfig()
+	cfg.MinGasPrices = "0poppy"
 	cfg.EnableLogging = true
 	// modification to pay fee with test bond denom "stake"
 	net := network.New(t, cfg)
@@ -52,14 +45,14 @@ func TestCreateCreatePool(t *testing.T) {
 	}{
 		{
 			id:     "0",
-			err:    stderr.New("invalid pubkey (invalid Bech32 prefix; expected joltpub, got jolt): invalid pubkey"),
+			err:    stderr.New("invalid pubkey (invalid Bech32 prefix; expected oppypub, got jolt): invalid pubkey"),
 			desc:   "invalid",
 			fields: []string{"jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg", "1"},
 			args: []string{
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 
@@ -72,7 +65,7 @@ func TestCreateCreatePool(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 	} {

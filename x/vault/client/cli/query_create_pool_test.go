@@ -2,6 +2,7 @@ package cli_test
 
 import (
 	"fmt"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"strconv"
 	"testing"
 
@@ -32,10 +33,11 @@ func networkWithCreatePoolObjects(t *testing.T, n int, maxValidator uint32) (*ne
 
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[types.ModuleName], &state))
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[stakingtypes.ModuleName], &stateStaking))
+
+	sk := ed25519.GenPrivKey()
+
 	for i := 1; i < n; i++ {
-		operatorStr := "joltval1yu5wjall4atm29puasahplrkvyz3vplmngm7kk"
-		operator, err := sdk.ValAddressFromBech32(operatorStr)
-		require.NoError(t, err)
+		operator := sk.PubKey().Address().Bytes()
 
 		sk := ed25519.GenPrivKey()
 		desc := stakingtypes.NewDescription("tester", "testId", "www.test.com", "aaa", "aaa")
@@ -48,7 +50,7 @@ func networkWithCreatePoolObjects(t *testing.T, n int, maxValidator uint32) (*ne
 
 		pro := types.PoolProposal{
 			PoolPubKey: poolPubKey,
-			Nodes:      []sdk.AccAddress{operator.Bytes()},
+			Nodes:      []sdk.AccAddress{operator},
 		}
 		state.CreatePoolList = append(state.CreatePoolList, &types.CreatePool{BlockHeight: strconv.Itoa(i), Validators: []stakingtypes.Validator{testValidator}, Proposal: []*types.PoolProposal{&pro}})
 	}
@@ -68,7 +70,7 @@ func networkWithCreatePoolObjects(t *testing.T, n int, maxValidator uint32) (*ne
 }
 
 func TestShowCreatePool(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	net, objs := networkWithCreatePoolObjects(t, 2, 3)
 
 	ctx := net.Validators[0].ClientCtx
@@ -116,7 +118,7 @@ func TestShowCreatePool(t *testing.T) {
 }
 
 func TestListCreatePoolNotEnoughValidator(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	net, _ := networkWithCreatePoolObjects(t, 2, 300)
 	ctx := net.Validators[0].ClientCtx
 	common := []string{
@@ -157,7 +159,7 @@ func TestListCreatePoolNotEnoughValidator(t *testing.T) {
 }
 
 func TestListCreatePool(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	net, objs := networkWithCreatePoolObjects(t, 5, 3)
 
 	ctx := net.Validators[0].ClientCtx

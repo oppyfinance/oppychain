@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	types2 "github.com/cosmos/cosmos-sdk/x/staking/types"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -12,21 +13,14 @@ import (
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
-func setupBech32Prefix() {
-	config := sdk.GetConfig()
-	config.SetBech32PrefixForAccount("jolt", "joltpub")
-	config.SetBech32PrefixForValidator("joltval", "joltvpub")
-	config.SetBech32PrefixForConsensusNode("joltvalcons", "joltcpub")
-}
-
 func TestCreatePoolMsgServerCreate(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	app, srv, wctx := setupMsgServer(t)
 	k := &app.VaultKeeper
 
 	sk := ed25519.GenPrivKey()
 	desc := types2.NewDescription("tester", "testId", "www.test.com", "aaa", "aaa")
-	creatorStr := "jolt1f0atl7egduue8a07j42hyklct0sqa68wxem3lg"
+	creatorStr := "oppy1fase3jev95k9lsj6hn0echk4e37kyhpspmluqd"
 	creator, err := sdk.AccAddressFromBech32(creatorStr)
 	assert.Nil(t, err)
 	valAddr, err := sdk.ValAddressFromHex(hex.EncodeToString(creator.Bytes()))
@@ -34,7 +28,7 @@ func TestCreatePoolMsgServerCreate(t *testing.T) {
 	testValidator, err := types2.NewValidator(valAddr, sk.PubKey(), desc)
 	require.NoError(t, err)
 
-	pubkey := "joltpub1zcjduepqhxmegjjucngmkkqjhs04u2z034943xslr3je678dxvt77pa5hqjskqd2eh"
+	pubkey := "oppypub1addwnpepqf2vlt7kmvc5guasrfha8lqcuz6s7j3y2z2hl8lw7mr0g5t2vfyjqc9cwdp"
 
 	ctx := sdk.UnwrapSDKContext(wctx)
 	historyInfo := types2.HistoricalInfo{
@@ -52,18 +46,15 @@ func TestCreatePoolMsgServerCreate(t *testing.T) {
 }
 
 func TestCreatePoolMsgServerCreateNotValidator(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	app, srv, wctx := setupMsgServer(t)
 	k := &app.VaultKeeper
 	ctx := sdk.UnwrapSDKContext(wctx)
 
 	sk := ed25519.GenPrivKey()
 	desc := types2.NewDescription("tester", "testId", "www.test.com", "aaa", "aaa")
-	operatorStr := "jolt1f0atl7egduue8a07j42hyklct0sqa68wxem3lg"
-	operator, err := sdk.AccAddressFromBech32(operatorStr)
-	assert.Nil(t, err)
-	valAddr, err := sdk.ValAddressFromHex(hex.EncodeToString(operator.Bytes()))
-	assert.Nil(t, err)
+
+	valAddr := sk.PubKey().Address().Bytes()
 	testValidator, err := types2.NewValidator(valAddr, sk.PubKey(), desc)
 	require.NoError(t, err)
 	historyInfo := types2.HistoricalInfo{
@@ -71,7 +62,7 @@ func TestCreatePoolMsgServerCreateNotValidator(t *testing.T) {
 	}
 	app.StakingKeeper.SetHistoricalInfo(ctx, int64(1), &historyInfo)
 
-	creatorStr := "jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg"
+	creatorStr := "oppy1fase3jev95k9lsj6hn0echk4e37kyhpspmluqd"
 	creator, err := sdk.AccAddressFromBech32(creatorStr)
 	assert.Nil(t, err)
 	expected := &types.MsgCreateCreatePool{Creator: creator, BlockHeight: "1", PoolPubKey: creatorStr}

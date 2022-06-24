@@ -1,7 +1,6 @@
 package balancer
 
 import (
-	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -12,14 +11,21 @@ import (
 	"gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
+func setupBech32Prefix() {
+	config := sdk.GetConfig()
+	config.SetBech32PrefixForAccount("oppy", "oppypub")
+	config.SetBech32PrefixForValidator("oppyval", "oppyvpub")
+	config.SetBech32PrefixForConsensusNode("oppyvalcons", "oppycpub")
+}
+
 func TestMsgCreateBalancerPool(t *testing.T) {
-	utils.SetAddressPrefixes()
+	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	invalidAddr := sdk.AccAddress("invalid")
+	//invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgCreateBalancerPool) MsgCreateBalancerPool) MsgCreateBalancerPool {
-		testPoolAsset := []types.PoolAsset{
+		testPoolAsset := []PoolAsset{
 			{
 				Weight: sdk.NewInt(100),
 				Token:  sdk.NewCoin("test", sdk.NewInt(100)),
@@ -72,7 +78,7 @@ func TestMsgCreateBalancerPool(t *testing.T) {
 		{
 			name: "invalid sender",
 			msg: createMsg(func(msg MsgCreateBalancerPool) MsgCreateBalancerPool {
-				msg.Sender = invalidAddr.String()
+				msg.Sender = "invalid"
 				return msg
 			}),
 			expectPass: false,
@@ -88,7 +94,7 @@ func TestMsgCreateBalancerPool(t *testing.T) {
 		{
 			name: "has no PoolAsset2",
 			msg: createMsg(func(msg MsgCreateBalancerPool) MsgCreateBalancerPool {
-				msg.PoolAssets = []types.PoolAsset{}
+				msg.PoolAssets = []PoolAsset{}
 				return msg
 			}),
 			expectPass: false,
@@ -96,7 +102,7 @@ func TestMsgCreateBalancerPool(t *testing.T) {
 		{
 			name: "has one Pool Asset",
 			msg: createMsg(func(msg MsgCreateBalancerPool) MsgCreateBalancerPool {
-				msg.PoolAssets = []types.PoolAsset{
+				msg.PoolAssets = []PoolAsset{
 					msg.PoolAssets[0],
 				}
 				return msg
@@ -184,7 +190,7 @@ func TestMsgCreateBalancerPool(t *testing.T) {
 		{
 			name: "valid governor: address",
 			msg: createMsg(func(msg MsgCreateBalancerPool) MsgCreateBalancerPool {
-				msg.FuturePoolGovernor = "jolt1txtsnx4gr4effr8542778fsxc20j5vzqxet7t0"
+				msg.FuturePoolGovernor = "oppy1txtsnx4gr4effr8542778fsxc20j5vzq7wu7r7"
 				return msg
 			}),
 			expectPass: true,

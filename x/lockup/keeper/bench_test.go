@@ -9,8 +9,6 @@ import (
 	"testing"
 	"time"
 
-	"gitlab.com/oppy-finance/oppychain/utils"
-
 	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
@@ -64,7 +62,7 @@ func benchmarkResetLogic(numLockups int, b *testing.B) {
 	addrs := []sdk.AccAddress{}
 	for i := 0; i < numAccts; i++ {
 		addr := sdk.AccAddress(secp256k1.GenPrivKey().PubKey().Address())
-		coins := sdk.Coins{sdk.NewInt64Coin(utils.DefaultBondDenom, 100000000)}
+		coins := sdk.Coins{sdk.NewInt64Coin(sdk.DefaultBondDenom, 100000000)}
 		for j := 0; j < numDenoms; j++ {
 			coins = coins.Add(sdk.NewInt64Coin(fmt.Sprintf("token%d", j), r.Int63n(100000000)))
 		}

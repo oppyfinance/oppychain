@@ -1,24 +1,25 @@
 package epochs_test
 
 import (
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"os"
 	path2 "path"
+	"runtime"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	simapp "gitlab.com/oppy-finance/oppychain/app"
 
-	tsimapp "gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"gitlab.com/oppy-finance/oppychain/x/epochs"
 	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
-
-	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 func TestEpochInfoChangesBeginBlockerAndInitGenesis(t *testing.T) {
-	var app *simapp.App
+
+	var app *oppyapp.App
 	var ctx sdk.Context
 	var epochInfo types.EpochInfo
 
@@ -117,15 +118,15 @@ func TestEpochInfoChangesBeginBlockerAndInitGenesis(t *testing.T) {
 		},
 	}
 
-	dir := os.TempDir()
-	tempPath := path2.Join(dir, "abci_test")
-	defer func(tempPath string) {
-		err := os.RemoveAll(tempPath)
-		require.NoError(t, err)
-	}(tempPath)
-
 	for _, test := range tests {
-		app = tsimapp.New(tempPath).(*simapp.App)
+		dir := os.TempDir()
+		pc, _, _, _ := runtime.Caller(1)
+		tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
+		defer func(tempPath string) {
+			err := os.RemoveAll(tempPath)
+			require.NoError(t, err)
+		}(tempPath)
+		app = simapp.New(tempPath).(*oppyapp.App)
 		ctx = app.BaseApp.NewContext(false, tmproto.Header{})
 
 		// On init genesis, default epochs information is set
@@ -165,13 +166,15 @@ func TestEpochInfoChangesBeginBlockerAndInitGenesis(t *testing.T) {
 }
 
 func TestEpochStartingOneMonthAfterInitGenesis(t *testing.T) {
+
 	dir := os.TempDir()
-	tempPath := path2.Join(dir, "testEpochStartingone")
+	pc, _, _, _ := runtime.Caller(1)
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
 	defer func(tempPath string) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := tsimapp.New(tempPath).(*simapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	// On init genesis, default epochs information is set
@@ -244,13 +247,15 @@ func TestLegacyEpochSerialization(t *testing.T) {
 	}
 
 	now := time.Now()
+
 	dir := os.TempDir()
-	tempPath := path2.Join(dir, "testlegacyEopch")
+	pc, _, _, _ := runtime.Caller(1)
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
 	defer func(tempPath string) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
 	}(tempPath)
-	app := tsimapp.New(tempPath).(*simapp.App)
+	app := simapp.New(tempPath).(*oppyapp.App)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	// On init genesis, default epochs information is set
