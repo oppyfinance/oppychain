@@ -2,6 +2,7 @@ package cli_test
 
 import (
 	"fmt"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"strconv"
 	"testing"
 	"time"
@@ -27,11 +28,13 @@ func preparePool(t *testing.T) (*network.Network, []*types.CreatePool) {
 	t.Helper()
 	height := []int{4, 7}
 	cfg := network.DefaultConfig()
+	cfg.MinGasPrices = "0poppy"
 	state := types.GenesisState{}
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[types.ModuleName], &state))
-	poolPubKey := "joltpub1addwnpepq2ax6hva3nkzup7xlsrr5nzc7wjfp86hfnx30z9sclet92qehdwzutn0ag3"
-	operatorStr := "joltval1yu5wjall4atm29puasahplrkvyz3vplmngm7kk"
-	operator, err := sdk.ValAddressFromBech32(operatorStr)
+	sk := ed25519.GenPrivKey()
+	poolPubKey, err := legacybech32.MarshalPubKey(legacybech32.AccPK, sk.PubKey()) //nolint
+	require.NoError(t, err)
+	operator := sk.PubKey().Address().Bytes()
 	require.NoError(t, err)
 	validators := make([]*stakingtypes.Validator, len(height))
 	for i, el := range height {
@@ -43,7 +46,7 @@ func preparePool(t *testing.T) (*network.Network, []*types.CreatePool) {
 		validators[i] = &testValidator
 		pro := types.PoolProposal{
 			PoolPubKey: poolPubKey,
-			Nodes:      []sdk.AccAddress{operator.Bytes()},
+			Nodes:      []sdk.AccAddress{operator},
 		}
 		state.CreatePoolList = append(state.CreatePoolList, &types.CreatePool{BlockHeight: strconv.Itoa(el), Validators: []stakingtypes.Validator{testValidator}, Proposal: []*types.PoolProposal{&pro}})
 	}
@@ -61,18 +64,19 @@ func preparePool(t *testing.T) (*network.Network, []*types.CreatePool) {
 	cfg.GenesisState[stakingtypes.ModuleName] = buf
 
 	net := network.New(t, cfg)
+	net.Config.BondDenom = "poppy"
 	return net, state.CreatePoolList
 }
 
 // this test will fail as it is not from pool owner
 func TestCreateIssueTokenFail(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	net, _ := preparePool(t)
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 	id := "0"
 
-	fields := []string{"100vvusd", "jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg"}
+	fields := []string{"100vvusd", "oppy1fase3jev95k9lsj6hn0echk4e37kyhpspmluqd"}
 	for _, tc := range []struct {
 		desc string
 		id   string
@@ -87,7 +91,7 @@ func TestCreateIssueTokenFail(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 	} {
@@ -143,7 +147,7 @@ func networkPrepare(t *testing.T, maxValidator uint32, addr string) (*network.Ne
 
 // this test will fail as it is not from pool owner
 func TestCreateIssue(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	k2 := keyring.NewInMemory()
 	_, _, err := k2.NewMnemonic("0",
 		keyring.English, sdk.FullFundraiserPath, keyring.DefaultBIP39Passphrase, hd.Secp256k1)
@@ -197,7 +201,7 @@ func TestCreateIssue(t *testing.T) {
 	_, err = net.WaitForHeightWithTimeout(15, time.Minute)
 	assert.Nil(t, err)
 	// now we submit the issue token request
-	issueTokenfields := []string{"100vvusd", "jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg"}
+	issueTokenfields := []string{"100vvusd", "oppy1fase3jev95k9lsj6hn0echk4e37kyhpspmluqd"}
 	id := "0"
 	issueTokenArgs := []string{id}
 	issueTokenArgs = append(issueTokenArgs, issueTokenfields...)

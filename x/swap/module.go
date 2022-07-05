@@ -6,19 +6,18 @@ import (
 	"fmt"
 	"math/rand"
 
+	"github.com/gorilla/mux"
+	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/spf13/cobra"
+	abci "github.com/tendermint/tendermint/abci/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
-	"github.com/gorilla/mux"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/spf13/cobra"
-	abci "github.com/tendermint/tendermint/abci/types"
-
 	"gitlab.com/oppy-finance/oppychain/x/swap/client/cli"
-	"gitlab.com/oppy-finance/oppychain/x/swap/client/rest"
 	"gitlab.com/oppy-finance/oppychain/x/swap/keeper"
 	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
 	"gitlab.com/oppy-finance/oppychain/x/swap/simulation"
@@ -42,6 +41,7 @@ func (AppModuleBasic) Name() string { return types.ModuleName }
 func (AppModuleBasic) RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 	types.RegisterLegacyAminoCodec(cdc)
 	balancer.RegisterLegacyAminoCodec(cdc)
+	// stableswap.RegisterLegacyAminoCodec(cdc)
 }
 
 // DefaultGenesis returns default genesis state as raw bytes for the swap
@@ -60,9 +60,8 @@ func (AppModuleBasic) ValidateGenesis(cdc codec.JSONCodec, config client.TxEncod
 }
 
 //---------------------------------------
-// Interfaces
+// Interfaces.
 func (b AppModuleBasic) RegisterRESTRoutes(ctx client.Context, r *mux.Router) {
-	rest.RegisterHandlers(ctx, r)
 }
 
 func (b AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, mux *runtime.ServeMux) {
@@ -81,10 +80,12 @@ func (b AppModuleBasic) GetQueryCmd() *cobra.Command {
 func (AppModuleBasic) RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 	types.RegisterInterfaces(registry)
 	balancer.RegisterInterfaces(registry)
+	// stableswap.RegisterInterfaces(registry)
 }
 
 type AppModule struct {
 	AppModuleBasic
+
 	ak     types.AccountKeeper
 	bk     types.BankKeeper
 	keeper keeper.Keeper
@@ -93,16 +94,14 @@ type AppModule struct {
 func (am AppModule) RegisterServices(cfg module.Configurator) {
 	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServerImpl(&am.keeper))
 	balancer.RegisterMsgServer(cfg.MsgServer(), keeper.NewBalancerMsgServerImpl(&am.keeper))
-	types.RegisterQueryServer(cfg.QueryServer(), am.keeper)
+	// stableswap.RegisterMsgServer(cfg.MsgServer(), keeper.NewStableswapMsgServerImpl(&am.keeper))
+	types.RegisterQueryServer(cfg.QueryServer(), keeper.NewQuerier(am.keeper))
 }
 
-func NewAppModule(cdc codec.Codec, keeper keeper.Keeper,
-	accountKeeper types.AccountKeeper, bankKeeper types.BankKeeper) AppModule {
+func NewAppModule(cdc codec.Codec, keeper keeper.Keeper) AppModule {
 	return AppModule{
 		AppModuleBasic: AppModuleBasic{cdc: cdc},
 		keeper:         keeper,
-		ak:             accountKeeper,
-		bk:             bankKeeper,
 	}
 }
 
@@ -119,9 +118,11 @@ func (am AppModule) Route() sdk.Route {
 // QuerierRoute returns the swap module's querier route name.
 func (AppModule) QuerierRoute() string { return types.RouterKey }
 
-// LegacyQuerierHandler returns the swap module sdk.Querier.
+// LegacyQuerierHandler returns the x/swap module's sdk.Querier.
 func (am AppModule) LegacyQuerierHandler(legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
-	return nil
+	return func(sdk.Context, []string, abci.RequestQuery) ([]byte, error) {
+		return nil, fmt.Errorf("legacy querier not supported for the x/%s module", types.ModuleName)
+	}
 }
 
 // InitGenesis performs genesis initialization for the swap module. It returns
@@ -155,7 +156,7 @@ func (am AppModule) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) []abci.Val
 // AppModuleSimulation functions
 
 // GenerateGenesisState creates a randomized GenState of the swap module.
-// However, at launch the swap module has no state, hence this is a no-op
+// However, at launch the swap module has no state, hence this is a no-op.
 func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	// simulation.RandomizedGenState(simState)
 }
@@ -172,7 +173,7 @@ func (AppModule) RandomizedParams(r *rand.Rand) []simtypes.ParamChange {
 	// return simulation.ParamChanges(r)
 }
 
-// RegisterStoreDecoder registers a decoder for supply module's types
+// RegisterStoreDecoder registers a decoder for supply module's types.
 func (am AppModule) RegisterStoreDecoder(sdr sdk.StoreDecoderRegistry) {
 }
 

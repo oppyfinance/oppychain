@@ -44,7 +44,7 @@ var testGenesis = types.GenesisState{
 func TestMarshalUnmarshalGenesis(t *testing.T) {
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
-	tempPath := path2.Join(dir, "%s", runtime.FuncForPC(pc).Name())
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
 	defer func(tempPath string) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
@@ -63,9 +63,10 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 
 	genesisExported := am.ExportGenesis(ctx, appCodec)
 	assert.NotPanics(t, func() {
+
 		dir := os.TempDir()
 		pc, _, _, _ := runtime.Caller(1)
-		tempPath := path2.Join(dir, "%s", runtime.FuncForPC(pc).Name())
+		tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
 		defer func(tempPath string) {
 			err := os.RemoveAll(tempPath)
 			require.NoError(t, err)
@@ -82,7 +83,7 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 func TestInitGenesis(t *testing.T) {
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
-	tempPath := path2.Join(dir, "%s", runtime.FuncForPC(pc).Name())
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
 	defer func(tempPath string) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
@@ -107,7 +108,7 @@ func TestInitGenesis(t *testing.T) {
 func TestExportGenesis(t *testing.T) {
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
-	tempPath := path2.Join(dir, "%s", runtime.FuncForPC(pc).Name())
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
 	defer func(tempPath string) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)

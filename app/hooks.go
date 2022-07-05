@@ -2,6 +2,7 @@ package app
 
 import (
 	epochtypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
+	incentivestypes "gitlab.com/oppy-finance/oppychain/x/incentives/types"
 	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 	minttypes "gitlab.com/oppy-finance/oppychain/x/mint/types"
 	swaptypes "gitlab.com/oppy-finance/oppychain/x/swap/types"
@@ -28,5 +29,8 @@ func (app *App) setupHooks() {
 			app.IncentivesKeeper.Hooks(),
 			app.MintKeeper.Hooks(),
 		),
+	)
+	app.IncentivesKeeper = *app.IncentivesKeeper.SetHooks(
+		incentivestypes.MultiIncentiveHooks{},
 	)
 }

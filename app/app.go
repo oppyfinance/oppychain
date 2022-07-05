@@ -1,6 +1,9 @@
 package app
 
 import (
+	"github.com/cosmos/cosmos-sdk/x/upgrade"
+	v2 "gitlab.com/oppy-finance/oppychain/upgrade/v2"
+	tokenfactorytypes "gitlab.com/oppy-finance/oppychain/x/tokenfactory/types"
 	"io"
 	"net/http"
 	"os"
@@ -77,7 +80,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	"github.com/cosmos/cosmos-sdk/x/upgrade"
 	upgradeclient "github.com/cosmos/cosmos-sdk/x/upgrade/client"
 	upgradekeeper "github.com/cosmos/cosmos-sdk/x/upgrade/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
@@ -91,6 +93,8 @@ import (
 	ibcporttypes "github.com/cosmos/ibc-go/v2/modules/core/05-port/types"
 	ibchost "github.com/cosmos/ibc-go/v2/modules/core/24-host"
 	ibckeeper "github.com/cosmos/ibc-go/v2/modules/core/keeper"
+	"github.com/ignite-hq/cli/ignite/pkg/cosmoscmd"
+	"github.com/ignite-hq/cli/ignite/pkg/openapiconsole"
 	"github.com/spf13/cast"
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmjson "github.com/tendermint/tendermint/libs/json"
@@ -103,9 +107,8 @@ import (
 	mintkeeper "gitlab.com/oppy-finance/oppychain/x/mint/keeper"
 	minttypes "gitlab.com/oppy-finance/oppychain/x/mint/types"
 	poolincentiveclient "gitlab.com/oppy-finance/oppychain/x/pool_incentives/client"
-
-	"github.com/ignite-hq/cli/ignite/pkg/cosmoscmd"
-	"github.com/ignite-hq/cli/ignite/pkg/openapiconsole"
+	tokenfactory "gitlab.com/oppy-finance/oppychain/x/tokenfactory"
+	tokenfactorykeeper "gitlab.com/oppy-finance/oppychain/x/tokenfactory/keeper"
 
 	monitoringp "github.com/tendermint/spn/x/monitoringp"
 	monitoringpkeeper "github.com/tendermint/spn/x/monitoringp/keeper"
@@ -188,6 +191,7 @@ var (
 		lockup.AppModuleBasic{},
 		incentives.AppModuleBasic{},
 		poolincentives.AppModuleBasic{},
+		tokenfactory.AppModuleBasic{},
 	)
 
 	// module account permissions
@@ -206,6 +210,7 @@ var (
 		lockupmoduletypes.ModuleName:     {authtypes.Minter, authtypes.Burner},
 		incentivesmoduletypes.ModuleName: {authtypes.Minter, authtypes.Burner},
 		poolincentivestypes.ModuleName:   nil,
+		tokenfactorytypes.ModuleName:     {authtypes.Minter, authtypes.Burner},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -275,6 +280,7 @@ type App struct {
 	LockupKeeper         lockupkeeper.Keeper
 	IncentivesKeeper     incentiveskeeper.Keeper
 	PoolIncentivesKeeper poolincentiveskeeper.Keeper
+	TokenFactoryKeeper   *tokenfactorykeeper.Keeper
 
 	// mm is the module manager
 	mm *module.Manager
@@ -320,6 +326,7 @@ func New(
 		lockupmoduletypes.StoreKey,
 		incentivesmoduletypes.StoreKey,
 		poolincentivestypes.StoreKey,
+		tokenfactorytypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -353,9 +360,10 @@ func New(
 	app.AccountKeeper = authkeeper.NewAccountKeeper(
 		appCodec, keys[authtypes.StoreKey], app.GetSubspace(authtypes.ModuleName), authtypes.ProtoBaseAccount, maccPerms,
 	)
-	app.BankKeeper = bankkeeper.NewBaseKeeper(
+	bKeeper := bankkeeper.NewBaseKeeper(
 		appCodec, keys[banktypes.StoreKey], app.AccountKeeper, app.GetSubspace(banktypes.ModuleName), app.ModuleAccountAddrs(),
 	)
+	app.BankKeeper = bKeeper
 	stakingKeeper := stakingkeeper.NewKeeper(
 		appCodec, keys[stakingtypes.StoreKey], app.AccountKeeper, app.BankKeeper, app.GetSubspace(stakingtypes.ModuleName),
 	)
@@ -388,6 +396,16 @@ func New(
 	app.StakingKeeper = *stakingKeeper.SetHooks(
 		stakingtypes.NewMultiStakingHooks(app.DistrKeeper.Hooks(), app.SlashingKeeper.Hooks()),
 	)
+
+	tokenFactoryKeeper := tokenfactorykeeper.NewKeeper(
+		appCodec,
+		app.keys[tokenfactorytypes.StoreKey],
+		app.GetSubspace(tokenfactorytypes.ModuleName),
+		app.AccountKeeper,
+		bKeeper.WithMintCoinsRestriction(tokenfactorytypes.NewTokenFactoryDenomMintCoinsRestriction()),
+		app.DistrKeeper,
+	)
+	app.TokenFactoryKeeper = &tokenFactoryKeeper
 
 	// ... other modules keepers
 
@@ -457,10 +475,11 @@ func New(
 	// ################################################################
 	vaultModule := vaultmodule.NewAppModule(appCodec, app.VaultKeeper, app.AccountKeeper, app.BankKeeper)
 	epochModule := epochs.NewAppModule(appCodec, app.EpochsKeeper)
-	swapModule := swap.NewAppModule(appCodec, app.SwapKeeper, app.AccountKeeper, app.BankKeeper)
+	swapModule := swap.NewAppModule(appCodec, app.SwapKeeper)
 	lockupModule := lockup.NewAppModule(appCodec, app.LockupKeeper, app.AccountKeeper, app.BankKeeper)
 	incentivesModule := incentives.NewAppModule(appCodec, app.IncentivesKeeper, app.AccountKeeper, app.BankKeeper, app.EpochsKeeper)
 	poolincentivesModule := poolincentives.NewAppModule(appCodec, app.PoolIncentivesKeeper)
+	tokenfactoryModule := tokenfactory.NewAppModule(appCodec, *app.TokenFactoryKeeper, app.AccountKeeper, app.BankKeeper)
 	// ################################################################
 	transferModule := transfer.NewAppModule(app.TransferKeeper)
 
@@ -548,6 +567,7 @@ func New(
 		lockupModule,
 		incentivesModule,
 		poolincentivesModule,
+		tokenfactoryModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -583,6 +603,7 @@ func New(
 		incentivesmoduletypes.ModuleName,
 		lockupmoduletypes.ModuleName,
 		poolincentivestypes.ModuleName,
+		tokenfactorytypes.ModuleName,
 	)
 
 	app.mm.SetOrderEndBlockers(
@@ -611,6 +632,7 @@ func New(
 		swapmoduletypes.ModuleName,
 		incentivesmoduletypes.ModuleName,
 		poolincentivestypes.ModuleName,
+		tokenfactorytypes.ModuleName,
 
 		// Note: epochs' endblock should be "real" end of epochs, we keep epochs endblock at the end
 		epochsmoduletypes.ModuleName,
@@ -648,6 +670,7 @@ func New(
 		swapmoduletypes.ModuleName,
 		lockupmoduletypes.ModuleName,
 		poolincentivestypes.ModuleName,
+		tokenfactorytypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	)
 
@@ -679,7 +702,8 @@ func New(
 		epochs.NewAppModule(appCodec, app.EpochsKeeper),
 		incentivesModule,
 		poolincentivesModule,
-		swap.NewAppModule(appCodec, app.SwapKeeper, app.AccountKeeper, app.BankKeeper),
+		tokenfactoryModule,
+		swap.NewAppModule(appCodec, app.SwapKeeper),
 	)
 	app.sm.RegisterStoreDecoders()
 
@@ -879,6 +903,8 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(lockupmoduletypes.ModuleName)
 	paramsKeeper.Subspace(incentivesmoduletypes.ModuleName)
 	paramsKeeper.Subspace(poolincentivestypes.ModuleName)
+	paramsKeeper.Subspace(tokenfactorytypes.ModuleName)
+
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper
@@ -891,4 +917,5 @@ func (app *App) SimulationManager() *module.SimulationManager {
 
 func (app *App) setupUpgredeHandlers() {
 	app.UpgradeKeeper.SetUpgradeHandler(v1.UpgradeName, v1.CreateUpgradeHandler(app.mm, app.configurator, &app.VaultKeeper))
+	app.UpgradeKeeper.SetUpgradeHandler(v2.UpgradeName, v2.CreateUpgradeHandler(app.mm, app.configurator))
 }

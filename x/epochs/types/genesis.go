@@ -5,44 +5,19 @@ import (
 	"time"
 )
 
-// DefaultIndex is the default capability global index
+// DefaultIndex is the default capability global index.
 const DefaultIndex uint64 = 1
 
 func NewGenesisState(epochs []EpochInfo) *GenesisState {
 	return &GenesisState{Epochs: epochs}
 }
 
-// DefaultGenesis returns the default Capability genesis state
+// DefaultGenesis returns the default Capability genesis state.
 func DefaultGenesis() *GenesisState {
 	epochs := []EpochInfo{
-		{
-			Identifier:              "minute",
-			StartTime:               time.Time{},
-			Duration:                time.Minute,
-			CurrentEpoch:            0,
-			CurrentEpochStartHeight: 0,
-			CurrentEpochStartTime:   time.Time{},
-			EpochCountingStarted:    false,
-		},
-
-		{
-			Identifier:              "week",
-			StartTime:               time.Time{},
-			Duration:                time.Hour * 24 * 7,
-			CurrentEpoch:            0,
-			CurrentEpochStartHeight: 0,
-			CurrentEpochStartTime:   time.Time{},
-			EpochCountingStarted:    false,
-		},
-		{
-			Identifier:              "day",
-			StartTime:               time.Time{},
-			Duration:                time.Hour * 24,
-			CurrentEpoch:            0,
-			CurrentEpochStartHeight: 0,
-			CurrentEpochStartTime:   time.Time{},
-			EpochCountingStarted:    false,
-		},
+		NewGenesisEpochInfo("minute", time.Minute),
+		NewGenesisEpochInfo("week", time.Hour*24*7),
+		NewGenesisEpochInfo("day", time.Hour*24),
 	}
 	return NewGenesisState(epochs)
 }
@@ -65,4 +40,16 @@ func (gs GenesisState) Validate() error {
 		epochIdentifiers[epoch.Identifier] = true
 	}
 	return nil
+}
+
+func NewGenesisEpochInfo(identifier string, duration time.Duration) EpochInfo {
+	return EpochInfo{
+		Identifier:              identifier,
+		StartTime:               time.Time{},
+		Duration:                duration,
+		CurrentEpoch:            0,
+		CurrentEpochStartHeight: 0,
+		CurrentEpochStartTime:   time.Time{},
+		EpochCountingStarted:    false,
+	}
 }

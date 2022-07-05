@@ -5,7 +5,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	"github.com/cosmos/cosmos-sdk/types/simulation"
 	types2 "github.com/cosmos/cosmos-sdk/x/staking/types"
-	"github.com/stretchr/testify/assert"
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"strconv"
 	"testing"
 
@@ -24,7 +24,7 @@ import (
 var _ = strconv.IntSize
 
 func TestOutboundTxMsgServerCreate(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	app, ctx := keepertest.SetupVaultApp(t)
 	k := app.VaultKeeper
 	srv := keeper.NewMsgServerImpl(k)
@@ -33,12 +33,12 @@ func TestOutboundTxMsgServerCreate(t *testing.T) {
 	sk := ed25519.GenPrivKey()
 	desc := types2.NewDescription("tester", "testId", "www.test.com", "aaa", "aaa")
 
-	creatorStr := "jolt1f0atl7egduue8a07j42hyklct0sqa68wxem3lg"
+	creatorStr := "oppy1fase3jev95k9lsj6hn0echk4e37kyhpspmluqd"
 	creator, err := sdk.AccAddressFromBech32(creatorStr)
-	assert.Nil(t, err)
+	require.NoError(t, err)
 
 	valAddr, err := sdk.ValAddressFromHex(hex.EncodeToString(creator.Bytes()))
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	testValidator, err := types2.NewValidator(valAddr, sk.PubKey(), desc)
 	require.NoError(t, err)
 

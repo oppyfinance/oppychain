@@ -2,6 +2,7 @@ package keeper_test
 
 import (
 	"fmt"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	"testing"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -26,13 +27,11 @@ func createNCreatePool(keeper *keeper.Keeper, ctx sdk.Context, n int, addresses 
 }
 
 func TestCreatePoolGet(t *testing.T) {
-	setupBech32Prefix()
-	addressesStr := []string{"jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d", "jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg", "jolt17fczazdur0g04jtedlwp837r0vzktvwc0gx0fg"}
-	addresses := make([]sdk.AccAddress, 3)
-	var err error
+	var addresses []sdk.AccAddress
 	for i := 0; i < 3; i++ {
-		addresses[i], err = sdk.AccAddressFromBech32(addressesStr[i])
-		assert.Nil(t, err)
+		sk := ed25519.GenPrivKey()
+		addr := sk.PubKey().Address().Bytes()
+		addresses = append(addresses, addr)
 	}
 
 	app, ctx := keepertest.SetupVaultApp(t)
@@ -45,14 +44,14 @@ func TestCreatePoolGet(t *testing.T) {
 }
 
 func TestCreatePoolRemove(t *testing.T) {
-	setupBech32Prefix()
-	addressesStr := []string{"jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d", "jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg", "jolt17fczazdur0g04jtedlwp837r0vzktvwc0gx0fg"}
-	addresses := make([]sdk.AccAddress, 3)
-	var err error
+
+	var addresses []sdk.AccAddress
 	for i := 0; i < 3; i++ {
-		addresses[i], err = sdk.AccAddressFromBech32(addressesStr[i])
-		assert.Nil(t, err)
+		sk := ed25519.GenPrivKey()
+		addr := sk.PubKey().Address().Bytes()
+		addresses = append(addresses, addr)
 	}
+
 	app, ctx := keepertest.SetupVaultApp(t)
 
 	items := createNCreatePool(&app.VaultKeeper, ctx, 10, addresses)
@@ -64,13 +63,12 @@ func TestCreatePoolRemove(t *testing.T) {
 }
 
 func TestCreatePoolGetAll(t *testing.T) {
-	setupBech32Prefix()
-	addressesStr := []string{"jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d", "jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg", "jolt17fczazdur0g04jtedlwp837r0vzktvwc0gx0fg"}
-	addresses := make([]sdk.AccAddress, 3)
-	var err error
+
+	var addresses []sdk.AccAddress
 	for i := 0; i < 3; i++ {
-		addresses[i], err = sdk.AccAddressFromBech32(addressesStr[i])
-		assert.Nil(t, err)
+		sk := ed25519.GenPrivKey()
+		addr := sk.PubKey().Address().Bytes()
+		addresses = append(addresses, addr)
 	}
 	app, ctx := keepertest.SetupVaultApp(t)
 	items := createNCreatePool(&app.VaultKeeper, ctx, 10, addresses)

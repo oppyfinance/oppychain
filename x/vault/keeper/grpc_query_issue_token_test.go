@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -14,7 +15,7 @@ import (
 )
 
 func TestIssueTokenQuerySingle(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	app, _, wctx := setupMsgServer(t)
 	k := &app.VaultKeeper
 	ctx := sdk.UnwrapSDKContext(wctx)
@@ -59,7 +60,7 @@ func TestIssueTokenQuerySingle(t *testing.T) {
 }
 
 func TestIssueTokenQueryPaginated(t *testing.T) {
-	setupBech32Prefix()
+	utils.SetAddressPrefixes()
 	app, _, wctx := setupMsgServer(t)
 	k := &app.VaultKeeper
 	ctx := sdk.UnwrapSDKContext(wctx)

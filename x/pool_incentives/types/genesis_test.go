@@ -4,14 +4,15 @@ import (
 	"testing"
 	"time"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	proto "github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/require"
+
 	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 func TestGenesisStateMarshalUnmarshal(t *testing.T) {
-
 	tests := []struct {
 		state *types.GenesisState
 	}{

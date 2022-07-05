@@ -20,7 +20,9 @@ import (
 
 func TestCreatePlaceOrder(t *testing.T) {
 	setupBech32Prefix()
-	net := network.New(t)
+	cfg := network.DefaultConfig()
+	cfg.MinGasPrices = "0poppy"
+	net := network.New(t, cfg)
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 	createInvoiceFields := []string{"placeOrderTest", val.Address.String(), "100000", "10", "xyz"}
@@ -32,7 +34,7 @@ func TestCreatePlaceOrder(t *testing.T) {
 		fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 		fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 		fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-		fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+		//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 	}
 
 	t.Run("test place order", func(t *testing.T) {

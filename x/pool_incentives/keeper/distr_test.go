@@ -1,100 +1,114 @@
 package keeper_test
 
 import (
+	abci "github.com/tendermint/tendermint/abci/types"
+
+	minttypes "gitlab.com/oppy-finance/oppychain/x/mint/types"
+	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"github.com/cosmos/cosmos-sdk/x/distribution"
 	distrtypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
-	abci "github.com/tendermint/tendermint/abci/types"
-	minttypes "gitlab.com/oppy-finance/oppychain/x/mint/types"
-	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 func (suite *KeeperTestSuite) TestAllocateAssetToCommunityPoolWhenNoDistrRecords() {
-	mintKeeper := suite.app.MintKeeper
-	params := suite.app.MintKeeper.GetParams(suite.ctx)
+	mintKeeper := suite.App.MintKeeper
+	params := suite.App.MintKeeper.GetParams(suite.Ctx)
 	params.WeightedDeveloperRewardsReceivers = []minttypes.WeightedAddress{
 		{
 			Address: sdk.AccAddress([]byte("addr1---------------")).String(),
 			Weight:  sdk.NewDec(1),
 		},
 	}
-	suite.app.MintKeeper.SetParams(suite.ctx, params)
+	suite.App.MintKeeper.SetParams(suite.Ctx, params)
 
 	// At this time, there is no distr record, so the asset should be allocated to the community pool.
 	mintCoin := sdk.NewCoin("stake", sdk.NewInt(100000))
 	mintCoins := sdk.Coins{mintCoin}
-	err := mintKeeper.MintCoins(suite.ctx, mintCoins)
+	err := mintKeeper.MintCoins(suite.Ctx, mintCoins)
 	suite.NoError(err)
 
-	err = mintKeeper.DistributeMintedCoin(suite.ctx, mintCoin) // this calls AllocateAsset via hook
+	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin) // this calls AllocateAsset via hook
 	suite.NoError(err)
 
-	distribution.BeginBlocker(suite.ctx, abci.RequestBeginBlock{}, suite.app.DistrKeeper)
+	distribution.BeginBlocker(suite.Ctx, abci.RequestBeginBlock{}, suite.App.DistrKeeper)
 
-	feePool := suite.app.DistrKeeper.GetFeePool(suite.ctx)
+	feePool := suite.App.DistrKeeper.GetFeePool(suite.Ctx)
 
-	paramsMint := suite.app.MintKeeper.GetParams(suite.ctx)
+	paramsMint := suite.App.MintKeeper.GetParams(suite.Ctx)
 	proportions := paramsMint.DistributionProportions
-	stakingIncentivesCoins := sdk.NewCoins(suite.app.MintKeeper.GetProportions(suite.ctx, mintCoin, proportions.Staking))
+	stakingIncentivesCoins := sdk.NewCoins(suite.App.MintKeeper.GetProportions(suite.Ctx, mintCoin, proportions.Staking))
 	communityPoolCoins := sdk.NewCoins(mintCoin).Sub(stakingIncentivesCoins)
 	// allocate asset will send tokens to the community pool as the pool-incentives guage is empty
-	suite.Equal(stakingIncentivesCoins.String(), suite.app.BankKeeper.GetBalance(suite.ctx, suite.app.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName), "stake").String())
+	suite.Equal(stakingIncentivesCoins.String(), suite.App.BankKeeper.GetBalance(suite.Ctx, suite.App.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName), "stake").String())
 	suite.Equal(sdk.NewDecCoinsFromCoins(communityPoolCoins[0]).String(), feePool.CommunityPool.String())
 	// the distribution account balance is the same as the distribution module as fund community move fund to the distribution account
-	suite.Equal(communityPoolCoins[0].String(), suite.app.BankKeeper.GetBalance(suite.ctx, suite.app.AccountKeeper.GetModuleAddress(distrtypes.ModuleName), "stake").String())
+	suite.Equal(communityPoolCoins[0].String(), suite.App.BankKeeper.GetBalance(suite.Ctx, suite.App.AccountKeeper.GetModuleAddress(distrtypes.ModuleName), "stake").String())
 
 	// Community pool should be increased
+
+	coin := suite.App.BankKeeper.GetBalance(suite.Ctx, suite.App.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName), "stake")
+	c2 := coin.Add(coin)
+
+	communityCoinsNow := communityPoolCoins[0].Add(communityPoolCoins[0])
+	communityCoinsNowDec := sdk.NewDecCoinFromCoin(communityCoinsNow)
 	mintCoin = sdk.NewCoin("stake", sdk.NewInt(100000))
 	mintCoins = sdk.Coins{mintCoin}
-	err = mintKeeper.MintCoins(suite.ctx, mintCoins)
+	err = mintKeeper.MintCoins(suite.Ctx, mintCoins)
 	suite.NoError(err)
-	err = mintKeeper.DistributeMintedCoin(suite.ctx, mintCoin) // this calls AllocateAsset via hook
+	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin) // this calls AllocateAsset via hook
 	suite.NoError(err)
 
-	distribution.BeginBlocker(suite.ctx, abci.RequestBeginBlock{}, suite.app.DistrKeeper)
+	distribution.BeginBlocker(suite.Ctx, abci.RequestBeginBlock{}, suite.App.DistrKeeper)
 
-	feePool = suite.app.DistrKeeper.GetFeePool(suite.ctx)
+	feePool = suite.App.DistrKeeper.GetFeePool(suite.Ctx)
+
 	// as each mint, staking get 4000, so we have 8000stake now
-	suite.Equal("80000stake", suite.app.BankKeeper.GetBalance(suite.ctx, suite.app.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName), "stake").String())
+	suite.Equal(c2.String(), suite.App.BankKeeper.GetBalance(suite.Ctx, suite.App.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName), "stake").String())
 	// community pool = previous community pool*2 =12000stake
-	suite.Equal(feePool.CommunityPool.String(), sdk.NewDecCoinsFromCoins(sdk.NewCoin("stake", sdk.NewInt(120000))).String())
-	suite.Equal(sdk.NewCoin("stake", sdk.NewInt(120000)), suite.app.BankKeeper.GetBalance(suite.ctx, suite.app.AccountKeeper.GetModuleAddress(distrtypes.ModuleName), "stake"))
+	suite.Equal(feePool.CommunityPool.String(), communityCoinsNowDec.String())
+	suite.Equal(communityCoinsNow, suite.App.BankKeeper.GetBalance(suite.Ctx, suite.App.AccountKeeper.GetModuleAddress(distrtypes.ModuleName), "stake"))
+}
+
+// GetProportions gets the balance of the `MintedDenom` from minted coins and returns coins according to the `AllocationRatio`.
+func getProportions(mintedCoin sdk.Coin, ratio sdk.Dec) sdk.Coin {
+	return sdk.NewCoin(mintedCoin.Denom, mintedCoin.Amount.ToDec().Mul(ratio).TruncateInt())
 }
 
 func (suite *KeeperTestSuite) TestAllocateAsset() {
-	keeper := suite.app.PoolIncentivesKeeper
-	mintKeeper := suite.app.MintKeeper
-	params := suite.app.MintKeeper.GetParams(suite.ctx)
+	keeper := suite.App.PoolIncentivesKeeper
+	mintKeeper := suite.App.MintKeeper
+	params := suite.App.MintKeeper.GetParams(suite.Ctx)
 	params.WeightedDeveloperRewardsReceivers = []minttypes.WeightedAddress{
 		{
 			Address: sdk.AccAddress([]byte("addr1---------------")).String(),
 			Weight:  sdk.NewDec(1),
 		},
 	}
-	suite.app.MintKeeper.SetParams(suite.ctx, params)
+	suite.App.MintKeeper.SetParams(suite.Ctx, params)
 
-	poolId := suite.prepareBalancerPool()
+	poolId := suite.PrepareBalancerPool()
 
 	// LockableDurations should be 1, 3, 7 hours from the default genesis state.
-	lockableDurations := keeper.GetLockableDurations(suite.ctx)
+	lockableDurations := keeper.GetLockableDurations(suite.Ctx)
 	suite.Equal(3, len(lockableDurations))
 
 	for i, duration := range lockableDurations {
 		suite.Equal(duration, types.DefaultGenesisState().GetLockableDurations()[i])
 	}
 
-	gauge1Id, err := keeper.GetPoolGaugeId(suite.ctx, poolId, lockableDurations[0])
+	gauge1Id, err := keeper.GetPoolGaugeId(suite.Ctx, poolId, lockableDurations[0])
 	suite.NoError(err)
 
-	gauge2Id, err := keeper.GetPoolGaugeId(suite.ctx, poolId, lockableDurations[1])
+	gauge2Id, err := keeper.GetPoolGaugeId(suite.Ctx, poolId, lockableDurations[1])
 	suite.NoError(err)
 
-	gauge3Id, err := keeper.GetPoolGaugeId(suite.ctx, poolId, lockableDurations[2])
+	gauge3Id, err := keeper.GetPoolGaugeId(suite.Ctx, poolId, lockableDurations[2])
 	suite.NoError(err)
 
 	// Create 3 records
-	err = keeper.ReplaceDistrRecords(suite.ctx, types.DistrRecord{
+	err = keeper.ReplaceDistrRecords(suite.Ctx, types.DistrRecord{
 		GaugeId: gauge1Id,
 		Weight:  sdk.NewInt(100),
 	}, types.DistrRecord{
@@ -109,66 +123,85 @@ func (suite *KeeperTestSuite) TestAllocateAsset() {
 	// In this time, there are 3 records, so the assets to be allocated to the gauges proportionally.
 	mintCoin := sdk.NewCoin("stake", sdk.NewInt(100000))
 	mintCoins := sdk.Coins{mintCoin}
-	err = mintKeeper.MintCoins(suite.ctx, mintCoins)
+	err = mintKeeper.MintCoins(suite.Ctx, mintCoins)
 	suite.NoError(err)
 
-	err = mintKeeper.DistributeMintedCoin(suite.ctx, mintCoin) // this calls AllocateAsset via hook
+	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin) // this calls AllocateAsset via hook
 	suite.NoError(err)
-	//staking will get 40000, and the community will get 3000, and pool-incentives get 3000
-	distribution.BeginBlocker(suite.ctx, abci.RequestBeginBlock{}, suite.app.DistrKeeper)
 
-	suite.Equal("40000stake", suite.app.BankKeeper.GetBalance(suite.ctx, suite.app.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName), "stake").String())
+	stakingCoins := sdk.NewCoins(getProportions(mintCoin, minttypes.Staking))
+	distribution.BeginBlocker(suite.Ctx, abci.RequestBeginBlock{}, suite.App.DistrKeeper)
 
-	// 5000=30000/(100+200+300)*(100)
-	gauge1, err := suite.app.IncentivesKeeper.GetGaugeByID(suite.ctx, gauge1Id)
+	suite.Equal(stakingCoins[0].String(), suite.App.BankKeeper.GetBalance(suite.Ctx, suite.App.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName), "stake").String())
+
+	// 6060606=36363636/(100+200+300)*(100)
+	poolIncentivesCoins := sdk.NewCoins(getProportions(mintCoin, minttypes.PoolIncentives))
+	a := sdk.MustNewDecFromStr("100")
+	b := sdk.MustNewDecFromStr("200")
+	c := sdk.MustNewDecFromStr("300")
+	total := sdk.MustNewDecFromStr("600")
+	first := sdk.NewCoins(getProportions(poolIncentivesCoins[0], a.Quo(total)))[0]
+	second := sdk.NewCoins(getProportions(poolIncentivesCoins[0], b.Quo(total)))[0]
+	third := sdk.NewCoins(getProportions(poolIncentivesCoins[0], c.Quo(total)))[0]
+
+	gauge1, err := suite.App.IncentivesKeeper.GetGaugeByID(suite.Ctx, gauge1Id)
 	suite.NoError(err)
-	suite.Equal("5000stake", gauge1.Coins.String())
+	suite.Equal(first.String(), gauge1.Coins.String())
 
-	gauge2, err := suite.app.IncentivesKeeper.GetGaugeByID(suite.ctx, gauge2Id)
+	gauge2, err := suite.App.IncentivesKeeper.GetGaugeByID(suite.Ctx, gauge2Id)
 	suite.NoError(err)
-	suite.Equal("9999stake", gauge2.Coins.String())
+	suite.Equal(second.String(), gauge2.Coins.String())
 
-	gauge3, err := suite.app.IncentivesKeeper.GetGaugeByID(suite.ctx, gauge3Id)
+	gauge3, err := suite.App.IncentivesKeeper.GetGaugeByID(suite.Ctx, gauge3Id)
 	suite.NoError(err)
-	suite.Equal("15000stake", gauge3.Coins.String())
+	suite.Equal(third.String(), gauge3.Coins.String())
 
 	// Allocate more.
 	mintCoin = sdk.NewCoin("stake", sdk.NewInt(50000))
 	mintCoins = sdk.Coins{mintCoin}
-	err = mintKeeper.MintCoins(suite.ctx, mintCoins)
+
+	poolIncentivesCoins2 := sdk.NewCoins(getProportions(mintCoin, minttypes.PoolIncentives))[0]
+
+	leftover := suite.App.BankKeeper.GetBalance(suite.Ctx, suite.App.AccountKeeper.GetModuleAddress(types.ModuleName), "stake")
+
+	poolIncentivesCoins2 = leftover.AddAmount(poolIncentivesCoins2.Amount)
+
+	stakingCoins2 := sdk.NewCoins(getProportions(mintCoin, minttypes.Staking))
+
+	first2 := sdk.NewCoins(getProportions(poolIncentivesCoins2, a.Quo(total)))[0]
+	second2 := sdk.NewCoins(getProportions(poolIncentivesCoins2, b.Quo(total)))[0]
+	third2 := sdk.NewCoins(getProportions(poolIncentivesCoins2, c.Quo(total)))[0]
+
+	err = mintKeeper.MintCoins(suite.Ctx, mintCoins)
 	suite.NoError(err)
-	err = mintKeeper.DistributeMintedCoin(suite.ctx, mintCoin) // this calls AllocateAsset via hook
+	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin) // this calls AllocateAsset via hook
 	suite.NoError(err)
 
-	distribution.BeginBlocker(suite.ctx, abci.RequestBeginBlock{}, suite.app.DistrKeeper)
+	distribution.BeginBlocker(suite.Ctx, abci.RequestBeginBlock{}, suite.App.DistrKeeper)
 
 	// It has very small margin of error.
-	// 400000(previous)+20000(current)
-	suite.Equal("60000stake", suite.app.BankKeeper.GetBalance(suite.ctx, suite.app.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName), "stake").String())
+	suite.Equal(stakingCoins[0].Add(stakingCoins2[0]).String(), suite.App.BankKeeper.GetBalance(suite.Ctx, suite.App.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName), "stake").String())
 
 	// Allocated assets should be increased.
-	gauge1, err = suite.app.IncentivesKeeper.GetGaugeByID(suite.ctx, gauge1Id)
+	gauge1, err = suite.App.IncentivesKeeper.GetGaugeByID(suite.Ctx, gauge1Id)
 	suite.NoError(err)
-	// 5000+(15000/6*1)=
-	suite.Equal("7500stake", gauge1.Coins.String())
+	suite.Equal(first.Add(first2).String(), gauge1.Coins.String())
 
-	gauge2, err = suite.app.IncentivesKeeper.GetGaugeByID(suite.ctx, gauge2Id)
+	gauge2, err = suite.App.IncentivesKeeper.GetGaugeByID(suite.Ctx, gauge2Id)
 	suite.NoError(err)
-	//9999+(15000/6)*2
-	suite.Equal("14999stake", gauge2.Coins.String())
+	suite.Equal(second.Add(second2).String(), gauge2.Coins.String())
 
-	gauge3, err = suite.app.IncentivesKeeper.GetGaugeByID(suite.ctx, gauge3Id)
+	gauge3, err = suite.App.IncentivesKeeper.GetGaugeByID(suite.Ctx, gauge3Id)
 	suite.NoError(err)
-	//15000+(15000/6)*3
-	suite.Equal("22500stake", gauge3.Coins.String())
+	suite.Equal(third.Add(third2).String(), gauge3.Coins.String())
 
 	// ------------ test community pool distribution when gaugeId is zero ------------ //
 
 	// record original community pool balance
-	feePoolOrigin := suite.app.DistrKeeper.GetFeePool(suite.ctx)
+	feePoolOrigin := suite.App.DistrKeeper.GetFeePool(suite.Ctx)
 
 	// Create 3 records including community pool
-	err = keeper.ReplaceDistrRecords(suite.ctx, types.DistrRecord{
+	err = keeper.ReplaceDistrRecords(suite.Ctx, types.DistrRecord{
 		GaugeId: 0,
 		Weight:  sdk.NewInt(700),
 	}, types.DistrRecord{
@@ -181,80 +214,95 @@ func (suite *KeeperTestSuite) TestAllocateAsset() {
 	suite.NoError(err)
 
 	// In this time, there are 3 records, so the assets to be allocated to the gauges proportionally.
+	leftovernow := suite.App.BankKeeper.GetBalance(suite.Ctx, suite.App.AccountKeeper.GetModuleAddress(types.ModuleName), "stake")
 	mintCoin = sdk.NewCoin("stake", sdk.NewInt(100000))
 	mintCoins = sdk.Coins{mintCoin}
-	err = mintKeeper.MintCoins(suite.ctx, mintCoins)
+	err = mintKeeper.MintCoins(suite.Ctx, mintCoins)
 	suite.NoError(err)
-	err = mintKeeper.DistributeMintedCoin(suite.ctx, mintCoin) // this calls AllocateAsset via hook
+	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin) // this calls AllocateAsset via hook
 	suite.NoError(err)
 
-	distribution.BeginBlocker(suite.ctx, abci.RequestBeginBlock{}, suite.app.DistrKeeper)
+	distribution.BeginBlocker(suite.Ctx, abci.RequestBeginBlock{}, suite.App.DistrKeeper)
 
 	// check community pool balance increase
-	// 30000 from the community pool itself, plus the incentives 3000/(10)*7
-	// the extra 1 stake is because of the 999stake at line 131
-	feePoolNew := suite.app.DistrKeeper.GetFeePool(suite.ctx)
-	suite.Equal(feePoolOrigin.CommunityPool.Add(sdk.NewDecCoin("stake", sdk.NewInt(30000))).Add(sdk.NewDecCoin("stake", sdk.NewInt(21000))), feePoolNew.CommunityPool)
+	feePoolNew := suite.App.DistrKeeper.GetFeePool(suite.Ctx)
+
+	a = sdk.MustNewDecFromStr("700")
+	total = sdk.MustNewDecFromStr("1000")
+
+	poolIncentiveGet := leftovernow.AddAmount(poolIncentivesCoins[0].Amount)
+
+	poolIncentivesCoins = sdk.NewCoins(getProportions(mintCoin, minttypes.PoolIncentives))
+	firstc := sdk.NewCoins(getProportions(poolIncentiveGet, a.Quo(total)))[0]
+
+	communityPoolCoins := mintCoins.Sub(stakingCoins).Sub(poolIncentivesCoins)
+
+	expecetd := feePoolOrigin.CommunityPool.Add(sdk.NewDecCoinFromCoin(firstc)).Add(sdk.NewDecCoinFromCoin(communityPoolCoins[0]))
+
+	suite.Equal(expecetd, feePoolNew.CommunityPool)
 
 	// ------------ test community pool distribution when no distribution records are set ------------ //
 
 	// record original community pool balance
-	feePoolOrigin = suite.app.DistrKeeper.GetFeePool(suite.ctx)
+	feePoolOrigin = suite.App.DistrKeeper.GetFeePool(suite.Ctx)
+
+	leftovernow = suite.App.BankKeeper.GetBalance(suite.Ctx, suite.App.AccountKeeper.GetModuleAddress(types.ModuleName), "stake")
 
 	// set empty records set
-	err = keeper.ReplaceDistrRecords(suite.ctx)
+	err = keeper.ReplaceDistrRecords(suite.Ctx)
 	suite.NoError(err)
 
 	// In this time, all should be allocated to community pool
 	mintCoin = sdk.NewCoin("stake", sdk.NewInt(100000))
 	mintCoins = sdk.Coins{mintCoin}
-	err = mintKeeper.MintCoins(suite.ctx, mintCoins)
+	err = mintKeeper.MintCoins(suite.Ctx, mintCoins)
 	suite.NoError(err)
-	err = mintKeeper.DistributeMintedCoin(suite.ctx, mintCoin) // this calls AllocateAsset via hook
+	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin) // this calls AllocateAsset via hook
 	suite.NoError(err)
 
-	distribution.BeginBlocker(suite.ctx, abci.RequestBeginBlock{}, suite.app.DistrKeeper)
+	distribution.BeginBlocker(suite.Ctx, abci.RequestBeginBlock{}, suite.App.DistrKeeper)
 
+	// we need to add the leftover from the poolincentive
+	communityPoolCoins = mintCoins.Sub(stakingCoins).Add(leftovernow)
 	// check community pool balance increase
-	feePoolNew = suite.app.DistrKeeper.GetFeePool(suite.ctx)
-	// 60001=30000+30000(incentives)+1 the left over from line 129
-	suite.Equal(feePoolOrigin.CommunityPool.Add(sdk.NewDecCoin("stake", sdk.NewInt(60001))), feePoolNew.CommunityPool)
+	feePoolNew = suite.App.DistrKeeper.GetFeePool(suite.Ctx)
+	suite.Equal(feePoolOrigin.CommunityPool.Add(sdk.NewDecCoinFromCoin(communityPoolCoins[0])), feePoolNew.CommunityPool)
 }
 
 func (suite *KeeperTestSuite) TestReplaceDistrRecords() uint64 {
 	suite.SetupTest()
 
-	keeper := suite.app.PoolIncentivesKeeper
+	keeper := suite.App.PoolIncentivesKeeper
 
 	// Not existent gauge.
-	err := keeper.ReplaceDistrRecords(suite.ctx, types.DistrRecord{
+	err := keeper.ReplaceDistrRecords(suite.Ctx, types.DistrRecord{
 		GaugeId: 1,
 		Weight:  sdk.NewInt(100),
 	})
 	suite.Error(err)
 
-	poolId := suite.prepareBalancerPool()
+	poolId := suite.PrepareBalancerPool()
 
 	// LockableDurations should be 1, 3, 7 hours from the default genesis state for testing
-	lockableDurations := keeper.GetLockableDurations(suite.ctx)
+	lockableDurations := keeper.GetLockableDurations(suite.Ctx)
 	suite.Equal(3, len(lockableDurations))
 
-	gaugeId, err := keeper.GetPoolGaugeId(suite.ctx, poolId, lockableDurations[0])
+	gaugeId, err := keeper.GetPoolGaugeId(suite.Ctx, poolId, lockableDurations[0])
 	suite.NoError(err)
 
-	err = keeper.ReplaceDistrRecords(suite.ctx, types.DistrRecord{
+	err = keeper.ReplaceDistrRecords(suite.Ctx, types.DistrRecord{
 		GaugeId: gaugeId,
 		Weight:  sdk.NewInt(100),
 	})
 	suite.NoError(err)
-	distrInfo := keeper.GetDistrInfo(suite.ctx)
+	distrInfo := keeper.GetDistrInfo(suite.Ctx)
 	suite.Equal(1, len(distrInfo.Records))
 	suite.Equal(gaugeId, distrInfo.Records[0].GaugeId)
 	suite.Equal(sdk.NewInt(100), distrInfo.Records[0].Weight)
 	suite.Equal(sdk.NewInt(100), distrInfo.TotalWeight)
 
 	// adding two of the same gauge id at once should error
-	err = keeper.ReplaceDistrRecords(suite.ctx, types.DistrRecord{
+	err = keeper.ReplaceDistrRecords(suite.Ctx, types.DistrRecord{
 		GaugeId: gaugeId,
 		Weight:  sdk.NewInt(100),
 	}, types.DistrRecord{
@@ -266,7 +314,7 @@ func (suite *KeeperTestSuite) TestReplaceDistrRecords() uint64 {
 	gaugeId2 := gaugeId + 1
 	gaugeId3 := gaugeId + 2
 
-	err = keeper.ReplaceDistrRecords(suite.ctx, types.DistrRecord{
+	err = keeper.ReplaceDistrRecords(suite.Ctx, types.DistrRecord{
 		GaugeId: gaugeId2,
 		Weight:  sdk.NewInt(100),
 	}, types.DistrRecord{
@@ -275,7 +323,7 @@ func (suite *KeeperTestSuite) TestReplaceDistrRecords() uint64 {
 	})
 	suite.NoError(err)
 
-	distrInfo = keeper.GetDistrInfo(suite.ctx)
+	distrInfo = keeper.GetDistrInfo(suite.Ctx)
 	suite.Equal(2, len(distrInfo.Records))
 	suite.Equal(gaugeId2, distrInfo.Records[0].GaugeId)
 	suite.Equal(gaugeId3, distrInfo.Records[1].GaugeId)
@@ -284,7 +332,7 @@ func (suite *KeeperTestSuite) TestReplaceDistrRecords() uint64 {
 	suite.Equal(sdk.NewInt(300), distrInfo.TotalWeight)
 
 	// Can replace the registered gauge id
-	err = keeper.ReplaceDistrRecords(suite.ctx, types.DistrRecord{
+	err = keeper.ReplaceDistrRecords(suite.Ctx, types.DistrRecord{
 		GaugeId: gaugeId2,
 		Weight:  sdk.NewInt(100),
 	})
@@ -296,25 +344,25 @@ func (suite *KeeperTestSuite) TestReplaceDistrRecords() uint64 {
 func (suite *KeeperTestSuite) TestUpdateDistrRecords() uint64 {
 	suite.SetupTest()
 
-	keeper := suite.app.PoolIncentivesKeeper
+	keeper := suite.App.PoolIncentivesKeeper
 
 	// Not existent gauge.
-	err := keeper.UpdateDistrRecords(suite.ctx, types.DistrRecord{
+	err := keeper.UpdateDistrRecords(suite.Ctx, types.DistrRecord{
 		GaugeId: 1,
 		Weight:  sdk.NewInt(100),
 	})
 	suite.Error(err)
 
-	poolId := suite.prepareBalancerPool()
+	poolId := suite.PrepareBalancerPool()
 
 	// LockableDurations should be 1, 3, 7 hours from the default genesis state for testing
-	lockableDurations := keeper.GetLockableDurations(suite.ctx)
+	lockableDurations := keeper.GetLockableDurations(suite.Ctx)
 	suite.Equal(3, len(lockableDurations))
 
-	gaugeId, err := keeper.GetPoolGaugeId(suite.ctx, poolId, lockableDurations[0])
+	gaugeId, err := keeper.GetPoolGaugeId(suite.Ctx, poolId, lockableDurations[0])
 	suite.NoError(err)
 
-	err = keeper.UpdateDistrRecords(suite.ctx, types.DistrRecord{
+	err = keeper.UpdateDistrRecords(suite.Ctx, types.DistrRecord{
 		GaugeId: 0,
 		Weight:  sdk.NewInt(100),
 	}, types.DistrRecord{
@@ -322,14 +370,14 @@ func (suite *KeeperTestSuite) TestUpdateDistrRecords() uint64 {
 		Weight:  sdk.NewInt(100),
 	})
 	suite.NoError(err)
-	distrInfo := keeper.GetDistrInfo(suite.ctx)
+	distrInfo := keeper.GetDistrInfo(suite.Ctx)
 	suite.Equal(2, len(distrInfo.Records))
 	suite.Equal(sdk.NewInt(100), distrInfo.Records[0].Weight)
 	suite.Equal(sdk.NewInt(100), distrInfo.Records[1].Weight)
 	suite.Equal(sdk.NewInt(200), distrInfo.TotalWeight)
 
 	// adding two of the same gauge id at once should error
-	err = keeper.UpdateDistrRecords(suite.ctx, types.DistrRecord{
+	err = keeper.UpdateDistrRecords(suite.Ctx, types.DistrRecord{
 		GaugeId: 0,
 		Weight:  sdk.NewInt(0),
 	}, types.DistrRecord{
@@ -340,7 +388,7 @@ func (suite *KeeperTestSuite) TestUpdateDistrRecords() uint64 {
 		Weight:  sdk.NewInt(150),
 	})
 	suite.NoError(err)
-	distrInfo = keeper.GetDistrInfo(suite.ctx)
+	distrInfo = keeper.GetDistrInfo(suite.Ctx)
 	suite.Equal(2, len(distrInfo.Records))
 	suite.Equal(sdk.NewInt(200), distrInfo.Records[0].Weight)
 	suite.Equal(sdk.NewInt(150), distrInfo.Records[1].Weight)

@@ -4,19 +4,20 @@ import (
 	"fmt"
 	"testing"
 
+	swapcli "gitlab.com/oppy-finance/oppychain/x/swap/client/cli"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/testutil"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	swapcli "gitlab.com/oppy-finance/oppychain/x/swap/client/cli"
 )
 
-// commonArgs is args for CLI test commands
+// commonArgs is args for CLI test commands.
 var commonArgs = []string{
 	fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 	fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-	fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(utils.DefaultBondDenom, sdk.NewInt(10))).String()),
+	fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(10))).String()),
 }
 
 // MsgCreatePool broadcast a pool creation message.
@@ -80,7 +81,7 @@ func MsgJoinPool(clientCtx client.Context, owner fmt.Stringer, poolID uint64, sh
 	return clitestutil.ExecTestCLICmd(clientCtx, swapcli.NewJoinPoolCmd(), args)
 }
 
-// MsgExitPool broadcast a pool exit message
+// MsgExitPool broadcast a pool exit message.
 func MsgExitPool(clientCtx client.Context, owner fmt.Stringer, poolID uint64, shareAmtIn string, minAmountsOut []string, extraArgs ...string) (testutil.BufferWriter, error) {
 	args := []string{
 		fmt.Sprintf("--%s=%d", swapcli.FlagPoolId, poolID),

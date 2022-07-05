@@ -6,16 +6,18 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/spf13/cobra"
+
+	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
+	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/spf13/cobra"
-	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
-	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
 )
 
-// GetTxCmd returns the transaction commands for this module
+// GetTxCmd returns the transaction commands for this module.
 func GetTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:                        types.ModuleName,
@@ -33,7 +35,7 @@ func GetTxCmd() *cobra.Command {
 	return cmd
 }
 
-// NewCreateGaugeCmd broadcast MsgCreateGauge
+// NewCreateGaugeCmd broadcast MsgCreateGauge.
 func NewCreateGaugeCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create-gauge [lockup_denom] [reward] [flags]",
@@ -112,7 +114,7 @@ func NewCreateGaugeCmd() *cobra.Command {
 	return cmd
 }
 
-// NewAddToGaugeCmd broadcast MsgAddToGauge
+// NewAddToGaugeCmd broadcast MsgAddToGauge.
 func NewAddToGaugeCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "add-to-gauge [gauge_id] [rewards] [flags]",

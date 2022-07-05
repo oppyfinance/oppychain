@@ -1,7 +1,6 @@
 package types
 
 import (
-	oppyapp "gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -10,11 +9,17 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
+func setupBech32Prefix() {
+	config := sdk.GetConfig()
+	config.SetBech32PrefixForAccount("oppy", "oppypub")
+	config.SetBech32PrefixForValidator("oppyval", "oppyvpub")
+	config.SetBech32PrefixForConsensusNode("oppyvalcons", "oppycpub")
+}
+
 func TestMsgSwapExactAmountIn(t *testing.T) {
-	oppyapp.SetAddressPrefixes()
+	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgSwapExactAmountIn) MsgSwapExactAmountIn) MsgSwapExactAmountIn {
 		properMsg := MsgSwapExactAmountIn{
@@ -60,7 +65,7 @@ func TestMsgSwapExactAmountIn(t *testing.T) {
 		{
 			name: "invalid sender",
 			msg: createMsg(func(msg MsgSwapExactAmountIn) MsgSwapExactAmountIn {
-				msg.Sender = invalidAddr.String()
+				msg.Sender = "invalid"
 				return msg
 			}),
 			expectPass: false,
@@ -141,10 +146,9 @@ func TestMsgSwapExactAmountIn(t *testing.T) {
 }
 
 func TestMsgSwapExactAmountOut(t *testing.T) {
-	oppyapp.SetAddressPrefixes()
+	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgSwapExactAmountOut) MsgSwapExactAmountOut) MsgSwapExactAmountOut {
 		properMsg := MsgSwapExactAmountOut{
@@ -190,7 +194,7 @@ func TestMsgSwapExactAmountOut(t *testing.T) {
 		{
 			name: "invalid sender",
 			msg: createMsg(func(msg MsgSwapExactAmountOut) MsgSwapExactAmountOut {
-				msg.Sender = invalidAddr.String()
+				msg.Sender = "invalid"
 				return msg
 			}),
 			expectPass: false,
@@ -271,10 +275,10 @@ func TestMsgSwapExactAmountOut(t *testing.T) {
 }
 
 func TestMsgJoinPool(t *testing.T) {
-	oppyapp.SetAddressPrefixes()
+	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	invalidAddr := sdk.AccAddress("invalid")
+	//invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgJoinPool) MsgJoinPool) MsgJoinPool {
 		properMsg := MsgJoinPool{
@@ -314,7 +318,7 @@ func TestMsgJoinPool(t *testing.T) {
 		{
 			name: "invalid sender",
 			msg: createMsg(func(msg MsgJoinPool) MsgJoinPool {
-				msg.Sender = invalidAddr.String()
+				msg.Sender = "invalid"
 				return msg
 			}),
 			expectPass: false,
@@ -371,10 +375,10 @@ func TestMsgJoinPool(t *testing.T) {
 }
 
 func TestMsgExitPool(t *testing.T) {
-	oppyapp.SetAddressPrefixes()
+	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	invalidAddr := sdk.AccAddress("invalid")
+	//invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgExitPool) MsgExitPool) MsgExitPool {
 		properMsg := MsgExitPool{
@@ -413,7 +417,7 @@ func TestMsgExitPool(t *testing.T) {
 		{
 			name: "invalid sender",
 			msg: createMsg(func(msg MsgExitPool) MsgExitPool {
-				msg.Sender = invalidAddr.String()
+				msg.Sender = "invalid"
 				return msg
 			}),
 			expectPass: false,
@@ -470,10 +474,10 @@ func TestMsgExitPool(t *testing.T) {
 }
 
 func TestMsgJoinSwapExternAmountIn(t *testing.T) {
-	oppyapp.SetAddressPrefixes()
+	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	invalidAddr := sdk.AccAddress("invalid")
+	//invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgJoinSwapExternAmountIn) MsgJoinSwapExternAmountIn) MsgJoinSwapExternAmountIn {
 		properMsg := MsgJoinSwapExternAmountIn{
@@ -512,7 +516,7 @@ func TestMsgJoinSwapExternAmountIn(t *testing.T) {
 		{
 			name: "invalid sender",
 			msg: createMsg(func(msg MsgJoinSwapExternAmountIn) MsgJoinSwapExternAmountIn {
-				msg.Sender = invalidAddr.String()
+				msg.Sender = "invalid"
 				return msg
 			}),
 			expectPass: false,
@@ -569,10 +573,10 @@ func TestMsgJoinSwapExternAmountIn(t *testing.T) {
 }
 
 func TestMsgJoinSwapShareAmountOut(t *testing.T) {
-	oppyapp.SetAddressPrefixes()
+	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	invalidAddr := sdk.AccAddress("invalid")
+	//invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgJoinSwapShareAmountOut) MsgJoinSwapShareAmountOut) MsgJoinSwapShareAmountOut {
 		properMsg := MsgJoinSwapShareAmountOut{
@@ -612,7 +616,7 @@ func TestMsgJoinSwapShareAmountOut(t *testing.T) {
 		{
 			name: "invalid sender",
 			msg: createMsg(func(msg MsgJoinSwapShareAmountOut) MsgJoinSwapShareAmountOut {
-				msg.Sender = invalidAddr.String()
+				msg.Sender = "invalid"
 				return msg
 			}),
 			expectPass: false,
@@ -669,10 +673,10 @@ func TestMsgJoinSwapShareAmountOut(t *testing.T) {
 }
 
 func TestMsgExitSwapExternAmountOut(t *testing.T) {
-	oppyapp.SetAddressPrefixes()
+	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	invalidAddr := sdk.AccAddress("invalid")
+	//invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgExitSwapExternAmountOut) MsgExitSwapExternAmountOut) MsgExitSwapExternAmountOut {
 		properMsg := MsgExitSwapExternAmountOut{
@@ -711,7 +715,7 @@ func TestMsgExitSwapExternAmountOut(t *testing.T) {
 		{
 			name: "invalid sender",
 			msg: createMsg(func(msg MsgExitSwapExternAmountOut) MsgExitSwapExternAmountOut {
-				msg.Sender = invalidAddr.String()
+				msg.Sender = "invalid"
 				return msg
 			}),
 			expectPass: false,
@@ -768,10 +772,10 @@ func TestMsgExitSwapExternAmountOut(t *testing.T) {
 }
 
 func TestMsgExitSwapShareAmountIn(t *testing.T) {
-	oppyapp.SetAddressPrefixes()
+	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	invalidAddr := sdk.AccAddress("invalid")
+	//invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgExitSwapShareAmountIn) MsgExitSwapShareAmountIn) MsgExitSwapShareAmountIn {
 		properMsg := MsgExitSwapShareAmountIn{
@@ -811,7 +815,7 @@ func TestMsgExitSwapShareAmountIn(t *testing.T) {
 		{
 			name: "invalid sender",
 			msg: createMsg(func(msg MsgExitSwapShareAmountIn) MsgExitSwapShareAmountIn {
-				msg.Sender = invalidAddr.String()
+				msg.Sender = "invalid"
 				return msg
 			}),
 			expectPass: false,

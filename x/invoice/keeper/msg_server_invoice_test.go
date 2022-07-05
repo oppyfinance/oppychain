@@ -20,9 +20,9 @@ import (
 
 func setupBech32Prefix() {
 	config := sdk.GetConfig()
-	config.SetBech32PrefixForAccount("jolt", "joltpub")
-	config.SetBech32PrefixForValidator("joltval", "joltvpub")
-	config.SetBech32PrefixForConsensusNode("joltvalcons", "joltcpub")
+	config.SetBech32PrefixForAccount("oppy", "oppypub")
+	config.SetBech32PrefixForValidator("oppyval", "oppyvpub")
+	config.SetBech32PrefixForConsensusNode("oppyvalcons", "oppycpub")
 }
 
 func TestInvoiceMsgServerCreate(t *testing.T) {

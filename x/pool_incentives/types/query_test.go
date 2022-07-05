@@ -6,11 +6,11 @@ import (
 
 	proto "github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/require"
+
 	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
 func TestQueryGaugeIdsResponseMarshalUnmarshal(t *testing.T) {
-
 	tests := []struct {
 		response *types.QueryGaugeIdsResponse
 	}{
@@ -40,7 +40,6 @@ func TestQueryGaugeIdsResponseMarshalUnmarshal(t *testing.T) {
 }
 
 func TestQueryIncentivizedPoolsResponseMarshalUnmarshal(t *testing.T) {
-
 	tests := []struct {
 		response *types.QueryIncentivizedPoolsResponse
 	}{

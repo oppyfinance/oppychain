@@ -1,25 +1,26 @@
 package balancer
 
 import (
+	types "gitlab.com/oppy-finance/oppychain/x/swap/types"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/msgservice"
 	proto "github.com/gogo/protobuf/proto"
-	types "gitlab.com/oppy-finance/oppychain/x/swap/types"
 )
 
 // RegisterLegacyAminoCodec registers the necessary x/swap interfaces and concrete types
 // on the provided LegacyAmino codec. These types are used for Amino JSON serialization.
 func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
-	cdc.RegisterConcrete(&Pool{}, "oppy/swap/BalancerPool", nil)
-	cdc.RegisterConcrete(&MsgCreateBalancerPool{}, "oppy/swap/create-balancer-pool", nil)
-	cdc.RegisterConcrete(&PoolParams{}, "oppy/swap/BalancerPoolParams", nil)
+	cdc.RegisterConcrete(&Pool{}, "osmosis/swap/BalancerPool", nil)
+	cdc.RegisterConcrete(&MsgCreateBalancerPool{}, "osmosis/swap/create-balancer-pool", nil)
+	cdc.RegisterConcrete(&PoolParams{}, "osmosis/swap/BalancerPoolParams", nil)
 }
 
 func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 	registry.RegisterInterface(
-		"jolt.oppychain.swap.v1beta1.PoolI",
+		"osmosis.swap.v1beta1.PoolI",
 		(*types.PoolI)(nil),
 		&Pool{},
 	)

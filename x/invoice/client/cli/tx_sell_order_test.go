@@ -20,11 +20,13 @@ import (
 
 func TestCreateSellOrderUnauthorized(t *testing.T) {
 	setupBech32Prefix()
-	net := network.New(t)
+	cfg := network.DefaultConfig()
+	cfg.MinGasPrices = "0poppy"
+	net := network.New(t, cfg)
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 
-	createInvoiceFields := []string{"xyz", "jolt1rfmwldwrm3652shx3a7say0v4vvtglast0l05d", "100000", "10", "xyz"}
+	createInvoiceFields := []string{"xyz", "oppy1txtsnx4gr4effr8542778fsxc20j5vzq7wu7r7", "100000", "10", "xyz"}
 
 	invoiceIDByte, err := tools.GenHash([]string{val.Address.String(), createInvoiceFields[1], createInvoiceFields[0]})
 	require.Nil(t, err)
@@ -44,7 +46,7 @@ func TestCreateSellOrderUnauthorized(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 		{
@@ -53,7 +55,7 @@ func TestCreateSellOrderUnauthorized(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 			code: 4,
 		},
@@ -85,7 +87,9 @@ func TestCreateSellOrderUnauthorized(t *testing.T) {
 
 func TestCreateSellOrderNotEnoughMoney(t *testing.T) {
 	setupBech32Prefix()
-	net := network.New(t)
+	cfg := network.DefaultConfig()
+	cfg.MinGasPrices = "0poppy"
+	net := network.New(t, cfg)
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 
@@ -109,7 +113,7 @@ func TestCreateSellOrderNotEnoughMoney(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 		{
@@ -118,7 +122,7 @@ func TestCreateSellOrderNotEnoughMoney(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 			code: 0x12,
 		},
@@ -149,7 +153,9 @@ func TestCreateSellOrderNotEnoughMoney(t *testing.T) {
 
 func TestCreateSellOrder(t *testing.T) {
 	setupBech32Prefix()
-	net := network.New(t)
+	cfg := network.DefaultConfig()
+	cfg.MinGasPrices = "0poppy"
+	net := network.New(t, cfg)
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 
@@ -173,7 +179,7 @@ func TestCreateSellOrder(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 		{
@@ -182,7 +188,7 @@ func TestCreateSellOrder(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 	}
@@ -212,7 +218,9 @@ func TestCreateSellOrder(t *testing.T) {
 
 func TestDeleteSellOrder(t *testing.T) {
 	setupBech32Prefix()
-	net := network.New(t)
+	cfg := network.DefaultConfig()
+	cfg.MinGasPrices = "0poppy"
+	net := network.New(t, cfg)
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 
@@ -236,7 +244,7 @@ func TestDeleteSellOrder(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 		{
@@ -245,7 +253,7 @@ func TestDeleteSellOrder(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 	}

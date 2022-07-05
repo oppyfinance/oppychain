@@ -1,12 +1,14 @@
 package cli_test
 
 import (
-	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
-	"github.com/cosmos/cosmos-sdk/testutil/network"
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
+
 	"gitlab.com/oppy-finance/oppychain/x/epochs/client/cli"
 	"gitlab.com/oppy-finance/oppychain/x/epochs/types"
+
+	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
+	"github.com/cosmos/cosmos-sdk/testutil/network"
 )
 
 type IntegrationTestSuite struct {

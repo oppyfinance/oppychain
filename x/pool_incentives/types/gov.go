@@ -14,13 +14,15 @@ const (
 
 func init() {
 	govtypes.RegisterProposalType(ProposalTypeUpdatePoolIncentives)
-	govtypes.RegisterProposalTypeCodec(&UpdatePoolIncentivesProposal{}, "oppy/UpdatePoolIncentivesProposal")
+	govtypes.RegisterProposalTypeCodec(&UpdatePoolIncentivesProposal{}, "osmosis/UpdatePoolIncentivesProposal")
 	govtypes.RegisterProposalType(ProposalTypeReplacePoolIncentives)
-	govtypes.RegisterProposalTypeCodec(&ReplacePoolIncentivesProposal{}, "oppy/ReplacePoolIncentivesProposal")
+	govtypes.RegisterProposalTypeCodec(&ReplacePoolIncentivesProposal{}, "osmosis/ReplacePoolIncentivesProposal")
 }
 
-var _ govtypes.Content = &UpdatePoolIncentivesProposal{}
-var _ govtypes.Content = &ReplacePoolIncentivesProposal{}
+var (
+	_ govtypes.Content = &UpdatePoolIncentivesProposal{}
+	_ govtypes.Content = &ReplacePoolIncentivesProposal{}
+)
 
 func NewReplacePoolIncentivesProposal(title, description string, records []DistrRecord) govtypes.Content {
 	return &ReplacePoolIncentivesProposal{

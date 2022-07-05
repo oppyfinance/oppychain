@@ -1,8 +1,9 @@
 package keeper
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 func (k Keeper) addLockRefs(ctx sdk.Context, lock types.PeriodLock) error {
@@ -33,7 +34,7 @@ func (k Keeper) deleteLockRefs(ctx sdk.Context, lockRefPrefix []byte, lock types
 	return nil
 }
 
-// make references for
+// make references for.
 func (k Keeper) addSyntheticLockRefs(ctx sdk.Context, lock types.PeriodLock, synthLock types.SyntheticLock) error {
 	refKeys, err := syntheticLockRefKeys(lock, synthLock)
 	if err != nil {

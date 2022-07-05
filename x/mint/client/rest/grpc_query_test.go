@@ -14,8 +14,10 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cosmos/cosmos-sdk/testutil/network"
+	"gitlab.com/oppy-finance/oppychain/app"
 	minttypes "gitlab.com/oppy-finance/oppychain/x/mint/types"
+
+	"github.com/cosmos/cosmos-sdk/testutil/network"
 )
 
 type IntegrationTestSuite struct {
@@ -27,8 +29,7 @@ type IntegrationTestSuite struct {
 func (s *IntegrationTestSuite) SetupSuite() {
 	s.T().Log("setting up integration test suite")
 
-	s.cfg = network.DefaultConfig()
-
+	s.cfg = app.DefaultConfig()
 	s.network = network.New(s.T(), s.cfg)
 
 	_, err := s.network.WaitForHeight(1)
@@ -37,6 +38,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 
 func (s *IntegrationTestSuite) TearDownSuite() {
 	s.T().Log("tearing down integration test suite")
+	s.network.Cleanup()
 }
 
 func (s *IntegrationTestSuite) TestQueryGRPC() {
@@ -51,7 +53,7 @@ func (s *IntegrationTestSuite) TestQueryGRPC() {
 	}{
 		{
 			"gRPC request params",
-			fmt.Sprintf("%s/oppy/mint/v1beta1/params", baseURL),
+			fmt.Sprintf("%s/osmosis/mint/v1beta1/params", baseURL),
 			map[string]string{},
 			&minttypes.QueryParamsResponse{},
 			&minttypes.QueryParamsResponse{
@@ -61,7 +63,7 @@ func (s *IntegrationTestSuite) TestQueryGRPC() {
 		},
 		{
 			"gRPC request epoch provisions",
-			fmt.Sprintf("%s/oppy/mint/v1beta1/epoch_provisions", baseURL),
+			fmt.Sprintf("%s/osmosis/mint/v1beta1/epoch_provisions", baseURL),
 			map[string]string{
 				grpctypes.GRPCBlockHeightHeader: "1",
 			},
@@ -75,8 +77,7 @@ func (s *IntegrationTestSuite) TestQueryGRPC() {
 		resp, err := testutil.GetRequestWithHeaders(tc.url, tc.headers)
 		s.Run(tc.name, func() {
 			s.Require().NoError(err)
-			//s.Require().NoError(val.ClientCtx.Jsoncode.UnmarshalJSON(resp, tc.respType))
-			s.Require().NoError(val.ClientCtx.Codec.UnmarshalJSON(resp, tc.respType))
+			s.Require().NoError(val.ClientCtx.JSONCodec.UnmarshalJSON(resp, tc.respType))
 			s.Require().Equal(tc.expected.String(), tc.respType.String())
 		})
 	}

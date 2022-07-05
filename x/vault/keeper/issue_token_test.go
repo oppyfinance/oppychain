@@ -13,7 +13,7 @@ import (
 
 func createNIssueToken(keeper *keeper.Keeper, ctx sdk.Context, n int) ([]types.IssueToken, error) {
 	items := make([]types.IssueToken, n)
-	creator, err := sdk.AccAddressFromBech32("jolt1xdpg5l3pxpyhxqg4ey4krq2pf9d3sphmmuuugg")
+	creator, err := sdk.AccAddressFromBech32("oppy1fase3jev95k9lsj6hn0echk4e37kyhpspmluqd")
 	if err != nil {
 		return nil, err
 	}

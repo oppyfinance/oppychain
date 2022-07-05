@@ -3,14 +3,15 @@ package types_test
 import (
 	"testing"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	proto "github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/require"
+
 	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 func TestUpdatePoolIncentivesProposalMarshalUnmarshal(t *testing.T) {
-
 	tests := []struct {
 		proposal *types.UpdatePoolIncentivesProposal
 	}{

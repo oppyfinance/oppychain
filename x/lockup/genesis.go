@@ -1,9 +1,10 @@
 package lockup
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"gitlab.com/oppy-finance/oppychain/x/lockup/keeper"
 	"gitlab.com/oppy-finance/oppychain/x/lockup/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

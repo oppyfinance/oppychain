@@ -5,14 +5,16 @@ import (
 	"fmt"
 	"strings"
 
+	yaml "gopkg.in/yaml.v2"
+
+	epochtypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"gitlab.com/oppy-finance/oppychain/utils"
-	epochtypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
-	yaml "gopkg.in/yaml.v2"
 )
 
-// Parameter store keys
+// Parameter store keys.
 var (
 	KeyMintDenom                            = []byte("MintDenom")
 	KeyGenesisEpochProvisions               = []byte("GenesisEpochProvisions")
@@ -22,6 +24,18 @@ var (
 	KeyPoolAllocationRatio                  = []byte("PoolAllocationRatio")
 	KeyDeveloperRewardsReceiver             = []byte("DeveloperRewardsReceiver")
 	KeyMintingRewardsDistributionStartEpoch = []byte("MintingRewardsDistributionStartEpoch")
+)
+
+var (
+	GenesisEpochProvisions = sdk.NewDec(5000000)
+	EpochIdentifier        = "minute"                        // 1 minute
+	ReductionPeriodInEpoch = 156                             // 3 years
+	ReductionFactor        = sdk.NewDecWithPrec(5, 1)        // 0.5
+	Staking                = sdk.NewDecWithPrec(54545455, 8) // 0.25
+	PoolIncentives         = sdk.NewDecWithPrec(36363636, 8) // 0.2/0.55=0.3636
+	DeveloperRewards       = sdk.NewDecWithPrec(0, 1)        // 0
+	CommunityPool          = sdk.NewDecWithPrec(9090909, 8)  // 0.5
+
 )
 
 // ParamTable for minting module.
@@ -34,7 +48,6 @@ func NewParams(
 	ReductionFactor sdk.Dec, reductionPeriodInEpochs int64, distrProportions DistributionProportions,
 	weightedDevRewardsReceivers []WeightedAddress, mintingRewardsDistributionStartEpoch int64,
 ) Params {
-
 	return Params{
 		MintDenom:                            mintDenom,
 		GenesisEpochProvisions:               genesisEpochProvisions,
@@ -47,26 +60,26 @@ func NewParams(
 	}
 }
 
-// default minting module parameters
+// default minting module parameters.
 func DefaultParams() Params {
 	return Params{
 		MintDenom:               utils.DefaultBondDenom,
-		GenesisEpochProvisions:  sdk.NewDec(5000000),
-		EpochIdentifier:         "minute",                 // 1 minute
+		GenesisEpochProvisions:  GenesisEpochProvisions,
+		EpochIdentifier:         EpochIdentifier,          // 1 minute
 		ReductionPeriodInEpochs: 156,                      // 3 years
 		ReductionFactor:         sdk.NewDecWithPrec(5, 1), // 0.5
 		DistributionProportions: DistributionProportions{
-			Staking:          sdk.NewDecWithPrec(54545455, 8), // 0.25
-			PoolIncentives:   sdk.NewDecWithPrec(36363636, 8), // 0.2/0.55=0.3636
-			DeveloperRewards: sdk.NewDecWithPrec(0, 1),        // 0
-			CommunityPool:    sdk.NewDecWithPrec(9090909, 8),  // 0.5
+			Staking:          Staking,          // 0.25
+			PoolIncentives:   PoolIncentives,   // 0.2/0.55=0.3636
+			DeveloperRewards: DeveloperRewards, // 0
+			CommunityPool:    CommunityPool,    // 0.5
 		},
 		WeightedDeveloperRewardsReceivers:    []WeightedAddress{},
 		MintingRewardsDistributionStartEpoch: 0,
 	}
 }
 
-// validate params
+// validate params.
 func (p Params) Validate() error {
 	if err := validateMintDenom(p.MintDenom); err != nil {
 		return err
@@ -102,7 +115,7 @@ func (p Params) String() string {
 	return string(out)
 }
 
-// Implements params.ParamSet
+// Implements params.ParamSet.
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	return paramtypes.ParamSetPairs{
 		paramtypes.NewParamSetPair(KeyMintDenom, &p.MintDenom, validateMintDenom),

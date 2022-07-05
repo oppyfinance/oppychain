@@ -7,21 +7,24 @@ import (
 	"testing"
 	"time"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
+
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
+
 	"gitlab.com/oppy-finance/oppychain/x/incentives"
 	"gitlab.com/oppy-finance/oppychain/x/incentives/types"
 	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 func TestIncentivesExportGenesis(t *testing.T) {
 
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
-	tempPath := path2.Join(dir, "%s", runtime.FuncForPC(pc).Name())
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
 	defer func(tempPath string) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
@@ -72,7 +75,7 @@ func TestIncentivesInitGenesis(t *testing.T) {
 
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
-	tempPath := path2.Join(dir, "%s", runtime.FuncForPC(pc).Name())
+	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
 	defer func(tempPath string) {
 		err := os.RemoveAll(tempPath)
 		require.NoError(t, err)
@@ -116,5 +119,4 @@ func TestIncentivesInitGenesis(t *testing.T) {
 	gauges := app.IncentivesKeeper.GetGauges(ctx)
 	require.Len(t, gauges, 1)
 	require.Equal(t, gauges[0], gauge)
-
 }

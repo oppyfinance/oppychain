@@ -1,12 +1,13 @@
 package mint
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"gitlab.com/oppy-finance/oppychain/x/mint/keeper"
 	"gitlab.com/oppy-finance/oppychain/x/mint/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// InitGenesis new mint genesis
+// InitGenesis new mint genesis.
 func InitGenesis(ctx sdk.Context, keeper keeper.Keeper, ak types.AccountKeeper, bk types.BankKeeper, data *types.GenesisState) {
 	data.Minter.EpochProvisions = data.Params.GenesisEpochProvisions
 	keeper.SetMinter(ctx, data.Minter)

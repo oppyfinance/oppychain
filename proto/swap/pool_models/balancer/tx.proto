@@ -2,7 +2,6 @@ syntax = "proto3";
 package oppyfinance.oppychain.swap.balancer.v1beta1;
 
 import "gogoproto/gogo.proto";
-import "swap/v1beta1/pool.proto";
 import "swap/pool_models/balancer/balancerPool.proto";
 option go_package = "gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer";
 
@@ -17,11 +16,13 @@ message MsgCreateBalancerPool {
 
   PoolParams poolParams = 2 [ (gogoproto.moretags) = "yaml:\"pool_params\"" ];
 
-  repeated swap.v1beta1.PoolAsset poolAssets = 3
+  repeated PoolAsset poolAssets = 3
       [ (gogoproto.nullable) = false ];
 
   string future_pool_governor = 4
       [ (gogoproto.moretags) = "yaml:\"future_pool_governor\"" ];
 }
 
-message MsgCreateBalancerPoolResponse {}
+message MsgCreateBalancerPoolResponse {
+  uint64 pool_id = 1 [ (gogoproto.customname) = "PoolID" ];
+}
