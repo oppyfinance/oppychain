@@ -2,6 +2,7 @@ package app
 
 import (
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
+	v2 "gitlab.com/oppy-finance/oppychain/upgrade/v2"
 	tokenfactorytypes "gitlab.com/oppy-finance/oppychain/x/tokenfactory/types"
 	"io"
 	"net/http"
@@ -916,4 +917,5 @@ func (app *App) SimulationManager() *module.SimulationManager {
 
 func (app *App) setupUpgredeHandlers() {
 	app.UpgradeKeeper.SetUpgradeHandler(v1.UpgradeName, v1.CreateUpgradeHandler(app.mm, app.configurator, &app.VaultKeeper))
+	app.UpgradeKeeper.SetUpgradeHandler(v2.UpgradeName, v2.CreateUpgradeHandler(app.mm, app.configurator))
 }

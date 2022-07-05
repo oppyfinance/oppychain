@@ -436,7 +436,9 @@ func (k Keeper) Distribute(ctx sdk.Context, gauges []types.Gauge) (sdk.Coins, er
 	if err != nil {
 		return nil, err
 	}
-	k.hooks.AfterEpochDistribution(ctx)
+	if k.hooks != nil {
+		k.hooks.AfterEpochDistribution(ctx)
+	}
 
 	k.checkFinishDistribution(ctx, gauges)
 	return totalDistributedCoins, nil
