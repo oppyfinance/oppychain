@@ -8,9 +8,11 @@ import { Coin } from "../cosmos/base/v1beta1/coin";
 export const protobufPackage = "oppyfinance.oppychain.incentives";
 
 export interface MsgCreateGauge {
-  /** flag to show if it's perpetual or multi-epoch */
+  /**
+   * flag to show if it's perpetual or multi-epoch
+   * distribution incentives by third party
+   */
   is_perpetual: boolean;
-  /** distribution incentives by third party */
   owner: string;
   /** distribute condition of a lock which meet one of these conditions */
   distribute_to: QueryCondition | undefined;

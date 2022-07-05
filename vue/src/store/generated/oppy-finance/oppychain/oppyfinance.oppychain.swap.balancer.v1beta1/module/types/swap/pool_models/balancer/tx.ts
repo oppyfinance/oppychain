@@ -1,7 +1,10 @@
 /* eslint-disable */
-import { Reader, Writer } from "protobufjs/minimal";
-import { PoolParams } from "../../../swap/pool_models/balancer/balancerPool";
-import { PoolAsset } from "../../../swap/v1beta1/pool";
+import { Reader, util, configure, Writer } from "protobufjs/minimal";
+import * as Long from "long";
+import {
+  PoolParams,
+  PoolAsset,
+} from "../../../swap/pool_models/balancer/balancerPool";
 
 export const protobufPackage = "oppyfinance.oppychain.swap.balancer.v1beta1";
 
@@ -13,7 +16,9 @@ export interface MsgCreateBalancerPool {
   future_pool_governor: string;
 }
 
-export interface MsgCreateBalancerPoolResponse {}
+export interface MsgCreateBalancerPoolResponse {
+  pool_id: number;
+}
 
 const baseMsgCreateBalancerPool: object = {
   sender: "",
@@ -148,13 +153,16 @@ export const MsgCreateBalancerPool = {
   },
 };
 
-const baseMsgCreateBalancerPoolResponse: object = {};
+const baseMsgCreateBalancerPoolResponse: object = { pool_id: 0 };
 
 export const MsgCreateBalancerPoolResponse = {
   encode(
-    _: MsgCreateBalancerPoolResponse,
+    message: MsgCreateBalancerPoolResponse,
     writer: Writer = Writer.create()
   ): Writer {
+    if (message.pool_id !== 0) {
+      writer.uint32(8).uint64(message.pool_id);
+    }
     return writer;
   },
 
@@ -170,6 +178,9 @@ export const MsgCreateBalancerPoolResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.pool_id = longToNumber(reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -178,24 +189,35 @@ export const MsgCreateBalancerPoolResponse = {
     return message;
   },
 
-  fromJSON(_: any): MsgCreateBalancerPoolResponse {
+  fromJSON(object: any): MsgCreateBalancerPoolResponse {
     const message = {
       ...baseMsgCreateBalancerPoolResponse,
     } as MsgCreateBalancerPoolResponse;
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.pool_id = Number(object.pool_id);
+    } else {
+      message.pool_id = 0;
+    }
     return message;
   },
 
-  toJSON(_: MsgCreateBalancerPoolResponse): unknown {
+  toJSON(message: MsgCreateBalancerPoolResponse): unknown {
     const obj: any = {};
+    message.pool_id !== undefined && (obj.pool_id = message.pool_id);
     return obj;
   },
 
   fromPartial(
-    _: DeepPartial<MsgCreateBalancerPoolResponse>
+    object: DeepPartial<MsgCreateBalancerPoolResponse>
   ): MsgCreateBalancerPoolResponse {
     const message = {
       ...baseMsgCreateBalancerPoolResponse,
     } as MsgCreateBalancerPoolResponse;
+    if (object.pool_id !== undefined && object.pool_id !== null) {
+      message.pool_id = object.pool_id;
+    } else {
+      message.pool_id = 0;
+    }
     return message;
   },
 };
@@ -234,6 +256,16 @@ interface Rpc {
   ): Promise<Uint8Array>;
 }
 
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw "Unable to locate global object";
+})();
+
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin
   ? T
@@ -244,3 +276,15 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}

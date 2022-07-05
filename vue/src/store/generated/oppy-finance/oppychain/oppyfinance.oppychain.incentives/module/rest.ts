@@ -28,8 +28,6 @@ export interface IncentivesGauge {
   id?: string;
   is_perpetual?: boolean;
   distribute_to?: LockupQueryCondition;
-
-  /** total amount of Coins that has been in the gauge. */
   coins?: V1Beta1Coin[];
 
   /** @format date-time */

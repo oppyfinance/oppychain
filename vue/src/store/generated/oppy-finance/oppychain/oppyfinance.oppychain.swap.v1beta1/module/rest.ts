@@ -146,19 +146,31 @@ export interface V1Beta1Coin {
 
 export type V1Beta1MsgExitPoolResponse = object;
 
-export type V1Beta1MsgExitSwapExternAmountOutResponse = object;
+export interface V1Beta1MsgExitSwapExternAmountOutResponse {
+  shareInAmount?: string;
+}
 
-export type V1Beta1MsgExitSwapShareAmountInResponse = object;
+export interface V1Beta1MsgExitSwapShareAmountInResponse {
+  tokenOutAmount?: string;
+}
 
 export type V1Beta1MsgJoinPoolResponse = object;
 
-export type V1Beta1MsgJoinSwapExternAmountInResponse = object;
+export interface V1Beta1MsgJoinSwapExternAmountInResponse {
+  shareOutAmount?: string;
+}
 
-export type V1Beta1MsgJoinSwapShareAmountOutResponse = object;
+export interface V1Beta1MsgJoinSwapShareAmountOutResponse {
+  tokenInAmount?: string;
+}
 
-export type V1Beta1MsgSwapExactAmountInResponse = object;
+export interface V1Beta1MsgSwapExactAmountInResponse {
+  tokenOutAmount?: string;
+}
 
-export type V1Beta1MsgSwapExactAmountOutResponse = object;
+export interface V1Beta1MsgSwapExactAmountOutResponse {
+  tokenInAmount?: string;
+}
 
 /**
 * message SomeRequest {
@@ -223,22 +235,9 @@ export interface V1Beta1PageResponse {
   total?: string;
 }
 
-export interface V1Beta1PoolAsset {
-  /**
-   * Coins we are talking about,
-   * the denomination must be unique amongst all PoolAssets for this pool.
-   */
-  token?: V1Beta1Coin;
-  weight?: string;
-}
-
 export interface V1Beta1QueryNumPoolsResponse {
   /** @format uint64 */
   numPools?: string;
-}
-
-export interface V1Beta1QueryPoolAssetsResponse {
-  poolAssets?: V1Beta1PoolAsset[];
 }
 
 export interface V1Beta1QueryPoolParamsResponse {
@@ -424,6 +423,10 @@ export interface V1Beta1QueryPoolsResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+/**
+* QuerySpotPriceResponse defines the gRPC response structure for a SpotPrice
+query.
+*/
 export interface V1Beta1QuerySpotPriceResponse {
   spotPrice?: string;
 }
@@ -437,6 +440,10 @@ export interface V1Beta1QuerySwapExactAmountOutResponse {
 }
 
 export interface V1Beta1QueryTotalLiquidityResponse {
+  liquidity?: V1Beta1Coin[];
+}
+
+export interface V1Beta1QueryTotalPoolLiquidityResponse {
   liquidity?: V1Beta1Coin[];
 }
 
@@ -738,7 +745,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    */
   querySpotPrice = (
     poolId: string,
-    query?: { tokenInDenom?: string; tokenOutDenom?: string; withSwapFee?: boolean },
+    query?: { base_asset_denom?: string; quote_asset_denom?: string },
     params: RequestParams = {},
   ) =>
     this.request<V1Beta1QuerySpotPriceResponse, RpcStatus>({
@@ -753,12 +760,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
-   * @name QueryPoolAssets
-   * @request GET:/oppy/swap/v1beta1/pools/{poolId}/tokens
+   * @name QueryTotalPoolLiquidity
+   * @request GET:/oppy/swap/v1beta1/pools/{poolId}/total_pool_liquidity
    */
-  queryPoolAssets = (poolId: string, params: RequestParams = {}) =>
-    this.request<V1Beta1QueryPoolAssetsResponse, RpcStatus>({
-      path: `/oppy/swap/v1beta1/pools/${poolId}/tokens`,
+  queryTotalPoolLiquidity = (poolId: string, params: RequestParams = {}) =>
+    this.request<V1Beta1QueryTotalPoolLiquidityResponse, RpcStatus>({
+      path: `/oppy/swap/v1beta1/pools/${poolId}/total_pool_liquidity`,
       method: "GET",
       format: "json",
       ...params,

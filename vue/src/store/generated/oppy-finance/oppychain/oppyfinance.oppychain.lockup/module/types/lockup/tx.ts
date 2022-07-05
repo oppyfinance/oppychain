@@ -36,6 +36,24 @@ export interface MsgBeginUnlockingResponse {
   success: boolean;
 }
 
+/**
+ * MsgExtendLockup extends the existing lockup's duration.
+ * The new duration is longer than the original.
+ */
+export interface MsgExtendLockup {
+  owner: string;
+  ID: number;
+  /**
+   * duration to be set. fails if lower than the current duration, or is
+   * unlocking
+   */
+  duration: Duration | undefined;
+}
+
+export interface MsgExtendLockupResponse {
+  success: boolean;
+}
+
 const baseMsgLockTokens: object = { owner: "" };
 
 export const MsgLockTokens = {
@@ -496,6 +514,164 @@ export const MsgBeginUnlockingResponse = {
   },
 };
 
+const baseMsgExtendLockup: object = { owner: "", ID: 0 };
+
+export const MsgExtendLockup = {
+  encode(message: MsgExtendLockup, writer: Writer = Writer.create()): Writer {
+    if (message.owner !== "") {
+      writer.uint32(10).string(message.owner);
+    }
+    if (message.ID !== 0) {
+      writer.uint32(16).uint64(message.ID);
+    }
+    if (message.duration !== undefined) {
+      Duration.encode(message.duration, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgExtendLockup {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgExtendLockup } as MsgExtendLockup;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.owner = reader.string();
+          break;
+        case 2:
+          message.ID = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.duration = Duration.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgExtendLockup {
+    const message = { ...baseMsgExtendLockup } as MsgExtendLockup;
+    if (object.owner !== undefined && object.owner !== null) {
+      message.owner = String(object.owner);
+    } else {
+      message.owner = "";
+    }
+    if (object.ID !== undefined && object.ID !== null) {
+      message.ID = Number(object.ID);
+    } else {
+      message.ID = 0;
+    }
+    if (object.duration !== undefined && object.duration !== null) {
+      message.duration = Duration.fromJSON(object.duration);
+    } else {
+      message.duration = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgExtendLockup): unknown {
+    const obj: any = {};
+    message.owner !== undefined && (obj.owner = message.owner);
+    message.ID !== undefined && (obj.ID = message.ID);
+    message.duration !== undefined &&
+      (obj.duration = message.duration
+        ? Duration.toJSON(message.duration)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgExtendLockup>): MsgExtendLockup {
+    const message = { ...baseMsgExtendLockup } as MsgExtendLockup;
+    if (object.owner !== undefined && object.owner !== null) {
+      message.owner = object.owner;
+    } else {
+      message.owner = "";
+    }
+    if (object.ID !== undefined && object.ID !== null) {
+      message.ID = object.ID;
+    } else {
+      message.ID = 0;
+    }
+    if (object.duration !== undefined && object.duration !== null) {
+      message.duration = Duration.fromPartial(object.duration);
+    } else {
+      message.duration = undefined;
+    }
+    return message;
+  },
+};
+
+const baseMsgExtendLockupResponse: object = { success: false };
+
+export const MsgExtendLockupResponse = {
+  encode(
+    message: MsgExtendLockupResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.success === true) {
+      writer.uint32(8).bool(message.success);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgExtendLockupResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgExtendLockupResponse,
+    } as MsgExtendLockupResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.success = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgExtendLockupResponse {
+    const message = {
+      ...baseMsgExtendLockupResponse,
+    } as MsgExtendLockupResponse;
+    if (object.success !== undefined && object.success !== null) {
+      message.success = Boolean(object.success);
+    } else {
+      message.success = false;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgExtendLockupResponse): unknown {
+    const obj: any = {};
+    message.success !== undefined && (obj.success = message.success);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgExtendLockupResponse>
+  ): MsgExtendLockupResponse {
+    const message = {
+      ...baseMsgExtendLockupResponse,
+    } as MsgExtendLockupResponse;
+    if (object.success !== undefined && object.success !== null) {
+      message.success = object.success;
+    } else {
+      message.success = false;
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   /** LockTokens lock tokens */
@@ -508,6 +684,8 @@ export interface Msg {
   BeginUnlocking(
     request: MsgBeginUnlocking
   ): Promise<MsgBeginUnlockingResponse>;
+  /** MsgEditLockup edits the existing lockups by lock ID */
+  ExtendLockup(request: MsgExtendLockup): Promise<MsgExtendLockupResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -552,6 +730,18 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgBeginUnlockingResponse.decode(new Reader(data))
+    );
+  }
+
+  ExtendLockup(request: MsgExtendLockup): Promise<MsgExtendLockupResponse> {
+    const data = MsgExtendLockup.encode(request).finish();
+    const promise = this.rpc.request(
+      "oppyfinance.oppychain.lockup.Msg",
+      "ExtendLockup",
+      data
+    );
+    return promise.then((data) =>
+      MsgExtendLockupResponse.decode(new Reader(data))
     );
   }
 }

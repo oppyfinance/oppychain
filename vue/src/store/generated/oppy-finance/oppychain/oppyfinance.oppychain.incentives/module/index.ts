@@ -4,13 +4,13 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgCreateGauge } from "./types/incentives/tx";
 import { MsgAddToGauge } from "./types/incentives/tx";
+import { MsgCreateGauge } from "./types/incentives/tx";
 
 
 const types = [
-  ["/oppyfinance.oppychain.incentives.MsgCreateGauge", MsgCreateGauge],
   ["/oppyfinance.oppychain.incentives.MsgAddToGauge", MsgAddToGauge],
+  ["/oppyfinance.oppychain.incentives.MsgCreateGauge", MsgCreateGauge],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -43,8 +43,8 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgCreateGauge: (data: MsgCreateGauge): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.incentives.MsgCreateGauge", value: MsgCreateGauge.fromPartial( data ) }),
     msgAddToGauge: (data: MsgAddToGauge): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.incentives.MsgAddToGauge", value: MsgAddToGauge.fromPartial( data ) }),
+    msgCreateGauge: (data: MsgCreateGauge): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.incentives.MsgCreateGauge", value: MsgCreateGauge.fromPartial( data ) }),
     
   };
 };

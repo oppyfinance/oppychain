@@ -56,6 +56,7 @@ const getDefaultState = () => {
 				LockedByID: {},
 				SyntheticLockupsByLockupID: {},
 				AccountLockedLongerDuration: {},
+				AccountLockedDuration: {},
 				AccountLockedLongerDurationNotUnlockingOnly: {},
 				AccountLockedLongerDurationDenom: {},
 				
@@ -168,6 +169,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.AccountLockedLongerDuration[JSON.stringify(params)] ?? {}
+		},
+				getAccountLockedDuration: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.AccountLockedDuration[JSON.stringify(params)] ?? {}
 		},
 				getAccountLockedLongerDurationNotUnlockingOnly: (state) => (params = { params: {}}) => {
 					if (!(<any> params).query) {
@@ -530,6 +537,32 @@ export default {
 		 		
 		
 		
+		async QueryAccountLockedDuration({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryAccountLockedDuration( key.owner, query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryAccountLockedDuration( key.owner, {...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'AccountLockedDuration', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryAccountLockedDuration', payload: { options: { all }, params: {...key},query }})
+				return getters['getAccountLockedDuration']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryAccountLockedDuration API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
 		async QueryAccountLockedLongerDurationNotUnlockingOnly({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
 			try {
 				const key = params ?? {};
@@ -577,6 +610,21 @@ export default {
 		},
 		
 		
+		async sendMsgExtendLockup({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgExtendLockup(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgExtendLockup:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgExtendLockup:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgBeginUnlockingAll({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -589,21 +637,6 @@ export default {
 					throw new Error('TxClient:MsgBeginUnlockingAll:Init Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new Error('TxClient:MsgBeginUnlockingAll:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgBeginUnlocking({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgBeginUnlocking(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgBeginUnlocking:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgBeginUnlocking:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -622,7 +655,35 @@ export default {
 				}
 			}
 		},
+		async sendMsgBeginUnlocking({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgBeginUnlocking(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgBeginUnlocking:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgBeginUnlocking:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		
+		async MsgExtendLockup({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgExtendLockup(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgExtendLockup:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgExtendLockup:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		async MsgBeginUnlockingAll({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -636,19 +697,6 @@ export default {
 				}
 			}
 		},
-		async MsgBeginUnlocking({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgBeginUnlocking(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgBeginUnlocking:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgBeginUnlocking:Create Could not create message: ' + e.message)
-				}
-			}
-		},
 		async MsgLockTokens({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -659,6 +707,19 @@ export default {
 					throw new Error('TxClient:MsgLockTokens:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgLockTokens:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgBeginUnlocking({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgBeginUnlocking(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgBeginUnlocking:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgBeginUnlocking:Create Could not create message: ' + e.message)
 				}
 			}
 		},

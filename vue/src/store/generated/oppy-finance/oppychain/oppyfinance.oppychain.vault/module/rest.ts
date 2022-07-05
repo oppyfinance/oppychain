@@ -426,7 +426,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryCreatePoolAll
    * @summary Queries a list of createPool items.
-   * @request GET:/oppyfinance/oppyChaind/vault/createPool
+   * @request GET:/oppy/oppychain/vault/createPool
    */
   queryCreatePoolAll = (
     query?: {
@@ -439,7 +439,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<VaultQueryAllCreatePoolResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/vault/createPool`,
+      path: `/oppy/oppychain/vault/createPool`,
       method: "GET",
       query: query,
       format: "json",
@@ -452,11 +452,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryCreatePool
    * @summary Queries a createPool by index.
-   * @request GET:/oppyfinance/oppyChaind/vault/createPool/{index}
+   * @request GET:/oppy/oppychain/vault/createPool/{index}
    */
   queryCreatePool = (index: string, params: RequestParams = {}) =>
     this.request<VaultQueryGetCreatePoolResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/vault/createPool/${index}`,
+      path: `/oppy/oppychain/vault/createPool/${index}`,
       method: "GET",
       format: "json",
       ...params,
@@ -468,7 +468,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryGetLastPool
    * @summary Queries a createPool by index.
-   * @request GET:/oppyfinance/oppyChaind/vault/getLastPool
+   * @request GET:/oppy/oppychain/vault/getLastPool
    */
   queryGetLastPool = (
     query?: {
@@ -481,7 +481,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<VaultQueryLastPoolResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/vault/getLastPool`,
+      path: `/oppy/oppychain/vault/getLastPool`,
       method: "GET",
       query: query,
       format: "json",
@@ -494,11 +494,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryGetValidators
    * @summary Queries a list of GetValidators items.
-   * @request GET:/oppyfinance/oppyChaind/vault/get_validators
+   * @request GET:/oppy/oppychain/vault/get_validators
    */
   queryGetValidators = (query?: { height?: string }, params: RequestParams = {}) =>
     this.request<VaultQueryGetValidatorsResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/vault/get_validators`,
+      path: `/oppy/oppychain/vault/get_validators`,
       method: "GET",
       query: query,
       format: "json",
@@ -511,7 +511,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryIssueTokenAll
    * @summary Queries a list of issueToken items.
-   * @request GET:/oppyfinance/oppyChaind/vault/issueToken
+   * @request GET:/oppy/oppychain/vault/issueToken
    */
   queryIssueTokenAll = (
     query?: {
@@ -524,7 +524,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<VaultQueryAllIssueTokenResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/vault/issueToken`,
+      path: `/oppy/oppychain/vault/issueToken`,
       method: "GET",
       query: query,
       format: "json",
@@ -537,11 +537,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryIssueToken
    * @summary Queries a issueToken by index.
-   * @request GET:/oppyfinance/oppyChaind/vault/issueToken/{index}
+   * @request GET:/oppy/oppychain/vault/issueToken/{index}
    */
   queryIssueToken = (index: string, params: RequestParams = {}) =>
     this.request<VaultQueryGetIssueTokenResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/vault/issueToken/${index}`,
+      path: `/oppy/oppychain/vault/issueToken/${index}`,
       method: "GET",
       format: "json",
       ...params,
@@ -553,7 +553,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryOutboundTxAll
    * @summary Queries a list of OutboundTx items.
-   * @request GET:/oppyfinance/oppyChaind/vault/outbound_tx
+   * @request GET:/oppy/oppychain/vault/outbound_tx
    */
   queryOutboundTxAll = (
     query?: {
@@ -566,7 +566,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<VaultQueryAllOutboundTxResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/vault/outbound_tx`,
+      path: `/oppy/oppychain/vault/outbound_tx`,
       method: "GET",
       query: query,
       format: "json",
@@ -579,11 +579,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryOutboundTx
    * @summary Queries a OutboundTx by index.
-   * @request GET:/oppyfinance/oppyChaind/vault/outbound_tx/{requestID}
+   * @request GET:/oppy/oppychain/vault/outbound_tx/{requestID}
    */
   queryOutboundTx = (requestID: string, params: RequestParams = {}) =>
     this.request<VaultQueryGetOutboundTxResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/vault/outbound_tx/${requestID}`,
+      path: `/oppy/oppychain/vault/outbound_tx/${requestID}`,
       method: "GET",
       format: "json",
       ...params,
@@ -595,7 +595,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryGetAllValidators
    * @summary Queries a list of GetValidators items.
-   * @request GET:/oppyfinance/oppyChaind/vault/validators
+   * @request GET:/oppy/oppychain/vault/validators
    */
   queryGetAllValidators = (
     query?: {
@@ -608,7 +608,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<VaultQueryAllValidatorsResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/vault/validators`,
+      path: `/oppy/oppychain/vault/validators`,
       method: "GET",
       query: query,
       format: "json",

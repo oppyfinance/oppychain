@@ -249,11 +249,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryEpochInfos
    * @summary EpochInfos provide running epochInfos
-   * @request GET:/oppyfinance/oppyChaind/epochs
+   * @request GET:/oppy/oppychain/epochs
    */
   queryEpochInfos = (params: RequestParams = {}) =>
     this.request<EpochsQueryEpochsInfoResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/epochs`,
+      path: `/oppy/oppychain/epochs`,
       method: "GET",
       format: "json",
       ...params,
@@ -265,11 +265,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryCurrentEpoch
    * @summary CurrentEpoch provide current epoch of specified identifier
-   * @request GET:/oppyfinance/oppyChaind/epochs/current_epoch
+   * @request GET:/oppy/oppychain/epochs/current_epoch
    */
   queryCurrentEpoch = (query?: { identifier?: string }, params: RequestParams = {}) =>
     this.request<EpochsQueryCurrentEpochResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/epochs/current_epoch`,
+      path: `/oppy/oppychain/epochs/current_epoch`,
       method: "GET",
       query: query,
       format: "json",

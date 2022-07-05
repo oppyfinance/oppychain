@@ -424,21 +424,6 @@ export default {
 		},
 		
 		
-		async sendMsgCreateGauge({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateGauge(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateGauge:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgCreateGauge:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgAddToGauge({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -454,20 +439,22 @@ export default {
 				}
 			}
 		},
-		
-		async MsgCreateGauge({ rootGetters }, { value }) {
+		async sendMsgCreateGauge({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgCreateGauge(value)
-				return msg
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgCreateGauge:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgCreateGauge:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgCreateGauge:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgAddToGauge({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -478,6 +465,19 @@ export default {
 					throw new Error('TxClient:MsgAddToGauge:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgAddToGauge:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgCreateGauge({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateGauge(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateGauge:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateGauge:Create Could not create message: ' + e.message)
 				}
 			}
 		},

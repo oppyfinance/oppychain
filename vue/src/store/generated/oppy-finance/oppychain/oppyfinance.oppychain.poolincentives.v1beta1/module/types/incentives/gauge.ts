@@ -11,15 +11,20 @@ export const protobufPackage = "oppyfinance.oppychain.incentives";
 export interface Gauge {
   /** unique ID of a Gauge */
   id: number;
-  /** flag to show if it's perpetual or multi-epoch */
+  /**
+   * flag to show if it's perpetual or multi-epoch
+   * distribution incentives by third party
+   */
   is_perpetual: boolean;
   /**
-   * distribution incentives by third party
    * Rewards are distributed to lockups that are are returned by at least one of
    * these queries
    */
   distribute_to: QueryCondition | undefined;
-  /** total amount of Coins that has been in the gauge. */
+  /**
+   * total amount of Coins that has been in the gauge.
+   * can distribute multiple coins
+   */
   coins: Coin[];
   /** distribution start time */
   start_time: Date | undefined;

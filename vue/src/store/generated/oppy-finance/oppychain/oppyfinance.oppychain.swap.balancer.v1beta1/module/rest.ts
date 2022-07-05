@@ -144,8 +144,17 @@ export interface V1Beta1Coin {
   amount?: string;
 }
 
-export type V1Beta1MsgCreateBalancerPoolResponse = object;
+export interface V1Beta1MsgCreateBalancerPoolResponse {
+  /** @format uint64 */
+  pool_id?: string;
+}
 
+/**
+* Pool asset is an internal struct that combines the amount of the
+token in the pool, and its balancer weight.
+This is an awkward packaging of data,
+and should be revisited in a future state migration.
+*/
 export interface V1Beta1PoolAsset {
   /**
    * Coins we are talking about,

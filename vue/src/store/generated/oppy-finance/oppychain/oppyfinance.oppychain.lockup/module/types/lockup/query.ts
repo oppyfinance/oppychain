@@ -115,6 +115,15 @@ export interface AccountLockedLongerDurationResponse {
   locks: PeriodLock[];
 }
 
+export interface AccountLockedDurationRequest {
+  owner: string;
+  duration: Duration | undefined;
+}
+
+export interface AccountLockedDurationResponse {
+  locks: PeriodLock[];
+}
+
 export interface AccountLockedLongerDurationNotUnlockingOnlyRequest {
   owner: string;
   duration: Duration | undefined;
@@ -2080,6 +2089,173 @@ export const AccountLockedLongerDurationResponse = {
   },
 };
 
+const baseAccountLockedDurationRequest: object = { owner: "" };
+
+export const AccountLockedDurationRequest = {
+  encode(
+    message: AccountLockedDurationRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.owner !== "") {
+      writer.uint32(10).string(message.owner);
+    }
+    if (message.duration !== undefined) {
+      Duration.encode(message.duration, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): AccountLockedDurationRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseAccountLockedDurationRequest,
+    } as AccountLockedDurationRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.owner = reader.string();
+          break;
+        case 2:
+          message.duration = Duration.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): AccountLockedDurationRequest {
+    const message = {
+      ...baseAccountLockedDurationRequest,
+    } as AccountLockedDurationRequest;
+    if (object.owner !== undefined && object.owner !== null) {
+      message.owner = String(object.owner);
+    } else {
+      message.owner = "";
+    }
+    if (object.duration !== undefined && object.duration !== null) {
+      message.duration = Duration.fromJSON(object.duration);
+    } else {
+      message.duration = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: AccountLockedDurationRequest): unknown {
+    const obj: any = {};
+    message.owner !== undefined && (obj.owner = message.owner);
+    message.duration !== undefined &&
+      (obj.duration = message.duration
+        ? Duration.toJSON(message.duration)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<AccountLockedDurationRequest>
+  ): AccountLockedDurationRequest {
+    const message = {
+      ...baseAccountLockedDurationRequest,
+    } as AccountLockedDurationRequest;
+    if (object.owner !== undefined && object.owner !== null) {
+      message.owner = object.owner;
+    } else {
+      message.owner = "";
+    }
+    if (object.duration !== undefined && object.duration !== null) {
+      message.duration = Duration.fromPartial(object.duration);
+    } else {
+      message.duration = undefined;
+    }
+    return message;
+  },
+};
+
+const baseAccountLockedDurationResponse: object = {};
+
+export const AccountLockedDurationResponse = {
+  encode(
+    message: AccountLockedDurationResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.locks) {
+      PeriodLock.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): AccountLockedDurationResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseAccountLockedDurationResponse,
+    } as AccountLockedDurationResponse;
+    message.locks = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.locks.push(PeriodLock.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): AccountLockedDurationResponse {
+    const message = {
+      ...baseAccountLockedDurationResponse,
+    } as AccountLockedDurationResponse;
+    message.locks = [];
+    if (object.locks !== undefined && object.locks !== null) {
+      for (const e of object.locks) {
+        message.locks.push(PeriodLock.fromJSON(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: AccountLockedDurationResponse): unknown {
+    const obj: any = {};
+    if (message.locks) {
+      obj.locks = message.locks.map((e) =>
+        e ? PeriodLock.toJSON(e) : undefined
+      );
+    } else {
+      obj.locks = [];
+    }
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<AccountLockedDurationResponse>
+  ): AccountLockedDurationResponse {
+    const message = {
+      ...baseAccountLockedDurationResponse,
+    } as AccountLockedDurationResponse;
+    message.locks = [];
+    if (object.locks !== undefined && object.locks !== null) {
+      for (const e of object.locks) {
+        message.locks.push(PeriodLock.fromPartial(e));
+      }
+    }
+    return message;
+  },
+};
+
 const baseAccountLockedLongerDurationNotUnlockingOnlyRequest: object = {
   owner: "",
 };
@@ -2489,6 +2665,10 @@ export interface Query {
   AccountLockedLongerDuration(
     request: AccountLockedLongerDurationRequest
   ): Promise<AccountLockedLongerDurationResponse>;
+  /** Returns account locked records with a specific duration */
+  AccountLockedDuration(
+    request: AccountLockedDurationRequest
+  ): Promise<AccountLockedDurationResponse>;
   /**
    * Returns account locked records with longer duration excluding tokens
    * started unlocking
@@ -2678,6 +2858,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       AccountLockedLongerDurationResponse.decode(new Reader(data))
+    );
+  }
+
+  AccountLockedDuration(
+    request: AccountLockedDurationRequest
+  ): Promise<AccountLockedDurationResponse> {
+    const data = AccountLockedDurationRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "oppyfinance.oppychain.lockup.Query",
+      "AccountLockedDuration",
+      data
+    );
+    return promise.then((data) =>
+      AccountLockedDurationResponse.decode(new Reader(data))
     );
   }
 

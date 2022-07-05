@@ -16,50 +16,50 @@ option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
 service Query {
     // Queries a OutboundTx by index.
 	rpc OutboundTx(QueryGetOutboundTxRequest) returns (QueryGetOutboundTxResponse) {
-		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/outbound_tx/{requestID}";
+		option (google.api.http).get = "/oppy/oppychain/vault/outbound_tx/{requestID}";
 	}
 
 	// Queries a list of OutboundTx items.
 	rpc OutboundTxAll(QueryAllOutboundTxRequest) returns (QueryAllOutboundTxResponse) {
-		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/outbound_tx";
+		option (google.api.http).get = "/oppy/oppychain/vault/outbound_tx";
 	}
 
 // Queries a list of GetValidators items.
 	rpc GetValidators(QueryGetValidatorsRequest) returns (QueryGetValidatorsResponse) {
-		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/get_validators";
+		option (google.api.http).get = "/oppy/oppychain/vault/get_validators";
 	}
 
 	// Queries a list of GetValidators items.
 	rpc GetAllValidators(QueryAllValidatorsRequest) returns (QueryAllValidatorsResponse) {
-		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/validators";
+		option (google.api.http).get = "/oppy/oppychain/vault/validators";
 	}
 
 // this line is used by starport scaffolding # 2
 
 	// Queries a issueToken by index.
 	rpc IssueToken(QueryGetIssueTokenRequest) returns (QueryGetIssueTokenResponse) {
-		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/issueToken/{index}";
+		option (google.api.http).get = "/oppy/oppychain/vault/issueToken/{index}";
 	}
 
 	// Queries a list of issueToken items.
 	rpc IssueTokenAll(QueryAllIssueTokenRequest) returns (QueryAllIssueTokenResponse) {
-		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/issueToken";
+		option (google.api.http).get = "/oppy/oppychain/vault/issueToken";
 	}
 
 
 	// Queries a createPool by index.
 	rpc CreatePool(QueryGetCreatePoolRequest) returns (QueryGetCreatePoolResponse) {
-		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/createPool/{index}";
+		option (google.api.http).get = "/oppy/oppychain/vault/createPool/{index}";
 	}
 
 	// Queries a list of createPool items.
 	rpc CreatePoolAll(QueryAllCreatePoolRequest) returns (QueryAllCreatePoolResponse) {
-		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/createPool";
+		option (google.api.http).get = "/oppy/oppychain/vault/createPool";
 	}
 
 	// Queries a createPool by index.
 	rpc GetLastPool(QueryLatestPoolRequest) returns (QueryLastPoolResponse) {
-		option (google.api.http).get = "/oppyfinance/oppyChaind/vault/getLastPool";
+		option (google.api.http).get = "/oppy/oppychain/vault/getLastPool";
 	}
 
 }

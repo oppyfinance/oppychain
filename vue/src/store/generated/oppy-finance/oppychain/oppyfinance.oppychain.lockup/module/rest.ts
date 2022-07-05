@@ -13,6 +13,10 @@ export interface LockupAccountLockedCoinsResponse {
   coins?: V1Beta1Coin[];
 }
 
+export interface LockupAccountLockedDurationResponse {
+  locks?: LockupPeriodLock[];
+}
+
 export interface LockupAccountLockedLongerDurationDenomResponse {
   locks?: LockupPeriodLock[];
 }
@@ -75,6 +79,10 @@ export interface LockupMsgBeginUnlockingAllResponse {
 }
 
 export interface LockupMsgBeginUnlockingResponse {
+  success?: boolean;
+}
+
+export interface LockupMsgExtendLockupResponse {
   success?: boolean;
 }
 
@@ -609,6 +617,23 @@ excluding tokens started unlocking
     this.request<LockupSyntheticLockupsByLockupIDResponse, RpcStatus>({
       path: `/oppy/lockup/v1beta1/synthetic_lockups_by_lock_id/${lock_id}`,
       method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryAccountLockedDuration
+   * @summary Returns account locked records with a specific duration
+   * @request GET:/osmosis/lockup/v1beta1/account_locked_duration/{owner}
+   */
+  queryAccountLockedDuration = (owner: string, query?: { duration?: string }, params: RequestParams = {}) =>
+    this.request<LockupAccountLockedDurationResponse, RpcStatus>({
+      path: `/osmosis/lockup/v1beta1/account_locked_duration/${owner}`,
+      method: "GET",
+      query: query,
       format: "json",
       ...params,
     });

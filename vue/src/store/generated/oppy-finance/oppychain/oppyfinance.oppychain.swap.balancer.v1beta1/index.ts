@@ -2,10 +2,11 @@ import { txClient, queryClient, MissingWalletError , registry} from './module'
 
 import { SmoothWeightChangeParams } from "./module/types/swap/pool_models/balancer/balancerPool"
 import { PoolParams } from "./module/types/swap/pool_models/balancer/balancerPool"
+import { PoolAsset } from "./module/types/swap/pool_models/balancer/balancerPool"
 import { Pool } from "./module/types/swap/pool_models/balancer/balancerPool"
 
 
-export { SmoothWeightChangeParams, PoolParams, Pool };
+export { SmoothWeightChangeParams, PoolParams, PoolAsset, Pool };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -47,6 +48,7 @@ const getDefaultState = () => {
 				_Structure: {
 						SmoothWeightChangeParams: getStructure(SmoothWeightChangeParams.fromPartial({})),
 						PoolParams: getStructure(PoolParams.fromPartial({})),
+						PoolAsset: getStructure(PoolAsset.fromPartial({})),
 						Pool: getStructure(Pool.fromPartial({})),
 						
 		},

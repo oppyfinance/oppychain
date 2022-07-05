@@ -443,7 +443,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryInvoiceAll
    * @summary Queries a list of invoice items.
-   * @request GET:/oppyfinance/oppyChaind/invoice/invoice
+   * @request GET:/oppy/oppychain/invoice/invoice
    */
   queryInvoiceAll = (
     query?: {
@@ -456,7 +456,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<InvoiceQueryAllInvoiceResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/invoice/invoice`,
+      path: `/oppy/oppychain/invoice/invoice`,
       method: "GET",
       query: query,
       format: "json",
@@ -469,11 +469,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryInvoice
    * @summary Queries a invoice by index.
-   * @request GET:/oppyfinance/oppyChaind/invoice/invoice/{index}
+   * @request GET:/oppy/oppychain/invoice/invoice/{index}
    */
   queryInvoice = (index: string, params: RequestParams = {}) =>
     this.request<InvoiceQueryGetInvoiceResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/invoice/invoice/${index}`,
+      path: `/oppy/oppychain/invoice/invoice/${index}`,
       method: "GET",
       format: "json",
       ...params,
@@ -485,7 +485,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryPlaceOrderAll
    * @summary Queries a list of placeOrder items.
-   * @request GET:/oppyfinance/oppyChaind/invoice/placeOrder
+   * @request GET:/oppy/oppychain/invoice/placeOrder
    */
   queryPlaceOrderAll = (
     query?: {
@@ -498,7 +498,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<InvoiceQueryAllPlaceOrderResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/invoice/placeOrder`,
+      path: `/oppy/oppychain/invoice/placeOrder`,
       method: "GET",
       query: query,
       format: "json",
@@ -511,11 +511,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryPlaceOrder
    * @summary Queries a placeOrder by index.
-   * @request GET:/oppyfinance/oppyChaind/invoice/placeOrder/{index}
+   * @request GET:/oppy/oppychain/invoice/placeOrder/{index}
    */
   queryPlaceOrder = (index: string, params: RequestParams = {}) =>
     this.request<InvoiceQueryGetPlaceOrderResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/invoice/placeOrder/${index}`,
+      path: `/oppy/oppychain/invoice/placeOrder/${index}`,
       method: "GET",
       format: "json",
       ...params,
@@ -527,7 +527,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QuerySellOrderAll
    * @summary Queries a list of sellOrder items.
-   * @request GET:/oppyfinance/oppyChaind/invoice/sellOrder
+   * @request GET:/oppy/oppychain/invoice/sellOrder
    */
   querySellOrderAll = (
     query?: {
@@ -540,7 +540,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<InvoiceQueryAllSellOrderResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/invoice/sellOrder`,
+      path: `/oppy/oppychain/invoice/sellOrder`,
       method: "GET",
       query: query,
       format: "json",
@@ -553,11 +553,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QuerySellOrder
    * @summary Queries a sellOrder by index.
-   * @request GET:/oppyfinance/oppyChaind/invoice/sellOrder/{index}
+   * @request GET:/oppy/oppychain/invoice/sellOrder/{index}
    */
   querySellOrder = (index: string, params: RequestParams = {}) =>
     this.request<InvoiceQueryGetSellOrderResponse, RpcStatus>({
-      path: `/oppyfinance/oppyChaind/invoice/sellOrder/${index}`,
+      path: `/oppy/oppychain/invoice/sellOrder/${index}`,
       method: "GET",
       format: "json",
       ...params,
