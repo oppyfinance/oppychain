@@ -12,12 +12,12 @@ option go_package = "gitlab.com/oppy-finance/oppychain/x/epochs/types";
 service Query {
   // EpochInfos provide running epochInfos
   rpc EpochInfos(QueryEpochsInfoRequest) returns (QueryEpochsInfoResponse) {
-    option (google.api.http).get = "/oppyfinance/oppyChaind/epochs";
+    option (google.api.http).get = "/oppy/oppychain/epochs";
   }
   // CurrentEpoch provide current epoch of specified identifier
   rpc CurrentEpoch(QueryCurrentEpochRequest)
       returns (QueryCurrentEpochResponse) {
-    option (google.api.http).get = "/oppyfinance/oppyChaind/epochs/current_epoch";
+    option (google.api.http).get = "/oppy/oppychain/epochs/current_epoch";
   }
 }
 
