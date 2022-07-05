@@ -497,6 +497,7 @@ func (suite *KeeperTestSuite) TestJoinPoolExitPool_InverseRelationship() {
 		suite.Require().NoError(err)
 
 		_, err = suite.App.SwapKeeper.ExitPool(suite.Ctx, joinPoolAcc, poolId, tc.joinPoolShareAmt, sdk.Coins{})
+		suite.Require().NoError(err)
 
 		balanceAfterExit := suite.App.BankKeeper.GetAllBalances(suite.Ctx, joinPoolAcc)
 		deltaBalance, _ := balanceBeforeJoin.SafeSub(balanceAfterExit)

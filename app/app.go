@@ -475,7 +475,7 @@ func New(
 	// ################################################################
 	vaultModule := vaultmodule.NewAppModule(appCodec, app.VaultKeeper, app.AccountKeeper, app.BankKeeper)
 	epochModule := epochs.NewAppModule(appCodec, app.EpochsKeeper)
-	swapModule := swap.NewAppModule(appCodec, app.SwapKeeper, app.AccountKeeper, app.BankKeeper)
+	swapModule := swap.NewAppModule(appCodec, app.SwapKeeper)
 	lockupModule := lockup.NewAppModule(appCodec, app.LockupKeeper, app.AccountKeeper, app.BankKeeper)
 	incentivesModule := incentives.NewAppModule(appCodec, app.IncentivesKeeper, app.AccountKeeper, app.BankKeeper, app.EpochsKeeper)
 	poolincentivesModule := poolincentives.NewAppModule(appCodec, app.PoolIncentivesKeeper)
@@ -703,7 +703,7 @@ func New(
 		incentivesModule,
 		poolincentivesModule,
 		tokenfactoryModule,
-		swap.NewAppModule(appCodec, app.SwapKeeper, app.AccountKeeper, app.BankKeeper),
+		swap.NewAppModule(appCodec, app.SwapKeeper),
 	)
 	app.sm.RegisterStoreDecoders()
 

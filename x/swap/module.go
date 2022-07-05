@@ -17,8 +17,6 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
-	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-
 	"gitlab.com/oppy-finance/oppychain/x/swap/client/cli"
 	"gitlab.com/oppy-finance/oppychain/x/swap/keeper"
 	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
@@ -91,9 +89,6 @@ type AppModule struct {
 	ak     types.AccountKeeper
 	bk     types.BankKeeper
 	keeper keeper.Keeper
-
-	accountKeeper stakingtypes.AccountKeeper
-	bankKeeper    stakingtypes.BankKeeper
 }
 
 func (am AppModule) RegisterServices(cfg module.Configurator) {
@@ -103,14 +98,10 @@ func (am AppModule) RegisterServices(cfg module.Configurator) {
 	types.RegisterQueryServer(cfg.QueryServer(), keeper.NewQuerier(am.keeper))
 }
 
-func NewAppModule(cdc codec.Codec, keeper keeper.Keeper,
-	accountKeeper types.AccountKeeper, bankKeeper types.BankKeeper,
-) AppModule {
+func NewAppModule(cdc codec.Codec, keeper keeper.Keeper) AppModule {
 	return AppModule{
 		AppModuleBasic: AppModuleBasic{cdc: cdc},
 		keeper:         keeper,
-		ak:             accountKeeper,
-		bk:             bankKeeper,
 	}
 }
 

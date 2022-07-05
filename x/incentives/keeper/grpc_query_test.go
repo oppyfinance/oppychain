@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	"fmt"
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -122,6 +123,7 @@ func (suite *KeeperTestSuite) TestGRPCActiveGaugesPerDenom() {
 	gaugeID, gauge, coins, startTime := suite.SetupNewGauge(false, sdk.Coins{sdk.NewInt64Coin("stake", 10)})
 	suite.Ctx = suite.Ctx.WithBlockTime(startTime.Add(time.Second))
 	err = suite.App.IncentivesKeeper.MoveUpcomingGaugeToActiveGauge(suite.Ctx, *gauge)
+	suite.Require().NoError(err)
 	// final check
 	res, err = suite.querier.ActiveGaugesPerDenom(sdk.WrapSDKContext(suite.Ctx), &types.ActiveGaugesPerDenomRequest{Denom: "lptoken", Pagination: nil})
 	suite.Require().NoError(err)
@@ -208,6 +210,7 @@ func (suite *KeeperTestSuite) TestGRPCUpcomingGaugesPerDenom() {
 	// final check when gauge is moved from upcoming to active
 	suite.Ctx = suite.Ctx.WithBlockTime(startTime.Add(time.Second))
 	err = suite.App.IncentivesKeeper.MoveUpcomingGaugeToActiveGauge(suite.Ctx, *gauge)
+	suite.Require().NoError(err)
 	res, err = suite.querier.UpcomingGaugesPerDenom(sdk.WrapSDKContext(suite.Ctx), &upcomingGaugeRequest)
 	suite.Require().NoError(err)
 	suite.Require().Len(res.UpcomingGauges, 0)
@@ -264,6 +267,7 @@ func (suite *KeeperTestSuite) TestRewardsEstWithPoolIncentives() {
 		EndEpoch: 10,
 	})
 	suite.Require().NoError(err)
+	fmt.Printf(">>>>>>>>>>>>>>>>>>%v\n", res.Coins.String())
 	suite.Require().Equal(res.Coins, coins)
 
 	epochIdentifier := suite.App.MintKeeper.GetParams(suite.Ctx).EpochIdentifier
@@ -275,11 +279,11 @@ func (suite *KeeperTestSuite) TestRewardsEstWithPoolIncentives() {
 	pParams.MintedDenom = "poppy"
 	suite.App.PoolIncentivesKeeper.SetParams(suite.Ctx, pParams)
 	curEpochNumber := suite.App.EpochsKeeper.GetEpochInfo(suite.Ctx, epochIdentifier).CurrentEpoch
-	suite.Ctx = suite.Ctx.WithBlockTime(time.Now())
 	suite.App.EpochsKeeper.AfterEpochEnd(suite.Ctx, epochIdentifier, curEpochNumber)
 	// TODO: Figure out what this number should be
-	minttedCoinEachEpoch := sdk.Coin{"poppy", minttypes.GenesisEpochProvisions.TruncateInt()}
+	minttedCoinEachEpoch := sdk.Coin{Denom: "poppy", Amount: minttypes.GenesisEpochProvisions.TruncateInt()}
 	poolIncentivesCoin := sdk.NewCoins(getProportions(minttedCoinEachEpoch, minttypes.PoolIncentives))[0]
+	fmt.Printf(">>>>>>>>>>>>%v\n", poolIncentivesCoin)
 
 	res, err = suite.querier.RewardsEst(sdk.WrapSDKContext(suite.Ctx), &types.RewardsEstRequest{
 		Owner:    lockOwner.String(),

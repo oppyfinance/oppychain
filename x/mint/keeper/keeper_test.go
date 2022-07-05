@@ -37,13 +37,12 @@ func (suite *KeeperTestSuite) TestMintCoinsToFeeCollectorAndGetProportions() {
 
 	// When coin is minted to the fee collector
 	fee := sdk.NewCoin("poppy", sdk.NewInt(0))
-	fees := sdk.NewCoins(fee)
 	coin := mintKeeper.GetProportions(suite.Ctx, fee, sdk.NewDecWithPrec(2, 1))
 	suite.Equal("0poppy", coin.String())
 
 	// When mint the 100K poppy coin to the fee collector
 	fee = sdk.NewCoin("poppy", sdk.NewInt(100000))
-	fees = sdk.NewCoins(fee)
+	fees := sdk.NewCoins(fee)
 
 	err := simapp.FundModuleAccount(suite.App.BankKeeper,
 		suite.Ctx,

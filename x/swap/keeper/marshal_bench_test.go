@@ -60,7 +60,7 @@ func setupPools(maxNumPoolsToGen int) []swaptypes.PoolI {
 	return pools
 }
 
-func BenchmarkswapPoolSerialization(b *testing.B) {
+func BenchmarkSwapPoolSerialization(b *testing.B) {
 
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
@@ -77,12 +77,13 @@ func BenchmarkswapPoolSerialization(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		j := i % maxNumPoolsToGen
-		app.SwapKeeper.MarshalPool(pools[j])
+		_, err := app.SwapKeeper.MarshalPool(pools[j])
+		require.NoError(b, err)
+
 	}
 }
 
-func BenchmarkswapPoolDeserialization(b *testing.B) {
-
+func BenchmarkSwapPoolDeserialization(b *testing.B) {
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
@@ -103,6 +104,7 @@ func BenchmarkswapPoolDeserialization(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		j := i % maxNumPoolsToGen
-		app.SwapKeeper.UnmarshalPool(marshals[j])
+		_, err := app.SwapKeeper.UnmarshalPool(marshals[j])
+		require.NoError(b, err)
 	}
 }

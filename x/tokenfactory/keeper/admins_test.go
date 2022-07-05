@@ -41,12 +41,12 @@ func (suite *KeeperTestSuite) TestAdminMsgs() {
 
 	// Test burning from own account
 	_, err = msgServer.Burn(sdk.WrapSDKContext(suite.Ctx), types.NewMsgBurn(suite.TestAccs[0].String(), sdk.NewInt64Coin(denom, 5)))
-	addr0bal -= 5
 	suite.Require().NoError(err)
 	suite.Require().True(suite.App.BankKeeper.GetBalance(suite.Ctx, suite.TestAccs[1], denom).Amount.Int64() == addr1bal)
 
 	// Test Change Admin
 	_, err = msgServer.ChangeAdmin(sdk.WrapSDKContext(suite.Ctx), types.NewMsgChangeAdmin(suite.TestAccs[0].String(), denom, suite.TestAccs[1].String()))
+	suite.Require().NoError(err)
 	queryRes, err = suite.queryClient.DenomAuthorityMetadata(suite.Ctx.Context(), &types.QueryDenomAuthorityMetadataRequest{
 		Denom: res.GetNewTokenDenom(),
 	})

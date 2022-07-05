@@ -32,7 +32,7 @@ func preparePool(t *testing.T) (*network.Network, []*types.CreatePool) {
 	state := types.GenesisState{}
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[types.ModuleName], &state))
 	sk := ed25519.GenPrivKey()
-	poolPubKey, err := legacybech32.MarshalPubKey(legacybech32.AccPK, sk.PubKey())
+	poolPubKey, err := legacybech32.MarshalPubKey(legacybech32.AccPK, sk.PubKey()) //nolint
 	require.NoError(t, err)
 	operator := sk.PubKey().Address().Bytes()
 	require.NoError(t, err)

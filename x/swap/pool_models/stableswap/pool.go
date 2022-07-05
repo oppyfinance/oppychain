@@ -70,18 +70,18 @@ func (pa Pool) NumAssets() int {
 }
 
 // returns pool liquidity of the provided denoms, in the same order the denoms were provided in
-func (pa Pool) getPoolAmts(denoms ...string) ([]sdk.Int, error) {
-	result := make([]sdk.Int, len(denoms))
-	poolLiquidity := pa.PoolLiquidity
-	for i, d := range denoms {
-		amt := poolLiquidity.AmountOf(d)
-		if amt.IsZero() {
-			return []sdk.Int{}, fmt.Errorf("denom %s does not exist in pool", d)
-		}
-		result[i] = amt
-	}
-	return result, nil
-}
+//func (pa Pool) getPoolAmts(denoms ...string) ([]sdk.Int, error) {
+//	result := make([]sdk.Int, len(denoms))
+//	poolLiquidity := pa.PoolLiquidity
+//	for i, d := range denoms {
+//		amt := poolLiquidity.AmountOf(d)
+//		if amt.IsZero() {
+//			return []sdk.Int{}, fmt.Errorf("denom %s does not exist in pool", d)
+//		}
+//		result[i] = amt
+//	}
+//	return result, nil
+//}
 
 // getScaledPoolAmts returns scaled amount of pool liquidity based on each asset's precisions
 func (pa Pool) getScaledPoolAmts(denoms ...string) ([]sdk.Dec, error) {

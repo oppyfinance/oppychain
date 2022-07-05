@@ -2,9 +2,6 @@ package types
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
@@ -27,23 +24,23 @@ var (
 	KeyTotalLiquidity = []byte{0x03}
 )
 
-func MustGetPoolIdFromShareDenom(denom string) uint64 {
-	numberStr := strings.TrimLeft(denom, "swap/pool/")
-	number, err := strconv.Atoi(numberStr)
-	if err != nil {
-		panic(err)
-	}
-	return uint64(number)
-}
+//func MustGetPoolIdFromShareDenom(denom string) uint64 {
+//	numberStr := strings.TrimLeft(denom, "swap/pool/")
+//	number, err := strconv.Atoi(numberStr)
+//	if err != nil {
+//		panic(err)
+//	}
+//	return uint64(number)
+//}
 
-func ValidatePoolShareDenom(denom string) error {
-	numberStr := strings.TrimLeft(denom, "swap/pool/")
-	_, err := strconv.Atoi(numberStr)
-	if err != nil {
-		return err
-	}
-	return nil
-}
+//func ValidatePoolShareDenom(denom string) error {
+//	numberStr := strings.TrimLeft(denom, "swap/pool/")
+//	_, err := strconv.Atoi(numberStr)
+//	if err != nil {
+//		return err
+//	}
+//	return nil
+//}
 
 func GetDenomPrefix(denom string) []byte {
 	return append(KeyTotalLiquidity, []byte(denom)...)

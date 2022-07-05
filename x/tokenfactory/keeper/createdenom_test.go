@@ -34,7 +34,7 @@ func (suite *KeeperTestSuite) TestMsgCreateDenom() {
 	suite.Require().True(preCreateBalance.Sub(postCreateBalance).IsEqual(denomCreationFee[0]))
 
 	// Make sure that a second version of the same denom can't be recreated
-	res, err = msgServer.CreateDenom(sdk.WrapSDKContext(suite.Ctx), types.NewMsgCreateDenom(suite.TestAccs[0].String(), "bitcoin"))
+	_, err = msgServer.CreateDenom(sdk.WrapSDKContext(suite.Ctx), types.NewMsgCreateDenom(suite.TestAccs[0].String(), "bitcoin"))
 	suite.Require().Error(err)
 
 	// Creating a second denom should work
@@ -55,6 +55,6 @@ func (suite *KeeperTestSuite) TestMsgCreateDenom() {
 	suite.Require().NotEmpty(res.GetNewTokenDenom())
 
 	// Make sure that an address with a "/" in it can't create denoms
-	res, err = msgServer.CreateDenom(sdk.WrapSDKContext(suite.Ctx), types.NewMsgCreateDenom("osmosis.eth/creator", "bitcoin"))
+	_, err = msgServer.CreateDenom(sdk.WrapSDKContext(suite.Ctx), types.NewMsgCreateDenom("oppy.eth/creator", "bitcoin"))
 	suite.Require().Error(err)
 }

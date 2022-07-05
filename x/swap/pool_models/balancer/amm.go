@@ -13,9 +13,9 @@ import (
 )
 
 const (
-	errMsgFormatSharesAmountNotPositive       = "shares amount must be positive, was %d"
-	errMsgFormatTokenAmountNotPositive        = "token amount must be positive, was %d"
-	errMsgFormatTokensLargerThanMax           = "%d resulted tokens is larger than the max amount of %d"
+	errMsgFormatSharesAmountNotPositive = "shares amount must be positive, was %d"
+	errMsgFormatTokenAmountNotPositive  = "token amount must be positive, was %d"
+	//errMsgFormatTokensLargerThanMax           = "%d resulted tokens is larger than the max amount of %d"
 	errMsgFormatSharesLargerThanMax           = "%d resulted shares is larger than the max amount of %d"
 	errMsgFormatFailedInterimLiquidityUpdate  = "failed to update interim liquidity - pool asset %s does not exist"
 	errMsgFormatRepeatingPoolAssetsNotAllowed = "repeating pool assets not allowed, found %s"

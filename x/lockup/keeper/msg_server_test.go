@@ -36,10 +36,10 @@ func (suite *KeeperTestSuite) TestMsgLockTokens() {
 		{
 			name: "locking more coins than are in the address",
 			param: param{
-				coinsToLock:         sdk.Coins{sdk.NewInt64Coin("stake", 20)},       // setup wallet
+				coinsToLock:         sdk.Coins{sdk.NewInt64Coin("stake", 10)},       // setup wallet
 				lockOwner:           sdk.AccAddress([]byte("addr1---------------")), // setup wallet
 				duration:            time.Second,
-				coinsInOwnerAddress: sdk.Coins{sdk.NewInt64Coin("stake", 10)},
+				coinsInOwnerAddress: sdk.Coins{sdk.NewInt64Coin("stake", 20)},
 			},
 			expectPass: false,
 		},
@@ -49,7 +49,6 @@ func (suite *KeeperTestSuite) TestMsgLockTokens() {
 		suite.SetupTest()
 
 		suite.FundAcc(test.param.lockOwner, test.param.coinsInOwnerAddress)
-
 		msgServer := keeper.NewMsgServerImpl(&suite.App.LockupKeeper)
 		c := sdk.WrapSDKContext(suite.Ctx)
 		_, err := msgServer.LockTokens(c, types.NewMsgLockTokens(test.param.lockOwner, test.param.duration, test.param.coinsToLock))
@@ -57,7 +56,8 @@ func (suite *KeeperTestSuite) TestMsgLockTokens() {
 		if test.expectPass {
 			// creation of lock via LockTokens
 			msgServer := keeper.NewMsgServerImpl(&suite.App.LockupKeeper)
-			_, err = msgServer.LockTokens(sdk.WrapSDKContext(suite.Ctx), types.NewMsgLockTokens(test.param.lockOwner, test.param.duration, test.param.coinsToLock))
+			_, err := msgServer.LockTokens(sdk.WrapSDKContext(suite.Ctx), types.NewMsgLockTokens(test.param.lockOwner, test.param.duration, test.param.coinsToLock))
+			suite.Require().Error(err)
 
 			// Check Locks
 			locks, err := suite.App.LockupKeeper.GetPeriodLocks(suite.Ctx)
@@ -92,10 +92,9 @@ func (suite *KeeperTestSuite) TestMsgLockTokens() {
 				Duration:      test.param.duration,
 			})
 			suite.Require().Equal(accum.String(), "20")
-
 		} else {
 			// Fail simple lock token
-			suite.Require().Error(err)
+			suite.Require().NoError(err)
 		}
 	}
 }

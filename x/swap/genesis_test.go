@@ -144,7 +144,7 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 
 	encodingConfig := cosmoscmd.MakeEncodingConfig(oppyapp.ModuleBasics)
 	appCodec := encodingConfig.Marshaler
-	am := swap.NewAppModule(appCodec, app.SwapKeeper, app.AccountKeeper, app.BankKeeper)
+	am := swap.NewAppModule(appCodec, app.SwapKeeper)
 	acc1 := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address().Bytes())
 	err := simapp.FundAccount(app.BankKeeper, ctx, acc1, sdk.NewCoins(
 		sdk.NewCoin("uoppy", sdk.NewInt(10000000000)),
@@ -169,7 +169,7 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 	genesis := am.ExportGenesis(ctx, appCodec)
 	assert.NotPanics(t, func() {
 		ctx := app.BaseApp.NewContext(false, tmproto.Header{})
-		am := swap.NewAppModule(appCodec, app.SwapKeeper, app.AccountKeeper, app.BankKeeper)
+		am := swap.NewAppModule(appCodec, app.SwapKeeper)
 		am.InitGenesis(ctx, appCodec, genesis)
 	})
 }
