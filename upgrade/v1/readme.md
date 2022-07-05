@@ -1,1 +1,1 @@
-this upgrade remove the legacy parameter module
+this upgrade upgrade the swap and its related modules

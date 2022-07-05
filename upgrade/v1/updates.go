@@ -4,19 +4,18 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	vaultkeeper "gitlab.com/oppy-finance/oppychain/x/vault/keeper"
 )
 
-const UpgradeName = "remove_parameter_module"
+const UpgradeName = "upgrade_grpc_path"
 
 func CreateUpgradeHandler(
 	mm *module.Manager,
 	configurator module.Configurator,
-	vault *vaultkeeper.Keeper,
 ) upgradetypes.UpgradeHandler {
 	return func(ctx sdk.Context, _plan upgradetypes.Plan, vm module.VersionMap) (module.VersionMap, error) {
-		// configure upgrade for x/gamm module pool creation fee param
-		ctx.Logger().Info("we have removed the parameter module")
-		return vm, nil
+		for i := 0; i < 2; i++ {
+			ctx.Logger().Info("we have updated the grpc path")
+		}
+		return mm.RunMigrations(ctx, configurator, vm)
 	}
 }
