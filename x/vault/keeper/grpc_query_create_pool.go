@@ -107,12 +107,13 @@ func (k Keeper) GetLastPool(c context.Context, req *types.QueryLatestPoolRequest
 
 	minSupportNodes := k.calMinSupportNodes(c)
 	proposalLast := getProposal(valLatest.Proposal, minSupportNodes)
-	lastProposal := types.PoolInfo{
-		BlockHeight: height,
-		CreatePool:  proposalLast,
+	if proposalLast != nil {
+		lastProposal := types.PoolInfo{
+			BlockHeight: height,
+			CreatePool:  proposalLast,
+		}
+		allProposal = append(allProposal, &lastProposal)
 	}
-
-	allProposal = append(allProposal, &lastProposal)
 
 	loopHeight := poolBlock + 1 - churnHeight
 	for {
@@ -120,11 +121,14 @@ func (k Keeper) GetLastPool(c context.Context, req *types.QueryLatestPoolRequest
 		valLatest2, found := k.GetCreatePool(ctx, heightStr)
 		if found {
 			proposalLast2 := getProposal(valLatest2.Proposal, minSupportNodes)
-			lastProposal := types.PoolInfo{
-				BlockHeight: heightStr,
-				CreatePool:  proposalLast2,
+			// this avoid the nil in burn token
+			if proposalLast2 != nil {
+				lastProposal := types.PoolInfo{
+					BlockHeight: heightStr,
+					CreatePool:  proposalLast2,
+				}
+				allProposal = append(allProposal, &lastProposal)
 			}
-			allProposal = append(allProposal, &lastProposal)
 			break
 		}
 		loopHeight -= churnHeight
