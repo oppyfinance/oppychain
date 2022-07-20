@@ -6,7 +6,7 @@ import (
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 )
 
-const UpgradeName = "upgrade_grpc_path"
+const UpgradeName = "hot_fix"
 
 func CreateUpgradeHandler(
 	mm *module.Manager,
