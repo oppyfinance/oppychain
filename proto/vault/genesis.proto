@@ -20,5 +20,6 @@ message GenesisState {
 	repeated CreatePool createPoolList = 3; // this line is used by starport scaffolding # genesis/proto/stateField
     // this line is used by starport scaffolding # ibc/genesis/proto
 	repeated Validators  validatorinfoList = 6;
+	repeated StandbyPower standbypowerList=7;
 	bool exported = 4;
 }

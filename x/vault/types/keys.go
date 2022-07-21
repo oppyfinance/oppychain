@@ -36,3 +36,7 @@ const (
 const (
 	ValidatorsStoreKey = "ValidatorStore-value-"
 )
+
+const (
+	StandbyPwoerStoreKey = "standbyPower-value-"
+)

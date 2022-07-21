@@ -17,14 +17,13 @@ import (
 
 type (
 	Keeper struct {
-		cdc                       codec.BinaryCodec
-		storeKey                  sdk.StoreKey
-		memKey                    sdk.StoreKey
-		vaultStaking              types.VaultStaking
-		validatorStandbyPowerInfo map[string]int64
-		bankKeeper                types.BankKeeper
-		paramstore                paramtypes.Subspace
-		ak                        banktypes.AccountKeeper
+		cdc          codec.BinaryCodec
+		storeKey     sdk.StoreKey
+		memKey       sdk.StoreKey
+		vaultStaking types.VaultStaking
+		bankKeeper   types.BankKeeper
+		paramstore   paramtypes.Subspace
+		ak           banktypes.AccountKeeper
 		// this line is used by starport scaffolding # ibc/keeper/attribute
 	}
 )
@@ -46,14 +45,13 @@ func NewKeeper(
 	}
 
 	return &Keeper{
-		cdc:                       cdc,
-		storeKey:                  storeKey,
-		memKey:                    memKey,
-		vaultStaking:              vaultStaking,
-		validatorStandbyPowerInfo: make(map[string]int64),
-		bankKeeper:                bankKeeper,
-		paramstore:                ps,
-		ak:                        ak,
+		cdc:          cdc,
+		storeKey:     storeKey,
+		memKey:       memKey,
+		vaultStaking: vaultStaking,
+		bankKeeper:   bankKeeper,
+		paramstore:   ps,
+		ak:           ak,
 		// this line is used by starport scaffolding # ibc/keeper/return
 
 	}

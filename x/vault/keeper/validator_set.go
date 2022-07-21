@@ -41,3 +41,45 @@ func (k Keeper) DoGetAllValidators(ctx sdk.Context) (list []types.Validators) {
 
 	return
 }
+
+// SetStandbyPower set a specific validator in the store from its index
+func (k Keeper) SetStandbyPower(ctx sdk.Context, addr string, powerItem types.StandbyPower) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.StandbyPwoerStoreKey))
+	b := k.cdc.MustMarshal(&powerItem)
+	store.Set(types.KeyPrefix(addr), b)
+}
+
+// DelStandbyDelete set a specific validator in the store from its index
+func (k Keeper) DelStandbyPower(ctx sdk.Context, addr string) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.StandbyPwoerStoreKey))
+	store.Delete(types.KeyPrefix(addr))
+}
+
+// GetStandbyPower returns a validators group from its index
+func (k Keeper) GetStandbyPower(ctx sdk.Context, addr string) (val types.StandbyPower, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.StandbyPwoerStoreKey))
+
+	b := store.Get(types.KeyPrefix(addr))
+	if b == nil {
+		return val, false
+	}
+
+	k.cdc.MustUnmarshal(b, &val)
+	return val, true
+}
+
+// DoGetAllStandbyPower returns all issueToken
+func (k Keeper) DoGetAllStandbyPower(ctx sdk.Context) (list []types.StandbyPower) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.StandbyPwoerStoreKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.StandbyPower
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		list = append(list, val)
+	}
+
+	return
+}

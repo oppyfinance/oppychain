@@ -31,6 +31,11 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 		k.SetValidators(ctx, strconv.FormatInt(elem.Height, 10), *elem)
 	}
 
+	// set all standbyPower info
+	for _, elem := range genState.StandbypowerList {
+		k.SetStandbyPower(ctx, elem.Addr, *elem)
+	}
+
 	k.SetParams(ctx, genState.Params)
 
 	// this line is used by starport scaffolding # ibc/genesis/init
@@ -61,6 +66,14 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	for _, elem := range validators {
 		elem := elem
 		genesis.ValidatorinfoList = append(genesis.ValidatorinfoList, &elem)
+	}
+
+	// set all standbypower info
+
+	allStandbyPowerInfo := k.DoGetAllStandbyPower(ctx)
+	for _, elem := range allStandbyPowerInfo {
+		elem := elem
+		genesis.StandbypowerList = append(genesis.StandbypowerList, &elem)
 	}
 
 	// this line is used by starport scaffolding # ibc/genesis/export

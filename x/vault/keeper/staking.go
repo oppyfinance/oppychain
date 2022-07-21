@@ -24,17 +24,21 @@ func (k Keeper) StakingInfo(ctx sdk.Context) {
 		if err != nil {
 			panic("get cons should never fail")
 		}
-		_, ok := k.validatorStandbyPowerInfo[consAddr.String()]
-		if !ok {
-			k.validatorStandbyPowerInfo[consAddr.String()] = params.Power
+		current, found := k.GetStandbyPower(ctx, consAddr.String())
+		if !found {
+			item := vaulttypes.StandbyPower{
+				Addr:  consAddr.String(),
+				Power: params.Power,
+			}
+			k.SetStandbyPower(ctx, consAddr.String(), item)
 			return false
 		}
-		current := k.validatorStandbyPowerInfo[consAddr.String()]
-		if current < 0 {
-			delete(k.validatorStandbyPowerInfo, consAddr.String())
+		if current.Power < 0 {
+			k.DelStandbyPower(ctx, consAddr.String())
 			return false
 		}
-		k.validatorStandbyPowerInfo[consAddr.String()] = current - params.Step
+		current.Power = current.Power - params.Step
+		k.SetStandbyPower(ctx, consAddr.String(), current)
 		return false
 	})
 }
@@ -47,11 +51,11 @@ func (k Keeper) getEligibleValidators(ctx sdk.Context) ([]vaulttypes.ValidatorPo
 	iterator := k.vaultStaking.ValidatorsPowerStoreIterator(ctx)
 
 	candidateDec := sdk.NewDecWithPrec(int64(maxValidators), 0)
-	candidateNumDec := candidateDec.QuoRoundUp(params.CandidateRatio)
+	candidateNumDec := candidateDec.MulTruncate(params.CandidateRatio)
 
-	candidateNum := int32(candidateNumDec.RoundInt64())
+	candidateNum := uint32(candidateNumDec.TruncateInt64())
 
-	for count := int32(0); iterator.Valid() && count < candidateNum; iterator.Next() {
+	for count := uint32(0); iterator.Valid() && count < maxValidators; iterator.Next() {
 		valAddr := sdk.ValAddress(iterator.Value())
 		validator, found := k.vaultStaking.GetValidator(ctx, valAddr)
 		if !found {
@@ -74,17 +78,23 @@ func (k Keeper) getEligibleValidators(ctx sdk.Context) ([]vaulttypes.ValidatorPo
 		if err != nil {
 			panic("it should never fail to get the cons addr")
 		}
-		standbyPower, ok := k.validatorStandbyPowerInfo[consAddr.String()]
-		if !ok {
-			k.validatorStandbyPowerInfo[consAddr.String()] = params.GetPower()
-			standbyPower = params.GetPower()
+		standbyPower, found := k.GetStandbyPower(ctx, consAddr.String())
+		if !found {
+			item := vaulttypes.StandbyPower{
+				Addr:  consAddr.String(),
+				Power: params.Power,
+			}
+			k.SetStandbyPower(ctx, consAddr.String(), item)
+
+			standbyPower = item
 		}
-		candidates[i].Power += standbyPower
+		candidates[i].Power += standbyPower.GetPower()
 	}
 	sort.Slice(candidates, func(i, j int) bool {
 		return candidates[i].Power > candidates[j].Power
 	})
-	return candidates, nil
+
+	return candidates[:candidateNum], nil
 }
 
 func (k Keeper) updateValidators(ctx sdk.Context) error {
