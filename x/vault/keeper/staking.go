@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"fmt"
 	"sort"
 	"strconv"
 	"time"
@@ -46,23 +45,17 @@ func (k Keeper) StakingInfo(ctx sdk.Context) {
 func (k Keeper) getEligibleValidators(ctx sdk.Context) ([]vaulttypes.ValidatorPowerInfo, error) {
 	params := k.GetParams(ctx)
 
-	maxValidators := k.vaultStaking.GetParams(ctx).MaxValidators
+	boundedValidators := k.vaultStaking.GetBondedValidatorsByPower(ctx)
 	var candidates []vaulttypes.ValidatorPowerInfo
-	iterator := k.vaultStaking.ValidatorsPowerStoreIterator(ctx)
 
-	candidateDec := sdk.NewDecWithPrec(int64(maxValidators), 0)
+	candidateDec := sdk.NewDecWithPrec(int64(len(boundedValidators)), 0)
 	candidateNumDec := candidateDec.MulTruncate(params.CandidateRatio)
 
 	candidateNum := uint32(candidateNumDec.TruncateInt64())
 
-	for count := uint32(0); iterator.Valid() && count < maxValidators; iterator.Next() {
-		valAddr := sdk.ValAddress(iterator.Value())
-		validator, found := k.vaultStaking.GetValidator(ctx, valAddr)
-		if !found {
-			panic(fmt.Sprintf("validator record not found for address: %X\n", valAddr))
-		}
+	for _, validator := range boundedValidators {
 		// if it is not the bonded node, we skip it.
-		if validator.Jailed || validator.GetStatus() != stakingtypes.Bonded {
+		if validator.Jailed {
 			continue
 		}
 		validatorWithPower := vaulttypes.ValidatorPowerInfo{
@@ -70,7 +63,6 @@ func (k Keeper) getEligibleValidators(ctx sdk.Context) ([]vaulttypes.ValidatorPo
 			Power:     validator.PotentialConsensusPower(sdk.DefaultPowerReduction),
 		}
 		candidates = append(candidates, validatorWithPower)
-		count++
 	}
 	// we get rotate the nodes
 	for i := 0; i < len(candidates); i++ {

@@ -27,14 +27,14 @@ var (
 )
 
 var (
-	GenesisEpochProvisions = sdk.NewDec(5000000)
-	EpochIdentifier        = "minute"                        // 1 minute
-	ReductionPeriodInEpoch = 156                             // 3 years
-	ReductionFactor        = sdk.NewDecWithPrec(5, 1)        // 0.5
-	Staking                = sdk.NewDecWithPrec(54545455, 8) // 0.25
-	PoolIncentives         = sdk.NewDecWithPrec(36363636, 8) // 0.2/0.55=0.3636
-	DeveloperRewards       = sdk.NewDecWithPrec(0, 1)        // 0
-	CommunityPool          = sdk.NewDecWithPrec(9090909, 8)  // 0.5
+	GenesisEpochProvisions = sdk.MustNewDecFromStr("821917.808219178082191780")
+	EpochIdentifier        = "day"                      // 1 day
+	ReductionPeriodInEpoch = 365                        // 1 year
+	ReductionFactor        = sdk.NewDecWithPrec(25, 2)  // 0.5
+	Staking                = sdk.NewDecWithPrec(375, 3) // 0.375
+	PoolIncentives         = sdk.NewDecWithPrec(625, 3) // 0.625
+	DeveloperRewards       = sdk.NewDecWithPrec(0, 1)   // 0
+	CommunityPool          = sdk.NewDecWithPrec(0, 1)   // 0
 
 )
 
@@ -45,7 +45,7 @@ func ParamKeyTable() paramtypes.KeyTable {
 
 func NewParams(
 	mintDenom string, genesisEpochProvisions sdk.Dec, epochIdentifier string,
-	ReductionFactor sdk.Dec, reductionPeriodInEpochs int64, distrProportions DistributionProportions,
+	reductionFactor sdk.Dec, reductionPeriodInEpochs int64, distrProportions DistributionProportions,
 	weightedDevRewardsReceivers []WeightedAddress, mintingRewardsDistributionStartEpoch int64,
 ) Params {
 	return Params{
@@ -53,7 +53,7 @@ func NewParams(
 		GenesisEpochProvisions:               genesisEpochProvisions,
 		EpochIdentifier:                      epochIdentifier,
 		ReductionPeriodInEpochs:              reductionPeriodInEpochs,
-		ReductionFactor:                      ReductionFactor,
+		ReductionFactor:                      reductionFactor,
 		DistributionProportions:              distrProportions,
 		WeightedDeveloperRewardsReceivers:    weightedDevRewardsReceivers,
 		MintingRewardsDistributionStartEpoch: mintingRewardsDistributionStartEpoch,

@@ -51,6 +51,9 @@ func (k Keeper) ProcessAccountLeft(ctx sdk.Context) {
 		return
 	}
 	for _, el := range ret.Pools {
+		if el.CreatePool == nil {
+			continue
+		}
 		addr := el.CreatePool.PoolAddr
 		if addr == nil {
 			continue

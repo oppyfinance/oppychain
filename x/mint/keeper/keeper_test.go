@@ -105,7 +105,7 @@ func (suite *KeeperTestSuite) TestDistrAssetToDeveloperRewardsAddrWhenNotEmpty()
 		mintCoin.Amount.ToDec().Mul(params.DistributionProportions.Staking).TruncateInt(),
 		suite.App.BankKeeper.GetAllBalances(suite.Ctx, feeCollector).AmountOf("poppy"))
 	suite.Equal(
-		sdk.MustNewDecFromStr("9092"),
+		sdk.MustNewDecFromStr("0"),
 		feePool.CommunityPool.AmountOf("poppy"))
 	suite.Equal(
 		mintCoin.Amount.ToDec().Mul(params.DistributionProportions.DeveloperRewards).TruncateInt(),
