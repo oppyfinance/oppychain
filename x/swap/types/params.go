@@ -26,7 +26,7 @@ func NewParams(poolCreationFee sdk.Coins) Params {
 // default swap module parameters.
 func DefaultParams() Params {
 	return Params{
-		PoolCreationFee: sdk.Coins{sdk.NewInt64Coin("poppy", 1000_000_000_000)}, // 1000 oppy
+		PoolCreationFee: sdk.Coins{sdk.NewInt64Coin("poppy", 10000_000_000_000)}, // 1000 oppy
 	}
 }
 

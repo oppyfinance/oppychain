@@ -14,9 +14,9 @@ const (
 
 func init() {
 	govtypes.RegisterProposalType(ProposalTypeUpdatePoolIncentives)
-	govtypes.RegisterProposalTypeCodec(&UpdatePoolIncentivesProposal{}, "osmosis/UpdatePoolIncentivesProposal")
+	govtypes.RegisterProposalTypeCodec(&UpdatePoolIncentivesProposal{}, "oppy/UpdatePoolIncentivesProposal")
 	govtypes.RegisterProposalType(ProposalTypeReplacePoolIncentives)
-	govtypes.RegisterProposalTypeCodec(&ReplacePoolIncentivesProposal{}, "osmosis/ReplacePoolIncentivesProposal")
+	govtypes.RegisterProposalTypeCodec(&ReplacePoolIncentivesProposal{}, "oppy/ReplacePoolIncentivesProposal")
 }
 
 var (

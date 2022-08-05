@@ -15,14 +15,13 @@ const DefaultIndex uint64 = 1
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		Params: Params{
-			DistrEpochIdentifier: "week",
+			DistrEpochIdentifier: "day",
 		},
 		Gauges: []Gauge{},
 		LockableDurations: []time.Duration{
-			time.Second,
-			time.Hour,
-			time.Hour * 3,
-			time.Hour * 7,
+			time.Hour * 24,
+			time.Hour * 24 * 7,
+			time.Hour * 24 * 14,
 		},
 	}
 }
