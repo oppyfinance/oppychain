@@ -23,9 +23,9 @@ func DefaultGenesisState() *GenesisState {
 	return &GenesisState{
 		Params: DefaultParams(),
 		LockableDurations: []time.Duration{
-			time.Hour,
-			time.Hour * 3,
-			time.Hour * 7,
+			time.Hour * 24,
+			time.Hour * 24 * 7,
+			time.Hour * 24 * 14,
 		},
 		DistrInfo: &DistrInfo{
 			TotalWeight: sdk.ZeroInt(),
