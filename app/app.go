@@ -8,7 +8,6 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
 	"gitlab.com/oppy-finance/oppychain/upgrade/v1"
-	tokenfactorytypes "gitlab.com/oppy-finance/oppychain/x/tokenfactory/types"
 
 	poolincentives "gitlab.com/oppy-finance/oppychain/x/pool_incentives"
 
@@ -96,29 +95,22 @@ import (
 	"github.com/ignite-hq/cli/ignite/pkg/cosmoscmd"
 	"github.com/ignite-hq/cli/ignite/pkg/openapiconsole"
 	"github.com/spf13/cast"
+	monitoringp "github.com/tendermint/spn/x/monitoringp"
+	monitoringpkeeper "github.com/tendermint/spn/x/monitoringp/keeper"
+	monitoringptypes "github.com/tendermint/spn/x/monitoringp/types"
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmjson "github.com/tendermint/tendermint/libs/json"
 	"github.com/tendermint/tendermint/libs/log"
 	tmos "github.com/tendermint/tendermint/libs/os"
 	dbm "github.com/tendermint/tm-db"
+	"gitlab.com/oppy-finance/oppychain/docs"
 	epochskeeper "gitlab.com/oppy-finance/oppychain/x/epochs/keeper"
 	epochsmoduletypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
 	"gitlab.com/oppy-finance/oppychain/x/mint"
 	mintkeeper "gitlab.com/oppy-finance/oppychain/x/mint/keeper"
 	minttypes "gitlab.com/oppy-finance/oppychain/x/mint/types"
 	poolincentiveclient "gitlab.com/oppy-finance/oppychain/x/pool_incentives/client"
-	tokenfactory "gitlab.com/oppy-finance/oppychain/x/tokenfactory"
-	tokenfactorykeeper "gitlab.com/oppy-finance/oppychain/x/tokenfactory/keeper"
 
-	monitoringp "github.com/tendermint/spn/x/monitoringp"
-	monitoringpkeeper "github.com/tendermint/spn/x/monitoringp/keeper"
-	monitoringptypes "github.com/tendermint/spn/x/monitoringp/types"
-
-	"gitlab.com/oppy-finance/oppychain/docs"
-
-	invoicemodule "gitlab.com/oppy-finance/oppychain/x/invoice"
-	invoicemodulekeeper "gitlab.com/oppy-finance/oppychain/x/invoice/keeper"
-	invoicemoduletypes "gitlab.com/oppy-finance/oppychain/x/invoice/types"
 	vaultmodule "gitlab.com/oppy-finance/oppychain/x/vault"
 	vaultmodulekeeper "gitlab.com/oppy-finance/oppychain/x/vault/keeper"
 	vaultmoduletypes "gitlab.com/oppy-finance/oppychain/x/vault/types"
@@ -185,13 +177,11 @@ var (
 		monitoringp.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 		vaultmodule.AppModuleBasic{},
-		invoicemodule.AppModuleBasic{},
 		epochs.AppModuleBasic{},
 		swap.AppModuleBasic{},
 		lockup.AppModuleBasic{},
 		incentives.AppModuleBasic{},
 		poolincentives.AppModuleBasic{},
-		tokenfactory.AppModuleBasic{},
 	)
 
 	// module account permissions
@@ -205,12 +195,10 @@ var (
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
 		//this is oppychain module
 		vaultmoduletypes.ModuleName:      {authtypes.Minter, authtypes.Burner},
-		invoicemoduletypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
 		swapmoduletypes.ModuleName:       {authtypes.Minter, authtypes.Burner},
 		lockupmoduletypes.ModuleName:     {authtypes.Minter, authtypes.Burner},
 		incentivesmoduletypes.ModuleName: {authtypes.Minter, authtypes.Burner},
 		poolincentivestypes.ModuleName:   nil,
-		tokenfactorytypes.ModuleName:     {authtypes.Minter, authtypes.Burner},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -274,13 +262,11 @@ type App struct {
 
 	//this is the oppyChain module
 	VaultKeeper          vaultmodulekeeper.Keeper
-	InvoiceKeeper        invoicemodulekeeper.Keeper
 	EpochsKeeper         epochskeeper.Keeper
 	SwapKeeper           swapkeeper.Keeper
 	LockupKeeper         lockupkeeper.Keeper
 	IncentivesKeeper     incentiveskeeper.Keeper
 	PoolIncentivesKeeper poolincentiveskeeper.Keeper
-	TokenFactoryKeeper   *tokenfactorykeeper.Keeper
 
 	// mm is the module manager
 	mm *module.Manager
@@ -320,13 +306,11 @@ func New(
 		evidencetypes.StoreKey, ibctransfertypes.StoreKey, capabilitytypes.StoreKey, monitoringptypes.StoreKey,
 		//this is oppychaion modules
 		vaultmoduletypes.StoreKey,
-		invoicemoduletypes.StoreKey,
 		epochsmoduletypes.StoreKey,
 		swapmoduletypes.StoreKey,
 		lockupmoduletypes.StoreKey,
 		incentivesmoduletypes.StoreKey,
 		poolincentivestypes.StoreKey,
-		tokenfactorytypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -397,32 +381,12 @@ func New(
 		stakingtypes.NewMultiStakingHooks(app.DistrKeeper.Hooks(), app.SlashingKeeper.Hooks()),
 	)
 
-	tokenFactoryKeeper := tokenfactorykeeper.NewKeeper(
-		appCodec,
-		app.keys[tokenfactorytypes.StoreKey],
-		app.GetSubspace(tokenfactorytypes.ModuleName),
-		app.AccountKeeper,
-		bKeeper.WithMintCoinsRestriction(tokenfactorytypes.NewTokenFactoryDenomMintCoinsRestriction()),
-		app.DistrKeeper,
-	)
-	app.TokenFactoryKeeper = &tokenFactoryKeeper
-
 	// ... other modules keepers
 
 	// Create IBC Keeper
 	app.IBCKeeper = ibckeeper.NewKeeper(
 		appCodec, keys[ibchost.StoreKey], app.GetSubspace(ibchost.ModuleName), app.StakingKeeper, app.UpgradeKeeper, scopedIBCKeeper,
 	)
-
-	// oppyChain keepers
-	app.InvoiceKeeper = *invoicemodulekeeper.NewKeeper(
-		appCodec,
-		keys[invoicemoduletypes.StoreKey],
-		keys[invoicemoduletypes.MemStoreKey],
-
-		app.BankKeeper,
-	)
-	invoiceModule := invoicemodule.NewAppModule(appCodec, app.InvoiceKeeper)
 
 	app.VaultKeeper = *vaultmodulekeeper.NewKeeper(
 		appCodec,
@@ -479,7 +443,6 @@ func New(
 	lockupModule := lockup.NewAppModule(appCodec, app.LockupKeeper, app.AccountKeeper, app.BankKeeper)
 	incentivesModule := incentives.NewAppModule(appCodec, app.IncentivesKeeper, app.AccountKeeper, app.BankKeeper, app.EpochsKeeper)
 	poolincentivesModule := poolincentives.NewAppModule(appCodec, app.PoolIncentivesKeeper)
-	tokenfactoryModule := tokenfactory.NewAppModule(appCodec, *app.TokenFactoryKeeper, app.AccountKeeper, app.BankKeeper)
 	// ################################################################
 	transferModule := transfer.NewAppModule(app.TransferKeeper)
 
@@ -561,13 +524,11 @@ func New(
 		monitoringModule,
 		// this is oppyChain module
 		vaultModule,
-		invoiceModule,
 		epochModule,
 		swapModule,
 		lockupModule,
 		incentivesModule,
 		poolincentivesModule,
-		tokenfactoryModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -597,13 +558,11 @@ func New(
 		paramstypes.ModuleName,
 		monitoringptypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
-		invoicemoduletypes.ModuleName,
 		vaultmoduletypes.ModuleName,
 		swapmoduletypes.ModuleName,
 		incentivesmoduletypes.ModuleName,
 		lockupmoduletypes.ModuleName,
 		poolincentivestypes.ModuleName,
-		tokenfactorytypes.ModuleName,
 	)
 
 	app.mm.SetOrderEndBlockers(
@@ -627,12 +586,10 @@ func New(
 		ibctransfertypes.ModuleName,
 		monitoringptypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
-		invoicemoduletypes.ModuleName,
 		vaultmoduletypes.ModuleName,
 		swapmoduletypes.ModuleName,
 		incentivesmoduletypes.ModuleName,
 		poolincentivestypes.ModuleName,
-		tokenfactorytypes.ModuleName,
 
 		// Note: epochs' endblock should be "real" end of epochs, we keep epochs endblock at the end
 		epochsmoduletypes.ModuleName,
@@ -666,11 +623,9 @@ func New(
 		incentivesmoduletypes.ModuleName,
 		epochsmoduletypes.ModuleName,
 		vaultmoduletypes.ModuleName,
-		invoicemoduletypes.ModuleName,
 		swapmoduletypes.ModuleName,
 		lockupmoduletypes.ModuleName,
 		poolincentivestypes.ModuleName,
-		tokenfactorytypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	)
 
@@ -697,12 +652,10 @@ func New(
 		// this line is used by starport scaffolding # stargate/app/appModule
 		vaultModule,
 		//	parammanagerModule,
-		invoiceModule,
 		lockup.NewAppModule(appCodec, app.LockupKeeper, app.AccountKeeper, app.BankKeeper),
 		epochs.NewAppModule(appCodec, app.EpochsKeeper),
 		incentivesModule,
 		poolincentivesModule,
-		tokenfactoryModule,
 		swap.NewAppModule(appCodec, app.SwapKeeper),
 	)
 	app.sm.RegisterStoreDecoders()
@@ -897,13 +850,11 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(monitoringptypes.ModuleName)
 	//this is oppychain module
 	paramsKeeper.Subspace(vaultmoduletypes.ModuleName)
-	paramsKeeper.Subspace(invoicemoduletypes.ModuleName)
 	paramsKeeper.Subspace(epochsmoduletypes.ModuleName)
 	paramsKeeper.Subspace(swapmoduletypes.ModuleName)
 	paramsKeeper.Subspace(lockupmoduletypes.ModuleName)
 	paramsKeeper.Subspace(incentivesmoduletypes.ModuleName)
 	paramsKeeper.Subspace(poolincentivestypes.ModuleName)
-	paramsKeeper.Subspace(tokenfactorytypes.ModuleName)
 
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
