@@ -118,10 +118,7 @@ func (k Keeper) CreatePool(ctx sdk.Context, msg types.CreatePoolMsg) (uint64, er
 	// create and save the pool's module account to the account keeper
 	acc := k.accountKeeper.NewAccount(
 		ctx,
-		authtypes.NewModuleAccount(
-			authtypes.NewBaseAccountWithAddress(pool.GetAddress()),
-			pool.GetAddress().String(),
-		),
+		authtypes.NewBaseAccountWithAddress(pool.GetAddress()),
 	)
 	k.accountKeeper.SetAccount(ctx, acc)
 
@@ -158,6 +155,8 @@ func (k Keeper) CreatePool(ctx sdk.Context, msg types.CreatePoolMsg) (uint64, er
 		},
 		Base:    poolShareBaseDenom,
 		Display: poolShareDisplayDenom,
+		Name:    "swapToken",
+		Symbol:  "swapToken",
 	})
 
 	if err := k.SetPool(ctx, pool); err != nil {
