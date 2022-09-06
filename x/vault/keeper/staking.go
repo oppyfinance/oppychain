@@ -36,7 +36,7 @@ func (k Keeper) StakingInfo(ctx sdk.Context) {
 			k.DelStandbyPower(ctx, consAddr.String())
 			return false
 		}
-		current.Power = current.Power - params.Step
+		current.Power -= params.Step
 		k.SetStandbyPower(ctx, consAddr.String(), current)
 		return false
 	})
@@ -54,10 +54,6 @@ func (k Keeper) getEligibleValidators(ctx sdk.Context) ([]vaulttypes.ValidatorPo
 	candidateNum := uint32(candidateNumDec.TruncateInt64())
 
 	for _, validator := range boundedValidators {
-		// if it is not the bonded node, we skip it.
-		if validator.Jailed {
-			continue
-		}
 		validatorWithPower := vaulttypes.ValidatorPowerInfo{
 			Validator: validator,
 			Power:     validator.PotentialConsensusPower(sdk.DefaultPowerReduction),

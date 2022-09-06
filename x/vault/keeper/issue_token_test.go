@@ -36,17 +36,6 @@ func TestIssueTokenGet(t *testing.T) {
 	}
 }
 
-//fixme how can we remove the issue token
-//func TestIssueTokenRemove(t *testing.T) {
-//	keeper, ctx := keepertest.SetupVaultApp(t)
-//	items := createNIssueToken(keeper, ctx, 10)
-//	for _, item := range items {
-//		keeper.RemoveIssueToken(ctx, item.Index)
-//		_, found := keeper.GetIssueToken(ctx, item.Index)
-//		assert.False(t, found)
-//	}
-//}
-
 func TestIssueTokenGetAll(t *testing.T) {
 	app, ctx := keepertest.SetupVaultApp(t)
 	items, err := createNIssueToken(&app.VaultKeeper, ctx, 10)

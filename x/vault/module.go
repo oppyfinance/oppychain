@@ -139,6 +139,10 @@ func (am AppModule) LegacyQuerierHandler(legacyQuerierCdc *codec.LegacyAmino) sd
 // module-specific GRPC queries.
 func (am AppModule) RegisterServices(cfg module.Configurator) {
 	types.RegisterQueryServer(cfg.QueryServer(), am.keeper)
+	//	m := keeper.NewMigrator(am.keeper)
+	//	if err := cfg.RegisterMigration(types.ModuleName, 2, m.Migrate2to3); err != nil {
+	//		panic(err)
+	//	}
 }
 
 // RegisterInvariants registers the capability module's invariants.
@@ -173,4 +177,4 @@ func (am AppModule) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) []abci.Val
 	return EndBlock(ctx, am.keeper)
 }
 
-func (AppModule) ConsensusVersion() uint64 { return 2 }
+func (AppModule) ConsensusVersion() uint64 { return 3 }

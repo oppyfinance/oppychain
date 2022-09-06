@@ -7,6 +7,7 @@ import "vault/issue_token.proto";
 import "vault/create_pool.proto";
 import "vault/staking.proto";
 import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
 
 option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
 
@@ -21,5 +22,9 @@ message GenesisState {
     // this line is used by starport scaffolding # ibc/genesis/proto
 	repeated Validators  validatorinfoList = 6;
 	repeated StandbyPower standbypowerList=7;
+	repeated cosmos.base.v1beta1.Coin feeCollectedList= 8 [
+		(gogoproto.nullable) = false,
+		(gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+	];
 	bool exported = 4;
 }

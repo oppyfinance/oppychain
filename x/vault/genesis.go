@@ -36,6 +36,8 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 		k.SetStandbyPower(ctx, elem.Addr, *elem)
 	}
 
+	k.SetStoreFeeAmount(ctx, genState.FeeCollectedList)
+
 	k.SetParams(ctx, genState.Params)
 
 	// this line is used by starport scaffolding # ibc/genesis/init
@@ -74,6 +76,13 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	for _, elem := range allStandbyPowerInfo {
 		elem := elem
 		genesis.StandbypowerList = append(genesis.StandbypowerList, &elem)
+	}
+
+	// get all fees
+	fees := k.GetAllFeeAmount(ctx)
+	for _, elem := range fees {
+		elem := elem
+		genesis.FeeCollectedList = append(genesis.FeeCollectedList, elem)
 	}
 
 	// this line is used by starport scaffolding # ibc/genesis/export

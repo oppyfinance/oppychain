@@ -7,10 +7,11 @@ import "vault/outbound_tx.proto";
 
 option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
 
+import "cosmos/base/v1beta1/coin.proto";
 import "gogoproto/gogo.proto";
 // Msg defines the Msg service.
 service Msg {
-      rpc CreateOutboundTx(MsgCreateOutboundTx) returns (MsgCreateOutboundTxResponse);
+  rpc CreateOutboundTx(MsgCreateOutboundTx) returns (MsgCreateOutboundTxResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
   rpc CreateIssueToken(MsgCreateIssueToken) returns (MsgCreateIssueTokenResponse);
   rpc CreateCreatePool(MsgCreateCreatePool) returns (MsgCreateCreatePoolResponse);
@@ -20,7 +21,11 @@ message MsgCreateOutboundTx {
   bytes creator = 1  [(gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress"];
   string requestID = 2;
   string outboundTx = 3;
-  string blockHeight =4;
+  string blockHeight = 4;
+  repeated cosmos.base.v1beta1.Coin feecoin = 5 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
 }
 
 message MsgCreateOutboundTxResponse {bool successful = 1;}
@@ -35,9 +40,6 @@ message MsgCreateIssueToken {
 message MsgCreateIssueTokenResponse {
   bool successful = 1;
 }
-
-
-
 
 message MsgCreateCreatePool {
   bytes creator = 1 [(gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress"];

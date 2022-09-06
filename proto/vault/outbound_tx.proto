@@ -4,14 +4,23 @@ package oppyfinance.oppychain.vault;
 option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
 
 import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
 
-message address{
-  repeated bytes address= 1 [(gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress",(gogoproto.nullable) = false ];
+message entity{
+  bytes address= 1 [(gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress"];
+  repeated cosmos.base.v1beta1.Coin feecoin = 2 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+}
 
+message proposals{
+  repeated entity entry= 1 ;
 }
 
 message OutboundTx {
   string index = 1;
-  map<string, address> items=2 [(gogoproto.nullable) = false];
+  bool processed = 2;
+  map<string, proposals> items = 3 [(gogoproto.nullable) = false];
 }
 

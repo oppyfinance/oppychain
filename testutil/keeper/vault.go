@@ -121,7 +121,7 @@ func SetupVaultApp(t testing.TB) (*oppyapp.App, sdk.Context) {
 		require.NoError(t, err)
 	}(tempPath)
 	app := simapp.New(tempPath).(*oppyapp.App)
-	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 10, Time: time.Now().UTC()})
+	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 100, Time: time.Now().UTC()})
 	params := app.StakingKeeper.GetParams(ctx)
 	params.MaxValidators = 3
 	app.StakingKeeper.SetParams(ctx, params)
