@@ -2,6 +2,11 @@ package keeper_test
 
 import (
 	"fmt"
+	"math/rand"
+	"strconv"
+	"testing"
+	"time"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/stretchr/testify/require"
@@ -10,10 +15,6 @@ import (
 	"gitlab.com/oppy-finance/oppychain/utils"
 	"gitlab.com/oppy-finance/oppychain/x/vault/keeper"
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
-	"math/rand"
-	"strconv"
-	"testing"
-	"time"
 )
 
 // Prevent strconv unused error
@@ -22,12 +23,13 @@ var _ = strconv.IntSize
 func createNOutboundTx(keeper *keeper.Keeper, ctx sdk.Context, n int) []types.OutboundTx {
 	items := make([]types.OutboundTx, n)
 
-	r := rand.New(rand.NewSource(time.Now().Unix()))
+	r := rand.New(rand.NewSource(time.Now().Unix())) //nolint:gosec
 	accs := simulation.RandomAccounts(r, n)
 	for i := range items {
 		items[i].Index = strconv.Itoa(i)
-		iitems := make(map[string]types.Address)
-		iitems[fmt.Sprintf("index%d", i)] = types.Address{Address: []sdk.AccAddress{accs[0].Address}}
+		iitems := make(map[string]types.Proposals)
+		entry := types.Entity{Address: accs[0].Address, Feecoin: []sdk.Coin{{Denom: "mock", Amount: sdk.NewInt(1)}}}
+		iitems[fmt.Sprintf("index%d", i)] = types.Proposals{Entry: []*types.Entity{&entry}}
 		items[i].Items = iitems
 		keeper.SetOutboundTx(ctx, items[i])
 	}

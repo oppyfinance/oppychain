@@ -44,7 +44,6 @@ func TestCreatePoolGet(t *testing.T) {
 }
 
 func TestCreatePoolRemove(t *testing.T) {
-
 	var addresses []sdk.AccAddress
 	for i := 0; i < 3; i++ {
 		sk := ed25519.GenPrivKey()
@@ -63,7 +62,6 @@ func TestCreatePoolRemove(t *testing.T) {
 }
 
 func TestCreatePoolGetAll(t *testing.T) {
-
 	var addresses []sdk.AccAddress
 	for i := 0; i < 3; i++ {
 		sk := ed25519.GenPrivKey()

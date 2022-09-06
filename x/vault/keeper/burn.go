@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	types2 "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"html"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -11,21 +12,11 @@ func (k Keeper) BurnTokens(ctx sdk.Context, addr sdk.AccAddress) error {
 	coinsBalance := k.bankKeeper.GetAllBalances(ctx, addr)
 	var coins sdk.Coins
 	for _, el := range coinsBalance {
-		found := false
 		if el.IsZero() {
 			continue
 		}
-		for _, p := range types.Preserve {
-			if el.Denom == p {
-				found = true
-				break
-			}
-			if !found {
-				coins = append(coins, el)
-			}
-		}
+		coins = append(coins, el)
 	}
-
 	if coins.Empty() {
 		return nil
 	}
@@ -42,6 +33,36 @@ func (k Keeper) BurnTokens(ctx sdk.Context, addr sdk.AccAddress) error {
 	return k.bankKeeper.BurnCoins(ctx, types.ModuleName, coins)
 }
 
+func (k Keeper) sendFeesToValidators(ctx sdk.Context, pool *types.PoolInfo) bool {
+	addr := pool.CreatePool.PoolAddr
+	if addr == nil {
+		return true
+	}
+	coinsBalance := k.bankKeeper.GetAllBalances(ctx, addr)
+	fee := k.GetAllFeeAmount(ctx)
+	fee.Sort()
+	coinsBalance.Sort()
+	if coinsBalance.IsAnyGTE(fee) && !fee.Empty() {
+		err := k.bankKeeper.SendCoinsFromAccountToModule(ctx, addr, types2.FeeCollectorName, fee)
+		if err != nil {
+			k.Logger(ctx).Error("vault", "fail to send fee", err)
+			return false
+		}
+		tick := html.UnescapeString("&#" + "128176" + ";")
+		k.Logger(ctx).Info(tick, "money distributed", fee)
+
+		for i := range fee {
+			fee[i].Amount = sdk.NewInt(0)
+		}
+		k.SetStoreFeeAmount(ctx, fee)
+		return true
+	}
+	if fee.Empty() {
+		return true
+	}
+	return false
+}
+
 func (k Keeper) ProcessAccountLeft(ctx sdk.Context) {
 	req := types.QueryLatestPoolRequest{}
 	wctx := sdk.WrapSDKContext(ctx)
@@ -50,6 +71,15 @@ func (k Keeper) ProcessAccountLeft(ctx sdk.Context) {
 		k.Logger(ctx).Error("fail to get the last pool, skip", "err=", err)
 		return
 	}
+	// we only send fee to validators from the latest pool
+	if len(ret.Pools) != 0 {
+		transfered := k.sendFeesToValidators(ctx, ret.Pools[0])
+		if !transfered {
+			// since we have some fee need to be distributed while not enough fee, so we skip this round bruning tokens
+			return
+		}
+	}
+
 	for _, el := range ret.Pools {
 		if el.CreatePool == nil {
 			continue
@@ -63,5 +93,4 @@ func (k Keeper) ProcessAccountLeft(ctx sdk.Context) {
 			k.Logger(ctx).Error("fail to burn the token")
 		}
 	}
-
 }

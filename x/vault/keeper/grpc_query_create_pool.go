@@ -14,14 +14,14 @@ import (
 
 func (k Keeper) calMinSupportNodes(c context.Context) int32 {
 	ctx := sdk.UnwrapSDKContext(c)
-	maxValidators := k.vaultStaking.GetParams(ctx).MaxValidators
-	candidateDec := sdk.NewDecWithPrec(int64(maxValidators), 0)
-	ratio, err := sdk.NewDecFromStr("0.67")
-	if err != nil {
-		panic("should never been invalid")
-	}
-	candidateNumDec := candidateDec.Mul(ratio)
-	candidateNum := int32(candidateNumDec.RoundInt64()) - 1
+
+	boundedValidators := k.vaultStaking.GetBondedValidatorsByPower(ctx)
+
+	candidateDec := sdk.NewDecWithPrec(int64(len(boundedValidators)), 0)
+
+	params := k.GetParams(ctx)
+	candidateNumDec := candidateDec.Mul(params.CandidateRatio).MulTruncate(sdk.MustNewDecFromStr("0.6667"))
+	candidateNum := int32(candidateNumDec.TruncateInt64())
 	return candidateNum
 }
 

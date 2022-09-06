@@ -56,13 +56,15 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 		panic(err)
 	}
 
-	ss1 := make(map[string]types.Address)
-	a1 := types.Address{Address: []sdk.AccAddress{s1}}
-	ss1["00"] = a1
+	ss1 := make(map[string]types.Proposals)
+	mockCoin := sdk.Coin{Denom: "aaa", Amount: sdk.NewIntFromUint64(3)}
+	a1 := types.Entity{Address: s1, Feecoin: []sdk.Coin{mockCoin}}
+	ss1["00"] = types.Proposals{Entry: []*types.Entity{&a1}}
 
-	ss2 := make(map[string]types.Address)
-	a2 := types.Address{Address: []sdk.AccAddress{s2}}
-	ss2["11"] = a2
+	ss2 := make(map[string]types.Proposals)
+	mockCoin2 := sdk.Coin{Denom: "aaa", Amount: sdk.NewIntFromUint64(4)}
+	a2 := types.Entity{Address: s2, Feecoin: []sdk.Coin{mockCoin2}}
+	ss2["11"] = types.Proposals{Entry: []*types.Entity{&a2}}
 
 	vaultGenesis := types.GenesisState{
 		OutboundTxList: []types.OutboundTx{
