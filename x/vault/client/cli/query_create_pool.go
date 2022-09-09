@@ -75,7 +75,6 @@ func CmdShowLastPool() *cobra.Command {
 		Use:   "show-last-pool",
 		Short: "show the last pool",
 		RunE: func(cmd *cobra.Command, args []string) error {
-
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
 			pageReq, err := client.ReadPageRequest(cmd.Flags())

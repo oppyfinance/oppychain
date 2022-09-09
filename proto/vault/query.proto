@@ -9,6 +9,7 @@ import "gogoproto/gogo.proto";
 import "vault/issue_token.proto";
 import "vault/create_pool.proto";
 import "vault/staking.proto";
+import "cosmos/base/v1beta1/coin.proto";
 
 option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
 
@@ -62,11 +63,26 @@ service Query {
 		option (google.api.http).get = "/oppy/oppychain/vault/getLastPool";
 	}
 
+	// Queries the pending fee
+	rpc GetPendingFee(QueryPendingFeeRequest) returns (QueryPendingFeeResponse) {
+		option (google.api.http).get = "/oppy/oppychain/vault/getPendingFee";
+	}
+}
+
+message QueryPendingFeeRequest{
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryPendingFeeResponse{
+	repeated cosmos.base.v1beta1.Coin feecoin = 1 [
+		(gogoproto.nullable) = false,
+		(gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+	];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 message QueryGetOutboundTxRequest {
 	  string requestID = 1;
-
 }
 
 message QueryGetOutboundTxResponse {

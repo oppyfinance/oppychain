@@ -1,0 +1,17 @@
+syntax = "proto3";
+package oppyfinance.oppychain.vault;
+
+option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
+
+import "gogoproto/gogo.proto";
+
+message addressV16{
+  repeated bytes address= 1 [(gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress",(gogoproto.nullable) = false ];
+
+}
+
+message OutboundTxV16 {
+  string index = 1;
+  map<string, addressV16> items=2 [(gogoproto.nullable) = false];
+}
+

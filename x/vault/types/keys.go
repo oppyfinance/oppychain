@@ -40,3 +40,5 @@ const (
 const (
 	StandbyPwoerStoreKey = "standbyPower-value-"
 )
+
+const FeeStoreKey = "fee_collected"
