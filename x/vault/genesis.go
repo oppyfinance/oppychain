@@ -38,6 +38,8 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	k.SetStoreFeeAmount(ctx, genState.FeeCollectedList)
 
+	k.SetQuotaData(ctx, genState.CoinsQuota)
+
 	k.SetParams(ctx, genState.Params)
 
 	// this line is used by starport scaffolding # ibc/genesis/init
@@ -86,6 +88,11 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	}
 
 	// this line is used by starport scaffolding # ibc/genesis/export
+
+	coinsQuota, found := k.GetQuotaData(ctx)
+	if found {
+		genesis.CoinsQuota = coinsQuota
+	}
 
 	return genesis
 }

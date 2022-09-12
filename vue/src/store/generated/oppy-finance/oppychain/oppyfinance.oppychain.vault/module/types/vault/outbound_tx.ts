@@ -1,42 +1,55 @@
 /* eslint-disable */
+import { Coin } from "../cosmos/base/v1beta1/coin";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "oppyfinance.oppychain.vault";
 
-export interface address {
-  address: Uint8Array[];
+export interface entity {
+  address: Uint8Array;
+  feecoin: Coin[];
+}
+
+export interface proposals {
+  entry: entity[];
 }
 
 export interface OutboundTx {
   index: string;
-  items: { [key: string]: address };
+  processed: boolean;
+  items: { [key: string]: proposals };
 }
 
 export interface OutboundTx_ItemsEntry {
   key: string;
-  value: address | undefined;
+  value: proposals | undefined;
 }
 
-const baseaddress: object = {};
+const baseentity: object = {};
 
-export const address = {
-  encode(message: address, writer: Writer = Writer.create()): Writer {
-    for (const v of message.address) {
-      writer.uint32(10).bytes(v!);
+export const entity = {
+  encode(message: entity, writer: Writer = Writer.create()): Writer {
+    if (message.address.length !== 0) {
+      writer.uint32(10).bytes(message.address);
+    }
+    for (const v of message.feecoin) {
+      Coin.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): address {
+  decode(input: Reader | Uint8Array, length?: number): entity {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseaddress } as address;
-    message.address = [];
+    const message = { ...baseentity } as entity;
+    message.feecoin = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.address.push(reader.bytes());
+          message.address = reader.bytes();
+          break;
+        case 2:
+          message.feecoin.push(Coin.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -46,52 +59,129 @@ export const address = {
     return message;
   },
 
-  fromJSON(object: any): address {
-    const message = { ...baseaddress } as address;
-    message.address = [];
+  fromJSON(object: any): entity {
+    const message = { ...baseentity } as entity;
+    message.feecoin = [];
     if (object.address !== undefined && object.address !== null) {
-      for (const e of object.address) {
-        message.address.push(bytesFromBase64(e));
+      message.address = bytesFromBase64(object.address);
+    }
+    if (object.feecoin !== undefined && object.feecoin !== null) {
+      for (const e of object.feecoin) {
+        message.feecoin.push(Coin.fromJSON(e));
       }
     }
     return message;
   },
 
-  toJSON(message: address): unknown {
+  toJSON(message: entity): unknown {
     const obj: any = {};
-    if (message.address) {
-      obj.address = message.address.map((e) =>
-        base64FromBytes(e !== undefined ? e : new Uint8Array())
+    message.address !== undefined &&
+      (obj.address = base64FromBytes(
+        message.address !== undefined ? message.address : new Uint8Array()
+      ));
+    if (message.feecoin) {
+      obj.feecoin = message.feecoin.map((e) =>
+        e ? Coin.toJSON(e) : undefined
       );
     } else {
-      obj.address = [];
+      obj.feecoin = [];
     }
     return obj;
   },
 
-  fromPartial(object: DeepPartial<address>): address {
-    const message = { ...baseaddress } as address;
-    message.address = [];
+  fromPartial(object: DeepPartial<entity>): entity {
+    const message = { ...baseentity } as entity;
+    message.feecoin = [];
     if (object.address !== undefined && object.address !== null) {
-      for (const e of object.address) {
-        message.address.push(e);
+      message.address = object.address;
+    } else {
+      message.address = new Uint8Array();
+    }
+    if (object.feecoin !== undefined && object.feecoin !== null) {
+      for (const e of object.feecoin) {
+        message.feecoin.push(Coin.fromPartial(e));
       }
     }
     return message;
   },
 };
 
-const baseOutboundTx: object = { index: "" };
+const baseproposals: object = {};
+
+export const proposals = {
+  encode(message: proposals, writer: Writer = Writer.create()): Writer {
+    for (const v of message.entry) {
+      entity.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): proposals {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseproposals } as proposals;
+    message.entry = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.entry.push(entity.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): proposals {
+    const message = { ...baseproposals } as proposals;
+    message.entry = [];
+    if (object.entry !== undefined && object.entry !== null) {
+      for (const e of object.entry) {
+        message.entry.push(entity.fromJSON(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: proposals): unknown {
+    const obj: any = {};
+    if (message.entry) {
+      obj.entry = message.entry.map((e) => (e ? entity.toJSON(e) : undefined));
+    } else {
+      obj.entry = [];
+    }
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<proposals>): proposals {
+    const message = { ...baseproposals } as proposals;
+    message.entry = [];
+    if (object.entry !== undefined && object.entry !== null) {
+      for (const e of object.entry) {
+        message.entry.push(entity.fromPartial(e));
+      }
+    }
+    return message;
+  },
+};
+
+const baseOutboundTx: object = { index: "", processed: false };
 
 export const OutboundTx = {
   encode(message: OutboundTx, writer: Writer = Writer.create()): Writer {
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
+    if (message.processed === true) {
+      writer.uint32(16).bool(message.processed);
+    }
     Object.entries(message.items).forEach(([key, value]) => {
       OutboundTx_ItemsEntry.encode(
         { key: key as any, value },
-        writer.uint32(18).fork()
+        writer.uint32(26).fork()
       ).ldelim();
     });
     return writer;
@@ -109,9 +199,12 @@ export const OutboundTx = {
           message.index = reader.string();
           break;
         case 2:
-          const entry2 = OutboundTx_ItemsEntry.decode(reader, reader.uint32());
-          if (entry2.value !== undefined) {
-            message.items[entry2.key] = entry2.value;
+          message.processed = reader.bool();
+          break;
+        case 3:
+          const entry3 = OutboundTx_ItemsEntry.decode(reader, reader.uint32());
+          if (entry3.value !== undefined) {
+            message.items[entry3.key] = entry3.value;
           }
           break;
         default:
@@ -130,9 +223,14 @@ export const OutboundTx = {
     } else {
       message.index = "";
     }
+    if (object.processed !== undefined && object.processed !== null) {
+      message.processed = Boolean(object.processed);
+    } else {
+      message.processed = false;
+    }
     if (object.items !== undefined && object.items !== null) {
       Object.entries(object.items).forEach(([key, value]) => {
-        message.items[key] = address.fromJSON(value);
+        message.items[key] = proposals.fromJSON(value);
       });
     }
     return message;
@@ -141,10 +239,11 @@ export const OutboundTx = {
   toJSON(message: OutboundTx): unknown {
     const obj: any = {};
     message.index !== undefined && (obj.index = message.index);
+    message.processed !== undefined && (obj.processed = message.processed);
     obj.items = {};
     if (message.items) {
       Object.entries(message.items).forEach(([k, v]) => {
-        obj.items[k] = address.toJSON(v);
+        obj.items[k] = proposals.toJSON(v);
       });
     }
     return obj;
@@ -158,10 +257,15 @@ export const OutboundTx = {
     } else {
       message.index = "";
     }
+    if (object.processed !== undefined && object.processed !== null) {
+      message.processed = object.processed;
+    } else {
+      message.processed = false;
+    }
     if (object.items !== undefined && object.items !== null) {
       Object.entries(object.items).forEach(([key, value]) => {
         if (value !== undefined) {
-          message.items[key] = address.fromPartial(value);
+          message.items[key] = proposals.fromPartial(value);
         }
       });
     }
@@ -180,7 +284,7 @@ export const OutboundTx_ItemsEntry = {
       writer.uint32(10).string(message.key);
     }
     if (message.value !== undefined) {
-      address.encode(message.value, writer.uint32(18).fork()).ldelim();
+      proposals.encode(message.value, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -196,7 +300,7 @@ export const OutboundTx_ItemsEntry = {
           message.key = reader.string();
           break;
         case 2:
-          message.value = address.decode(reader, reader.uint32());
+          message.value = proposals.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -214,7 +318,7 @@ export const OutboundTx_ItemsEntry = {
       message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
-      message.value = address.fromJSON(object.value);
+      message.value = proposals.fromJSON(object.value);
     } else {
       message.value = undefined;
     }
@@ -225,7 +329,7 @@ export const OutboundTx_ItemsEntry = {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined &&
-      (obj.value = message.value ? address.toJSON(message.value) : undefined);
+      (obj.value = message.value ? proposals.toJSON(message.value) : undefined);
     return obj;
   },
 
@@ -239,7 +343,7 @@ export const OutboundTx_ItemsEntry = {
       message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
-      message.value = address.fromPartial(object.value);
+      message.value = proposals.fromPartial(object.value);
     } else {
       message.value = undefined;
     }

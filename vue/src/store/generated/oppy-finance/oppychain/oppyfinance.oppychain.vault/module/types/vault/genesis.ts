@@ -1,8 +1,10 @@
 /* eslint-disable */
-import { Params, Validators } from "../vault/staking";
+import { Params, Validators, StandbyPower } from "../vault/staking";
 import { OutboundTx } from "../vault/outbound_tx";
 import { IssueToken } from "../vault/issue_token";
 import { CreatePool } from "../vault/create_pool";
+import { Coin } from "../cosmos/base/v1beta1/coin";
+import { coinsQuota } from "../vault/quota";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "oppyfinance.oppychain.vault";
@@ -18,6 +20,9 @@ export interface GenesisState {
   createPoolList: CreatePool[];
   /** this line is used by starport scaffolding # ibc/genesis/proto */
   validatorinfoList: Validators[];
+  standbypowerList: StandbyPower[];
+  feeCollectedList: Coin[];
+  coinsQuota: coinsQuota | undefined;
   exported: boolean;
 }
 
@@ -40,6 +45,15 @@ export const GenesisState = {
     for (const v of message.validatorinfoList) {
       Validators.encode(v!, writer.uint32(50).fork()).ldelim();
     }
+    for (const v of message.standbypowerList) {
+      StandbyPower.encode(v!, writer.uint32(58).fork()).ldelim();
+    }
+    for (const v of message.feeCollectedList) {
+      Coin.encode(v!, writer.uint32(66).fork()).ldelim();
+    }
+    if (message.coinsQuota !== undefined) {
+      coinsQuota.encode(message.coinsQuota, writer.uint32(74).fork()).ldelim();
+    }
     if (message.exported === true) {
       writer.uint32(32).bool(message.exported);
     }
@@ -54,6 +68,8 @@ export const GenesisState = {
     message.issueTokenList = [];
     message.createPoolList = [];
     message.validatorinfoList = [];
+    message.standbypowerList = [];
+    message.feeCollectedList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -80,6 +96,17 @@ export const GenesisState = {
             Validators.decode(reader, reader.uint32())
           );
           break;
+        case 7:
+          message.standbypowerList.push(
+            StandbyPower.decode(reader, reader.uint32())
+          );
+          break;
+        case 8:
+          message.feeCollectedList.push(Coin.decode(reader, reader.uint32()));
+          break;
+        case 9:
+          message.coinsQuota = coinsQuota.decode(reader, reader.uint32());
+          break;
         case 4:
           message.exported = reader.bool();
           break;
@@ -97,6 +124,8 @@ export const GenesisState = {
     message.issueTokenList = [];
     message.createPoolList = [];
     message.validatorinfoList = [];
+    message.standbypowerList = [];
+    message.feeCollectedList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -124,6 +153,27 @@ export const GenesisState = {
       for (const e of object.validatorinfoList) {
         message.validatorinfoList.push(Validators.fromJSON(e));
       }
+    }
+    if (
+      object.standbypowerList !== undefined &&
+      object.standbypowerList !== null
+    ) {
+      for (const e of object.standbypowerList) {
+        message.standbypowerList.push(StandbyPower.fromJSON(e));
+      }
+    }
+    if (
+      object.feeCollectedList !== undefined &&
+      object.feeCollectedList !== null
+    ) {
+      for (const e of object.feeCollectedList) {
+        message.feeCollectedList.push(Coin.fromJSON(e));
+      }
+    }
+    if (object.coinsQuota !== undefined && object.coinsQuota !== null) {
+      message.coinsQuota = coinsQuota.fromJSON(object.coinsQuota);
+    } else {
+      message.coinsQuota = undefined;
     }
     if (object.exported !== undefined && object.exported !== null) {
       message.exported = Boolean(object.exported);
@@ -165,6 +215,24 @@ export const GenesisState = {
     } else {
       obj.validatorinfoList = [];
     }
+    if (message.standbypowerList) {
+      obj.standbypowerList = message.standbypowerList.map((e) =>
+        e ? StandbyPower.toJSON(e) : undefined
+      );
+    } else {
+      obj.standbypowerList = [];
+    }
+    if (message.feeCollectedList) {
+      obj.feeCollectedList = message.feeCollectedList.map((e) =>
+        e ? Coin.toJSON(e) : undefined
+      );
+    } else {
+      obj.feeCollectedList = [];
+    }
+    message.coinsQuota !== undefined &&
+      (obj.coinsQuota = message.coinsQuota
+        ? coinsQuota.toJSON(message.coinsQuota)
+        : undefined);
     message.exported !== undefined && (obj.exported = message.exported);
     return obj;
   },
@@ -175,6 +243,8 @@ export const GenesisState = {
     message.issueTokenList = [];
     message.createPoolList = [];
     message.validatorinfoList = [];
+    message.standbypowerList = [];
+    message.feeCollectedList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -202,6 +272,27 @@ export const GenesisState = {
       for (const e of object.validatorinfoList) {
         message.validatorinfoList.push(Validators.fromPartial(e));
       }
+    }
+    if (
+      object.standbypowerList !== undefined &&
+      object.standbypowerList !== null
+    ) {
+      for (const e of object.standbypowerList) {
+        message.standbypowerList.push(StandbyPower.fromPartial(e));
+      }
+    }
+    if (
+      object.feeCollectedList !== undefined &&
+      object.feeCollectedList !== null
+    ) {
+      for (const e of object.feeCollectedList) {
+        message.feeCollectedList.push(Coin.fromPartial(e));
+      }
+    }
+    if (object.coinsQuota !== undefined && object.coinsQuota !== null) {
+      message.coinsQuota = coinsQuota.fromPartial(object.coinsQuota);
+    } else {
+      message.coinsQuota = undefined;
     }
     if (object.exported !== undefined && object.exported !== null) {
       message.exported = object.exported;

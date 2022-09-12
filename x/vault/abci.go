@@ -8,6 +8,7 @@ import (
 
 func BeginBlock(ctx sdk.Context, keeper keeper.Keeper) {
 	keeper.StakingInfo(ctx)
+	//keeper.QuotaCheck(ctx)
 }
 
 func EndBlock(ctx sdk.Context, keeper keeper.Keeper) []abci.ValidatorUpdate {

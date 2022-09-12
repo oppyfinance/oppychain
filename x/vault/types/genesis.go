@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	// this line is used by starport scaffolding # ibc/genesistype/import
 )
 
@@ -14,9 +15,13 @@ func DefaultGenesis() *GenesisState {
 		// this line is used by starport scaffolding # ibc/genesistype/default
 		OutboundTxList: []OutboundTx{},
 		// this line is used by starport scaffolding # genesis/types/default
-		IssueTokenList: []*IssueToken{},
-		CreatePoolList: []*CreatePool{},
-		Params:         DefaultParams(),
+		IssueTokenList:   []*IssueToken{},
+		CreatePoolList:   []*CreatePool{},
+		Params:           DefaultParams(),
+		FeeCollectedList: []sdk.Coin{},
+		CoinsQuota: CoinsQuota{
+			History:  []*HistoricalAmount{},
+			CoinsSum: sdk.NewCoins()},
 	}
 }
 
@@ -53,6 +58,20 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for createPool")
 		}
 		createPoolIndexMap[elem.BlockHeight] = true
+	}
+
+	if err := gs.FeeCollectedList.Validate(); err != nil {
+		return err
+	}
+
+	coinQuota := gs.CoinsQuota
+	if err := coinQuota.CoinsSum.Validate(); err != nil {
+		return err
+	}
+	for _, el := range coinQuota.History {
+		if !el.Amount.IsValid() {
+			return fmt.Errorf("invalid history for hight %v", el.BlockHeight)
+		}
 	}
 
 	return nil

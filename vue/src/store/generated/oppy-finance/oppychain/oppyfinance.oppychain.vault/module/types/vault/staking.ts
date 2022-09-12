@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import { Coin } from "../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "oppyfinance.oppychain.vault";
 
@@ -9,10 +10,17 @@ export interface Params {
   power: number;
   step: number;
   candidate_ratio: string;
+  targetQuota: Coin[];
+  history_length: number;
 }
 
 export interface Validator {
   pubkey: Uint8Array;
+  power: number;
+}
+
+export interface StandbyPower {
+  addr: string;
   power: number;
 }
 
@@ -26,6 +34,7 @@ const baseParams: object = {
   power: 0,
   step: 0,
   candidate_ratio: "",
+  history_length: 0,
 };
 
 export const Params = {
@@ -42,6 +51,12 @@ export const Params = {
     if (message.candidate_ratio !== "") {
       writer.uint32(34).string(message.candidate_ratio);
     }
+    for (const v of message.targetQuota) {
+      Coin.encode(v!, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.history_length !== 0) {
+      writer.uint32(48).int32(message.history_length);
+    }
     return writer;
   },
 
@@ -49,6 +64,7 @@ export const Params = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
+    message.targetQuota = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -64,6 +80,12 @@ export const Params = {
         case 4:
           message.candidate_ratio = reader.string();
           break;
+        case 5:
+          message.targetQuota.push(Coin.decode(reader, reader.uint32()));
+          break;
+        case 6:
+          message.history_length = reader.int32();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -74,6 +96,7 @@ export const Params = {
 
   fromJSON(object: any): Params {
     const message = { ...baseParams } as Params;
+    message.targetQuota = [];
     if (
       object.block_churn_interval !== undefined &&
       object.block_churn_interval !== null
@@ -100,6 +123,16 @@ export const Params = {
     } else {
       message.candidate_ratio = "";
     }
+    if (object.targetQuota !== undefined && object.targetQuota !== null) {
+      for (const e of object.targetQuota) {
+        message.targetQuota.push(Coin.fromJSON(e));
+      }
+    }
+    if (object.history_length !== undefined && object.history_length !== null) {
+      message.history_length = Number(object.history_length);
+    } else {
+      message.history_length = 0;
+    }
     return message;
   },
 
@@ -111,11 +144,21 @@ export const Params = {
     message.step !== undefined && (obj.step = message.step);
     message.candidate_ratio !== undefined &&
       (obj.candidate_ratio = message.candidate_ratio);
+    if (message.targetQuota) {
+      obj.targetQuota = message.targetQuota.map((e) =>
+        e ? Coin.toJSON(e) : undefined
+      );
+    } else {
+      obj.targetQuota = [];
+    }
+    message.history_length !== undefined &&
+      (obj.history_length = message.history_length);
     return obj;
   },
 
   fromPartial(object: DeepPartial<Params>): Params {
     const message = { ...baseParams } as Params;
+    message.targetQuota = [];
     if (
       object.block_churn_interval !== undefined &&
       object.block_churn_interval !== null
@@ -141,6 +184,16 @@ export const Params = {
       message.candidate_ratio = object.candidate_ratio;
     } else {
       message.candidate_ratio = "";
+    }
+    if (object.targetQuota !== undefined && object.targetQuota !== null) {
+      for (const e of object.targetQuota) {
+        message.targetQuota.push(Coin.fromPartial(e));
+      }
+    }
+    if (object.history_length !== undefined && object.history_length !== null) {
+      message.history_length = object.history_length;
+    } else {
+      message.history_length = 0;
     }
     return message;
   },
@@ -209,6 +262,78 @@ export const Validator = {
       message.pubkey = object.pubkey;
     } else {
       message.pubkey = new Uint8Array();
+    }
+    if (object.power !== undefined && object.power !== null) {
+      message.power = object.power;
+    } else {
+      message.power = 0;
+    }
+    return message;
+  },
+};
+
+const baseStandbyPower: object = { addr: "", power: 0 };
+
+export const StandbyPower = {
+  encode(message: StandbyPower, writer: Writer = Writer.create()): Writer {
+    if (message.addr !== "") {
+      writer.uint32(10).string(message.addr);
+    }
+    if (message.power !== 0) {
+      writer.uint32(16).int64(message.power);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): StandbyPower {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseStandbyPower } as StandbyPower;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.addr = reader.string();
+          break;
+        case 2:
+          message.power = longToNumber(reader.int64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): StandbyPower {
+    const message = { ...baseStandbyPower } as StandbyPower;
+    if (object.addr !== undefined && object.addr !== null) {
+      message.addr = String(object.addr);
+    } else {
+      message.addr = "";
+    }
+    if (object.power !== undefined && object.power !== null) {
+      message.power = Number(object.power);
+    } else {
+      message.power = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: StandbyPower): unknown {
+    const obj: any = {};
+    message.addr !== undefined && (obj.addr = message.addr);
+    message.power !== undefined && (obj.power = message.power);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<StandbyPower>): StandbyPower {
+    const message = { ...baseStandbyPower } as StandbyPower;
+    if (object.addr !== undefined && object.addr !== null) {
+      message.addr = object.addr;
+    } else {
+      message.addr = "";
     }
     if (object.power !== undefined && object.power !== null) {
       message.power = object.power;

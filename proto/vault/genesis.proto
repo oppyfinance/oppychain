@@ -5,6 +5,7 @@ import "vault/outbound_tx.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 import "vault/issue_token.proto";
 import "vault/create_pool.proto";
+import "vault/quota.proto";
 import "vault/staking.proto";
 import "gogoproto/gogo.proto";
 import "cosmos/base/v1beta1/coin.proto";
@@ -26,5 +27,6 @@ message GenesisState {
 		(gogoproto.nullable) = false,
 		(gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
 	];
+	coinsQuota coinsQuota = 9[	(gogoproto.nullable) = false];
 	bool exported = 4;
 }

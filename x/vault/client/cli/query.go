@@ -29,6 +29,8 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 	cmd.AddCommand(CmdGetValidators())
 	cmd.AddCommand(CmdGetValidatorByHeight())
 
+	cmd.AddCommand(CmdGetQuota())
+
 	// this line is used by starport scaffolding # 1
 
 	cmd.AddCommand(CmdListIssueToken())
@@ -39,6 +41,7 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 	cmd.AddCommand(CmdShowLastPool())
 
 	cmd.AddCommand(CmdListPendingFee())
+	cmd.AddCommand(CmdListQuota())
 
 	return cmd
 }

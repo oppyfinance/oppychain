@@ -9,6 +9,7 @@ import "gogoproto/gogo.proto";
 import "vault/issue_token.proto";
 import "vault/create_pool.proto";
 import "vault/staking.proto";
+import "vault/quota.proto";
 import "cosmos/base/v1beta1/coin.proto";
 
 option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
@@ -33,6 +34,11 @@ service Query {
 	// Queries a list of GetValidators items.
 	rpc GetAllValidators(QueryAllValidatorsRequest) returns (QueryAllValidatorsResponse) {
 		option (google.api.http).get = "/oppy/oppychain/vault/validators";
+	}
+
+// Queries a list of GetQuota items.
+	rpc GetQuota(QueryGetQuotaRequest) returns (QueryGetQuotaResponse) {
+		option (google.api.http).get = "/oppy-finance/oppychain/vault/get_quota";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -65,7 +71,7 @@ service Query {
 
 	// Queries the pending fee
 	rpc GetPendingFee(QueryPendingFeeRequest) returns (QueryPendingFeeResponse) {
-		option (google.api.http).get = "/oppy/oppychain/vault/getPendingFee";
+		option (google.api.http).get = "/oppy/oppychain/vault/get_pending_fee";
 	}
 }
 
@@ -115,6 +121,14 @@ message QueryAllValidatorsRequest {
 message QueryAllValidatorsResponse{
 	repeated Validators all_validators = 1;
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetQuotaRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryGetQuotaResponse {
+	coinsQuota coinQuotaResponse=1  [(gogoproto.nullable) = false] ;
 }
 
 // this line is used by starport scaffolding # 3
