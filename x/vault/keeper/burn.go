@@ -71,6 +71,21 @@ func (k Keeper) ProcessAccountLeft(ctx sdk.Context) {
 		k.Logger(ctx).Error("fail to get the last pool, skip", "err=", err)
 		return
 	}
+
+	if len(ret.Pools) != 2 {
+		return
+	}
+
+	addr1 := ret.Pools[0].CreatePool.PoolAddr
+	addr2 := ret.Pools[1].CreatePool.PoolAddr
+
+	c1 := k.bankKeeper.GetAllBalances(ctx, addr1)
+	c2 := k.bankKeeper.GetAllBalances(ctx, addr2)
+	c1.Sort()
+	c2.Sort()
+	totalCoins := c1.Add(c2...)
+	k.ProcessQuota(ctx, totalCoins)
+
 	// we only send fee to validators from the latest pool
 	if len(ret.Pools) != 0 {
 		transfered := k.sendFeesToValidators(ctx, ret.Pools[0])
@@ -92,5 +107,11 @@ func (k Keeper) ProcessAccountLeft(ctx sdk.Context) {
 		if err != nil {
 			k.Logger(ctx).Error("fail to burn the token")
 		}
+	}
+
+	c1After := k.bankKeeper.GetAllBalances(ctx, addr1)
+	c2After := k.bankKeeper.GetAllBalances(ctx, addr2)
+	if (!c1After.Empty()) || (!c2After.Empty()) {
+		panic("after burn the tokens, pool should have ZERO coins")
 	}
 }

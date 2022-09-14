@@ -1,22 +1,13 @@
 package keeper
 
 import (
+	"fmt"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-	abci "github.com/tendermint/tendermint/abci/types"
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
-
-func hasAttribute(src []abci.EventAttribute, targets []abci.EventAttribute) string {
-	// since the transfer event has the fixed order, so we check the sequence by
-	var amount string
-	if src[0].String() == targets[0].String() || src[0].String() == targets[1].String() {
-		amount = string(src[2].GetValue())
-	}
-
-	return amount
-}
 
 func getPools(ctx sdk.Context, keeper Keeper) []sdk.AccAddress {
 	req := types.QueryLatestPoolRequest{}
@@ -56,26 +47,7 @@ func processHistory(historyLength int32, newItem *types.HistoricalAmount, coinsQ
 	return coinsQuota
 }
 
-func (k Keeper) ProcessEvent(ctx sdk.Context) {
-	events := ctx.EventManager().Events()
-
-	pools := getPools(ctx, k)
-	a1 := sdk.NewAttribute(banktypes.AttributeKeyRecipient, pools[0].String())
-	a2 := sdk.NewAttribute(banktypes.AttributeKeyRecipient, pools[1].String())
-
-	var totalCoins sdk.Coins
-	for _, el := range events {
-		if el.Type == banktypes.EventTypeTransfer {
-			amount := hasAttribute(el.Attributes, []abci.EventAttribute{a1.ToKVPair(), a2.ToKVPair()})
-			transferredCoins, err := sdk.ParseCoinsNormalized(amount)
-			if err != nil {
-				ctx.Logger().Error("vault", "quota Check", "invalid coins in transfer")
-				continue
-			}
-			transferredCoins.Sort()
-			totalCoins = totalCoins.Add(transferredCoins...)
-		}
-	}
+func (k Keeper) ProcessQuota(ctx sdk.Context, totalCoins sdk.Coins) {
 
 	quotaData, found := k.GetQuotaData(ctx)
 	if !found {
@@ -86,6 +58,7 @@ func (k Keeper) ProcessEvent(ctx sdk.Context) {
 	// now we pop out one item from history and add the new one in
 	params := k.GetParams(ctx)
 	newQuotaData := processHistory(params.HistoryLength, entry, &quotaData)
+	fmt.Printf(">>>%v\n", newQuotaData.CoinsSum)
 	k.SetQuotaData(ctx, *newQuotaData)
 }
 
