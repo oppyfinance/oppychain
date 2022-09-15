@@ -2,7 +2,6 @@ package keeper_test
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/stretchr/testify/assert"
 	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
@@ -101,42 +100,9 @@ func TestProcessEvent(t *testing.T) {
 
 	sendToken := sdk.NewCoins(sdk.NewCoin("abnb", sdk.NewInt(100)), sdk.NewCoin("aeth", sdk.NewInt(222)))
 
-	ctx.EventManager().EmitEvents(sdk.Events{
-		sdk.NewEvent(
-			banktypes.EventTypeTransfer,
-			sdk.NewAttribute(banktypes.AttributeKeyRecipient, creators[0].String()),
-			sdk.NewAttribute(banktypes.AttributeKeySender, creators[2].String()),
-			sdk.NewAttribute(sdk.AttributeKeyAmount, sendToken.String()),
-		),
-		sdk.NewEvent(
-			sdk.EventTypeMessage,
-			sdk.NewAttribute(banktypes.AttributeKeySender, creators[2].String()),
-		),
-	})
-
-	app.VaultKeeper.ProcessEvent(ctx)
+	app.VaultKeeper.ProcessQuota(ctx, sendToken)
 	quota, found := app.VaultKeeper.GetQuotaData(ctx)
 	assert.True(t, found)
 	assert.Equal(t, len(quota.History), 1)
 	assert.True(t, quota.CoinsSum.IsEqual(sendToken))
-
-	ctx.EventManager().EmitEvents(sdk.Events{
-		sdk.NewEvent(
-			banktypes.EventTypeTransfer,
-			sdk.NewAttribute(banktypes.AttributeKeyRecipient, creators[2].String()),
-			sdk.NewAttribute(banktypes.AttributeKeySender, creators[2].String()),
-			sdk.NewAttribute(sdk.AttributeKeyAmount, sendToken.String()),
-		),
-		sdk.NewEvent(
-			sdk.EventTypeMessage,
-			sdk.NewAttribute(banktypes.AttributeKeySender, creators[2].String()),
-		),
-	})
-
-	// as we cannot delete the first event, so we have to process the first event again here
-	app.VaultKeeper.ProcessEvent(ctx)
-	quota, found = app.VaultKeeper.GetQuotaData(ctx)
-	assert.True(t, found)
-	assert.Equal(t, len(quota.History), 2)
-	assert.True(t, quota.CoinsSum.IsEqual(sendToken.Add(sendToken...)))
 }

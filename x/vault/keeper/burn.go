@@ -90,8 +90,7 @@ func (k Keeper) ProcessAccountLeft(ctx sdk.Context) {
 	if len(ret.Pools) != 0 {
 		transfered := k.sendFeesToValidators(ctx, ret.Pools[0])
 		if !transfered {
-			// since we have some fee need to be distributed while not enough fee, so we skip this round bruning tokens
-			return
+			ctx.Logger().Info("vault", "send Fee to validator", "not enough token to be paid as fee")
 		}
 	}
 

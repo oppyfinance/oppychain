@@ -871,4 +871,5 @@ func (app *App) setupUpgredeHandlers() {
 	app.UpgradeKeeper.SetUpgradeHandler(v1.UpgradeName, v1.CreateUpgradeHandler(app.mm, app.configurator))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.ParamUpgradeName, v1.CreateUpgradeHandlerParamUpgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.FeeDistributionUpgradeName, v1.CreateUpgradeHandlerFeeDistributionUpgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
+	app.UpgradeKeeper.SetUpgradeHandler(v1.V18UpgradeName, v1.CreateUpgradeHandlerForV18Upgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
 }

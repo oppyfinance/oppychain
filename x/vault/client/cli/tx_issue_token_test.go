@@ -2,10 +2,11 @@ package cli_test
 
 import (
 	"fmt"
-	"gitlab.com/oppy-finance/oppychain/utils"
 	"strconv"
 	"testing"
 	"time"
+
+	"gitlab.com/oppy-finance/oppychain/utils"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/crypto/hd"
@@ -26,7 +27,7 @@ import (
 
 func preparePool(t *testing.T) (*network.Network, []*types.CreatePool) {
 	t.Helper()
-	height := []int{4, 7}
+	height := []int{7, 10}
 	cfg := network.DefaultConfig()
 	cfg.MinGasPrices = "0poppy"
 	state := types.GenesisState{}
@@ -47,6 +48,7 @@ func preparePool(t *testing.T) (*network.Network, []*types.CreatePool) {
 		pro := types.PoolProposal{
 			PoolPubKey: poolPubKey,
 			Nodes:      []sdk.AccAddress{operator},
+			PoolAddr:   sk.PubKey().Address().Bytes(),
 		}
 		state.CreatePoolList = append(state.CreatePoolList, &types.CreatePool{BlockHeight: strconv.Itoa(el), Validators: []stakingtypes.Validator{testValidator}, Proposal: []*types.PoolProposal{&pro}})
 	}
@@ -75,6 +77,8 @@ func TestCreateIssueTokenFail(t *testing.T) {
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 	id := "0"
+
+	net.WaitForHeightWithTimeout(10, time.Minute)
 
 	fields := []string{"100vvusd", "oppy1fase3jev95k9lsj6hn0echk4e37kyhpspmluqd"}
 	for _, tc := range []struct {
@@ -156,6 +160,7 @@ func TestCreateIssue(t *testing.T) {
 	assert.Nil(t, err)
 	net, _ := networkPrepare(t, 3, v.GetAddress().String())
 
+	net.WaitForHeightWithTimeout(5, time.Minute)
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 	key := ctx.Keyring

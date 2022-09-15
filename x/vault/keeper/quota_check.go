@@ -1,8 +1,6 @@
 package keeper
 
 import (
-	"fmt"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
@@ -57,7 +55,6 @@ func (k Keeper) ProcessQuota(ctx sdk.Context, totalCoins sdk.Coins) {
 	// now we pop out one item from history and add the new one in
 	params := k.GetParams(ctx)
 	newQuotaData := processHistory(params.HistoryLength, entry, &quotaData)
-	fmt.Printf(">>>%v\n", newQuotaData.CoinsSum)
 	k.SetQuotaData(ctx, *newQuotaData)
 }
 

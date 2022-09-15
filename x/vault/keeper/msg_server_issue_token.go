@@ -63,7 +63,7 @@ func (k msgServer) CreateIssueToken(goCtx context.Context, msg *types.MsgCreateI
 			types.EventIssueToken,
 			sdk.NewAttribute(types.AttrIssueTokenIndex, msg.Index),
 			sdk.NewAttribute(types.AttrIssueTokenTxID, hid),
-			sdk.NewAttribute(types.AttrIssueToken, "ok"),
+			sdk.NewAttribute(types.AttrIssueToken, "all"),
 		),
 	})
 
