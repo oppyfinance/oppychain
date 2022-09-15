@@ -48,7 +48,6 @@ func processHistory(historyLength int32, newItem *types.HistoricalAmount, coinsQ
 }
 
 func (k Keeper) ProcessQuota(ctx sdk.Context, totalCoins sdk.Coins) {
-
 	quotaData, found := k.GetQuotaData(ctx)
 	if !found {
 		panic("this item should be always be available")

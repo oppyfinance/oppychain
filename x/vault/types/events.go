@@ -6,4 +6,5 @@ const (
 	EventIssueToken        = "issue_token"
 	AttrIssueTokenIndex    = "issue_token_index"
 	AttrIssueTokenTxID     = "issue_token_txid"
+	AttrIssueToken         = "issued"
 )
