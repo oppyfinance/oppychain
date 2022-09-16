@@ -8,7 +8,7 @@ import (
 )
 
 var DefaultAcctFunds sdk.Coins = sdk.NewCoins(
-	sdk.NewCoin("uoppy", sdk.NewInt(10000000000)),
+	sdk.NewCoin("poppy", sdk.NewInt(1000000000000000)),
 	sdk.NewCoin("foo", sdk.NewInt(10000000)),
 	sdk.NewCoin("bar", sdk.NewInt(10000000)),
 	sdk.NewCoin("baz", sdk.NewInt(10000000)),
@@ -16,6 +16,7 @@ var DefaultAcctFunds sdk.Coins = sdk.NewCoins(
 
 // Returns a Univ2 pool with the initial liquidity being the provided balances
 func (suite *KeeperTestHelper) PrepareUni2PoolWithAssets(asset1, asset2 sdk.Coin) uint64 {
+	suite.FundAcc(suite.TestAccs[0], DefaultAcctFunds)
 	return suite.PrepareBalancerPoolWithPoolAsset(
 		[]balancer.PoolAsset{
 			{

@@ -18,7 +18,7 @@ package keeper_test
 // 			suite.Ctx,
 // 			acc,
 // 			sdk.NewCoins(
-// 				sdk.NewCoin("uoppy", sdk.NewInt(1000000000)),
+// 				sdk.NewCoin("poppy", sdk.NewInt(1000000000)),
 // 				sdk.NewCoin("foo", sdk.NewInt(1000)),
 // 				sdk.NewCoin("bar", sdk.NewInt(1000)),
 // 				sdk.NewCoin("baz", sdk.NewInt(1000)),
@@ -93,7 +93,7 @@ package keeper_test
 // 			coins[i] = sdk.Coin{denoms[i], amount}
 // 		}
 // 		coinOf[acc.String()] = coins
-// 		coins = append(coins, sdk.NewCoin("uoppy", sdk.NewInt(1000000000)))
+// 		coins = append(coins, sdk.NewCoin("poppy", sdk.NewInt(1000000000)))
 
 // 		suite.FundAcc(
 // 			suite.App.BankKeeper,
@@ -137,7 +137,7 @@ package keeper_test
 // 		suite.Ctx,
 // 		acc1,
 // 		sdk.NewCoins(
-// 			sdk.NewCoin("uoppy", sdk.NewInt(1000000000)),
+// 			sdk.NewCoin("poppy", sdk.NewInt(1000000000)),
 // 			sdk.NewCoin("foo", sdk.NewInt(1000)),
 // 			sdk.NewCoin("bar", sdk.NewInt(1000)),
 // 			sdk.NewCoin("baz", sdk.NewInt(1000)),
@@ -177,7 +177,7 @@ package keeper_test
 // 		suite.Ctx,
 // 		acc1,
 // 		sdk.NewCoins(
-// 			sdk.NewCoin("uoppy", sdk.NewInt(1000000000)),
+// 			sdk.NewCoin("poppy", sdk.NewInt(1000000000)),
 // 			sdk.NewCoin("foo", sdk.NewInt(1000)),
 // 			sdk.NewCoin("bar", sdk.NewInt(1000)),
 // 			sdk.NewCoin("baz", sdk.NewInt(1000)),

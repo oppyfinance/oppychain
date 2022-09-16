@@ -31,7 +31,7 @@ const (
 var (
 	oneTrillion          = sdk.NewInt(1e12)
 	defaultOsmoPoolAsset = balancer.PoolAsset{
-		Token:  sdk.NewCoin("uoppy", oneTrillion),
+		Token:  sdk.NewCoin("poppy", oneTrillion),
 		Weight: sdk.NewInt(100),
 	}
 	defaultAtomPoolAsset = balancer.PoolAsset{
@@ -80,7 +80,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		name:         "single tokensIn - equal weights with zero swap fee",
 		swapFee:      sdk.MustNewDecFromStr("0"),
 		poolAssets:   oneTrillionEvenPoolAssets,
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000)),
 		expectShares: sdk.NewInt(2_499_999_968_750),
 	},
 	{
@@ -101,7 +101,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		name:         "single tokensIn - equal weights with 0.01 swap fee",
 		swapFee:      sdk.MustNewDecFromStr("0.01"),
 		poolAssets:   oneTrillionEvenPoolAssets,
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000)),
 		expectShares: sdk.NewInt(2_487_500_000_000),
 	},
 	{
@@ -122,7 +122,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		name:         "single tokensIn - equal weights with 0.99 swap fee",
 		swapFee:      sdk.MustNewDecFromStr("0.99"),
 		poolAssets:   oneTrillionEvenPoolAssets,
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000)),
 		expectShares: sdk.NewInt(1_262_500_000_000),
 	},
 	{
@@ -135,7 +135,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		// 	P_supply = initial pool supply = 1e20
 		//	A_t = amount of deposited asset = 50,000
 		//	B_t = existing balance of deposited asset in the pool prior to deposit = 1,000,000,000,000
-		//	W_t = normalized weight of deposited asset in pool = 0.25 (asset A, uoppy, has weight 1/4 of uatom)
+		//	W_t = normalized weight of deposited asset in pool = 0.25 (asset A, poppy, has weight 1/4 of uatom)
 		// 	swapFeeRatio = (1 - (1 - W_t) * swapFee)
 		// Plugging all of this in, we get:
 		// 	Full solution: https://www.wolframalpha.com/input?i=%28100+*+10%5E18+%29*+%28%28+1+%2B+%2850%2C000+*+%281+-+%281+-+0.25%29+*+0.99%29+%2F+1000000000000%29%29%5E0.25+-+1%29
@@ -149,7 +149,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 				Weight: sdk.NewInt(300),
 			},
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000)),
 		expectShares: sdk.NewInt(321_875_000_000),
 	},
 	{
@@ -170,12 +170,12 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.ZeroDec(),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uoppy", 1e12),
+				Token:  sdk.NewInt64Coin("poppy", 1e12),
 				Weight: sdk.NewInt(500),
 			},
 			defaultAtomPoolAsset,
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000)),
 		expectShares: sdk.NewInt(4_166_666_649_306),
 	},
 	{
@@ -196,12 +196,12 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0.01"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uoppy", 1e12),
+				Token:  sdk.NewInt64Coin("poppy", 1e12),
 				Weight: sdk.NewInt(500),
 			},
 			defaultAtomPoolAsset,
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000)),
 		expectShares: sdk.NewInt(4_159_722_200_000),
 	},
 	{
@@ -222,7 +222,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uoppy", 1e12),
+				Token:  sdk.NewInt64Coin("poppy", 1e12),
 				Weight: sdk.NewInt(200),
 			},
 			{
@@ -230,7 +230,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 				Weight: sdk.NewInt(1000),
 			},
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000)),
 		expectShares: sdk.NewInt(833_333_315_972),
 	},
 	{
@@ -251,7 +251,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0.02"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uoppy", 1e12),
+				Token:  sdk.NewInt64Coin("poppy", 1e12),
 				Weight: sdk.NewInt(200),
 			},
 			{
@@ -259,7 +259,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 				Weight: sdk.NewInt(1000),
 			},
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000)),
 		expectShares: sdk.NewInt(819_444_430_000),
 	},
 	{
@@ -280,7 +280,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uoppy", 156_736),
+				Token:  sdk.NewInt64Coin("poppy", 156_736),
 				Weight: sdk.NewInt(200),
 			},
 			{
@@ -289,7 +289,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 			},
 		},
 		// 156_736 * 3 / 4 = 117552
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", (156_736*3)/4)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", (156_736*3)/4)),
 		expectShares: sdk.NewIntFromUint64(9_775_731_930_496_140_648),
 	},
 	{
@@ -310,7 +310,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0.02"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uoppy", 156_736),
+				Token:  sdk.NewInt64Coin("poppy", 156_736),
 				Weight: sdk.NewInt(200),
 			},
 			{
@@ -319,7 +319,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 			},
 		},
 		// 156_736 / 4 * 3 = 117552
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 156_736/4*3)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 156_736/4*3)),
 		expectShares: sdk.NewIntFromUint64(9_644_655_900_000_000_000),
 	},
 	{
@@ -340,7 +340,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uoppy", 500_000),
+				Token:  sdk.NewInt64Coin("poppy", 500_000),
 				Weight: sdk.NewInt(100),
 			},
 			{
@@ -348,7 +348,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 				Weight: sdk.NewInt(1000),
 			},
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 499_999)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 499_999)),
 		expectShares: sdk.NewIntFromUint64(6_504_099_261_800_144_638),
 	},
 	{
@@ -361,7 +361,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uoppy", 500_000),
+				Token:  sdk.NewInt64Coin("poppy", 500_000),
 				Weight: sdk.NewInt(100),
 			},
 			{
@@ -369,7 +369,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 				Weight: sdk.NewInt(1000),
 			},
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 500_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 500_000)),
 		expectShares: sdk.NewIntFromUint64(6_504_099_261_800_144_638),
 		expectPanic:  true,
 	},
@@ -395,7 +395,7 @@ func (suite *KeeperTestSuite) TestCalcJoinPoolShares() {
 			swapFee:    sdk.MustNewDecFromStr("0"),
 			poolAssets: oneTrillionEvenPoolAssets,
 			tokensIn: sdk.NewCoins(
-				sdk.NewInt64Coin("uoppy", 25_000),
+				sdk.NewInt64Coin("poppy", 25_000),
 				sdk.NewInt64Coin("uatom", 25_000),
 			),
 			// Raises liquidity perfectly by 25_000 / 1_000_000_000_000.
@@ -408,14 +408,14 @@ func (suite *KeeperTestSuite) TestCalcJoinPoolShares() {
 			swapFee:    sdk.MustNewDecFromStr("0.001"),
 			poolAssets: oneTrillionEvenPoolAssets,
 			tokensIn: sdk.NewCoins(
-				sdk.NewInt64Coin("uoppy", 25_000),
+				sdk.NewInt64Coin("poppy", 25_000),
 				sdk.NewInt64Coin("uatom", 25_000),
 			),
 			expectShares: sdk.NewInt(2500000000000),
 		},
 		{
-			// For uoppys and uatom
-			// join pool is first done to the extent where the ratio can be preserved, which is 25,000 uoppy and 25,000 uatom
+			// For poppys and uatom
+			// join pool is first done to the extent where the ratio can be preserved, which is 25,000 poppy and 25,000 uatom
 			// then we perfrom single asset deposit for the remaining 25,000 uatom with the equation below
 			// Expected output from Balancer paper (https://balancer.fi/whitepaper.pdf) using equation (25) on page 10:
 			// P_issued = P_supply * ((1 + (A_t * swapFeeRatio  / B_t))^W_t - 1)
@@ -435,15 +435,15 @@ func (suite *KeeperTestSuite) TestCalcJoinPoolShares() {
 			swapFee:    sdk.ZeroDec(),
 			poolAssets: oneTrillionEvenPoolAssets,
 			tokensIn: sdk.NewCoins(
-				sdk.NewInt64Coin("uoppy", 25_000),
+				sdk.NewInt64Coin("poppy", 25_000),
 				sdk.NewInt64Coin("uatom", 50_000),
 			),
 
 			expectShares: sdk.NewInt(2.5e12 + 1249999992187),
 		},
 		{
-			// For uoppys and uatom
-			// join pool is first done to the extent where the ratio can be preserved, which is 25,000 uoppy and 25,000 uatom
+			// For poppys and uatom
+			// join pool is first done to the extent where the ratio can be preserved, which is 25,000 poppy and 25,000 uatom
 			// then we perfrom single asset deposit for the remaining 25,000 uatom with the equation below
 			// Expected output from Balancer paper (https://balancer.fi/whitepaper.pdf) using equation (25) on page 10:
 			// P_issued = P_supply * ((1 + (A_t * swapFeeRatio  / B_t))^W_t - 1)
@@ -463,14 +463,14 @@ func (suite *KeeperTestSuite) TestCalcJoinPoolShares() {
 			swapFee:    sdk.MustNewDecFromStr("0.01"),
 			poolAssets: oneTrillionEvenPoolAssets,
 			tokensIn: sdk.NewCoins(
-				sdk.NewInt64Coin("uoppy", 25_000),
+				sdk.NewInt64Coin("poppy", 25_000),
 				sdk.NewInt64Coin("uatom", 50_000),
 			),
 
 			expectShares: sdk.NewInt(2.5e12 + 1243750000000),
 		},
 		{
-			// join pool is first done to the extent where the ratio can be preserved, which is 25,000 uoppy and 12,500 uatom.
+			// join pool is first done to the extent where the ratio can be preserved, which is 25,000 poppy and 12,500 uatom.
 			// the minimal total share resulted here would be 1,250,000,000,000 =  2500 / 2,000,000,000,000 * 100,000,000,000,000,000,000
 			// then we perfrom single asset deposit for the remaining 37,500 uatom with the equation below
 			//
@@ -492,13 +492,13 @@ func (suite *KeeperTestSuite) TestCalcJoinPoolShares() {
 			swapFee: sdk.MustNewDecFromStr("0.03"),
 			poolAssets: []balancer.PoolAsset{
 				{
-					Token:  sdk.NewInt64Coin("uoppy", 2_000_000_000_000),
+					Token:  sdk.NewInt64Coin("poppy", 2_000_000_000_000),
 					Weight: sdk.NewInt(500),
 				},
 				defaultAtomPoolAsset,
 			},
 			tokensIn: sdk.NewCoins(
-				sdk.NewInt64Coin("uoppy", 25_000),
+				sdk.NewInt64Coin("poppy", 25_000),
 				sdk.NewInt64Coin("uatom", 50_000),
 			),
 			expectShares: sdk.NewInt(1250000000000 + 609374990000),
@@ -552,7 +552,7 @@ func TestUpdateIntermediaryPoolAssetsLiquidity(t *testing.T) {
 
 			setup: func() (sdk.Coins, map[string]balancer.PoolAsset, map[string]balancer.PoolAsset) {
 				const (
-					uoppyValueOriginal = 1_000_000_000_000
+					poppyValueOriginal = 1_000_000_000_000
 					atomValueOriginal  = 123
 					ionValueOriginal   = 657
 
@@ -561,13 +561,13 @@ func TestUpdateIntermediaryPoolAssetsLiquidity(t *testing.T) {
 				)
 
 				newLiquidity := sdk.NewCoins(
-					sdk.NewInt64Coin("uoppy", 1_000),
+					sdk.NewInt64Coin("poppy", 1_000),
 					sdk.NewInt64Coin("atom", 2_000),
 					sdk.NewInt64Coin("ion", 3_000))
 
 				originalPoolAssetsByDenom := map[string]balancer.PoolAsset{
-					"uoppy": {
-						Token:  sdk.NewInt64Coin("uoppy", uoppyValueOriginal),
+					"poppy": {
+						Token:  sdk.NewInt64Coin("poppy", poppyValueOriginal),
 						Weight: sdk.NewInt(weight),
 					},
 					"atom": {
@@ -595,7 +595,7 @@ func TestUpdateIntermediaryPoolAssetsLiquidity(t *testing.T) {
 
 			setup: func() (sdk.Coins, map[string]balancer.PoolAsset, map[string]balancer.PoolAsset) {
 				const (
-					uoppyValueOriginal = 1_000_000_000_000
+					poppyValueOriginal = 1_000_000_000_000
 					atomValueOriginal  = 123
 					ionValueOriginal   = 657
 
@@ -606,8 +606,8 @@ func TestUpdateIntermediaryPoolAssetsLiquidity(t *testing.T) {
 				newLiquidity := sdk.NewCoins()
 
 				originalPoolAssetsByDenom := map[string]balancer.PoolAsset{
-					"uoppy": {
-						Token:  sdk.NewInt64Coin("uoppy", uoppyValueOriginal),
+					"poppy": {
+						Token:  sdk.NewInt64Coin("poppy", poppyValueOriginal),
 						Weight: sdk.NewInt(weight),
 					},
 					"atom": {
@@ -628,7 +628,7 @@ func TestUpdateIntermediaryPoolAssetsLiquidity(t *testing.T) {
 
 			setup: func() (sdk.Coins, map[string]balancer.PoolAsset, map[string]balancer.PoolAsset) {
 				const (
-					uoppyValueOriginal = 1_000_000_000_000
+					poppyValueOriginal = 1_000_000_000_000
 
 					// Weight does not affect calculations so it is shared
 					weight = 100
@@ -638,8 +638,8 @@ func TestUpdateIntermediaryPoolAssetsLiquidity(t *testing.T) {
 					sdk.NewInt64Coin("juno", 1_000))
 
 				originalPoolAssetsByDenom := map[string]balancer.PoolAsset{
-					"uoppy": {
-						Token:  sdk.NewInt64Coin("uoppy", uoppyValueOriginal),
+					"poppy": {
+						Token:  sdk.NewInt64Coin("poppy", poppyValueOriginal),
 						Weight: sdk.NewInt(weight),
 					},
 				}
@@ -743,7 +743,7 @@ func TestCalcJoinSingleAssetTokensIn(t *testing.T) {
 			name:         "one token in - equal weights with zero swap fee",
 			swapFee:      sdk.MustNewDecFromStr("0"),
 			poolAssets:   oneTrillionEvenPoolAssets,
-			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000)),
+			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000)),
 			expectShares: sdk.NewInt(2_499_999_968_750),
 		},
 		{
@@ -763,7 +763,7 @@ func TestCalcJoinSingleAssetTokensIn(t *testing.T) {
 			name:         "two tokens in - equal weights with zero swap fee",
 			swapFee:      sdk.MustNewDecFromStr("0"),
 			poolAssets:   oneTrillionEvenPoolAssets,
-			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000), sdk.NewInt64Coin("uatom", 50_000)),
+			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000), sdk.NewInt64Coin("uatom", 50_000)),
 			expectShares: sdk.NewInt(2_499_999_968_750 * 2),
 		},
 		{
@@ -785,7 +785,7 @@ func TestCalcJoinSingleAssetTokensIn(t *testing.T) {
 			name:         "one token in - equal weights with swap fee of 0.01",
 			swapFee:      sdk.MustNewDecFromStr("0.01"),
 			poolAssets:   oneTrillionEvenPoolAssets,
-			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000)),
+			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000)),
 			expectShares: sdk.NewInt(2_487_500_000_000),
 		},
 		{
@@ -807,11 +807,11 @@ func TestCalcJoinSingleAssetTokensIn(t *testing.T) {
 			name:         "two tokens in - equal weights with swap fee of 0.01",
 			swapFee:      sdk.MustNewDecFromStr("0.01"),
 			poolAssets:   oneTrillionEvenPoolAssets,
-			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000), sdk.NewInt64Coin("uatom", 50_000)),
+			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000), sdk.NewInt64Coin("uatom", 50_000)),
 			expectShares: sdk.NewInt(2_487_500_000_000 * 2),
 		},
 		{
-			// For uoppy:
+			// For poppy:
 			//
 			// Expected output from Balancer paper (https://balancer.fi/whitepaper.pdf) using equation (25) with on page 10
 			// with swapFeeRatio added:
@@ -851,7 +851,7 @@ func TestCalcJoinSingleAssetTokensIn(t *testing.T) {
 			swapFee: sdk.MustNewDecFromStr("0.03"),
 			poolAssets: []balancer.PoolAsset{
 				{
-					Token:  sdk.NewInt64Coin("uoppy", 2_000_000_000),
+					Token:  sdk.NewInt64Coin("poppy", 2_000_000_000),
 					Weight: sdk.NewInt(500),
 				},
 				{
@@ -859,7 +859,7 @@ func TestCalcJoinSingleAssetTokensIn(t *testing.T) {
 					Weight: sdk.NewInt(100),
 				},
 			},
-			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000), sdk.NewInt64Coin("uatom", 100_000)),
+			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000), sdk.NewInt64Coin("uatom", 100_000)),
 			expectShares: sdk.NewInt(2_072_912_400_000_000 + 1_624_999_900_000),
 		},
 		{
@@ -874,7 +874,7 @@ func TestCalcJoinSingleAssetTokensIn(t *testing.T) {
 			swapFee:    sdk.ZeroDec(),
 			poolAssets: oneTrillionEvenPoolAssets,
 			// Second tokenIn does not exist.
-			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uoppy", 50_000), sdk.NewInt64Coin(doesNotExistDenom, 50_000)),
+			tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("poppy", 50_000), sdk.NewInt64Coin(doesNotExistDenom, 50_000)),
 			expectShares: sdk.ZeroInt(),
 			expErr:       fmt.Errorf(balancer.ErrMsgFormatNoPoolAssetFound, doesNotExistDenom),
 		},
@@ -941,13 +941,13 @@ func TestGetPoolAssetsByDenom(t *testing.T) {
 			name: "one pool asset",
 			poolAssets: []balancer.PoolAsset{
 				{
-					Token:  sdk.NewInt64Coin("uoppy", 1e12),
+					Token:  sdk.NewInt64Coin("poppy", 1e12),
 					Weight: sdk.NewInt(100),
 				},
 			},
 			expectedPoolAssetsByDenom: map[string]balancer.PoolAsset{
-				"uoppy": {
-					Token:  sdk.NewInt64Coin("uoppy", 1e12),
+				"poppy": {
+					Token:  sdk.NewInt64Coin("poppy", 1e12),
 					Weight: sdk.NewInt(100),
 				},
 			},
@@ -956,7 +956,7 @@ func TestGetPoolAssetsByDenom(t *testing.T) {
 			name: "two pool assets",
 			poolAssets: []balancer.PoolAsset{
 				{
-					Token:  sdk.NewInt64Coin("uoppy", 1e12),
+					Token:  sdk.NewInt64Coin("poppy", 1e12),
 					Weight: sdk.NewInt(100),
 				},
 				{
@@ -965,8 +965,8 @@ func TestGetPoolAssetsByDenom(t *testing.T) {
 				},
 			},
 			expectedPoolAssetsByDenom: map[string]balancer.PoolAsset{
-				"uoppy": {
-					Token:  sdk.NewInt64Coin("uoppy", 1e12),
+				"poppy": {
+					Token:  sdk.NewInt64Coin("poppy", 1e12),
 					Weight: sdk.NewInt(100),
 				},
 				"atom": {
@@ -979,15 +979,15 @@ func TestGetPoolAssetsByDenom(t *testing.T) {
 			name: "duplicate pool assets",
 			poolAssets: []balancer.PoolAsset{
 				{
-					Token:  sdk.NewInt64Coin("uoppy", 1e12),
+					Token:  sdk.NewInt64Coin("poppy", 1e12),
 					Weight: sdk.NewInt(100),
 				},
 				{
-					Token:  sdk.NewInt64Coin("uoppy", 123),
+					Token:  sdk.NewInt64Coin("poppy", 123),
 					Weight: sdk.NewInt(400),
 				},
 			},
-			err: fmt.Errorf(balancer.ErrMsgFormatRepeatingPoolAssetsNotAllowed, "uoppy"),
+			err: fmt.Errorf(balancer.ErrMsgFormatRepeatingPoolAssetsNotAllowed, "poppy"),
 		},
 	}
 

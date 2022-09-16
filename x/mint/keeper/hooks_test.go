@@ -169,7 +169,7 @@ func setupGaugeForLPIncentives(t *testing.T, app *oppyapp.App, ctx sdk.Context) 
 	distrTo := lockuptypes.QueryCondition{
 		LockQueryType: lockuptypes.ByDuration,
 		Denom:         "lptoken",
-		Duration:      time.Second,
+		Duration:      time.Hour * 24,
 	}
 
 	// mints coins so supply exists on chain

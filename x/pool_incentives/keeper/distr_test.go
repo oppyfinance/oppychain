@@ -236,8 +236,10 @@ func (suite *KeeperTestSuite) TestAllocateAsset() {
 	firstc := sdk.NewCoins(getProportions(poolIncentiveGet, a.Quo(total)))[0]
 
 	communityPoolCoins := mintCoins.Sub(stakingCoins).Sub(poolIncentivesCoins)
-
-	expecetd := feePoolOrigin.CommunityPool.Add(sdk.NewDecCoinFromCoin(firstc)).Add(sdk.NewDecCoinFromCoin(communityPoolCoins[0]))
+	suite.True(communityPoolCoins.Empty())
+	// since community is 0, so we do not need to add community share any longer.
+	// expecetd := feePoolOrigin.CommunityPool.Add(sdk.NewDecCoinFromCoin(firstc)).Add(sdk.NewDecCoinFromCoin(communityPoolCoins[0]))
+	expecetd := feePoolOrigin.CommunityPool.Add(sdk.NewDecCoinFromCoin(firstc))
 
 	suite.Equal(expecetd, feePoolNew.CommunityPool)
 

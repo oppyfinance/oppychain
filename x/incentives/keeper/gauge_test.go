@@ -54,7 +54,7 @@ func (suite *KeeperTestSuite) TestNonPerpetualGaugeOperations() {
 	gauges := suite.App.IncentivesKeeper.GetNotFinishedGauges(suite.Ctx)
 	suite.Require().Len(gauges, 0)
 
-	lockOwners := suite.SetupManyLocks(5, defaultLiquidTokens, defaultLPTokens, time.Second)
+	lockOwners := suite.SetupManyLocks(5, defaultLiquidTokens, defaultLPTokens, time.Hour*24)
 	gaugeID, _, coins, startTime := suite.SetupNewGauge(false, sdk.Coins{sdk.NewInt64Coin("stake", 10)})
 	// evenly distributed per lock
 	expectedCoinsPerLock := sdk.Coins{sdk.NewInt64Coin("stake", 2)}
@@ -86,7 +86,7 @@ func (suite *KeeperTestSuite) TestNonPerpetualGaugeOperations() {
 		DistributeTo: lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
 			Denom:         "lptoken",
-			Duration:      time.Second,
+			Duration:      time.Hour * 24,
 		},
 		Coins:             coins.Add(addCoins...),
 		NumEpochsPaidOver: 2,
@@ -166,7 +166,7 @@ func (suite *KeeperTestSuite) TestPerpetualGaugeOperations() {
 		DistributeTo: lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
 			Denom:         "lptoken",
-			Duration:      time.Second,
+			Duration:      time.Hour * 24,
 		},
 		Coins:             coins,
 		NumEpochsPaidOver: 1,
@@ -189,7 +189,7 @@ func (suite *KeeperTestSuite) TestPerpetualGaugeOperations() {
 		DistributeTo: lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
 			Denom:         "lptoken",
-			Duration:      time.Second,
+			Duration:      time.Hour * 24,
 		},
 		Coins:             coins,
 		NumEpochsPaidOver: 1,
