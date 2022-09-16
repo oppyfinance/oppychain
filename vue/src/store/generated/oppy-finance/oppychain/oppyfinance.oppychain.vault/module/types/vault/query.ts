@@ -1,15 +1,26 @@
 /* eslint-disable */
 import { Reader, Writer } from "protobufjs/minimal";
-import { OutboundTx } from "../vault/outbound_tx";
 import {
   PageRequest,
   PageResponse,
 } from "../cosmos/base/query/v1beta1/pagination";
+import { Coin } from "../cosmos/base/v1beta1/coin";
+import { OutboundTx } from "../vault/outbound_tx";
 import { Validators } from "../vault/staking";
+import { coinsQuota } from "../vault/quota";
 import { IssueToken } from "../vault/issue_token";
 import { PoolProposal } from "../vault/create_pool";
 
 export const protobufPackage = "oppyfinance.oppychain.vault";
+
+export interface QueryPendingFeeRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryPendingFeeResponse {
+  feecoin: Coin[];
+  pagination: PageResponse | undefined;
+}
 
 export interface QueryGetOutboundTxRequest {
   requestID: string;
@@ -43,6 +54,14 @@ export interface QueryAllValidatorsRequest {
 export interface QueryAllValidatorsResponse {
   all_validators: Validators[];
   pagination: PageResponse | undefined;
+}
+
+export interface QueryGetQuotaRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryGetQuotaResponse {
+  coinQuotaResponse: coinsQuota | undefined;
 }
 
 /** this line is used by starport scaffolding # 3 */
@@ -92,6 +111,167 @@ export interface QueryAllCreatePoolResponse {
   CreatePool: PoolProposal[];
   pagination: PageResponse | undefined;
 }
+
+const baseQueryPendingFeeRequest: object = {};
+
+export const QueryPendingFeeRequest = {
+  encode(
+    message: QueryPendingFeeRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryPendingFeeRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryPendingFeeRequest } as QueryPendingFeeRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryPendingFeeRequest {
+    const message = { ...baseQueryPendingFeeRequest } as QueryPendingFeeRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryPendingFeeRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryPendingFeeRequest>
+  ): QueryPendingFeeRequest {
+    const message = { ...baseQueryPendingFeeRequest } as QueryPendingFeeRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryPendingFeeResponse: object = {};
+
+export const QueryPendingFeeResponse = {
+  encode(
+    message: QueryPendingFeeResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.feecoin) {
+      Coin.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryPendingFeeResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryPendingFeeResponse,
+    } as QueryPendingFeeResponse;
+    message.feecoin = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.feecoin.push(Coin.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryPendingFeeResponse {
+    const message = {
+      ...baseQueryPendingFeeResponse,
+    } as QueryPendingFeeResponse;
+    message.feecoin = [];
+    if (object.feecoin !== undefined && object.feecoin !== null) {
+      for (const e of object.feecoin) {
+        message.feecoin.push(Coin.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryPendingFeeResponse): unknown {
+    const obj: any = {};
+    if (message.feecoin) {
+      obj.feecoin = message.feecoin.map((e) =>
+        e ? Coin.toJSON(e) : undefined
+      );
+    } else {
+      obj.feecoin = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryPendingFeeResponse>
+  ): QueryPendingFeeResponse {
+    const message = {
+      ...baseQueryPendingFeeResponse,
+    } as QueryPendingFeeResponse;
+    message.feecoin = [];
+    if (object.feecoin !== undefined && object.feecoin !== null) {
+      for (const e of object.feecoin) {
+        message.feecoin.push(Coin.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
 
 const baseQueryGetOutboundTxRequest: object = { requestID: "" };
 
@@ -718,6 +898,143 @@ export const QueryAllValidatorsResponse = {
       message.pagination = PageResponse.fromPartial(object.pagination);
     } else {
       message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetQuotaRequest: object = {};
+
+export const QueryGetQuotaRequest = {
+  encode(
+    message: QueryGetQuotaRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetQuotaRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryGetQuotaRequest } as QueryGetQuotaRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetQuotaRequest {
+    const message = { ...baseQueryGetQuotaRequest } as QueryGetQuotaRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetQuotaRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryGetQuotaRequest>): QueryGetQuotaRequest {
+    const message = { ...baseQueryGetQuotaRequest } as QueryGetQuotaRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetQuotaResponse: object = {};
+
+export const QueryGetQuotaResponse = {
+  encode(
+    message: QueryGetQuotaResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.coinQuotaResponse !== undefined) {
+      coinsQuota
+        .encode(message.coinQuotaResponse, writer.uint32(10).fork())
+        .ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetQuotaResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryGetQuotaResponse } as QueryGetQuotaResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.coinQuotaResponse = coinsQuota.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetQuotaResponse {
+    const message = { ...baseQueryGetQuotaResponse } as QueryGetQuotaResponse;
+    if (
+      object.coinQuotaResponse !== undefined &&
+      object.coinQuotaResponse !== null
+    ) {
+      message.coinQuotaResponse = coinsQuota.fromJSON(object.coinQuotaResponse);
+    } else {
+      message.coinQuotaResponse = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetQuotaResponse): unknown {
+    const obj: any = {};
+    message.coinQuotaResponse !== undefined &&
+      (obj.coinQuotaResponse = message.coinQuotaResponse
+        ? coinsQuota.toJSON(message.coinQuotaResponse)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetQuotaResponse>
+  ): QueryGetQuotaResponse {
+    const message = { ...baseQueryGetQuotaResponse } as QueryGetQuotaResponse;
+    if (
+      object.coinQuotaResponse !== undefined &&
+      object.coinQuotaResponse !== null
+    ) {
+      message.coinQuotaResponse = coinsQuota.fromPartial(
+        object.coinQuotaResponse
+      );
+    } else {
+      message.coinQuotaResponse = undefined;
     }
     return message;
   },
@@ -1583,6 +1900,8 @@ export interface Query {
   GetAllValidators(
     request: QueryAllValidatorsRequest
   ): Promise<QueryAllValidatorsResponse>;
+  /** Queries a list of GetQuota items. */
+  GetQuota(request: QueryGetQuotaRequest): Promise<QueryGetQuotaResponse>;
   /** Queries a issueToken by index. */
   IssueToken(
     request: QueryGetIssueTokenRequest
@@ -1601,6 +1920,10 @@ export interface Query {
   ): Promise<QueryAllCreatePoolResponse>;
   /** Queries a createPool by index. */
   GetLastPool(request: QueryLatestPoolRequest): Promise<QueryLastPoolResponse>;
+  /** Queries the pending fee */
+  GetPendingFee(
+    request: QueryPendingFeeRequest
+  ): Promise<QueryPendingFeeResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -1661,6 +1984,18 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllValidatorsResponse.decode(new Reader(data))
+    );
+  }
+
+  GetQuota(request: QueryGetQuotaRequest): Promise<QueryGetQuotaResponse> {
+    const data = QueryGetQuotaRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "oppyfinance.oppychain.vault.Query",
+      "GetQuota",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetQuotaResponse.decode(new Reader(data))
     );
   }
 
@@ -1729,6 +2064,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryLastPoolResponse.decode(new Reader(data))
+    );
+  }
+
+  GetPendingFee(
+    request: QueryPendingFeeRequest
+  ): Promise<QueryPendingFeeResponse> {
+    const data = QueryPendingFeeRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "oppyfinance.oppychain.vault.Query",
+      "GetPendingFee",
+      data
+    );
+    return promise.then((data) =>
+      QueryPendingFeeResponse.decode(new Reader(data))
     );
   }
 }

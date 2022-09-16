@@ -673,15 +673,16 @@ func New(
 	app.configurator = module.NewConfigurator(app.AppCodec(), app.MsgServiceRouter(), app.GRPCQueryRouter())
 	app.setupUpgredeHandlers()
 	// fixme the antihandler of swap is not set!!!
-	anteHandler, err := ante.NewAnteHandler(
-		ante.HandlerOptions{
-			AccountKeeper:   app.AccountKeeper,
-			BankKeeper:      app.BankKeeper,
-			SignModeHandler: encodingConfig.TxConfig.SignModeHandler(),
-			FeegrantKeeper:  app.FeeGrantKeeper,
-			SigGasConsumer:  ante.DefaultSigVerificationGasConsumer,
-		},
-	)
+
+	baseAnte := ante.HandlerOptions{
+		AccountKeeper:   app.AccountKeeper,
+		BankKeeper:      app.BankKeeper,
+		SignModeHandler: encodingConfig.TxConfig.SignModeHandler(),
+		FeegrantKeeper:  app.FeeGrantKeeper,
+		SigGasConsumer:  ante.DefaultSigVerificationGasConsumer,
+	}
+
+	anteHandler, err := NewAnteHandler(app, baseAnte)
 	if err != nil {
 		panic(err)
 	}
@@ -870,4 +871,5 @@ func (app *App) setupUpgredeHandlers() {
 	app.UpgradeKeeper.SetUpgradeHandler(v1.UpgradeName, v1.CreateUpgradeHandler(app.mm, app.configurator))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.ParamUpgradeName, v1.CreateUpgradeHandlerParamUpgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.FeeDistributionUpgradeName, v1.CreateUpgradeHandlerFeeDistributionUpgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
+	app.UpgradeKeeper.SetUpgradeHandler(v1.V18UpgradeName, v1.CreateUpgradeHandlerForV18Upgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
 }

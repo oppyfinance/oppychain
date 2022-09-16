@@ -21,6 +21,17 @@ export interface RpcStatus {
 }
 
 /**
+* Coin defines a token with a denomination and an amount.
+
+NOTE: The amount field is an Int which implements the custom method
+signatures required by gogoproto.
+*/
+export interface V1Beta1Coin {
+  denom?: string;
+  amount?: string;
+}
+
+/**
 * message SomeRequest {
          Foo some_parameter = 1;
          PageRequest pagination = 2;
@@ -109,7 +120,8 @@ export interface VaultMsgCreateOutboundTxResponse {
 
 export interface VaultOutboundTx {
   index?: string;
-  items?: Record<string, Vaultaddress>;
+  processed?: boolean;
+  items?: Record<string, Vaultproposals>;
 }
 
 export interface VaultPoolProposal {
@@ -192,12 +204,31 @@ export interface VaultQueryGetOutboundTxResponse {
   outboundTx?: VaultOutboundTx;
 }
 
+export interface VaultQueryGetQuotaResponse {
+  coinQuotaResponse?: VaultcoinsQuota;
+}
+
 export interface VaultQueryGetValidatorsResponse {
   validators?: VaultValidators;
 }
 
 export interface VaultQueryLastPoolResponse {
   pools?: VaultpoolInfo[];
+}
+
+export interface VaultQueryPendingFeeResponse {
+  feecoin?: V1Beta1Coin[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
 }
 
 export interface VaultValidator {
@@ -215,13 +246,30 @@ export interface VaultValidators {
   height?: string;
 }
 
-export interface Vaultaddress {
-  address?: string[];
+export interface VaultcoinsQuota {
+  history?: VaulthistoricalAmount[];
+  CoinsSum?: V1Beta1Coin[];
+}
+
+export interface Vaultentity {
+  /** @format byte */
+  address?: string;
+  feecoin?: V1Beta1Coin[];
+}
+
+export interface VaulthistoricalAmount {
+  /** @format int64 */
+  blockHeight?: string;
+  amount?: V1Beta1Coin[];
 }
 
 export interface VaultpoolInfo {
   BlockHeight?: string;
   CreatePool?: VaultPoolProposal;
+}
+
+export interface Vaultproposals {
+  entry?: Vaultentity[];
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -424,6 +472,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
+   * @name QueryGetQuota
+   * @summary Queries a list of GetQuota items.
+   * @request GET:/oppy-finance/oppychain/vault/get_quota
+   */
+  queryGetQuota = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<VaultQueryGetQuotaResponse, RpcStatus>({
+      path: `/oppy-finance/oppychain/vault/get_quota`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
    * @name QueryCreatePoolAll
    * @summary Queries a list of createPool items.
    * @request GET:/oppy/oppychain/vault/createPool
@@ -482,6 +556,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   ) =>
     this.request<VaultQueryLastPoolResponse, RpcStatus>({
       path: `/oppy/oppychain/vault/getLastPool`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryGetPendingFee
+   * @summary Queries the pending fee
+   * @request GET:/oppy/oppychain/vault/get_pending_fee
+   */
+  queryGetPendingFee = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<VaultQueryPendingFeeResponse, RpcStatus>({
+      path: `/oppy/oppychain/vault/get_pending_fee`,
       method: "GET",
       query: query,
       format: "json",

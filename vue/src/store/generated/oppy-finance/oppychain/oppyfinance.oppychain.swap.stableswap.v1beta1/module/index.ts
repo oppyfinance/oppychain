@@ -4,13 +4,13 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgStableSwapAdjustScalingFactors } from "./types/swap/pool_models/stableswap/tx";
 import { MsgCreateStableswapPool } from "./types/swap/pool_models/stableswap/tx";
+import { MsgStableSwapAdjustScalingFactors } from "./types/swap/pool_models/stableswap/tx";
 
 
 const types = [
-  ["/oppyfinance.oppychain.swap.stableswap.v1beta1.MsgStableSwapAdjustScalingFactors", MsgStableSwapAdjustScalingFactors],
   ["/oppyfinance.oppychain.swap.stableswap.v1beta1.MsgCreateStableswapPool", MsgCreateStableswapPool],
+  ["/oppyfinance.oppychain.swap.stableswap.v1beta1.MsgStableSwapAdjustScalingFactors", MsgStableSwapAdjustScalingFactors],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -43,8 +43,8 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgStableSwapAdjustScalingFactors: (data: MsgStableSwapAdjustScalingFactors): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.swap.stableswap.v1beta1.MsgStableSwapAdjustScalingFactors", value: MsgStableSwapAdjustScalingFactors.fromPartial( data ) }),
     msgCreateStableswapPool: (data: MsgCreateStableswapPool): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.swap.stableswap.v1beta1.MsgCreateStableswapPool", value: MsgCreateStableswapPool.fromPartial( data ) }),
+    msgStableSwapAdjustScalingFactors: (data: MsgStableSwapAdjustScalingFactors): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.swap.stableswap.v1beta1.MsgStableSwapAdjustScalingFactors", value: MsgStableSwapAdjustScalingFactors.fromPartial( data ) }),
     
   };
 };

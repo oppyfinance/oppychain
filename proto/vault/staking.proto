@@ -2,6 +2,7 @@ syntax = "proto3";
 package oppyfinance.oppychain.vault;
 
 import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
 
 option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
 
@@ -17,6 +18,13 @@ message Params{
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable)   = false
   ];
+
+  repeated cosmos.base.v1beta1.Coin targetQuota= 5 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+    (gogoproto.moretags) = "yaml:\"target_quota\""
+  ];
+  int32 history_length=6 [(gogoproto.moretags) = "yaml:\"history_length\""];
 }
 
 message Validator{

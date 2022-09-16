@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { Reader, Writer } from "protobufjs/minimal";
+import { Coin } from "../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "oppyfinance.oppychain.vault";
 
@@ -8,6 +9,7 @@ export interface MsgCreateOutboundTx {
   requestID: string;
   outboundTx: string;
   blockHeight: string;
+  feecoin: Coin[];
 }
 
 export interface MsgCreateOutboundTxResponse {
@@ -59,6 +61,9 @@ export const MsgCreateOutboundTx = {
     if (message.blockHeight !== "") {
       writer.uint32(34).string(message.blockHeight);
     }
+    for (const v of message.feecoin) {
+      Coin.encode(v!, writer.uint32(42).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -66,6 +71,7 @@ export const MsgCreateOutboundTx = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgCreateOutboundTx } as MsgCreateOutboundTx;
+    message.feecoin = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -81,6 +87,9 @@ export const MsgCreateOutboundTx = {
         case 4:
           message.blockHeight = reader.string();
           break;
+        case 5:
+          message.feecoin.push(Coin.decode(reader, reader.uint32()));
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -91,6 +100,7 @@ export const MsgCreateOutboundTx = {
 
   fromJSON(object: any): MsgCreateOutboundTx {
     const message = { ...baseMsgCreateOutboundTx } as MsgCreateOutboundTx;
+    message.feecoin = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = bytesFromBase64(object.creator);
     }
@@ -109,6 +119,11 @@ export const MsgCreateOutboundTx = {
     } else {
       message.blockHeight = "";
     }
+    if (object.feecoin !== undefined && object.feecoin !== null) {
+      for (const e of object.feecoin) {
+        message.feecoin.push(Coin.fromJSON(e));
+      }
+    }
     return message;
   },
 
@@ -122,11 +137,19 @@ export const MsgCreateOutboundTx = {
     message.outboundTx !== undefined && (obj.outboundTx = message.outboundTx);
     message.blockHeight !== undefined &&
       (obj.blockHeight = message.blockHeight);
+    if (message.feecoin) {
+      obj.feecoin = message.feecoin.map((e) =>
+        e ? Coin.toJSON(e) : undefined
+      );
+    } else {
+      obj.feecoin = [];
+    }
     return obj;
   },
 
   fromPartial(object: DeepPartial<MsgCreateOutboundTx>): MsgCreateOutboundTx {
     const message = { ...baseMsgCreateOutboundTx } as MsgCreateOutboundTx;
+    message.feecoin = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
@@ -146,6 +169,11 @@ export const MsgCreateOutboundTx = {
       message.blockHeight = object.blockHeight;
     } else {
       message.blockHeight = "";
+    }
+    if (object.feecoin !== undefined && object.feecoin !== null) {
+      for (const e of object.feecoin) {
+        message.feecoin.push(Coin.fromPartial(e));
+      }
     }
     return message;
   },

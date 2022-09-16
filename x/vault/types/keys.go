@@ -27,18 +27,14 @@ func KeyPrefix(p string) []byte {
 
 const (
 	CreatePoolKey = "CreatePool-value-"
-)
 
-const (
 	IssueTokenKey = "IssueToken-value-"
-)
 
-const (
 	ValidatorsStoreKey = "ValidatorStore-value-"
-)
 
-const (
 	StandbyPwoerStoreKey = "standbyPower-value-"
-)
 
-const FeeStoreKey = "fee_collected"
+	FeeStoreKey = "fee_collected"
+
+	QuotaStoreKey = "quota-vaule-"
+)

@@ -3,15 +3,21 @@ import { txClient, queryClient, MissingWalletError , registry} from './module'
 import { PoolProposal } from "./module/types/vault/create_pool"
 import { CreatePool } from "./module/types/vault/create_pool"
 import { IssueToken } from "./module/types/vault/issue_token"
-import { address } from "./module/types/vault/outbound_tx"
+import { entity } from "./module/types/vault/outbound_tx"
+import { proposals } from "./module/types/vault/outbound_tx"
 import { OutboundTx } from "./module/types/vault/outbound_tx"
+import { addressV16 } from "./module/types/vault/outbound_tx_v16"
+import { OutboundTxV16 } from "./module/types/vault/outbound_tx_v16"
 import { poolInfo } from "./module/types/vault/query"
+import { historicalAmount } from "./module/types/vault/quota"
+import { coinsQuota } from "./module/types/vault/quota"
 import { Params } from "./module/types/vault/staking"
 import { Validator } from "./module/types/vault/staking"
+import { StandbyPower } from "./module/types/vault/staking"
 import { Validators } from "./module/types/vault/staking"
 
 
-export { PoolProposal, CreatePool, IssueToken, address, OutboundTx, poolInfo, Params, Validator, Validators };
+export { PoolProposal, CreatePool, IssueToken, entity, proposals, OutboundTx, addressV16, OutboundTxV16, poolInfo, historicalAmount, coinsQuota, Params, Validator, StandbyPower, Validators };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -53,21 +59,29 @@ const getDefaultState = () => {
 				OutboundTxAll: {},
 				GetValidators: {},
 				GetAllValidators: {},
+				GetQuota: {},
 				IssueToken: {},
 				IssueTokenAll: {},
 				CreatePool: {},
 				CreatePoolAll: {},
 				GetLastPool: {},
+				GetPendingFee: {},
 				
 				_Structure: {
 						PoolProposal: getStructure(PoolProposal.fromPartial({})),
 						CreatePool: getStructure(CreatePool.fromPartial({})),
 						IssueToken: getStructure(IssueToken.fromPartial({})),
-						address: getStructure(address.fromPartial({})),
+						entity: getStructure(entity.fromPartial({})),
+						proposals: getStructure(proposals.fromPartial({})),
 						OutboundTx: getStructure(OutboundTx.fromPartial({})),
+						addressV16: getStructure(addressV16.fromPartial({})),
+						OutboundTxV16: getStructure(OutboundTxV16.fromPartial({})),
 						poolInfo: getStructure(poolInfo.fromPartial({})),
+						historicalAmount: getStructure(historicalAmount.fromPartial({})),
+						coinsQuota: getStructure(coinsQuota.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						Validator: getStructure(Validator.fromPartial({})),
+						StandbyPower: getStructure(StandbyPower.fromPartial({})),
 						Validators: getStructure(Validators.fromPartial({})),
 						
 		},
@@ -121,6 +135,12 @@ export default {
 					}
 			return state.GetAllValidators[JSON.stringify(params)] ?? {}
 		},
+				getGetQuota: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.GetQuota[JSON.stringify(params)] ?? {}
+		},
 				getIssueToken: (state) => (params = { params: {}}) => {
 					if (!(<any> params).query) {
 						(<any> params).query=null
@@ -150,6 +170,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.GetLastPool[JSON.stringify(params)] ?? {}
+		},
+				getGetPendingFee: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.GetPendingFee[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -290,6 +316,32 @@ export default {
 		 		
 		
 		
+		async QueryGetQuota({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryGetQuota(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryGetQuota({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'GetQuota', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryGetQuota', payload: { options: { all }, params: {...key},query }})
+				return getters['getGetQuota']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryGetQuota API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
 		async QueryIssueToken({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
 			try {
 				const key = params ?? {};
@@ -402,6 +454,32 @@ export default {
 				return getters['getGetLastPool']( { params: {...key}, query}) ?? {}
 			} catch (e) {
 				throw new Error('QueryClient:QueryGetLastPool API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryGetPendingFee({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryGetPendingFee(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryGetPendingFee({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'GetPendingFee', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryGetPendingFee', payload: { options: { all }, params: {...key},query }})
+				return getters['getGetPendingFee']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryGetPendingFee API Node Unavailable. Could not perform query: ' + e.message)
 				
 			}
 		},

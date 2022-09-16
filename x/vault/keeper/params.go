@@ -25,17 +25,29 @@ func (k Keeper) CandidateRatio(ctx sdk.Context) (res sdk.Dec) {
 	return
 }
 
-// Get all parameteras as types.Params
+func (k Keeper) TargetQuota(ctx sdk.Context) (res sdk.Coins) {
+	k.paramstore.Get(ctx, vaultmoduletypes.KeyTargetQuota, &res)
+	return
+}
+
+func (k Keeper) QuotaHistoryLength(ctx sdk.Context) (res int32) {
+	k.paramstore.Get(ctx, vaultmoduletypes.KeyHistoryLength, &res)
+	return
+}
+
+// GetParams Get all parameteras as types.Params
 func (k Keeper) GetParams(ctx sdk.Context) vaultmoduletypes.Params {
 	return vaultmoduletypes.NewParams(
 		k.BlockChurnInterval(ctx),
 		k.Power(ctx),
 		k.Step(ctx),
 		k.CandidateRatio(ctx),
+		k.TargetQuota(ctx),
+		k.QuotaHistoryLength(ctx),
 	)
 }
 
-// set the params
+// SetParams set the params
 func (k Keeper) SetParams(ctx sdk.Context, params vaultmoduletypes.Params) {
 	k.paramstore.SetParamSet(ctx, &params)
 }

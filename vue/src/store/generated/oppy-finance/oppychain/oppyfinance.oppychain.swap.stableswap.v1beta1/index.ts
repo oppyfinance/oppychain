@@ -108,21 +108,6 @@ export default {
 			})
 		},
 		
-		async sendMsgStableSwapAdjustScalingFactors({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgStableSwapAdjustScalingFactors(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgStableSwapAdjustScalingFactors:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgStableSwapAdjustScalingFactors:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgCreateStableswapPool({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -138,20 +123,22 @@ export default {
 				}
 			}
 		},
-		
-		async MsgStableSwapAdjustScalingFactors({ rootGetters }, { value }) {
+		async sendMsgStableSwapAdjustScalingFactors({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgStableSwapAdjustScalingFactors(value)
-				return msg
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgStableSwapAdjustScalingFactors:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgStableSwapAdjustScalingFactors:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgStableSwapAdjustScalingFactors:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgCreateStableswapPool({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -162,6 +149,19 @@ export default {
 					throw new Error('TxClient:MsgCreateStableswapPool:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgCreateStableswapPool:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgStableSwapAdjustScalingFactors({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgStableSwapAdjustScalingFactors(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgStableSwapAdjustScalingFactors:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgStableSwapAdjustScalingFactors:Create Could not create message: ' + e.message)
 				}
 			}
 		},
