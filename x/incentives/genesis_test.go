@@ -33,7 +33,7 @@ func TestIncentivesExportGenesis(t *testing.T) {
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	genesis := incentives.ExportGenesis(ctx, app.IncentivesKeeper)
-	require.Equal(t, genesis.Params.DistrEpochIdentifier, "week")
+	require.Equal(t, genesis.Params.DistrEpochIdentifier, "day")
 	require.Len(t, genesis.Gauges, 0)
 
 	addr := sdk.AccAddress([]byte("addr1---------------"))
@@ -41,7 +41,7 @@ func TestIncentivesExportGenesis(t *testing.T) {
 	distrTo := lockuptypes.QueryCondition{
 		LockQueryType: lockuptypes.ByDuration,
 		Denom:         "lptoken",
-		Duration:      time.Second,
+		Duration:      time.Hour * 24,
 	}
 	startTime := time.Now()
 	err := simapp.FundAccount(app.BankKeeper, ctx, addr, coins)
@@ -56,7 +56,7 @@ func TestIncentivesExportGenesis(t *testing.T) {
 	require.NoError(t, err)
 
 	genesis = incentives.ExportGenesis(ctx, app.IncentivesKeeper)
-	require.Equal(t, genesis.Params.DistrEpochIdentifier, "week")
+	require.Equal(t, genesis.Params.DistrEpochIdentifier, "day")
 	require.Len(t, genesis.Gauges, 1)
 
 	require.Equal(t, genesis.Gauges[0], types.Gauge{

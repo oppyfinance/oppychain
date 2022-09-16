@@ -178,7 +178,7 @@ func (suite *KeeperTestSuite) TestNoLockPerpetualGaugeDistribution() {
 		DistributeTo: lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
 			Denom:         "lptoken",
-			Duration:      time.Second,
+			Duration:      time.Hour * 24,
 		},
 		Coins:             coins,
 		NumEpochsPaidOver: 1,
@@ -223,7 +223,7 @@ func (suite *KeeperTestSuite) TestNoLockNonPerpetualGaugeDistribution() {
 		DistributeTo: lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
 			Denom:         "lptoken",
-			Duration:      time.Second,
+			Duration:      time.Hour * 24,
 		},
 		Coins:             coins,
 		NumEpochsPaidOver: 2,

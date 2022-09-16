@@ -93,7 +93,7 @@ func TestGammExportGenesis(t *testing.T) {
 
 	acc1 := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address().Bytes())
 	err := simapp.FundAccount(app.BankKeeper, ctx, acc1, sdk.NewCoins(
-		sdk.NewCoin("uoppy", sdk.NewInt(10000000000)),
+		sdk.NewCoin("poppy", sdk.NewInt(100000000000000)),
 		sdk.NewInt64Coin("foo", 100000),
 		sdk.NewInt64Coin("bar", 100000),
 	))
@@ -147,7 +147,7 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 	am := swap.NewAppModule(appCodec, app.SwapKeeper)
 	acc1 := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address().Bytes())
 	err := simapp.FundAccount(app.BankKeeper, ctx, acc1, sdk.NewCoins(
-		sdk.NewCoin("uoppy", sdk.NewInt(10000000000)),
+		sdk.NewCoin("poppy", sdk.NewInt(100000000000000)),
 		sdk.NewInt64Coin("foo", 100000),
 		sdk.NewInt64Coin("bar", 100000),
 	))

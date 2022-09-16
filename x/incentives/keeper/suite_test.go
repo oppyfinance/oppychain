@@ -15,9 +15,9 @@ var (
 	defaultLPDenom      string        = "lptoken"
 	defaultLPTokens     sdk.Coins     = sdk.Coins{sdk.NewInt64Coin(defaultLPDenom, 10)}
 	defaultLiquidTokens sdk.Coins     = sdk.Coins{sdk.NewInt64Coin("foocoin", 10)}
-	defaultLockDuration time.Duration = time.Second
+	defaultLockDuration time.Duration = time.Hour * 24
 	oneLockupUser       userLocks     = userLocks{
-		lockDurations: []time.Duration{time.Second},
+		lockDurations: []time.Duration{time.Hour * 24},
 		lockAmounts:   []sdk.Coins{defaultLPTokens},
 	}
 	defaultRewardDenom string = "rewardDenom"
@@ -149,7 +149,7 @@ func (suite *KeeperTestSuite) SetupManyLocks(numLocks int, liquidBalance sdk.Coi
 func (suite *KeeperTestSuite) SetupLockAndGauge(isPerpetual bool) (sdk.AccAddress, uint64, sdk.Coins, time.Time) {
 	// create a gauge and locks
 	lockOwner := sdk.AccAddress([]byte("addr1---------------"))
-	suite.LockTokens(lockOwner, sdk.Coins{sdk.NewInt64Coin("lptoken", 10)}, time.Second)
+	suite.LockTokens(lockOwner, sdk.Coins{sdk.NewInt64Coin("lptoken", 10)}, 2*time.Hour*24)
 
 	// create gauge
 	gaugeID, _, gaugeCoins, startTime := suite.SetupNewGauge(isPerpetual, sdk.Coins{sdk.NewInt64Coin("poppy", 10)})

@@ -142,9 +142,9 @@ func (suite *KeeperTestSuite) TestLockableDurations() {
 
 	// LockableDurations should be 1, 3, 7 hours from the default genesis state.
 	suite.Equal(3, len(res.LockableDurations))
-	suite.Equal(time.Hour, res.LockableDurations[0])
-	suite.Equal(time.Hour*3, res.LockableDurations[1])
-	suite.Equal(time.Hour*7, res.LockableDurations[2])
+	suite.Equal(time.Hour*24, res.LockableDurations[0])
+	suite.Equal(time.Hour*24*7, res.LockableDurations[1])
+	suite.Equal(time.Hour*14*24, res.LockableDurations[2])
 }
 
 func (suite *KeeperTestSuite) TestIncentivizedPools() {
@@ -206,27 +206,27 @@ func (suite *KeeperTestSuite) TestIncentivizedPools2() {
 
 	suite.Equal(poolId, res.IncentivizedPools[0].PoolId)
 	suite.Equal(gauge1Id, res.IncentivizedPools[0].GaugeId)
-	suite.Equal(time.Hour, res.IncentivizedPools[0].LockableDuration)
+	suite.Equal(time.Hour*24, res.IncentivizedPools[0].LockableDuration)
 
 	suite.Equal(poolId, res.IncentivizedPools[1].PoolId)
 	suite.Equal(gauge2Id, res.IncentivizedPools[1].GaugeId)
-	suite.Equal(time.Hour*3, res.IncentivizedPools[1].LockableDuration)
+	suite.Equal(time.Hour*24*7, res.IncentivizedPools[1].LockableDuration)
 
 	suite.Equal(poolId, res.IncentivizedPools[2].PoolId)
 	suite.Equal(gauge3Id, res.IncentivizedPools[2].GaugeId)
-	suite.Equal(time.Hour*7, res.IncentivizedPools[2].LockableDuration)
+	suite.Equal(time.Hour*24*14, res.IncentivizedPools[2].LockableDuration)
 
 	suite.Equal(poolId2, res.IncentivizedPools[3].PoolId)
 	suite.Equal(gauge4Id, res.IncentivizedPools[3].GaugeId)
-	suite.Equal(time.Hour*7, res.IncentivizedPools[3].LockableDuration)
+	suite.Equal(time.Hour*14*24, res.IncentivizedPools[3].LockableDuration)
 
 	// Actually, the pool incentives module can add incentives to any perpetual gauge, even if the gauge is not directly related to a pool.
 	// However, these records must be excluded in incentivizedPools.
 	gauge5Id, err := suite.App.IncentivesKeeper.CreateGauge(
 		suite.Ctx, isPerpetual, sdk.AccAddress{}, sdk.Coins{}, lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
-			Denom:         "uoppy",
-			Duration:      time.Hour,
+			Denom:         "poppy",
+			Duration:      time.Hour * 24,
 		}, time.Now(), 1)
 	suite.NoError(err)
 
@@ -255,27 +255,27 @@ func (suite *KeeperTestSuite) TestIncentivizedPools2() {
 
 	suite.Equal(poolId, res.IncentivizedPools[0].PoolId)
 	suite.Equal(gauge1Id, res.IncentivizedPools[0].GaugeId)
-	suite.Equal(time.Hour, res.IncentivizedPools[0].LockableDuration)
+	suite.Equal(time.Hour*24, res.IncentivizedPools[0].LockableDuration)
 
 	suite.Equal(poolId, res.IncentivizedPools[1].PoolId)
 	suite.Equal(gauge2Id, res.IncentivizedPools[1].GaugeId)
-	suite.Equal(time.Hour*3, res.IncentivizedPools[1].LockableDuration)
+	suite.Equal(time.Hour*24*7, res.IncentivizedPools[1].LockableDuration)
 
 	suite.Equal(poolId, res.IncentivizedPools[2].PoolId)
 	suite.Equal(gauge3Id, res.IncentivizedPools[2].GaugeId)
-	suite.Equal(time.Hour*7, res.IncentivizedPools[2].LockableDuration)
+	suite.Equal(time.Hour*24*14, res.IncentivizedPools[2].LockableDuration)
 
 	suite.Equal(poolId2, res.IncentivizedPools[3].PoolId)
 	suite.Equal(gauge4Id, res.IncentivizedPools[3].GaugeId)
-	suite.Equal(time.Hour*7, res.IncentivizedPools[3].LockableDuration)
+	suite.Equal(time.Hour*24*14, res.IncentivizedPools[3].LockableDuration)
 
 	// Ensure that non-perpetual pot can't get rewards.
 	// TODO: extract this to standalone test
 	gauge6Id, err := suite.App.IncentivesKeeper.CreateGauge(
 		suite.Ctx, notPerpetual, sdk.AccAddress{}, sdk.Coins{}, lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
-			Denom:         "uoppy",
-			Duration:      time.Hour,
+			Denom:         "poppy",
+			Duration:      time.Hour * 24,
 		}, time.Now(), 1)
 
 	suite.NoError(err)

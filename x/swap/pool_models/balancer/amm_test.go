@@ -16,7 +16,7 @@ import (
 // This test sets up 2 asset pools, and then checks the spot price on them.
 // It uses the pools spot price method, rather than the swap keepers spot price method.
 func (suite *KeeperTestSuite) TestBalancerSpotPrice() {
-	baseDenom := "uoppy"
+	baseDenom := "poppy"
 	quoteDenom := "uion"
 
 	tests := []struct {
@@ -116,7 +116,7 @@ func TestCalculateAmountOutAndIn_InverseRelationship(t *testing.T) {
 	// For every test case in testcases, apply a swap fee in swapFeeCases.
 	testcases := []testcase{
 		{
-			denomOut:         "uoppy",
+			denomOut:         "poppy",
 			initialPoolOut:   1_000_000_000_000,
 			initialWeightOut: 100,
 			initialCalcOut:   100,
@@ -126,7 +126,7 @@ func TestCalculateAmountOutAndIn_InverseRelationship(t *testing.T) {
 			initialWeightIn: 100,
 		},
 		{
-			denomOut:         "uoppy",
+			denomOut:         "poppy",
 			initialPoolOut:   1_000,
 			initialWeightOut: 100,
 			initialCalcOut:   100,
@@ -136,7 +136,7 @@ func TestCalculateAmountOutAndIn_InverseRelationship(t *testing.T) {
 			initialWeightIn: 100,
 		},
 		{
-			denomOut:         "uoppy",
+			denomOut:         "poppy",
 			initialPoolOut:   1_000,
 			initialWeightOut: 100,
 			initialCalcOut:   100,
@@ -146,7 +146,7 @@ func TestCalculateAmountOutAndIn_InverseRelationship(t *testing.T) {
 			initialWeightIn: 100,
 		},
 		{
-			denomOut:         "uoppy",
+			denomOut:         "poppy",
 			initialPoolOut:   1_000,
 			initialWeightOut: 200,
 			initialCalcOut:   100,
@@ -156,7 +156,7 @@ func TestCalculateAmountOutAndIn_InverseRelationship(t *testing.T) {
 			initialWeightIn: 50,
 		},
 		{
-			denomOut:         "uoppy",
+			denomOut:         "poppy",
 			initialPoolOut:   1_000_000,
 			initialWeightOut: 200,
 			initialCalcOut:   100000,

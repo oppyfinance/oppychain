@@ -76,7 +76,7 @@ func (suite *KeeperTestSuite) TestDistrAssetToDeveloperRewardsAddrWhenNotEmpty()
 	distrTo := lockuptypes.QueryCondition{
 		LockQueryType: lockuptypes.ByDuration,
 		Denom:         "lptoken",
-		Duration:      time.Second,
+		Duration:      time.Hour * 24,
 	}
 
 	// mints coins so supply exists on chain

@@ -143,7 +143,7 @@ Pools have the following parameters:
     This allows pool governance to smoothly change the weights of the assets it holds in the pool. So it can slowly move from a 2:1 ratio, to a 1:1 ratio.
     Currently, smooth weight changes are implemented as a linear change in weight ratios over a given duration of time. So weights changed from 4:1 to 2:2 over 2 days, then at day 1 of the change, the weights would be 3:1.5, and at day 2 its 2:2, and will remain at these weight ratios.
 
-The swap module also has a **PoolCreationFee** parameter, which currently is set to `100000000 uoppy` or `100 OSMO`.
+The swap module also has a **PoolCreationFee** parameter, which currently is set to `100000000 poppy` or `100 OSMO`.
 
 [comment]: <> (TODO Add better description of how the weights affect things)
 
@@ -228,8 +228,8 @@ The configuration json file contains the following parameters:
 
 ```json
 {
- "weights": "5ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4,5uoppy",
- "initial-deposit": "499404ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4,500000uoppy",
+ "weights": "5ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4,5poppy",
+ "initial-deposit": "499404ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4,500000poppy",
  "swap-fee": "0.01",
  "exit-fee": "0.01",
  "future-governor": ""
@@ -337,7 +337,7 @@ osmosisd tx swap join-swap-share-amount-out [token-in-denom] [token-in-max-amoun
 Swap a **maximum** of `0.312466 OSMO` for the corresponding amount of `AKT`, then join `pool 3` and receive **exactly** `1.4481270389710236872 swap/pool/3`:
 
 ```sh
-osmosisd tx swap join-swap-share-amount-out uoppy 312466 14481270389710236872 --pool-id 3 --from WALLET_NAME --chain-id osmosis-1
+osmosisd tx swap join-swap-share-amount-out poppy 312466 14481270389710236872 --pool-id 3 --from WALLET_NAME --chain-id osmosis-1
 ```
 :::
 
@@ -357,7 +357,7 @@ osmosisd tx swap exit-swap-share-amount-in [token-out-denom] [share-in-amount] [
 Exit `pool 3` by removing **exactly** `14.563185400026723131 swap/pool/3` and swap the `AKT` portion of the LP share to receive 100% OSMO in the **minimum** amount of `.298548 OSMO`:
 
 ```sh
-osmosisd tx swap exit-swap-share-amount-in uoppy 14563185400026723131 298548 --pool-id 3 --from WALLET_NAME --chain-id osmosis-1
+osmosisd tx swap exit-swap-share-amount-in poppy 14563185400026723131 298548 --pool-id 3 --from WALLET_NAME --chain-id osmosis-1
 ```
 :::
 
@@ -376,7 +376,7 @@ osmosisd tx swap swap-exact-amount-in [token-in] [token-out-min-amount] --pool-i
 Swap **exactly** `.407239 AKT` through `pool 3` into a **minimum** of `.140530 OSMO` using `WALLET_NAME` on the osmosis mainnet:
 
 ```sh
-osmosisd tx swap swap-exact-amount-in 407239ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 140530 --swap-route-pool-ids 3 --swap-route-denoms uoppy --from WALLET_NAME --chain-id osmosis-1
+osmosisd tx swap swap-exact-amount-in 407239ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 140530 --swap-route-pool-ids 3 --swap-route-denoms poppy --from WALLET_NAME --chain-id osmosis-1
 ```
 :::
 
@@ -395,7 +395,7 @@ osmosisd tx swap swap-exact-amount-out [token-out] [token-out-max-amount] --swap
 Swap a **maximum** of `.407239 AKT` through `pool 3` into **exactly** `.140530 OSMO` using `WALLET_NAME` on the osmosis mainnet:
 
 ```sh
-osmosisd tx swap swap-exact-amount-out 140530uoppy 407239 --swap-route-pool-ids 3 --swap-route-denoms ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 --from WALLET_NAME --chain-id osmosis-1
+osmosisd tx swap swap-exact-amount-out 140530poppy 407239 --swap-route-pool-ids 3 --swap-route-denoms ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 --from WALLET_NAME --chain-id osmosis-1
 ```
 
 
@@ -432,7 +432,7 @@ osmosisd query swap estimate-swap-exact-amount-in <poolID> <sender> <tokenIn> [f
 Query the amount of ATOM the sender would receive for swapping 1 OSMO in pool 1.
 
 ```sh
-osmosisd query swap estimate-swap-exact-amount-in 1 osmo123nfq6m8f88m4g3sky570unsnk4zng4uqv7cm8 1000000uoppy --swap-route-pool-ids 1 --swap-route-denoms ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 
+osmosisd query swap estimate-swap-exact-amount-in 1 osmo123nfq6m8f88m4g3sky570unsnk4zng4uqv7cm8 1000000poppy --swap-route-pool-ids 1 --swap-route-denoms ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 
 ```
 
 
@@ -446,7 +446,7 @@ osmosisd query swap estimate-swap-exact-amount-out <poolID> <sender> <tokenOut> 
 Query the amount of OSMO the sender would require to swap 1 ATOM out of pool 1.
 
 ```sh
-osmosisd query swap estimate-swap-exact-amount-out 1 osmo123nfq6m8f88m4g3sky570unsnk4zng4uqv7cm8 1000000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 --swap-route-pool-ids 1 --swap-route-denoms uoppy
+osmosisd query swap estimate-swap-exact-amount-out 1 osmo123nfq6m8f88m4g3sky570unsnk4zng4uqv7cm8 1000000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 --swap-route-pool-ids 1 --swap-route-denoms poppy
 ```
 
 ### Num Pools
@@ -513,7 +513,7 @@ Query parameters and assets of all active pools.
 Query the price of OSMO based on the price of ATOM in pool 1.
 
 ```sh
-osmosisd query swap spot-price 1 uoppy ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2
+osmosisd query swap spot-price 1 poppy ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2
 ```
 
 
@@ -567,7 +567,7 @@ osmosisd query swap estimate-swap-exact-amount-in [poolID] [sender] [tokenIn] --
 Query the amount of ATOM (or `ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2`) the `sender` would receive for swapping `1 OSMO` in `pool 1`.
 
 ```sh
-osmosisd query swap estimate-swap-exact-amount-in 1 osmo123nfq6m8f88m4g3sky570unsnk4zng4uqv7cm8 1000000uoppy --swap-route-pool-ids 1 --swap-route-denoms ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2
+osmosisd query swap estimate-swap-exact-amount-in 1 osmo123nfq6m8f88m4g3sky570unsnk4zng4uqv7cm8 1000000poppy --swap-route-pool-ids 1 --swap-route-denoms ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2
 ```
 :::
 
@@ -586,7 +586,7 @@ osmosisd query swap estimate-swap-exact-amount-out [poolID] [sender] [tokenOut] 
 Query the amount of `OSMO` the `sender` would require to swap 1 ATOM (or `1000000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2`) our of `pool 1`:
 
 ```sh
-osmosisd query swap estimate-swap-exact-amount-out 1 osmo123nfq6m8f88m4g3sky570unsnk4zng4uqv7cm8 1000000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 --swap-route-pool-ids 1 --swap-route-denoms uoppy
+osmosisd query swap estimate-swap-exact-amount-out 1 osmo123nfq6m8f88m4g3sky570unsnk4zng4uqv7cm8 1000000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 --swap-route-pool-ids 1 --swap-route-denoms poppy
 ```
 :::
 
@@ -640,7 +640,7 @@ Which outputs:
     weight: "500000.000000000000000000"
   - |
     token:
-      denom: uoppy
+      denom: poppy
       amount: "21388879300450"
     weight: "500000.000000000000000000"
 ```
@@ -674,7 +674,7 @@ poolAssets:
   weight: "536870912000000"
 - token:
     amount: "21387918414792"
-    denom: uoppy
+    denom: poppy
   weight: "536870912000000"
 ```
 :::
@@ -734,7 +734,7 @@ osmosisd query swap spot-price [poolID] [tokenInDenom] [tokenOutDenom] [flags]
 Query the price of OSMO based on the price of ATOM in pool 1:
 
 ```sh
-osmosisd query swap spot-price 1 uoppy ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2
+osmosisd query swap spot-price 1 poppy ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2
 ```
 
 Which outputs:
@@ -825,8 +825,8 @@ The configuration file contains the following parameters.
 
 ```json
 {
- "weights": "5uatom,5uoppy",
- "initial-deposit": "100uatom,100uoppy",
+ "weights": "5uatom,5poppy",
+ "initial-deposit": "100uatom,100poppy",
  "swap-fee": "0.01",
  "exit-fee": "0.01",
  "future-governor": "168h"
@@ -849,7 +849,7 @@ osmosisd tx swap join-pool [flags]
 Join pool 1 with 1 OSMO and the respective amount of ATOM, using myKeyringWallet.
 
 ```sh
-osmosisd tx swap join-pool --pool-id 2 --max-amounts-in 1000000uoppy --max-amounts-in 1000000uion --share-amount-out 1000000 --from myKeyringWallet
+osmosisd tx swap join-pool --pool-id 2 --max-amounts-in 1000000poppy --max-amounts-in 1000000uion --share-amount-out 1000000 --from myKeyringWallet
 ```
 
 
@@ -867,7 +867,7 @@ osmosisd tx swap exit-pool [flags]
 Exit pool one with 1 OSMO and the respective amount of ATOM using myKeyringWallet.
 
 ```sh
-osmosisd tx swap exit-pool --pool-id 1 --min-amounts-out 1000000uoppy --share-amount-in 1000000 --from myKeyringWallet
+osmosisd tx swap exit-pool --pool-id 1 --min-amounts-out 1000000poppy --share-amount-in 1000000 --from myKeyringWallet
 ```
 
 
@@ -883,7 +883,7 @@ osmosisd tx swap join-swap-extern-amount-in [token-in] [share-out-min-amount] [f
 #### Example
 
 ```sh
-osmosisd tx swap join-swap-extern-amount-in 1000000uoppy 1000000 --pool-id 1 --from myKeyringWallet
+osmosisd tx swap join-swap-extern-amount-in 1000000poppy 1000000 --pool-id 1 --from myKeyringWallet
 ```
 
 
@@ -897,7 +897,7 @@ osmosisd tx swap exit-swap-extern-amount-out [token-out] [share-in-max-amount] [
 #### Example
 
 ```sh
-osmosisd tx swap exit-swap-extern-amount-out 1000000uoppy 1000000 --pool-id 1 --from myKeyringWallet
+osmosisd tx swap exit-swap-extern-amount-out 1000000poppy 1000000 --pool-id 1 --from myKeyringWallet
 ```
 
 
@@ -913,7 +913,7 @@ osmosisd tx swap join-swap-share-amount-out [token-in-denom] [token-in-max-amoun
 #### Example
 
 ```sh
-osmosisd tx swap join-swap-share-amount-out uoppy 1000000 1000000 --pool-id 1 --from myKeyringWallet
+osmosisd tx swap join-swap-share-amount-out poppy 1000000 1000000 --pool-id 1 --from myKeyringWallet
 ```
 
 
@@ -929,7 +929,7 @@ osmosisd tx swap exit-swap-share-amount-in [token-out-denom] [share-in-amount] [
 #### Example
 
 ```sh
-osmosisd tx swap exit-swap-share-amount-in uoppy 1000000 1000000 --pool-id 1 --from myKeyringWallet
+osmosisd tx swap exit-swap-share-amount-in poppy 1000000 1000000 --pool-id 1 --from myKeyringWallet
 ```
 
 ### Swap Exact Amount In
@@ -946,7 +946,7 @@ osmosisd tx swap swap-exact-amount-in [token-in] [token-out-min-amount] [flags]
 Swap 1 OSMO through pool 1 into at least 0.3 ATOM using MyKeyringWallet.
 
 ```sh
-osmosisd tx swap swap-exact-amount-in 1000000uoppy 300000 --swap-route-pool-ids 1 --swap-route-denoms ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 --from MyKeyringWallet
+osmosisd tx swap swap-exact-amount-in 1000000poppy 300000 --swap-route-pool-ids 1 --swap-route-denoms ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 --from MyKeyringWallet
 ```
 
 
@@ -964,7 +964,7 @@ osmosisd tx swap swap-exact-amount-out [token-out] [token-out-max-amount] [flags
 Swap 1 ATOM through pool 1 into at most 2.5 OSMO using MyKeyringWallet.
 
 ```sh
-osmosisd tx swap swap-exact-amount-out 1000000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 250000 --swap-route-pool-ids 1 --swap-route-denoms uoppy --from MyKeyringWallet
+osmosisd tx swap swap-exact-amount-out 1000000ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 250000 --swap-route-pool-ids 1 --swap-route-denoms poppy --from MyKeyringWallet
 ```
 
 ## Other resources

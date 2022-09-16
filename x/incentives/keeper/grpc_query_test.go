@@ -33,7 +33,7 @@ func (suite *KeeperTestSuite) TestGRPCGaugeByID() {
 		DistributeTo: lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
 			Denom:         "lptoken",
-			Duration:      time.Second,
+			Duration:      time.Hour * 24,
 		},
 		Coins:             coins,
 		NumEpochsPaidOver: 2,
@@ -65,7 +65,7 @@ func (suite *KeeperTestSuite) TestGRPCGauges() {
 		DistributeTo: lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
 			Denom:         "lptoken",
-			Duration:      time.Second,
+			Duration:      time.Hour * 24,
 		},
 		Coins:             coins,
 		NumEpochsPaidOver: 2,
@@ -100,7 +100,7 @@ func (suite *KeeperTestSuite) TestGRPCActiveGauges() {
 		DistributeTo: lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
 			Denom:         "lptoken",
-			Duration:      time.Second,
+			Duration:      time.Hour * 24,
 		},
 		Coins:             coins,
 		NumEpochsPaidOver: 2,
@@ -134,7 +134,7 @@ func (suite *KeeperTestSuite) TestGRPCActiveGaugesPerDenom() {
 		DistributeTo: lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
 			Denom:         "lptoken",
-			Duration:      time.Second,
+			Duration:      time.Hour * 24,
 		},
 		Coins:             coins,
 		NumEpochsPaidOver: 2,
@@ -166,7 +166,7 @@ func (suite *KeeperTestSuite) TestGRPCUpcomingGauges() {
 		DistributeTo: lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
 			Denom:         "lptoken",
-			Duration:      time.Second,
+			Duration:      time.Hour * 24,
 		},
 		Coins:             coins,
 		NumEpochsPaidOver: 2,
@@ -197,7 +197,7 @@ func (suite *KeeperTestSuite) TestGRPCUpcomingGaugesPerDenom() {
 		DistributeTo: lockuptypes.QueryCondition{
 			LockQueryType: lockuptypes.ByDuration,
 			Denom:         "lptoken",
-			Duration:      time.Second,
+			Duration:      time.Hour * 24,
 		},
 		Coins:             coins,
 		NumEpochsPaidOver: 2,
@@ -307,8 +307,8 @@ func (suite *KeeperTestSuite) TestGRPCToDistributeCoins() {
 	// create locks
 	addr1 := sdk.AccAddress([]byte("addr1---------------"))
 	addr2 := sdk.AccAddress([]byte("addr2---------------"))
-	suite.LockTokens(addr1, sdk.Coins{sdk.NewInt64Coin("lptoken", 10)}, time.Second)
-	suite.LockTokens(addr2, sdk.Coins{sdk.NewInt64Coin("lptoken", 10)}, 2*time.Second)
+	suite.LockTokens(addr1, sdk.Coins{sdk.NewInt64Coin("lptoken", 10)}, time.Hour*24)
+	suite.LockTokens(addr2, sdk.Coins{sdk.NewInt64Coin("lptoken", 10)}, 2*time.Hour*24)
 
 	// setup a gauge
 	gaugeID, _, coins, startTime := suite.SetupNewGauge(false, sdk.Coins{sdk.NewInt64Coin("stake", 10)})
@@ -367,8 +367,8 @@ func (suite *KeeperTestSuite) TestGRPCDistributedCoins() {
 	// create locks
 	addr1 := sdk.AccAddress([]byte("addr1---------------"))
 	addr2 := sdk.AccAddress([]byte("addr2---------------"))
-	suite.LockTokens(addr1, sdk.Coins{sdk.NewInt64Coin("lptoken", 10)}, time.Second)
-	suite.LockTokens(addr2, sdk.Coins{sdk.NewInt64Coin("lptoken", 10)}, 2*time.Second)
+	suite.LockTokens(addr1, sdk.Coins{sdk.NewInt64Coin("lptoken", 10)}, time.Hour*24)
+	suite.LockTokens(addr2, sdk.Coins{sdk.NewInt64Coin("lptoken", 10)}, 2*time.Hour*24)
 
 	// setup a gauge
 	gaugeID, _, coins, startTime := suite.SetupNewGauge(false, sdk.Coins{sdk.NewInt64Coin("stake", 10)})
