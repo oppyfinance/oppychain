@@ -37,5 +37,5 @@ release-job:
     description: '$CI_COMMIT_TAG'
     assets:
       links:
-        - name: 'test-release-$CI_COMMIT_TAG-oppyChaind'
+        - name: 'test-${CI_COMMIT_TAG}'
           url: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/test/${CI_COMMIT_TAG}/file.txt"
