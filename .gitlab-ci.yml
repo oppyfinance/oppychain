@@ -4,12 +4,13 @@ stages:          # List of stages for jobs, and their order of execution
   - release
 
 variables:
-  PACKAGE_REGISTRY_URL: "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/testingrelease/$CI_COMMIT_TAG/"
+  PACKAGE_REGISTRY_URL: "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/$CI_COMMIT_TAG/"
 
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
+    - echo $PACKAGE_REGISTRY_URL
     - make build
 
 upload-job:
