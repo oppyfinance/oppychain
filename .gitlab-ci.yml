@@ -12,6 +12,12 @@ build-job:       # This job runs in the build stage, which runs first.
   script:
     - echo $PACKAGE_REGISTRY_URL
     - make build
+    - mkdir bin
+    - cp oppyChaind bin/oppyChaind
+  artifacts:
+    paths:
+      - bin/
+
 
 upload-job:
   stage: upload
@@ -24,8 +30,7 @@ upload-job:
     - echo "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/test/${CI_COMMIT_TAG}/oppyChaind"
     - pwd
     - ls
-    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --data-binary @oppyChaind "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/test/${CI_COMMIT_TAG}/oppyChaind"'
-
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file bin/oppyChaind  "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/test/${CI_COMMIT_TAG}/oppyChaind"'
 
 release-job:
   stage: release
