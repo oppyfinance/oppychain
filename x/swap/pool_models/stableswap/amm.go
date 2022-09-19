@@ -15,6 +15,8 @@ var (
 )
 
 // solidly CFMM is xy(x^2 + y^2) = k
+//
+//nolint:golint,unused
 func cfmmConstant(xReserve, yReserve sdk.Dec) sdk.Dec {
 	xy := xReserve.Mul(yReserve)
 	x2 := xReserve.Mul(xReserve)
@@ -27,6 +29,8 @@ func cfmmConstant(xReserve, yReserve sdk.Dec) sdk.Dec {
 // outside of x and y (e.g. u = wz), and v is the sum
 // of their squares (e.g. v = w^2 + z^2).
 // When u = 1 and v = 0, this is equivalent to solidly's CFMM
+//
+//nolint:golint,unused
 func cfmmConstantMulti(xReserve, yReserve, uReserve, vSumSquares sdk.Dec) sdk.Dec {
 	xyu := xReserve.Mul(yReserve.Mul(uReserve))
 	x2 := xReserve.Mul(xReserve)
@@ -90,7 +94,7 @@ func solveCfmm(xReserve, yReserve, yIn sdk.Dec) sdk.Dec {
 
 	xmid := x.Mul(x)
 	x2py2 := xmid.Add(y.Mul(y))
-	//x2py2 := x.Mul(sdk.OneDec())
+	// x2py2 := x.Mul(sdk.OneDec())
 
 	xy := x.Mul(y)
 
@@ -124,33 +128,33 @@ func solveCfmm(xReserve, yReserve, yIn sdk.Dec) sdk.Dec {
 	e := xy.Mul(x2py2) // xy(x^2 + y^2)
 
 	// t1 = -27 (b + y)^2 e
-	//t1 := e.Mul(bpy2).MulInt64Mut(-27)
+	// t1 := e.Mul(bpy2).MulInt64Mut(-27)
 
-	//fixme need double check
+	// fixme need double check
 	mid := e.Mul(bpy2)
 	t1 := mid.MulInt64(-27)
-	//t1 := e.Add(sdk.ZeroDec())
+	// t1 := e.Add(sdk.ZeroDec())
 
 	// compute d = (b + y)^2 sqrt(729 e^2 + 108 (b+y)^8)
 	bpy8 := bpy4.Mul(bpy4)
 
-	//fixme need double check
+	// fixme need double check
 	e = e.Mul(e)
 	e = e.MulInt64(729)
 	bpy8 = bpy8.MulInt64(108)
 	e = e.Add(bpy8)
 	sqrt_inner := e.Add(sdk.ZeroDec())
-	//sqrt_inner := e.MulMut(e).MulInt64Mut(729).AddMut(bpy8.MulInt64Mut(108)) // 729 e^2 + 108 (b+y)^8
+	// sqrt_inner := e.MulMut(e).MulInt64Mut(729).AddMut(bpy8.MulInt64Mut(108)) // 729 e^2 + 108 (b+y)^8
 	sqrt, err := sqrt_inner.ApproxSqrt()
 	if err != nil {
 		panic(err)
 	}
 	sqrt = sqrt.Mul(bpy2)
 	d := sqrt.Add(sdk.ZeroDec())
-	//d := sqrt.MulMut(bpy2)
+	// d := sqrt.MulMut(bpy2)
 
 	// foo = (t1 + d)^(1/3)
-	//foo3 := t1.AddMut(d)
+	// foo3 := t1.AddMut(d)
 	t1 = t1.Add(d)
 	foo3 := t1.Add(sdk.ZeroDec())
 	foo, _ := foo3.ApproxRoot(3)
@@ -178,6 +182,8 @@ func solveCfmm(xReserve, yReserve, yIn sdk.Dec) sdk.Dec {
 // how many units `a` of x do we get out.
 // So we solve the following expression for `a`
 // xyz(x^2 + y^2 + w) = (x - a)(y + b)z((x - a)^2 + (y + b)^2 + w)
+//
+//nolint:golint,unused
 func solveCfmmMulti(xReserve, yReserve, wSumSquares, yIn sdk.Dec) sdk.Dec {
 	if !yReserve.Add(yIn).IsPositive() {
 		panic("invalid yReserve, yIn combo")
@@ -278,18 +284,21 @@ func solveCfmmMulti(xReserve, yReserve, wSumSquares, yIn sdk.Dec) sdk.Dec {
 	return a
 }
 
+//nolint:golint,unused
 func approxDecEqual(a, b, tol sdk.Dec) bool {
 	diff := a.Sub(b).Abs()
 	return diff.Quo(a).LTE(tol) && diff.Quo(b).LTE(tol)
 }
 
 var (
-	twodec    = sdk.MustNewDecFromStr("2.0")
-	threshold = sdk.NewDecWithPrec(1, 10) // Correct within a factor of 1 * 10^{-10}
+	twodec    = sdk.MustNewDecFromStr("2.0") //nolint:unused
+	threshold = sdk.NewDecWithPrec(1, 10)    // Correct within a factor of 1 * 10^{-10}
 )
 
 // solveCFMMBinarySearch searches the correct dx using binary search over constant K.
 // added for future extension
+//
+//nolint:golint,unused
 func solveCFMMBinarySearch(constantFunction func(sdk.Dec, sdk.Dec) sdk.Dec) func(sdk.Dec, sdk.Dec, sdk.Dec) sdk.Dec {
 	return func(xReserve, yReserve, yIn sdk.Dec) sdk.Dec {
 		k := constantFunction(xReserve, yReserve)
@@ -314,8 +323,8 @@ func solveCFMMBinarySearch(constantFunction func(sdk.Dec, sdk.Dec) sdk.Dec) func
 // solveCFMMBinarySearch searches the correct dx using binary search over constant K.
 // added for future extension
 
-//nolint:unused
-//func solveCFMMBinarySearchMulti(constantFunction func(sdk.Dec, sdk.Dec, sdk.Dec, sdk.Dec) sdk.Dec) func(sdk.Dec, sdk.Dec, sdk.Dec, sdk.Dec, sdk.Dec) sdk.Dec {
+//nolint:nolintlint,unused
+// func solveCFMMBinarySearchMulti(constantFunction func(sdk.Dec, sdk.Dec, sdk.Dec, sdk.Dec) sdk.Dec) func(sdk.Dec, sdk.Dec, sdk.Dec, sdk.Dec, sdk.Dec) sdk.Dec {
 //	return func(xReserve, yReserve, uReserve, wSumSquares, yIn sdk.Dec) sdk.Dec {
 //		k := constantFunction(xReserve, yReserve, uReserve, wSumSquares)
 //		yf := yReserve.Add(yIn)
@@ -336,7 +345,7 @@ func solveCFMMBinarySearch(constantFunction func(sdk.Dec, sdk.Dec) sdk.Dec) func
 //	}
 //}
 
-//nolint:unused
+//nolint:nolintlint,unused
 func spotPrice(baseReserve, quoteReserve sdk.Dec) sdk.Dec {
 	// y = baseAsset, x = quoteAsset
 	// Define f_{y -> x}(a) as the function that outputs the amount of tokens X you'd get by
@@ -360,7 +369,6 @@ func spotPrice(baseReserve, quoteReserve sdk.Dec) sdk.Dec {
 // returns outAmt as a decimal
 func (pa *Pool) calcOutAmtGivenIn(tokenIn sdk.Coin, tokenOutDenom string, swapFee sdk.Dec) (sdk.Dec, error) {
 	reserves, err := pa.getScaledPoolAmts(tokenIn.Denom, tokenOutDenom)
-
 	if err != nil {
 		return sdk.Dec{}, err
 	}
@@ -381,7 +389,7 @@ func (pa *Pool) calcInAmtGivenOut(tokenOut sdk.Coin, tokenInDenom string, swapFe
 	// We are solving for the amount of token in, cfmm(x,y) = cfmm(x + x_in, y - y_out)
 	// x = tokenInSupply, y = tokenOutSupply, yIn = -tokenOutAmount
 	cfmmIn := solveCfmm(tokenInSupply, tokenOutSupply, tokenOut.Amount.ToDec().Neg())
-	//fixme need double check
+	// fixme need double check
 	cfmmIn = cfmmIn.Neg()
 	inAmt := pa.getDescaledPoolAmt(tokenInDenom, cfmmIn)
 	return inAmt, nil

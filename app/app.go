@@ -193,7 +193,7 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
-		//this is oppychain module
+		// this is oppychain module
 		vaultmoduletypes.ModuleName:      {authtypes.Minter, authtypes.Burner},
 		swapmoduletypes.ModuleName:       {authtypes.Minter, authtypes.Burner},
 		lockupmoduletypes.ModuleName:     {authtypes.Minter, authtypes.Burner},
@@ -260,7 +260,7 @@ type App struct {
 
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
-	//this is the oppyChain module
+	// this is the oppyChain module
 	VaultKeeper          vaultmodulekeeper.Keeper
 	EpochsKeeper         epochskeeper.Keeper
 	SwapKeeper           swapkeeper.Keeper
@@ -304,7 +304,7 @@ func New(
 		minttypes.StoreKey, distrtypes.StoreKey, slashingtypes.StoreKey,
 		govtypes.StoreKey, paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey, feegrant.StoreKey,
 		evidencetypes.StoreKey, ibctransfertypes.StoreKey, capabilitytypes.StoreKey, monitoringptypes.StoreKey,
-		//this is oppychaion modules
+		// this is oppychaion modules
 		vaultmoduletypes.StoreKey,
 		epochsmoduletypes.StoreKey,
 		swapmoduletypes.StoreKey,
@@ -495,7 +495,7 @@ func New(
 
 	// NOTE: we may consider parsing `appOpts` inside module constructors. For the moment
 	// we prefer to be more strict in what arguments the modules expect.
-	var skipGenesisInvariants = cast.ToBool(appOpts.Get(crisis.FlagSkipGenesisInvariants))
+	skipGenesisInvariants := cast.ToBool(appOpts.Get(crisis.FlagSkipGenesisInvariants))
 
 	// NOTE: Any module instantiated in the module manager that is later modified
 	// must be passed by reference here.
@@ -619,7 +619,7 @@ func New(
 		ibctransfertypes.ModuleName,
 		feegrant.ModuleName,
 		monitoringptypes.ModuleName,
-		//this is oppychain modules
+		// this is oppychain modules
 		incentivesmoduletypes.ModuleName,
 		epochsmoduletypes.ModuleName,
 		vaultmoduletypes.ModuleName,
@@ -849,7 +849,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(ibctransfertypes.ModuleName)
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	paramsKeeper.Subspace(monitoringptypes.ModuleName)
-	//this is oppychain module
+	// this is oppychain module
 	paramsKeeper.Subspace(vaultmoduletypes.ModuleName)
 	paramsKeeper.Subspace(epochsmoduletypes.ModuleName)
 	paramsKeeper.Subspace(swapmoduletypes.ModuleName)

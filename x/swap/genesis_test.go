@@ -80,7 +80,6 @@ func TestSwapInitGenesis(t *testing.T) {
 }
 
 func TestGammExportGenesis(t *testing.T) {
-
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
@@ -131,7 +130,6 @@ func TestGammExportGenesis(t *testing.T) {
 }
 
 func TestMarshalUnmarshalGenesis(t *testing.T) {
-
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())

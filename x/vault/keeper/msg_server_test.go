@@ -2,8 +2,9 @@ package keeper_test
 
 import (
 	"context"
-	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"testing"
+
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"

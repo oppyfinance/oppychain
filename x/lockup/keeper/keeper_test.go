@@ -1,10 +1,11 @@
 package keeper_test
 
 import (
+	"testing"
+
 	"github.com/stretchr/testify/suite"
 	"gitlab.com/oppy-finance/oppychain/app/apptesting"
 	"gitlab.com/oppy-finance/oppychain/x/lockup/keeper"
-	"testing"
 )
 
 type KeeperTestSuite struct {

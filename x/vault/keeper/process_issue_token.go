@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"encoding/hex"
+
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	"github.com/cosmos/cosmos-sdk/types/bech32/legacybech32" //nolint
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"

@@ -37,7 +37,6 @@ func NewKeeper(
 	ps paramtypes.Subspace,
 	ak banktypes.AccountKeeper,
 	// this line is used by starport scaffolding # ibc/keeper/parameter
-
 ) *Keeper {
 	// set KeyTable if it has not already been set
 	if !ps.HasKeyTable() {

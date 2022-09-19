@@ -1,8 +1,9 @@
 package keeper
 
 import (
-	types2 "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"html"
+
+	types2 "github.com/cosmos/cosmos-sdk/x/auth/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
@@ -88,8 +89,8 @@ func (k Keeper) ProcessAccountLeft(ctx sdk.Context) {
 
 	// we only send fee to validators from the latest pool
 	if len(ret.Pools) != 0 {
-		transfered := k.sendFeesToValidators(ctx, ret.Pools[0])
-		if !transfered {
+		transferred := k.sendFeesToValidators(ctx, ret.Pools[0])
+		if !transferred {
 			ctx.Logger().Info("vault", "send Fee to validator", "not enough token to be paid as fee")
 		}
 	}

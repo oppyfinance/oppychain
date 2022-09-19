@@ -62,7 +62,7 @@ func TestEndOfEpochMintedCoinDistribution(t *testing.T) {
 
 		mintParams = app.MintKeeper.GetParams(ctx)
 		mintedCoin := app.MintKeeper.GetMinter(ctx).EpochProvision(mintParams)
-		//expectedRewardsAmount := app.MintKeeper.GetProportions(ctx, mintedCoin, mintParams.DistributionProportions.Staking).Amount
+		// expectedRewardsAmount := app.MintKeeper.GetProportions(ctx, mintedCoin, mintParams.DistributionProportions.Staking).Amount
 		expectedPoolIncentivesRewardsAmount := app.MintKeeper.GetProportions(ctx, mintedCoin, mintParams.DistributionProportions.PoolIncentives).Amount
 		expectedPoolIncentivesRewards := sdk.NewDecCoin("poppy", expectedPoolIncentivesRewardsAmount)
 		_ = expectedPoolIncentivesRewards
@@ -77,7 +77,7 @@ func TestEndOfEpochMintedCoinDistribution(t *testing.T) {
 		require.True(t, postSupply.IsEqual(presupply.Add(mintedCoin)))
 		// check community pool balance increase
 		feePoolNew := app.DistrKeeper.GetFeePool(ctx)
-		//the money of communitypool comes from 1. the ration it origial have and the assert from poolincentives as the weith
+		// the money of communitypool comes from 1. the ration it origial have and the assert from poolincentives as the weith
 		// here is zero. 2 from the community pool ratio itself.
 
 		require.Equal(t, feePoolOrigin.CommunityPool.Add(expectedRewards), feePoolNew.CommunityPool, height)
@@ -112,7 +112,6 @@ func TestEndOfEpochMintedCoinDistribution(t *testing.T) {
 }
 
 func TestEndOfEpochNoDistributionWhenIsNotYetStartTime(t *testing.T) {
-
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())

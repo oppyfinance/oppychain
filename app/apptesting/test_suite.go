@@ -1,11 +1,12 @@
 package apptesting
 
 import (
-	"github.com/stretchr/testify/require"
 	"os"
 	path2 "path"
 	"runtime"
 	"time"
+
+	"github.com/stretchr/testify/require"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -98,11 +99,11 @@ func (s *KeeperTestHelper) SetupValidator(bondStatus stakingtypes.BondStatus) sd
 	return valAddr
 }
 
-//func (s *KeeperTestHelper) SetupTokenFactory() {
+// func (s *KeeperTestHelper) SetupTokenFactory() {
 //	s.App.TokenFactoryKeeper.CreateModuleAccount(s.Ctx)
 //}
 
-//func (s *KeeperTestHelper) BeginNewBlock(executeNextEpoch bool) {
+// func (s *KeeperTestHelper) BeginNewBlock(executeNextEpoch bool) {
 //	var valAddr []byte
 //
 //	validators := s.App.StakingKeeper.GetAllValidators(s.Ctx)
@@ -120,7 +121,7 @@ func (s *KeeperTestHelper) SetupValidator(bondStatus stakingtypes.BondStatus) sd
 //	s.BeginNewBlockWithProposer(executeNextEpoch, valAddr)
 //}
 
-//func (s *KeeperTestHelper) BeginNewBlockWithProposer(executeNextEpoch bool, proposer sdk.ValAddress) {
+// func (s *KeeperTestHelper) BeginNewBlockWithProposer(executeNextEpoch bool, proposer sdk.ValAddress) {
 //	validator, found := s.App.StakingKeeper.GetValidator(s.Ctx, proposer)
 //	s.Assert().True(found)
 //
@@ -157,7 +158,7 @@ func (s *KeeperTestHelper) EndBlock() {
 	s.App.EndBlocker(s.Ctx, reqEndBlock)
 }
 
-//func (s *KeeperTestHelper) AllocateRewardsToValidator(valAddr sdk.ValAddress, rewardAmt sdk.Int) {
+// func (s *KeeperTestHelper) AllocateRewardsToValidator(valAddr sdk.ValAddress, rewardAmt sdk.Int) {
 //	validator, found := s.App.StakingKeeper.GetValidator(s.Ctx, valAddr)
 //	s.Require().True(found)
 //
@@ -173,7 +174,7 @@ func (s *KeeperTestHelper) EndBlock() {
 //}
 
 // SetupGammPoolsWithBondDenomMultiplier uses given multipliers to set initial pool supply of bond denom.
-//func (s *KeeperTestHelper) SetupGammPoolsWithBondDenomMultiplier(multipliers []sdk.Dec) []swaptypes.PoolI {
+// func (s *KeeperTestHelper) SetupGammPoolsWithBondDenomMultiplier(multipliers []sdk.Dec) []swaptypes.PoolI {
 //	s.App.SwapKeeper.SetParams(s.Ctx, swaptypes.Params{
 //		PoolCreationFee: sdk.Coins{},
 //	})
@@ -231,7 +232,7 @@ func (s *KeeperTestHelper) EndBlock() {
 
 // SwapAndSetSpotPrice runs a swap to set Spot price of a pool using arbitrary values
 // returns spot price after the arbitrary swap.
-//func (s *KeeperTestHelper) SwapAndSetSpotPrice(poolId uint64, fromAsset sdk.Coin, toAsset sdk.Coin) sdk.Dec {
+// func (s *KeeperTestHelper) SwapAndSetSpotPrice(poolId uint64, fromAsset sdk.Coin, toAsset sdk.Coin) sdk.Dec {
 //	// create a dummy account
 //	acc1 := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address().Bytes())
 //

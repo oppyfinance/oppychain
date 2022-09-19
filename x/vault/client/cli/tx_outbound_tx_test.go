@@ -2,10 +2,11 @@ package cli_test
 
 import (
 	"fmt"
-	"gitlab.com/oppy-finance/oppychain/utils"
 	"strconv"
 	"testing"
 	"time"
+
+	"gitlab.com/oppy-finance/oppychain/utils"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"

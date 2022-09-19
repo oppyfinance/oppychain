@@ -13,7 +13,7 @@ func InitGenesis(ctx sdk.Context, keeper keeper.Keeper, ak types.AccountKeeper, 
 	keeper.SetMinter(ctx, data.Minter)
 	keeper.SetParams(ctx, data.Params)
 
-	//it will create the module account if not exist
+	// it will create the module account if not exist
 	if !ak.HasAccount(ctx, ak.GetModuleAddress(types.ModuleName)) {
 		ak.GetModuleAccount(ctx, types.ModuleName)
 	}

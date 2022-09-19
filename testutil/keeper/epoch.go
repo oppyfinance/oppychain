@@ -1,6 +1,8 @@
 package keeper
 
 import (
+	"testing"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/store"
@@ -11,7 +13,6 @@ import (
 	tmdb "github.com/tendermint/tm-db"
 	"gitlab.com/oppy-finance/oppychain/x/epochs/keeper"
 	epochtypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
-	"testing"
 )
 
 func SetupEpochKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {

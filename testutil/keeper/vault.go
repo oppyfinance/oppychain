@@ -1,17 +1,18 @@
 package keeper
 
 import (
+	"os"
+	"runtime"
+	"testing"
+	"time"
+
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	oppyapp "gitlab.com/oppy-finance/oppychain/app"
-	"testing"
 
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
-	"os"
 	path2 "path"
-	"runtime"
-	"time"
 
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"

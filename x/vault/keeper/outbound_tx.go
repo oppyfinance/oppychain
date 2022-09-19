@@ -19,7 +19,6 @@ func (k Keeper) SetOutboundTx(ctx sdk.Context, outboundTx types.OutboundTx) {
 func (k Keeper) GetOutboundTx(
 	ctx sdk.Context,
 	requestID string,
-
 ) (val types.OutboundTx, found bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.OutboundTxKeyPrefix))
 
@@ -38,7 +37,6 @@ func (k Keeper) GetOutboundTx(
 func (k Keeper) RemoveOutboundTx(
 	ctx sdk.Context,
 	requestID string,
-
 ) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.OutboundTxKeyPrefix))
 	store.Delete(types.OutboundTxKey(

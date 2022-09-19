@@ -2,8 +2,9 @@ package keeper_test
 
 import (
 	gocontext "context"
-	"gitlab.com/oppy-finance/oppychain/app/apptesting"
 	"testing"
+
+	"gitlab.com/oppy-finance/oppychain/app/apptesting"
 
 	"github.com/stretchr/testify/suite"
 	"gitlab.com/oppy-finance/oppychain/x/mint/types"

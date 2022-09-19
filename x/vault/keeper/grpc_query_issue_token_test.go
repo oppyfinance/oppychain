@@ -1,8 +1,9 @@
 package keeper_test
 
 import (
-	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
+
+	"gitlab.com/oppy-finance/oppychain/utils"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"

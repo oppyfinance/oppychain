@@ -46,7 +46,7 @@ func (k Keeper) getCoinsFromGauges(gauges []types.Gauge) sdk.Coins {
 	return coins
 }
 
-//func (k Keeper) getCoinsFromIterator(ctx sdk.Context, iterator db.Iterator) sdk.Coins {
+// func (k Keeper) getCoinsFromIterator(ctx sdk.Context, iterator db.Iterator) sdk.Coins {
 //	return k.getCoinsFromGauges(k.getGaugesFromIterator(ctx, iterator))
 //}
 
@@ -84,14 +84,16 @@ func (k Keeper) SetGaugeWithRefKey(ctx sdk.Context, gauge *types.Gauge) error {
 	timeKey := getTimeKey(gauge.StartTime)
 	activeOrUpcomingGauge := gauge.IsActiveGauge(curTime) || gauge.IsUpcomingGauge(curTime)
 
-	if gauge.IsUpcomingGauge(curTime) {
-		combinedKeys := combineKeys(types.KeyPrefixUpcomingGauges, timeKey)
-		return k.CreateGaugeRefKeys(ctx, gauge, combinedKeys, activeOrUpcomingGauge)
-	} else if gauge.IsActiveGauge(curTime) {
-		combinedKeys := combineKeys(types.KeyPrefixActiveGauges, timeKey)
-		return k.CreateGaugeRefKeys(ctx, gauge, combinedKeys, activeOrUpcomingGauge)
+	if !gauge.IsUpcomingGauge(curTime) {
+		if gauge.IsActiveGauge(curTime) {
+			combinedKeys := combineKeys(types.KeyPrefixActiveGauges, timeKey)
+			return k.CreateGaugeRefKeys(ctx, gauge, combinedKeys, activeOrUpcomingGauge)
+		} else {
+			combinedKeys := combineKeys(types.KeyPrefixFinishedGauges, timeKey)
+			return k.CreateGaugeRefKeys(ctx, gauge, combinedKeys, activeOrUpcomingGauge)
+		}
 	} else {
-		combinedKeys := combineKeys(types.KeyPrefixFinishedGauges, timeKey)
+		combinedKeys := combineKeys(types.KeyPrefixUpcomingGauges, timeKey)
 		return k.CreateGaugeRefKeys(ctx, gauge, combinedKeys, activeOrUpcomingGauge)
 	}
 }

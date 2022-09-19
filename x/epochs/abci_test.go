@@ -1,14 +1,15 @@
 package epochs_test
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	oppyapp "gitlab.com/oppy-finance/oppychain/app"
-	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"os"
 	path2 "path"
 	"runtime"
 	"testing"
 	"time"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
@@ -18,7 +19,6 @@ import (
 )
 
 func TestEpochInfoChangesBeginBlockerAndInitGenesis(t *testing.T) {
-
 	var app *oppyapp.App
 	var ctx sdk.Context
 	var epochInfo types.EpochInfo
@@ -166,7 +166,6 @@ func TestEpochInfoChangesBeginBlockerAndInitGenesis(t *testing.T) {
 }
 
 func TestEpochStartingOneMonthAfterInitGenesis(t *testing.T) {
-
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())

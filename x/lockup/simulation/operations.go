@@ -24,9 +24,9 @@ const (
 	DefaultWeightMsgLockTokens        int = 10
 	DefaultWeightMsgBeginUnlockingAll int = 10
 	DefaultWeightMsgBeginUnlocking    int = 10
-	OpWeightMsgLockTokens                 = "op_weight_msg_create_lockup"
-	OpWeightMsgBeginUnlockingAll          = "op_weight_msg_begin_unlocking_all"
-	OpWeightMsgBeginUnlocking             = "op_weight_msg_begin_unlocking"
+	OpWeightMsgLockTokens                 = "op_weight_msg_create_lockup"       //nolint:gosec
+	OpWeightMsgBeginUnlockingAll          = "op_weight_msg_begin_unlocking_all" //nolint:gosec
+	OpWeightMsgBeginUnlocking             = "op_weight_msg_begin_unlocking"     //nolint:gosec
 )
 
 // WeightedOperations returns all the operations from the module with their respective weights.

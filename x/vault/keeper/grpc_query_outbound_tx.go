@@ -31,7 +31,6 @@ func (k Keeper) OutboundTxAll(c context.Context, req *types.QueryAllOutboundTxRe
 		outboundTxs = append(outboundTxs, outboundTx)
 		return nil
 	})
-
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}

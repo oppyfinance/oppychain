@@ -1,8 +1,9 @@
 package types
 
 import (
-	"github.com/cosmos/cosmos-sdk/x/auth/types"
 	time "time"
+
+	"github.com/cosmos/cosmos-sdk/x/auth/types"
 
 	epochstypes "gitlab.com/oppy-finance/oppychain/x/epochs/types"
 	lockuptypes "gitlab.com/oppy-finance/oppychain/x/lockup/types"
@@ -17,9 +18,8 @@ type BankKeeper interface {
 	HasSupply(ctx sdk.Context, denom string) bool
 
 	SendCoinsFromModuleToAccount(ctx sdk.Context, senderModule string, recipientAddr sdk.AccAddress, amt sdk.Coins) error
-	//SendCoinsFromModuleToManyAccounts(
-	//	ctx sdk.Context, senderModule string, recipientAddrs []sdk.AccAddress, amts []sdk.Coins,
-	//) error
+	// SendCoinsFromModuleToManyAccounts(
+	//	ctx sdk.Context, senderModule string, recipientAddrs []sdk.AccAddress, amts []sdk.Coins) error
 
 	BlockedAddr(addr sdk.AccAddress) bool
 

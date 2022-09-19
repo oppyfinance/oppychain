@@ -25,8 +25,8 @@ func (k Keeper) AfterEpochEnd(ctx sdk.Context, epochIdentifier string, epochNumb
 		}
 
 		// distribute due to epoch event
-		//TODO we disable the increate the capacity of the event manager
-		//ctx.EventManager().IncreaseCapacity(2e6)
+		// TODO we disable the increate the capacity of the event manager
+		// ctx.EventManager().IncreaseCapacity(2e6)
 		gauges = k.GetActiveGauges(ctx)
 		// only distribute to active gauges that are for native denoms
 		// or non-perpetual and for synthetic denoms.

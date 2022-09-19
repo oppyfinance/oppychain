@@ -1,15 +1,16 @@
 package keeper_test
 
 import (
-	"github.com/stretchr/testify/require"
-	oppyapp "gitlab.com/oppy-finance/oppychain/app"
-	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"math/rand"
 	"os"
 	path2 "path"
 	"runtime"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/require"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
+	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 
 	"gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
 	balancertypes "gitlab.com/oppy-finance/oppychain/x/swap/pool_models/balancer"
@@ -61,7 +62,6 @@ func setupPools(maxNumPoolsToGen int) []swaptypes.PoolI {
 }
 
 func BenchmarkSwapPoolSerialization(b *testing.B) {
-
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())

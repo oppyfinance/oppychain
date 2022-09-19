@@ -113,17 +113,17 @@ func (pa *Pool) SubTotalShares(amt sdk.Int) {
 // If the same denom's PoolAsset exists, will return error.
 // The list of PoolAssets must be sorted. This is done to enable fast searching for a PoolAsset by denomination.
 // TODO: Unify story for validation of []PoolAsset, some is here, some is in CreatePool.ValidateBasic()
-func (pa *Pool) setInitialPoolAssets(PoolAssets []PoolAsset) error {
+func (pa *Pool) setInitialPoolAssets(poolAssets []PoolAsset) error {
 	exists := make(map[string]bool)
 	for _, asset := range pa.PoolAssets {
 		exists[asset.Token.Denom] = true
 	}
 
 	newTotalWeight := pa.TotalWeight
-	scaledPoolAssets := make([]PoolAsset, 0, len(PoolAssets))
+	scaledPoolAssets := make([]PoolAsset, 0, len(poolAssets))
 
 	// TODO: Refactor this into PoolAsset.validate()
-	for _, asset := range PoolAssets {
+	for _, asset := range poolAssets {
 		if asset.Token.Amount.LTE(sdk.ZeroInt()) {
 			return fmt.Errorf("can't add the zero or negative balance of token")
 		}
@@ -146,7 +146,7 @@ func (pa *Pool) setInitialPoolAssets(PoolAssets []PoolAsset) error {
 
 	// TODO: Change this to a more efficient sorted insert algorithm.
 	// Furthermore, consider changing the underlying data type to allow in-place modification if the
-	// number of PoolAssets is expected to be large.
+	// number of poolAssets is expected to be large.
 	pa.PoolAssets = append(pa.PoolAssets, scaledPoolAssets...)
 	SortPoolAssetsByDenom(pa.PoolAssets)
 
@@ -246,34 +246,34 @@ func (pa Pool) getPoolAssetAndIndex(denom string) (int, PoolAsset, error) {
 }
 
 func (p Pool) parsePoolAssetsByDenoms(tokenADenom, tokenBDenom string) (
-	Aasset PoolAsset, Basset PoolAsset, err error,
+	aAsset PoolAsset, bAsset PoolAsset, err error,
 ) {
-	Aasset, found1 := GetPoolAssetByDenom(p.PoolAssets, tokenADenom)
-	Basset, found2 := GetPoolAssetByDenom(p.PoolAssets, tokenBDenom)
+	aAsset, found1 := GetPoolAssetByDenom(p.PoolAssets, tokenADenom)
+	bAsset, found2 := GetPoolAssetByDenom(p.PoolAssets, tokenBDenom)
 	if !(found1 && found2) {
-		return Aasset, Basset, errors.New("one of the provided pool denoms does not exist in pool")
+		return aAsset, bAsset, errors.New("one of the provided pool denoms does not exist in pool")
 	}
-	return Aasset, Basset, nil
+	return aAsset, bAsset, nil
 }
 
 func (p Pool) parsePoolAssets(tokensA sdk.Coins, tokenBDenom string) (
-	tokenA sdk.Coin, Aasset PoolAsset, Basset PoolAsset, err error,
+	tokenA sdk.Coin, aasset PoolAsset, bAasset PoolAsset, err error,
 ) {
 	if len(tokensA) != 1 {
-		return tokenA, Aasset, Basset, errors.New("expected tokensB to be of length one")
+		return tokenA, aasset, bAasset, errors.New("expected tokensB to be of length one")
 	}
-	Aasset, Basset, err = p.parsePoolAssetsByDenoms(tokensA[0].Denom, tokenBDenom)
-	return tokensA[0], Aasset, Basset, err
+	aasset, bAasset, err = p.parsePoolAssetsByDenoms(tokensA[0].Denom, tokenBDenom)
+	return tokensA[0], aasset, bAasset, err
 }
 
 func (p Pool) parsePoolAssetsCoins(tokensA sdk.Coins, tokensB sdk.Coins) (
-	Aasset PoolAsset, Basset PoolAsset, err error,
+	aAsset PoolAsset, bAsset PoolAsset, err error,
 ) {
 	if len(tokensB) != 1 {
-		return Aasset, Basset, errors.New("expected tokensA to be of length one")
+		return aAsset, bAsset, errors.New("expected tokensA to be of length one")
 	}
-	_, Aasset, Basset, err = p.parsePoolAssets(tokensA, tokensB[0].Denom)
-	return Aasset, Basset, err
+	_, aAsset, bAsset, err = p.parsePoolAssets(tokensA, tokensB[0].Denom)
+	return aAsset, bAsset, err
 }
 
 func (p *Pool) IncreaseLiquidity(sharesOut sdk.Int, coinsIn sdk.Coins) {

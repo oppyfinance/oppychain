@@ -1,6 +1,9 @@
 package app_test
 
 import (
+	"os"
+	"testing"
+
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/simapp"
@@ -12,8 +15,6 @@ import (
 	"github.com/stretchr/testify/require"
 	abci "github.com/tendermint/tendermint/abci/types"
 	"gitlab.com/oppy-finance/oppychain/app"
-	"os"
-	"testing"
 )
 
 func init() {
