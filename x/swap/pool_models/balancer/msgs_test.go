@@ -22,7 +22,7 @@ func TestMsgCreateBalancerPool(t *testing.T) {
 	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	//invalidAddr := sdk.AccAddress("invalid")
+	// invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgCreateBalancerPool) MsgCreateBalancerPool) MsgCreateBalancerPool {
 		testPoolAsset := []PoolAsset{

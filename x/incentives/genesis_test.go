@@ -21,7 +21,6 @@ import (
 )
 
 func TestIncentivesExportGenesis(t *testing.T) {
-
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
@@ -72,7 +71,6 @@ func TestIncentivesExportGenesis(t *testing.T) {
 }
 
 func TestIncentivesInitGenesis(t *testing.T) {
-
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())

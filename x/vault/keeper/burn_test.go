@@ -2,6 +2,9 @@ package keeper_test
 
 import (
 	"fmt"
+	"strconv"
+	"testing"
+
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -10,8 +13,6 @@ import (
 	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
-	"strconv"
-	"testing"
 )
 
 func prepare(t *testing.T) (*oppyapp.App, sdk.Context, []sdk.AccAddress) {

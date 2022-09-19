@@ -2,6 +2,11 @@ package keeper_test
 
 import (
 	"encoding/hex"
+	"math/rand"
+	"strconv"
+	"testing"
+	"time"
+
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	"github.com/cosmos/cosmos-sdk/types/simulation"
 	types2 "github.com/cosmos/cosmos-sdk/x/staking/types"
@@ -9,14 +14,9 @@ import (
 	"github.com/tendermint/tendermint/crypto/secp256k1"
 	"gitlab.com/oppy-finance/oppychain/testutil/simapp"
 	"gitlab.com/oppy-finance/oppychain/utils"
-	"strconv"
-	"testing"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
-
-	"math/rand"
-	"time"
 
 	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
 	"gitlab.com/oppy-finance/oppychain/x/vault/keeper"
@@ -92,7 +92,8 @@ func TestOutboundTxMsgServerCreate(t *testing.T) {
 	r := rand.New(rand.NewSource(time.Now().Unix()))
 	accs := simulation.RandomAccounts(r, 1)
 
-	expected := &types.MsgCreateOutboundTx{Creator: accs[0].Address,
+	expected := &types.MsgCreateOutboundTx{
+		Creator:     accs[0].Address,
 		RequestID:   strconv.Itoa(12),
 		BlockHeight: "100",
 		OutboundTx:  "123",
@@ -102,7 +103,8 @@ func TestOutboundTxMsgServerCreate(t *testing.T) {
 	_, err := srv.CreateOutboundTx(wctx, expected)
 	require.Error(t, err)
 
-	expected = &types.MsgCreateOutboundTx{Creator: creators[0],
+	expected = &types.MsgCreateOutboundTx{
+		Creator:     creators[0],
 		RequestID:   strconv.Itoa(1),
 		BlockHeight: "100",
 		OutboundTx:  "123",
@@ -120,7 +122,8 @@ func TestOutboundTxMsgServerCreate(t *testing.T) {
 	require.Equal(t, len(rst.Items), 1)
 	require.Equal(t, expected.Creator.String(), rst.Items["123"].Entry[0].Address.String())
 
-	expected = &types.MsgCreateOutboundTx{Creator: creators[1],
+	expected = &types.MsgCreateOutboundTx{
+		Creator:     creators[1],
 		RequestID:   strconv.Itoa(1),
 		BlockHeight: "100",
 		OutboundTx:  "123",

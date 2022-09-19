@@ -9,8 +9,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/rest"
 )
 
-// REST Variable names
-// nolint
+//nolint:nolintlint    // nolint
+//nolint:gofumpt    // REST Variable names
 const (
 	LockID           = "lock-id"
 	RestOwnerAddress = "owner"

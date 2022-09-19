@@ -49,7 +49,8 @@ var (
 //
 // CalcJoinPoolShares calls calcSingleAssetJoin. As a result, we can reuse
 // the same test cases for unit testing both calcSingleAssetJoin and
-//  CalcJoinPoolShares with only one tokensIn.
+//
+//	CalcJoinPoolShares with only one tokensIn.
 type calcJoinSharesTestCase struct {
 	name         string
 	swapFee      sdk.Dec

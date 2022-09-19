@@ -18,7 +18,6 @@ import (
 )
 
 func TestEpochsExportGenesis(t *testing.T) {
-
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
@@ -60,7 +59,6 @@ func TestEpochsExportGenesis(t *testing.T) {
 }
 
 func TestEpochsInitGenesis(t *testing.T) {
-
 	dir := os.TempDir()
 	pc, _, _, _ := runtime.Caller(1)
 	tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())

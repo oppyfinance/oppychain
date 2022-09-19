@@ -1,11 +1,11 @@
 package cli
 
 import (
-    "strconv"
-	
-	"github.com/spf13/cobra"
-    "github.com/cosmos/cosmos-sdk/client"
+	"strconv"
+
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
+	"github.com/spf13/cobra"
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
@@ -17,7 +17,6 @@ func CmdGetQuota() *cobra.Command {
 		Short: "Query get_quota",
 		Args:  cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
@@ -25,22 +24,18 @@ func CmdGetQuota() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryGetQuotaRequest{
-				
-            }
-
-            
+			params := &types.QueryGetQuotaRequest{}
 
 			res, err := queryClient.GetQuota(cmd.Context(), params)
-            if err != nil {
-                return err
-            }
+			if err != nil {
+				return err
+			}
 
-            return clientCtx.PrintProto(res)
+			return clientCtx.PrintProto(res)
 		},
 	}
 
 	flags.AddQueryFlagsToCmd(cmd)
 
-    return cmd
+	return cmd
 }

@@ -2,9 +2,10 @@ package network
 
 import (
 	"fmt"
-	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
 	"time"
+
+	"gitlab.com/oppy-finance/oppychain/utils"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/crypto/hd"
@@ -64,6 +65,7 @@ func DefaultConfig() network.Config {
 				baseapp.SetMinGasPrices(val.AppConfig.MinGasPrices),
 			)
 		},
+
 		GenesisState:    app.ModuleBasics.DefaultGenesis(encoding.Marshaler),
 		TimeoutCommit:   2 * time.Second,
 		ChainID:         "chain-" + tmrand.NewRand().Str(6),

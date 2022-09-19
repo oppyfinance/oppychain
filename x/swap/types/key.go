@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
@@ -24,7 +25,7 @@ var (
 	KeyTotalLiquidity = []byte{0x03}
 )
 
-//func MustGetPoolIdFromShareDenom(denom string) uint64 {
+// func MustGetPoolIdFromShareDenom(denom string) uint64 {
 //	numberStr := strings.TrimLeft(denom, "swap/pool/")
 //	number, err := strconv.Atoi(numberStr)
 //	if err != nil {
@@ -33,7 +34,7 @@ var (
 //	return uint64(number)
 //}
 
-//func ValidatePoolShareDenom(denom string) error {
+// func ValidatePoolShareDenom(denom string) error {
 //	numberStr := strings.TrimLeft(denom, "swap/pool/")
 //	_, err := strconv.Atoi(numberStr)
 //	if err != nil {

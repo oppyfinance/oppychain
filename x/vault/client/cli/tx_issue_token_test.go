@@ -78,7 +78,8 @@ func TestCreateIssueTokenFail(t *testing.T) {
 	ctx := val.ClientCtx
 	id := "0"
 
-	net.WaitForHeightWithTimeout(10, time.Minute)
+	_, err := net.WaitForHeightWithTimeout(10, time.Minute)
+	assert.Nil(t, err)
 
 	fields := []string{"100vvusd", "oppy1fase3jev95k9lsj6hn0echk4e37kyhpspmluqd"}
 	for _, tc := range []struct {
@@ -95,7 +96,7 @@ func TestCreateIssueTokenFail(t *testing.T) {
 				fmt.Sprintf("--%s=%s", flags.FlagFrom, val.Address.String()),
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				//fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
+				// fmt.Sprintf("--%s=%s", flags.FlagFees, sdk.NewCoins(sdk.NewCoin(net.Config.BondDenom, sdk.NewInt(10))).String()),
 			},
 		},
 	} {
@@ -131,7 +132,7 @@ func networkPrepare(t *testing.T, maxValidator uint32, addr string) (*network.Ne
 	state.Params.BlockChurnInterval = 3
 	buf, err := cfg.Codec.MarshalJSON(&state)
 	require.NoError(t, err)
-	stateBank.Balances = []banktypes.Balance{banktypes.Balance{Address: addr, Coins: sdk.Coins{sdk.NewCoin("stake", sdk.NewInt(100000))}}}
+	stateBank.Balances = []banktypes.Balance{{Address: addr, Coins: sdk.Coins{sdk.NewCoin("stake", sdk.NewInt(100000))}}}
 	bankBuf, err := cfg.Codec.MarshalJSON(&stateBank)
 	require.NoError(t, err)
 	cfg.GenesisState[banktypes.ModuleName] = bankBuf
@@ -160,7 +161,8 @@ func TestCreateIssue(t *testing.T) {
 	assert.Nil(t, err)
 	net, _ := networkPrepare(t, 3, v.GetAddress().String())
 
-	net.WaitForHeightWithTimeout(5, time.Minute)
+	_, err = net.WaitForHeightWithTimeout(5, time.Minute)
+	assert.NoError(t, err)
 	val := net.Validators[0]
 	ctx := val.ClientCtx
 	key := ctx.Keyring

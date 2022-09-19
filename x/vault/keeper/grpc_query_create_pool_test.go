@@ -1,8 +1,9 @@
 package keeper_test
 
 import (
-	"gitlab.com/oppy-finance/oppychain/utils"
 	"testing"
+
+	"gitlab.com/oppy-finance/oppychain/utils"
 
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -68,7 +69,6 @@ func TestCreatePoolQuerySingle(t *testing.T) {
 }
 
 func TestCreatePoolQueryPaginated(t *testing.T) {
-
 	var addresses []sdk.AccAddress
 	for i := 0; i < 3; i++ {
 		sk := ed25519.GenPrivKey()

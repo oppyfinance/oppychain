@@ -2,9 +2,10 @@ package simulation_test
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
-	"testing"
 
 	"github.com/stretchr/testify/require"
 
@@ -16,7 +17,6 @@ import (
 )
 
 func TestDecodeStore(t *testing.T) {
-
 	interfaceRegistry := codectypes.NewInterfaceRegistry()
 	cdc := codec.NewProtoCodec(interfaceRegistry)
 

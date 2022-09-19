@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
@@ -32,7 +33,6 @@ func (k Keeper) GetAllValidators(goCtx context.Context, req *types.QueryAllValid
 	}
 
 	return &types.QueryAllValidatorsResponse{AllValidators: allValidators, Pagination: pageRes}, nil
-
 }
 
 func (k Keeper) GetValidators(c context.Context, req *types.QueryGetValidatorsRequest) (*types.QueryGetValidatorsResponse, error) {

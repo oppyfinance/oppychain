@@ -1,12 +1,13 @@
 package lockup_test
 
 import (
-	"github.com/tendermint/spm/cosmoscmd"
 	"os"
 	path2 "path"
 	"runtime"
 	"testing"
 	"time"
+
+	"github.com/tendermint/spm/cosmoscmd"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/assert"

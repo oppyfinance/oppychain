@@ -2,11 +2,12 @@ package simapp
 
 import (
 	"encoding/json"
+	"time"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
 	cosmoscmd3 "github.com/ignite-hq/cli/ignite/pkg/cosmoscmd"
-	"time"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	"github.com/tendermint/spm/cosmoscmd"

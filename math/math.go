@@ -12,9 +12,12 @@ var powPrecision, _ = sdk.NewDecFromStr("0.00000001")
 
 // Singletons
 var zero = sdk.ZeroDec()
-var oneHalf = sdk.MustNewDecFromStr("0.5")
-var one = sdk.OneDec()
-var two = sdk.MustNewDecFromStr("2")
+
+var (
+	oneHalf = sdk.MustNewDecFromStr("0.5")
+	one     = sdk.OneDec()
+	two     = sdk.MustNewDecFromStr("2")
+)
 
 /*********************************************************/
 
@@ -133,7 +136,7 @@ func PowApprox(base sdk.Dec, exp sdk.Dec, precision sdk.Dec) sdk.Dec {
 		// On this line, bigK == i.
 		bigK = zero.Add(sdk.NewDec(i)) // TODO: O(n) bigint allocation happens
 
-		//term.MulMut(c).MulMut(x).QuoMut(bigK)
+		// term.MulMut(c).MulMut(x).QuoMut(bigK)
 
 		term = MulMut(term, c)
 		term = MulMut(term, x)

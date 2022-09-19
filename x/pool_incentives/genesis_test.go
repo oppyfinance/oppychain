@@ -1,13 +1,14 @@
 package pool_incentives_test
 
 import (
-	"github.com/tendermint/spm/cosmoscmd"
-	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"os"
 	path2 "path"
 	"runtime"
 	"testing"
 	"time"
+
+	"github.com/tendermint/spm/cosmoscmd"
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
@@ -20,26 +21,28 @@ import (
 	"gitlab.com/oppy-finance/oppychain/x/pool_incentives/types"
 )
 
-var now = time.Now().UTC()
-var testGenesis = types.GenesisState{
-	Params: types.Params{
-		MintedDenom: "uoppy",
-	},
-	LockableDurations: []time.Duration{
-		time.Second,
-		time.Minute,
-		time.Hour,
-	},
-	DistrInfo: &types.DistrInfo{
-		TotalWeight: sdk.NewInt(1),
-		Records: []types.DistrRecord{
-			{
-				GaugeId: 1,
-				Weight:  sdk.NewInt(1),
+var (
+	now         = time.Now().UTC()
+	testGenesis = types.GenesisState{
+		Params: types.Params{
+			MintedDenom: "uoppy",
+		},
+		LockableDurations: []time.Duration{
+			time.Second,
+			time.Minute,
+			time.Hour,
+		},
+		DistrInfo: &types.DistrInfo{
+			TotalWeight: sdk.NewInt(1),
+			Records: []types.DistrRecord{
+				{
+					GaugeId: 1,
+					Weight:  sdk.NewInt(1),
+				},
 			},
 		},
-	},
-}
+	}
+)
 
 func TestMarshalUnmarshalGenesis(t *testing.T) {
 	dir := os.TempDir()
@@ -63,7 +66,6 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 
 	genesisExported := am.ExportGenesis(ctx, appCodec)
 	assert.NotPanics(t, func() {
-
 		dir := os.TempDir()
 		pc, _, _, _ := runtime.Caller(1)
 		tempPath := path2.Join(dir, runtime.FuncForPC(pc).Name())
@@ -76,7 +78,6 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 		ctx = ctx.WithBlockTime(now.Add(time.Second))
 		am := poolincentives.NewAppModule(appCodec, app.PoolIncentivesKeeper)
 		am.InitGenesis(ctx, appCodec, genesisExported)
-
 	})
 }
 

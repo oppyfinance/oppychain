@@ -2,10 +2,11 @@ package keeper_test
 
 import (
 	"encoding/hex"
+	"testing"
+
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	types2 "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"gitlab.com/oppy-finance/oppychain/utils"
-	"testing"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/assert"

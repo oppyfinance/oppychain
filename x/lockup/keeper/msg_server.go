@@ -122,7 +122,8 @@ func (server msgServer) BeginUnlockingAll(goCtx context.Context, msg *types.MsgB
 		),
 	}
 	for _, lock := range unlocks {
-		events = events.AppendEvent(createBeginUnlockEvent(&lock))
+		eachLock := lock
+		events = events.AppendEvent(createBeginUnlockEvent(&eachLock))
 	}
 	ctx.EventManager().EmitEvents(events)
 

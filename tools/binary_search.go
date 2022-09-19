@@ -64,7 +64,8 @@ func BinarySearch(f func(input sdk.Int) (sdk.Int, error),
 	upperbound sdk.Int,
 	targetOutput sdk.Int,
 	errTolerance ErrTolerance,
-	maxIterations int) (sdk.Int, error) {
+	maxIterations int,
+) (sdk.Int, error) {
 	// Setup base case of loop
 	curEstimate := lowerbound.Add(upperbound).QuoRaw(2)
 	curOutput, err := f(curEstimate)
@@ -74,12 +75,14 @@ func BinarySearch(f func(input sdk.Int) (sdk.Int, error),
 	curIteration := 0
 	for ; curIteration < maxIterations; curIteration += 1 {
 		compRes := errTolerance.Compare(curOutput, targetOutput)
-		if compRes > 0 {
-			upperbound = curEstimate
-		} else if compRes < 0 {
-			lowerbound = curEstimate
+		if compRes <= 0 {
+			if compRes < 0 {
+				lowerbound = curEstimate
+			} else {
+				break
+			}
 		} else {
-			break
+			upperbound = curEstimate
 		}
 		curEstimate = lowerbound.Add(upperbound).QuoRaw(2)
 		curOutput, err = f(curEstimate)
