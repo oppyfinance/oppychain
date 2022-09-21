@@ -474,9 +474,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryGetQuota
    * @summary Queries a list of GetQuota items.
-   * @request GET:/oppy-finance/oppychain/vault/get_quota
+   * @request GET:/oppy-finance/oppychain/vault/get_quota/{query_length}
    */
   queryGetQuota = (
+    query_length: number,
     query?: {
       "pagination.key"?: string;
       "pagination.offset"?: string;
@@ -487,7 +488,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<VaultQueryGetQuotaResponse, RpcStatus>({
-      path: `/oppy-finance/oppychain/vault/get_quota`,
+      path: `/oppy-finance/oppychain/vault/get_quota/${query_length}`,
       method: "GET",
       query: query,
       format: "json",

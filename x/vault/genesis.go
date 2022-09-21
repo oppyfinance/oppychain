@@ -26,6 +26,12 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 		k.SetCreatePool(ctx, *elem)
 	}
 
+	// FIXME we assume that the first and the second pool info is for the latest two pool
+	// set the latest two pool info
+	if len(genState.CreatePoolList) > 1 {
+		k.UpdateLastTwoPool(ctx, *genState.CreatePoolList[0])
+		k.UpdateLastTwoPool(ctx, *genState.CreatePoolList[1])
+	}
 	// set all the validator info
 	for _, elem := range genState.ValidatorinfoList {
 		k.SetValidators(ctx, strconv.FormatInt(elem.Height, 10), *elem)

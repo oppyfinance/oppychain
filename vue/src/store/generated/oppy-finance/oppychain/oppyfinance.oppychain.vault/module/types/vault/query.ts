@@ -57,6 +57,7 @@ export interface QueryAllValidatorsResponse {
 }
 
 export interface QueryGetQuotaRequest {
+  query_length: number;
   pagination: PageRequest | undefined;
 }
 
@@ -903,15 +904,18 @@ export const QueryAllValidatorsResponse = {
   },
 };
 
-const baseQueryGetQuotaRequest: object = {};
+const baseQueryGetQuotaRequest: object = { query_length: 0 };
 
 export const QueryGetQuotaRequest = {
   encode(
     message: QueryGetQuotaRequest,
     writer: Writer = Writer.create()
   ): Writer {
+    if (message.query_length !== 0) {
+      writer.uint32(8).int32(message.query_length);
+    }
     if (message.pagination !== undefined) {
-      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+      PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -924,6 +928,9 @@ export const QueryGetQuotaRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          message.query_length = reader.int32();
+          break;
+        case 2:
           message.pagination = PageRequest.decode(reader, reader.uint32());
           break;
         default:
@@ -936,6 +943,11 @@ export const QueryGetQuotaRequest = {
 
   fromJSON(object: any): QueryGetQuotaRequest {
     const message = { ...baseQueryGetQuotaRequest } as QueryGetQuotaRequest;
+    if (object.query_length !== undefined && object.query_length !== null) {
+      message.query_length = Number(object.query_length);
+    } else {
+      message.query_length = 0;
+    }
     if (object.pagination !== undefined && object.pagination !== null) {
       message.pagination = PageRequest.fromJSON(object.pagination);
     } else {
@@ -946,6 +958,8 @@ export const QueryGetQuotaRequest = {
 
   toJSON(message: QueryGetQuotaRequest): unknown {
     const obj: any = {};
+    message.query_length !== undefined &&
+      (obj.query_length = message.query_length);
     message.pagination !== undefined &&
       (obj.pagination = message.pagination
         ? PageRequest.toJSON(message.pagination)
@@ -955,6 +969,11 @@ export const QueryGetQuotaRequest = {
 
   fromPartial(object: DeepPartial<QueryGetQuotaRequest>): QueryGetQuotaRequest {
     const message = { ...baseQueryGetQuotaRequest } as QueryGetQuotaRequest;
+    if (object.query_length !== undefined && object.query_length !== null) {
+      message.query_length = object.query_length;
+    } else {
+      message.query_length = 0;
+    }
     if (object.pagination !== undefined && object.pagination !== null) {
       message.pagination = PageRequest.fromPartial(object.pagination);
     } else {

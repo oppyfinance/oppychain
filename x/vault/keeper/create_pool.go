@@ -13,6 +13,54 @@ func (k Keeper) SetCreatePool(ctx sdk.Context, createPool types.CreatePool) {
 	store.Set(types.KeyPrefix(createPool.BlockHeight), b)
 }
 
+// UpdateLastTwoPool updates the last two pool
+func (k Keeper) UpdateLastTwoPool(ctx sdk.Context, latestPool types.CreatePool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.LastTwoPoolKey))
+
+	c := sdk.WrapSDKContext(ctx)
+	minNodesNeed := k.calMinSupportNodes(c)
+	find := false
+	for _, el := range latestPool.Proposal {
+		if int32(len(el.Nodes)) >= minNodesNeed {
+			find = true
+			break
+		}
+	}
+
+	if !find {
+		return
+	}
+
+	b := k.cdc.MustMarshal(&latestPool)
+	previous := store.Get(types.KeyPrefix("new"))
+	if previous == nil {
+		store.Set(types.KeyPrefix("new"), b)
+		return
+	}
+	var previousItem types.CreatePool
+	k.cdc.MustUnmarshal(previous, &previousItem)
+
+	// check whether have been submitted by others
+	if previousItem.BlockHeight == latestPool.BlockHeight {
+		store.Set(types.KeyPrefix("new"), b)
+		return
+	}
+
+	store.Set(types.KeyPrefix("old"), previous)
+	store.Set(types.KeyPrefix("new"), b)
+}
+
+func (k Keeper) GetLatestTwoPool(ctx sdk.Context) []*types.CreatePool {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.LastTwoPoolKey))
+	previous := store.Get(types.KeyPrefix("old"))
+	latest := store.Get(types.KeyPrefix("new"))
+
+	var o1, n1 types.CreatePool
+	k.cdc.MustUnmarshal(previous, &o1)
+	k.cdc.MustUnmarshal(latest, &n1)
+	return []*types.CreatePool{&n1, &o1}
+}
+
 // GetCreatePool returns a createPool from its index
 func (k Keeper) GetCreatePool(ctx sdk.Context, index string) (val types.CreatePool, found bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.CreatePoolKey))
