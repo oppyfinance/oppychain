@@ -27,13 +27,13 @@ unit-test-job:   # This job runs in the test stage.
     - sleep 1
     - echo "Code coverage is 90%"
 
-#lint_code:
-#  image: golangci/golangci-lint
-#  stage: test
-#  before_script:
-#    - go get mvdan.cc/gofumpt
-#  script:
-#    - golangci-lint run -v
+lint_code:
+  image: golangci/golangci-lint
+  stage: test
+  before_script:
+    - go get mvdan.cc/gofumpt
+  script:
+    - golangci-lint run -v
 
 # deploy-job:      # This job runs in the deploy stage.
 #   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
