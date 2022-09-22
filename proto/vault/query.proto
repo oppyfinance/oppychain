@@ -28,7 +28,7 @@ service Query {
 
 // Queries a list of GetValidators items.
 	rpc GetValidators(QueryGetValidatorsRequest) returns (QueryGetValidatorsResponse) {
-		option (google.api.http).get = "/oppy/oppychain/vault/get_validators";
+		option (google.api.http).get = "/oppy/oppychain/vault/get_validators/{height}";
 	}
 
 	// Queries a list of GetValidators items.

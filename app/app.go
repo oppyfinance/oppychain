@@ -294,6 +294,9 @@ func New(
 	cdc := encodingConfig.Amino
 	interfaceRegistry := encodingConfig.InterfaceRegistry
 
+	// we set the default power deduction to 10^12
+	sdk.DefaultPowerReduction = sdk.NewIntFromUint64(1000000000000)
+
 	bApp := baseapp.NewBaseApp(Name, logger, db, encodingConfig.TxConfig.TxDecoder(), baseAppOptions...)
 	bApp.SetCommitMultiStoreTracer(traceStore)
 	bApp.SetVersion(version.Version)

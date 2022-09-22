@@ -24,6 +24,19 @@ func CreateUpgradeHandlerForV181Upgrade(
 			ctx.Logger().Info("we update the parameter for staking and vault")
 		}
 
+		// we set the setp of the vault to be deducted by 10^7
+		params := vaultKeeper.GetParams(ctx)
+
+		params.Power = 10000
+		params.Step = 1000
+		vaultKeeper.SetParams(ctx, params)
+
+		// we clean up all the standby power history
+		v := vaultKeeper.DoGetAllStandbyPower(ctx)
+		for _, el := range v {
+			vaultKeeper.DelStandbyPower(ctx, el.Addr)
+		}
+
 		var poolInfo []types.CreatePool
 		height := ctx.BlockHeight()
 		for {

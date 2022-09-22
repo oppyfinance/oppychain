@@ -34882,7 +34882,7 @@ paths:
           type: boolean
       tags:
         - Query
-  /oppy/oppychain/vault/get_validators:
+  '/oppy/oppychain/vault/get_validators/{height}':
     get:
       summary: Queries a list of GetValidators items.
       operationId: OppyfinanceOppychainVaultGetValidators
@@ -34929,8 +34929,8 @@ paths:
                   additionalProperties: {}
       parameters:
         - name: height
-          in: query
-          required: false
+          in: path
+          required: true
           type: string
       tags:
         - Query

@@ -610,21 +610,6 @@ export default {
 		},
 		
 		
-		async sendMsgExtendLockup({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgExtendLockup(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgExtendLockup:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgExtendLockup:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgBeginUnlockingAll({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -637,6 +622,21 @@ export default {
 					throw new Error('TxClient:MsgBeginUnlockingAll:Init Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new Error('TxClient:MsgBeginUnlockingAll:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgExtendLockup({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgExtendLockup(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgExtendLockup:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgExtendLockup:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -671,19 +671,6 @@ export default {
 			}
 		},
 		
-		async MsgExtendLockup({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgExtendLockup(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgExtendLockup:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgExtendLockup:Create Could not create message: ' + e.message)
-				}
-			}
-		},
 		async MsgBeginUnlockingAll({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -694,6 +681,19 @@ export default {
 					throw new Error('TxClient:MsgBeginUnlockingAll:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgBeginUnlockingAll:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgExtendLockup({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgExtendLockup(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgExtendLockup:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgExtendLockup:Create Could not create message: ' + e.message)
 				}
 			}
 		},

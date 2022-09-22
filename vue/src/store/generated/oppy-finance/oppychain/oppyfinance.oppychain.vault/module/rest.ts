@@ -595,13 +595,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryGetValidators
    * @summary Queries a list of GetValidators items.
-   * @request GET:/oppy/oppychain/vault/get_validators
+   * @request GET:/oppy/oppychain/vault/get_validators/{height}
    */
-  queryGetValidators = (query?: { height?: string }, params: RequestParams = {}) =>
+  queryGetValidators = (height: string, params: RequestParams = {}) =>
     this.request<VaultQueryGetValidatorsResponse, RpcStatus>({
-      path: `/oppy/oppychain/vault/get_validators`,
+      path: `/oppy/oppychain/vault/get_validators/${height}`,
       method: "GET",
-      query: query,
       format: "json",
       ...params,
     });

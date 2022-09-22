@@ -416,18 +416,18 @@ export default {
 		},
 		
 		
-		async sendMsgJoinPool({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgSwapExactAmountOut({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgJoinPool(value)
+				const msg = await txClient.msgSwapExactAmountOut(value)
 				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
 	gas: "200000" }, memo})
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgJoinPool:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgSwapExactAmountOut:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgJoinPool:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgSwapExactAmountOut:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -446,6 +446,21 @@ export default {
 				}
 			}
 		},
+		async sendMsgSwapExactAmountIn({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSwapExactAmountIn(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSwapExactAmountIn:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgSwapExactAmountIn:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgExitPool({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -458,36 +473,6 @@ export default {
 					throw new Error('TxClient:MsgExitPool:Init Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new Error('TxClient:MsgExitPool:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgSwapExactAmountOut({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSwapExactAmountOut(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSwapExactAmountOut:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgSwapExactAmountOut:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgExitSwapShareAmountIn({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgExitSwapShareAmountIn(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgExitSwapShareAmountIn:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgExitSwapShareAmountIn:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -521,32 +506,47 @@ export default {
 				}
 			}
 		},
-		async sendMsgSwapExactAmountIn({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgExitSwapShareAmountIn({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSwapExactAmountIn(value)
+				const msg = await txClient.msgExitSwapShareAmountIn(value)
 				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
 	gas: "200000" }, memo})
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSwapExactAmountIn:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgExitSwapShareAmountIn:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgSwapExactAmountIn:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgExitSwapShareAmountIn:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgJoinPool({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgJoinPool(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgJoinPool:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgJoinPool:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
 		
-		async MsgJoinPool({ rootGetters }, { value }) {
+		async MsgSwapExactAmountOut({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgJoinPool(value)
+				const msg = await txClient.msgSwapExactAmountOut(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgJoinPool:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgSwapExactAmountOut:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgJoinPool:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgSwapExactAmountOut:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -563,6 +563,19 @@ export default {
 				}
 			}
 		},
+		async MsgSwapExactAmountIn({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSwapExactAmountIn(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSwapExactAmountIn:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgSwapExactAmountIn:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		async MsgExitPool({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -573,32 +586,6 @@ export default {
 					throw new Error('TxClient:MsgExitPool:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgExitPool:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgSwapExactAmountOut({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSwapExactAmountOut(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSwapExactAmountOut:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgSwapExactAmountOut:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgExitSwapShareAmountIn({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgExitSwapShareAmountIn(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgExitSwapShareAmountIn:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgExitSwapShareAmountIn:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -628,16 +615,29 @@ export default {
 				}
 			}
 		},
-		async MsgSwapExactAmountIn({ rootGetters }, { value }) {
+		async MsgExitSwapShareAmountIn({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSwapExactAmountIn(value)
+				const msg = await txClient.msgExitSwapShareAmountIn(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSwapExactAmountIn:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgExitSwapShareAmountIn:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgSwapExactAmountIn:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgExitSwapShareAmountIn:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgJoinPool({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgJoinPool(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgJoinPool:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgJoinPool:Create Could not create message: ' + e.message)
 				}
 			}
 		},
