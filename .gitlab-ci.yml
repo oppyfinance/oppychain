@@ -50,8 +50,8 @@ upload-job:
   rules:
     - if: $CI_COMMIT_TAG
   script:
-    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file release_files/${LINUX_AMD64_BINARY}  "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/pack_${CI_COMMIT_TAG}/${CI_COMMIT_TAG}/${LINUX_AMD64_BINARY} "'
-    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file release_files/checksum.txt  "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/pack_${CI_COMMIT_TAG}/${CI_COMMIT_TAG}/checksum.txt"'
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file release_files/${LINUX_AMD64_BINARY}  "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/artifacts/${CI_COMMIT_TAG}/${LINUX_AMD64_BINARY} "'
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file release_files/checksum.txt  "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/artifacts/${CI_COMMIT_TAG}/checksum.txt"'
 
 release-job:
   stage: release
@@ -67,6 +67,6 @@ release-job:
     assets:
       links:
         - name: '$LINUX_AMD64_BINARY'
-          url: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/pack_${CI_COMMIT_TAG}/${CI_COMMIT_TAG}/${LINUX_AMD64_BINARY}"
+          url: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/artifacts/${CI_COMMIT_TAG}/${LINUX_AMD64_BINARY}"
         - name: 'checksum.txt'
-          url: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/pack_${CI_COMMIT_TAG}/${CI_COMMIT_TAG}/checksum.txt"
+          url: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/artifacts/${CI_COMMIT_TAG}/checksum.txt"
