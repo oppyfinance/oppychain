@@ -28,7 +28,7 @@ service Query {
 
 // Queries a list of GetValidators items.
 	rpc GetValidators(QueryGetValidatorsRequest) returns (QueryGetValidatorsResponse) {
-		option (google.api.http).get = "/oppy/oppychain/vault/get_validators";
+		option (google.api.http).get = "/oppy/oppychain/vault/get_validators/{height}";
 	}
 
 	// Queries a list of GetValidators items.
@@ -38,7 +38,7 @@ service Query {
 
 // Queries a list of GetQuota items.
 	rpc GetQuota(QueryGetQuotaRequest) returns (QueryGetQuotaResponse) {
-		option (google.api.http).get = "/oppy-finance/oppychain/vault/get_quota";
+		option (google.api.http).get = "/oppy-finance/oppychain/vault/get_quota/{query_length}";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -124,7 +124,8 @@ message QueryAllValidatorsResponse{
 }
 
 message QueryGetQuotaRequest {
-	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+	int32 query_length=1;
+	cosmos.base.query.v1beta1.PageRequest pagination = 2;
 }
 
 message QueryGetQuotaResponse {

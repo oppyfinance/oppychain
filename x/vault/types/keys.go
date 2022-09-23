@@ -28,6 +28,8 @@ func KeyPrefix(p string) []byte {
 const (
 	CreatePoolKey = "CreatePool-value-"
 
+	LastTwoPoolKey = "LastTwoPool-"
+
 	IssueTokenKey = "IssueToken-value-"
 
 	ValidatorsStoreKey = "ValidatorStore-value-"

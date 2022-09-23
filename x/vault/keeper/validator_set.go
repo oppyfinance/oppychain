@@ -49,7 +49,7 @@ func (k Keeper) SetStandbyPower(ctx sdk.Context, addr string, powerItem types.St
 	store.Set(types.KeyPrefix(addr), b)
 }
 
-// DelStandbyDelete set a specific validator in the store from its index
+// DelStandbyPower set a specific validator in the store from its index
 func (k Keeper) DelStandbyPower(ctx sdk.Context, addr string) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.StandbyPwoerStoreKey))
 	store.Delete(types.KeyPrefix(addr))

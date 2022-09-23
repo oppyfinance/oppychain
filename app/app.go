@@ -294,6 +294,9 @@ func New(
 	cdc := encodingConfig.Amino
 	interfaceRegistry := encodingConfig.InterfaceRegistry
 
+	// we set the default power deduction to 10^12
+	sdk.DefaultPowerReduction = sdk.NewIntFromUint64(1000000000000)
+
 	bApp := baseapp.NewBaseApp(Name, logger, db, encodingConfig.TxConfig.TxDecoder(), baseAppOptions...)
 	bApp.SetCommitMultiStoreTracer(traceStore)
 	bApp.SetVersion(version.Version)
@@ -872,4 +875,5 @@ func (app *App) setupUpgredeHandlers() {
 	app.UpgradeKeeper.SetUpgradeHandler(v1.ParamUpgradeName, v1.CreateUpgradeHandlerParamUpgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.FeeDistributionUpgradeName, v1.CreateUpgradeHandlerFeeDistributionUpgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.V18UpgradeName, v1.CreateUpgradeHandlerForV18Upgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
+	app.UpgradeKeeper.SetUpgradeHandler(v1.V181UpgradeName, v1.CreateUpgradeHandlerForV181Upgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
 }

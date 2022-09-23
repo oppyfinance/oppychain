@@ -4,15 +4,15 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgCreateIssueToken } from "./types/vault/tx";
 import { MsgCreateCreatePool } from "./types/vault/tx";
 import { MsgCreateOutboundTx } from "./types/vault/tx";
+import { MsgCreateIssueToken } from "./types/vault/tx";
 
 
 const types = [
-  ["/oppyfinance.oppychain.vault.MsgCreateIssueToken", MsgCreateIssueToken],
   ["/oppyfinance.oppychain.vault.MsgCreateCreatePool", MsgCreateCreatePool],
   ["/oppyfinance.oppychain.vault.MsgCreateOutboundTx", MsgCreateOutboundTx],
+  ["/oppyfinance.oppychain.vault.MsgCreateIssueToken", MsgCreateIssueToken],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -45,9 +45,9 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgCreateIssueToken: (data: MsgCreateIssueToken): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.vault.MsgCreateIssueToken", value: MsgCreateIssueToken.fromPartial( data ) }),
     msgCreateCreatePool: (data: MsgCreateCreatePool): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.vault.MsgCreateCreatePool", value: MsgCreateCreatePool.fromPartial( data ) }),
     msgCreateOutboundTx: (data: MsgCreateOutboundTx): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.vault.MsgCreateOutboundTx", value: MsgCreateOutboundTx.fromPartial( data ) }),
+    msgCreateIssueToken: (data: MsgCreateIssueToken): EncodeObject => ({ typeUrl: "/oppyfinance.oppychain.vault.MsgCreateIssueToken", value: MsgCreateIssueToken.fromPartial( data ) }),
     
   };
 };

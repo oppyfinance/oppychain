@@ -34329,7 +34329,7 @@ paths:
           type: string
       tags:
         - Query
-  /oppy-finance/oppychain/vault/get_quota:
+  '/oppy-finance/oppychain/vault/get_quota/{query_length}':
     get:
       summary: Queries a list of GetQuota items.
       operationId: OppyfinanceOppychainVaultGetQuota
@@ -34404,6 +34404,11 @@ paths:
                       type: string
                   additionalProperties: {}
       parameters:
+        - name: query_length
+          in: path
+          required: true
+          type: integer
+          format: int32
         - name: pagination.key
           description: |-
             key is a value returned in PageResponse.next_key to begin
@@ -34877,7 +34882,7 @@ paths:
           type: boolean
       tags:
         - Query
-  /oppy/oppychain/vault/get_validators:
+  '/oppy/oppychain/vault/get_validators/{height}':
     get:
       summary: Queries a list of GetValidators items.
       operationId: OppyfinanceOppychainVaultGetValidators
@@ -34924,8 +34929,8 @@ paths:
                   additionalProperties: {}
       parameters:
         - name: height
-          in: query
-          required: false
+          in: path
+          required: true
           type: string
       tags:
         - Query
