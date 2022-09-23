@@ -121,6 +121,8 @@ func networkPrepare(t *testing.T, maxValidator uint32, addr string) (*network.Ne
 	t.Helper()
 	cfg := network.DefaultConfig()
 	cfg.MinGasPrices = "0stake"
+	cfg.BondedTokens = sdk.NewInt(10000000000000000)
+	cfg.StakingTokens = sdk.NewInt(100000000000000000)
 	state := types.GenesisState{}
 	stateStaking := stakingtypes.GenesisState{}
 	stateBank := banktypes.GenesisState{}
@@ -217,5 +219,6 @@ func TestCreateIssue(t *testing.T) {
 	assert.Nil(t, err)
 	var respIssueToken sdk.TxResponse
 	require.NoError(t, ctx.Codec.UnmarshalJSON(out.Bytes(), &respIssueToken))
+	fmt.Printf(">>>>>>>>>>>>>>>>>%v\n", respIssueToken.RawLog)
 	require.Equal(t, uint32(0), respIssueToken.Code)
 }

@@ -45,6 +45,7 @@ func prepare(t *testing.T) (*oppyapp.App, sdk.Context, []sdk.AccAddress) {
 		Proposal:    []*types.PoolProposal{&p1, &p1, &p1},
 	}
 	app.VaultKeeper.SetCreatePool(ctx, createPool)
+	app.VaultKeeper.UpdateLastTwoPool(ctx, createPool)
 
 	createPool = types.CreatePool{
 		BlockHeight: strconv.FormatInt(position2, 10),
@@ -52,18 +53,20 @@ func prepare(t *testing.T) (*oppyapp.App, sdk.Context, []sdk.AccAddress) {
 		Proposal:    []*types.PoolProposal{&p2, &p2, &p2},
 	}
 	app.VaultKeeper.SetCreatePool(ctx, createPool)
+	app.VaultKeeper.UpdateLastTwoPool(ctx, createPool)
 
 	items := make([]types.CreatePool, 2)
 	for i := range items {
 		sk := ed25519.GenPrivKey()
 		poolProposal := types.PoolProposal{
-			PoolPubKey: sk.PubKey().String(),
+			PoolAddr: creators[i].Bytes(),
 		}
 		err := simapp.FundAccount(app.BankKeeper, ctx, sk.PubKey().Address().Bytes(), sdk.Coins{sdk.Coin{Denom: "mock", Amount: sdk.NewInt(1000)}})
 		assert.NoError(t, err)
 		items[i].Proposal = []*types.PoolProposal{&poolProposal}
 		items[i].BlockHeight = fmt.Sprintf("%d", i)
 		app.VaultKeeper.SetCreatePool(ctx, items[i])
+		app.VaultKeeper.UpdateLastTwoPool(ctx, items[i])
 	}
 	return app, ctx, creators
 }

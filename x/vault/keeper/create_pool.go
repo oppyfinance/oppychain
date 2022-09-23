@@ -13,6 +13,16 @@ func (k Keeper) SetCreatePool(ctx sdk.Context, createPool types.CreatePool) {
 	store.Set(types.KeyPrefix(createPool.BlockHeight), b)
 }
 
+// GenSetLastTwoPool the first is the newest
+func (k Keeper) GenSetLastTwoPool(ctx sdk.Context, lastPool []*types.CreatePool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.LastTwoPoolKey))
+	b0 := k.cdc.MustMarshal(lastPool[0])
+	b1 := k.cdc.MustMarshal(lastPool[1])
+	store.Set(types.KeyPrefix("new"), b0)
+	store.Set(types.KeyPrefix("old"), b1)
+
+}
+
 // UpdateLastTwoPool updates the last two pool
 func (k Keeper) UpdateLastTwoPool(ctx sdk.Context, latestPool types.CreatePool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.LastTwoPoolKey))
@@ -50,15 +60,19 @@ func (k Keeper) UpdateLastTwoPool(ctx sdk.Context, latestPool types.CreatePool) 
 	store.Set(types.KeyPrefix("new"), b)
 }
 
-func (k Keeper) GetLatestTwoPool(ctx sdk.Context) []*types.CreatePool {
+func (k Keeper) GetLatestTwoPool(ctx sdk.Context) ([]*types.CreatePool, bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.LastTwoPoolKey))
 	previous := store.Get(types.KeyPrefix("old"))
 	latest := store.Get(types.KeyPrefix("new"))
 
+	// we MUST to have two pools to make the genesis valid
+	if previous == nil || latest == nil {
+		return nil, false
+	}
 	var o1, n1 types.CreatePool
 	k.cdc.MustUnmarshal(previous, &o1)
 	k.cdc.MustUnmarshal(latest, &n1)
-	return []*types.CreatePool{&n1, &o1}
+	return []*types.CreatePool{&n1, &o1}, true
 }
 
 // GetCreatePool returns a createPool from its index

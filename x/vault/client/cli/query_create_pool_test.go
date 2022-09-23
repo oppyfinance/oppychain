@@ -2,14 +2,14 @@ package cli_test
 
 import (
 	"fmt"
-	"strconv"
-	"testing"
-
-	"gitlab.com/oppy-finance/oppychain/utils"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/bech32/legacybech32" //nolint
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	"gitlab.com/oppy-finance/oppychain/utils"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+	"strconv"
+	"testing"
 
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 
@@ -18,9 +18,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	tmcli "github.com/tendermint/tendermint/libs/cli"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
-
 	"gitlab.com/oppy-finance/oppychain/testutil/network"
 	"gitlab.com/oppy-finance/oppychain/x/vault/client/cli"
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
@@ -29,6 +26,8 @@ import (
 func networkWithCreatePoolObjects(t *testing.T, n int, maxValidator uint32) (*network.Network, []*types.CreatePool) {
 	t.Helper()
 	cfg := network.DefaultConfig()
+	cfg.BondedTokens = sdk.NewInt(10000000000000000)
+	cfg.StakingTokens = sdk.NewInt(100000000000000000)
 	state := types.GenesisState{}
 	stateStaking := stakingtypes.GenesisState{}
 
@@ -37,7 +36,7 @@ func networkWithCreatePoolObjects(t *testing.T, n int, maxValidator uint32) (*ne
 
 	sk := ed25519.GenPrivKey()
 
-	for i := 1; i < n; i++ {
+	for i := 1; i < n+1; i++ {
 		operator := sk.PubKey().Address().Bytes()
 
 		sk := ed25519.GenPrivKey()
@@ -51,10 +50,12 @@ func networkWithCreatePoolObjects(t *testing.T, n int, maxValidator uint32) (*ne
 
 		pro := types.PoolProposal{
 			PoolPubKey: poolPubKey,
+			PoolAddr:   sk.PubKey().Address().Bytes(),
 			Nodes:      []sdk.AccAddress{operator},
 		}
 		state.CreatePoolList = append(state.CreatePoolList, &types.CreatePool{BlockHeight: strconv.Itoa(i), Validators: []stakingtypes.Validator{testValidator}, Proposal: []*types.PoolProposal{&pro}})
 	}
+	state.LatestTwoPool = state.CreatePoolList[:2]
 	buf, err := cfg.Codec.MarshalJSON(&state)
 	require.NoError(t, err)
 	cfg.GenesisState[types.ModuleName] = buf
@@ -65,7 +66,6 @@ func networkWithCreatePoolObjects(t *testing.T, n int, maxValidator uint32) (*ne
 	buf, err = cfg.Codec.MarshalJSON(&stateVault)
 	require.NoError(t, err)
 	cfg.GenesisState[stakingtypes.ModuleName] = buf
-
 	nb := network.New(t, cfg)
 	return nb, state.CreatePoolList
 }
@@ -73,7 +73,6 @@ func networkWithCreatePoolObjects(t *testing.T, n int, maxValidator uint32) (*ne
 func TestShowCreatePool(t *testing.T) {
 	utils.SetAddressPrefixes()
 	net, objs := networkWithCreatePoolObjects(t, 2, 3)
-
 	ctx := net.Validators[0].ClientCtx
 	common := []string{
 		fmt.Sprintf("--%s=json", tmcli.OutputFlag),
@@ -102,6 +101,7 @@ func TestShowCreatePool(t *testing.T) {
 		t.Run(tc.desc, func(t *testing.T) {
 			args := []string{tc.id}
 			args = append(args, tc.args...)
+
 			out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdShowCreatePool(), args)
 			if tc.err != nil {
 				stat, ok := status.FromError(tc.err)
@@ -121,6 +121,7 @@ func TestShowCreatePool(t *testing.T) {
 func TestListCreatePoolNotEnoughValidator(t *testing.T) {
 	utils.SetAddressPrefixes()
 	net, _ := networkWithCreatePoolObjects(t, 2, 300)
+	net.WaitForHeight(10)
 	ctx := net.Validators[0].ClientCtx
 	common := []string{
 		fmt.Sprintf("--%s=json", tmcli.OutputFlag),
@@ -215,7 +216,7 @@ func TestListCreatePool(t *testing.T) {
 		require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
 		require.NoError(t, err)
 		require.Equal(t, len(objs), int(resp.Pagination.Total))
-		require.Len(t, resp.CreatePool, 4, "should be only one message")
+		require.Len(t, resp.CreatePool, 5, "should be only 5 messages")
 		require.Equal(t, objs[0].Proposal[0].PoolPubKey, resp.CreatePool[0].GetPoolPubKey())
 	})
 }

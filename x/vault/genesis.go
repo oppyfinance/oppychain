@@ -26,11 +26,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 		k.SetCreatePool(ctx, *elem)
 	}
 
+	k.SetParams(ctx, genState.Params)
+
 	// FIXME we assume that the first and the second pool info is for the latest two pool
 	// set the latest two pool info
-	if len(genState.CreatePoolList) > 1 {
-		k.UpdateLastTwoPool(ctx, *genState.CreatePoolList[0])
-		k.UpdateLastTwoPool(ctx, *genState.CreatePoolList[1])
+
+	if len(genState.LatestTwoPool) == 2 {
+		k.GenSetLastTwoPool(ctx, genState.LatestTwoPool)
 	}
 	// set all the validator info
 	for _, elem := range genState.ValidatorinfoList {
@@ -45,8 +47,6 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	k.SetStoreFeeAmount(ctx, genState.FeeCollectedList)
 
 	k.SetQuotaData(ctx, genState.CoinsQuota)
-
-	k.SetParams(ctx, genState.Params)
 
 	// this line is used by starport scaffolding # ibc/genesis/init
 }
@@ -98,6 +98,11 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	coinsQuota, found := k.GetQuotaData(ctx)
 	if found {
 		genesis.CoinsQuota = coinsQuota
+	}
+
+	lastTwoPools, found := k.GetLatestTwoPool(ctx)
+	if found {
+		genesis.LatestTwoPool = lastTwoPools
 	}
 
 	return genesis
