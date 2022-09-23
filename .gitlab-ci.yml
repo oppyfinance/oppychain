@@ -16,11 +16,9 @@ build-job:       # This job runs in the build stage, which runs first.
     - make build
     - cp oppyChaind ${LINUX_AMD64_BINARY}
     - sha256sum ${LINUX_AMD64_BINARY} > checksum.txt
-    - ls
     - mkdir release_files
     - cp ${LINUX_AMD64_BINARY} release_files/${LINUX_AMD64_BINARY}
     - cp checksum.txt release_files/checksum.txt
-    - ls release_files
   artifacts:
     paths:
       - release_files/
