@@ -30,6 +30,8 @@ func preparePool(t *testing.T) (*network.Network, []*types.CreatePool) {
 	height := []int{7, 10}
 	cfg := network.DefaultConfig()
 	cfg.MinGasPrices = "0poppy"
+	cfg.BondedTokens = sdk.NewInt(10000000000000000)
+	cfg.StakingTokens = sdk.NewInt(100000000000000000)
 	state := types.GenesisState{}
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[types.ModuleName], &state))
 	sk := ed25519.GenPrivKey()
@@ -53,6 +55,7 @@ func preparePool(t *testing.T) (*network.Network, []*types.CreatePool) {
 		state.CreatePoolList = append(state.CreatePoolList, &types.CreatePool{BlockHeight: strconv.Itoa(el), Validators: []stakingtypes.Validator{testValidator}, Proposal: []*types.PoolProposal{&pro}})
 	}
 	state.Params.BlockChurnInterval = 3
+	state.LatestTwoPool = state.CreatePoolList[:2]
 
 	buf, err := cfg.Codec.MarshalJSON(&state)
 	require.NoError(t, err)
@@ -121,6 +124,8 @@ func networkPrepare(t *testing.T, maxValidator uint32, addr string) (*network.Ne
 	t.Helper()
 	cfg := network.DefaultConfig()
 	cfg.MinGasPrices = "0stake"
+	cfg.BondedTokens = sdk.NewInt(10000000000000000)
+	cfg.StakingTokens = sdk.NewInt(100000000000000000)
 	state := types.GenesisState{}
 	stateStaking := stakingtypes.GenesisState{}
 	stateBank := banktypes.GenesisState{}
@@ -179,7 +184,7 @@ func TestCreateIssue(t *testing.T) {
 	assert.Nil(t, err)
 
 	pubkey := legacybech32.MustMarshalPubKey(legacybech32.AccPK, thisInfo.GetPubKey()) //nolint
-	createPoolFields := []string{pubkey, "10"}
+	createPoolFields := []string{pubkey, "4"}
 
 	commonArgs := []string{
 		fmt.Sprintf("--%s=%s", flags.FlagFrom, info[0].GetAddress()),
@@ -197,13 +202,14 @@ func TestCreateIssue(t *testing.T) {
 	args = append(args, createPoolFields...)
 	args = append(args, commonArgs...)
 
-	_, err = net.WaitForHeightWithTimeout(10, time.Minute)
+	_, err = net.WaitForHeightWithTimeout(3, time.Minute)
 	assert.Nil(t, err)
 
 	out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdCreateCreatePool(), args)
 	assert.Nil(t, err)
 	var resp sdk.TxResponse
 	require.NoError(t, ctx.Codec.UnmarshalJSON(out.Bytes(), &resp))
+	require.Equal(t, uint32(0), resp.Code)
 
 	_, err = net.WaitForHeightWithTimeout(15, time.Minute)
 	assert.Nil(t, err)
@@ -217,5 +223,6 @@ func TestCreateIssue(t *testing.T) {
 	assert.Nil(t, err)
 	var respIssueToken sdk.TxResponse
 	require.NoError(t, ctx.Codec.UnmarshalJSON(out.Bytes(), &respIssueToken))
+	fmt.Printf(">>>>>>>>>>>>>>>>>%v\n", respIssueToken.RawLog)
 	require.Equal(t, uint32(0), respIssueToken.Code)
 }

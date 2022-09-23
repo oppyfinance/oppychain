@@ -34,9 +34,10 @@ type IntegrationTestSuite struct {
 
 func (s *IntegrationTestSuite) SetupSuite() {
 	s.T().Log("setting up integration test suite")
-
 	s.cfg = network.DefaultConfig()
 	s.cfg.MinGasPrices = "0stake"
+	s.cfg.BondedTokens = sdk.NewInt(10000000000000000)
+	s.cfg.StakingTokens = sdk.NewInt(100000000000000000)
 	// modification to pay fee with test bond denom "stake"
 	genesisState := app.ModuleBasics.DefaultGenesis(s.cfg.Codec)
 	swapGen := swaptypes.DefaultGenesis()

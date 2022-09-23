@@ -75,6 +75,7 @@ func TestOutboundTxMsgServerCreate(t *testing.T) {
 		Proposal:    []*types.PoolProposal{&p1, &p1, &p1},
 	}
 	k.SetCreatePool(ctx, createPool)
+	k.UpdateLastTwoPool(ctx, createPool)
 
 	p1 = types.PoolProposal{PoolAddr: creators[1], Nodes: []sdk.AccAddress{creators[0], creators[1], creators[2]}}
 	createPool = types.CreatePool{
@@ -83,6 +84,7 @@ func TestOutboundTxMsgServerCreate(t *testing.T) {
 		Proposal:    []*types.PoolProposal{&p1, &p1, &p1},
 	}
 	k.SetCreatePool(ctx, createPool)
+	k.UpdateLastTwoPool(ctx, createPool)
 
 	historyInfo := types2.HistoricalInfo{
 		Valset: testValidators,

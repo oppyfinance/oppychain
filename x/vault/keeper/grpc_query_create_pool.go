@@ -76,7 +76,10 @@ func (k Keeper) GetLastPool(c rawcontext.Context, req *types.QueryLatestPoolRequ
 	}
 
 	ctx := sdk.UnwrapSDKContext(c)
-	lastTwoPools := k.GetLatestTwoPool(ctx)
+	lastTwoPools, found := k.GetLatestTwoPool(ctx)
+	if !found {
+		return &types.QueryLastPoolResponse{Pools: allProposal}, nil
+	}
 
 	minSupportNodes := k.calMinSupportNodes(c)
 	for _, el := range lastTwoPools {
