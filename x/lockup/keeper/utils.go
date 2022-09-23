@@ -107,6 +107,7 @@ func syntheticLockRefKeys(lock types.PeriodLock, synthLock types.SyntheticLock) 
 	return refKeys, nil
 }
 
+//nolint:golint,unused
 func syntheticCoins(coins sdk.Coins, suffix string) sdk.Coins {
 	syntheticCoins := sdk.Coins{}
 	for _, coin := range coins {

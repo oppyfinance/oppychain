@@ -172,7 +172,7 @@ func (ptr *ptr) pull(key []byte) {
 	}
 
 	node = node.delete(idx)
-	// For sake of efficienty on our use case, we pull only when a ptr gets
+	// For sake of efficiency on our use case, we pull only when a ptr gets
 	// empty.
 	// if len(data.Index) >= int(ptr.tree.m/2) {
 	if len(node.Children) > 0 {
@@ -239,8 +239,7 @@ func (node *Node) setAcc(idx int, acc sdk.Int) *Node {
 }
 
 func (cs *Node) insert(idx int, c *Child) *Node {
-	arr := append(cs.Children[:idx], append([]*Child{c}, cs.Children[idx:]...)...)
-	return NewNode(arr...)
+	return NewNode(append(cs.Children[:idx], append([]*Child{c}, cs.Children[idx:]...)...)...)
 }
 
 func (node *Node) delete(idx int) *Node {

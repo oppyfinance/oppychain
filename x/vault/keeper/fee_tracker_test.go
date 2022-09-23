@@ -1,10 +1,11 @@
 package keeper_test
 
 import (
+	"testing"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/assert"
 	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
-	"testing"
 )
 
 func TestSetStoreFeeAmount(t *testing.T) {

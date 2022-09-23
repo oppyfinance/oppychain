@@ -278,7 +278,7 @@ func TestMsgJoinPool(t *testing.T) {
 	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	//invalidAddr := sdk.AccAddress("invalid")
+	// invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgJoinPool) MsgJoinPool) MsgJoinPool {
 		properMsg := MsgJoinPool{
@@ -378,7 +378,7 @@ func TestMsgExitPool(t *testing.T) {
 	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	//invalidAddr := sdk.AccAddress("invalid")
+	// invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgExitPool) MsgExitPool) MsgExitPool {
 		properMsg := MsgExitPool{
@@ -477,7 +477,7 @@ func TestMsgJoinSwapExternAmountIn(t *testing.T) {
 	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	//invalidAddr := sdk.AccAddress("invalid")
+	// invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgJoinSwapExternAmountIn) MsgJoinSwapExternAmountIn) MsgJoinSwapExternAmountIn {
 		properMsg := MsgJoinSwapExternAmountIn{
@@ -576,7 +576,7 @@ func TestMsgJoinSwapShareAmountOut(t *testing.T) {
 	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	//invalidAddr := sdk.AccAddress("invalid")
+	// invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgJoinSwapShareAmountOut) MsgJoinSwapShareAmountOut) MsgJoinSwapShareAmountOut {
 		properMsg := MsgJoinSwapShareAmountOut{
@@ -676,7 +676,7 @@ func TestMsgExitSwapExternAmountOut(t *testing.T) {
 	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	//invalidAddr := sdk.AccAddress("invalid")
+	// invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgExitSwapExternAmountOut) MsgExitSwapExternAmountOut) MsgExitSwapExternAmountOut {
 		properMsg := MsgExitSwapExternAmountOut{
@@ -775,7 +775,7 @@ func TestMsgExitSwapShareAmountIn(t *testing.T) {
 	setupBech32Prefix()
 	pk1 := ed25519.GenPrivKey().PubKey()
 	addr1 := sdk.AccAddress(pk1.Address()).String()
-	//invalidAddr := sdk.AccAddress("invalid")
+	// invalidAddr := sdk.AccAddress("invalid")
 
 	createMsg := func(after func(msg MsgExitSwapShareAmountIn) MsgExitSwapShareAmountIn) MsgExitSwapShareAmountIn {
 		properMsg := MsgExitSwapShareAmountIn{

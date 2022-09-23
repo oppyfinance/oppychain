@@ -17,7 +17,6 @@ func CmdCreateCreatePool() *cobra.Command {
 		Short: "Create a new create_pool",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-
 			argsPoolPubKey, err := cast.ToStringE(args[0])
 			if err != nil {
 				return err

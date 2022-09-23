@@ -2,9 +2,10 @@ package cli_test
 
 import (
 	"fmt"
-	"gitlab.com/oppy-finance/oppychain/utils"
 	"strconv"
 	"testing"
+
+	"gitlab.com/oppy-finance/oppychain/utils"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"

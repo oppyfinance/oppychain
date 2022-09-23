@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 	"google.golang.org/grpc/codes"
@@ -13,14 +14,18 @@ func (k Keeper) GetQuota(goCtx context.Context, req *types.QueryGetQuotaRequest)
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
+	if req.QueryLength > 100 {
+		return nil, status.Error(codes.OutOfRange, "query item should small than 100")
+	}
+
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Process the query
-	_ = ctx
 	result, found := k.GetQuotaData(ctx)
 	if !found {
 		return nil, status.Error(codes.InvalidArgument, "Coin quota data is not ready")
 	}
+
+	result.History = result.History[:req.QueryLength]
 
 	return &types.QueryGetQuotaResponse{CoinQuotaResponse: result}, nil
 }

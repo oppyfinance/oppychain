@@ -160,7 +160,7 @@ func (suite *KeeperTestSuite) TestDistrAssetToCommunityPoolWhenNoDeveloperReward
 	// PoolIncentives + DeveloperRewards + CommunityPool => CommunityPool, because it turncate, so it is not the accurate
 	// result
 
-	//proportionToCommunity := params.DistributionProportions.PoolIncentives.
+	// proportionToCommunity := params.DistributionProportions.PoolIncentives.
 	//	Add(params.DistributionProportions.DeveloperRewards).
 	//	Add(params.DistributionProportions.CommunityPool)
 

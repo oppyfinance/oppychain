@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	// this line is used by starport scaffolding # ibc/genesistype/import
 )
@@ -21,7 +22,8 @@ func DefaultGenesis() *GenesisState {
 		FeeCollectedList: []sdk.Coin{},
 		CoinsQuota: CoinsQuota{
 			History:  []*HistoricalAmount{},
-			CoinsSum: sdk.NewCoins()},
+			CoinsSum: sdk.NewCoins(),
+		},
 	}
 }
 

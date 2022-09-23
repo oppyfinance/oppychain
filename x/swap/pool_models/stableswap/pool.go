@@ -70,7 +70,7 @@ func (pa Pool) NumAssets() int {
 }
 
 // returns pool liquidity of the provided denoms, in the same order the denoms were provided in
-//func (pa Pool) getPoolAmts(denoms ...string) ([]sdk.Int, error) {
+// func (pa Pool) getPoolAmts(denoms ...string) ([]sdk.Int, error) {
 //	result := make([]sdk.Int, len(denoms))
 //	poolLiquidity := pa.PoolLiquidity
 //	for i, d := range denoms {

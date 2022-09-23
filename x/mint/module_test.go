@@ -1,11 +1,12 @@
 package mint_test
 
 import (
-	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 	"os"
 	path2 "path"
 	"runtime"
 	"testing"
+
+	oppyapp "gitlab.com/oppy-finance/oppychain/app"
 
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"

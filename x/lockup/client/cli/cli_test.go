@@ -36,6 +36,8 @@ func (s *IntegrationTestSuite) SetupSuite() {
 
 	s.cfg = network.DefaultConfig()
 	s.cfg.MinGasPrices = "0stake"
+	s.cfg.BondedTokens = sdk.NewInt(10000000000000000)
+	s.cfg.StakingTokens = sdk.NewInt(100000000000000000)
 	s.network = network.New(s.T(), s.cfg)
 
 	_, err := s.network.WaitForHeight(1)

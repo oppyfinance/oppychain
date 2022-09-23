@@ -119,5 +119,8 @@ func (k msgServer) CreateCreatePool(goCtx context.Context, msg *types.MsgCreateC
 		createPool,
 	)
 
+	// whether we need to update the last pool
+	k.UpdateLastTwoPool(ctx, createPool)
+
 	return &types.MsgCreateCreatePoolResponse{Successful: true}, nil
 }

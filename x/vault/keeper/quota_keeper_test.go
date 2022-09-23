@@ -1,12 +1,13 @@
 package keeper_test
 
 import (
+	"strconv"
+	"testing"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/assert"
 	keepertest "gitlab.com/oppy-finance/oppychain/testutil/keeper"
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
-	"strconv"
-	"testing"
 )
 
 func TestQuotaCheck(t *testing.T) {

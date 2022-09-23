@@ -1,8 +1,7 @@
 package keeper
 
 import (
-	"context"
-	"strconv"
+	rawcontext "context"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -12,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) calMinSupportNodes(c context.Context) int32 {
+func (k Keeper) calMinSupportNodes(c rawcontext.Context) int32 {
 	ctx := sdk.UnwrapSDKContext(c)
 
 	boundedValidators := k.vaultStaking.GetBondedValidatorsByPower(ctx)
@@ -25,7 +24,7 @@ func (k Keeper) calMinSupportNodes(c context.Context) int32 {
 	return candidateNum
 }
 
-func (k Keeper) CreatePoolAll(c context.Context, req *types.QueryAllCreatePoolRequest) (*types.QueryAllCreatePoolResponse, error) {
+func (k Keeper) CreatePoolAll(c rawcontext.Context, req *types.QueryAllCreatePoolRequest) (*types.QueryAllCreatePoolResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -53,7 +52,7 @@ func (k Keeper) CreatePoolAll(c context.Context, req *types.QueryAllCreatePoolRe
 	return &types.QueryAllCreatePoolResponse{CreatePool: proposals, Pagination: pageRes}, nil
 }
 
-func (k Keeper) CreatePool(c context.Context, req *types.QueryGetCreatePoolRequest) (*types.QueryGetCreatePoolResponse, error) {
+func (k Keeper) CreatePool(c rawcontext.Context, req *types.QueryGetCreatePoolRequest) (*types.QueryGetCreatePoolResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -70,73 +69,30 @@ func (k Keeper) CreatePool(c context.Context, req *types.QueryGetCreatePoolReque
 	return &types.QueryGetCreatePoolResponse{CreatePool: proposal}, nil
 }
 
-func (k Keeper) GetLastPool(c context.Context, req *types.QueryLatestPoolRequest) (*types.QueryLastPoolResponse, error) {
+func (k Keeper) GetLastPool(c rawcontext.Context, req *types.QueryLatestPoolRequest) (*types.QueryLastPoolResponse, error) {
 	var allProposal []*types.PoolInfo
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
+
 	ctx := sdk.UnwrapSDKContext(c)
-	blockHeight := ctx.BlockHeight()
-
-	churnHeight := k.GetParams(ctx).BlockChurnInterval
-
-	if blockHeight < churnHeight {
-		return nil, status.Error(codes.Internal, "the block height is small than the churn height")
-	}
-
-	poolBlock := (blockHeight / churnHeight) * churnHeight
-
-	var valLatest types.CreatePool
-	var found bool
-	var height string
-	// if the current block height is 50, the height will be larger than blockHeight
-	if poolBlock+1 >= blockHeight {
-		poolBlock -= churnHeight
-	}
-	for {
-		height = strconv.FormatInt(poolBlock+1, 10)
-		valLatest, found = k.GetCreatePool(ctx, height)
-		if found {
-			break
-		}
-		if poolBlock < 10 {
-			return nil, status.Error(codes.InvalidArgument, "not found")
-		}
-		poolBlock -= churnHeight
+	lastTwoPools, found := k.GetLatestTwoPool(ctx)
+	if !found {
+		return &types.QueryLastPoolResponse{Pools: allProposal}, nil
 	}
 
 	minSupportNodes := k.calMinSupportNodes(c)
-	proposalLast := getProposal(valLatest.Proposal, minSupportNodes)
-	if proposalLast != nil {
-		lastProposal := types.PoolInfo{
-			BlockHeight: height,
-			CreatePool:  proposalLast,
+	for _, el := range lastTwoPools {
+		proposalLast := getProposal(el.Proposal, minSupportNodes)
+		if proposalLast != nil {
+			lastProposal := types.PoolInfo{
+				BlockHeight: el.BlockHeight,
+				CreatePool:  proposalLast,
+			}
+			allProposal = append(allProposal, &lastProposal)
 		}
-		allProposal = append(allProposal, &lastProposal)
 	}
 
-	loopHeight := poolBlock + 1 - churnHeight
-	for {
-		heightStr := strconv.FormatInt(loopHeight, 10)
-		valLatest2, found := k.GetCreatePool(ctx, heightStr)
-		if found {
-			proposalLast2 := getProposal(valLatest2.Proposal, minSupportNodes)
-			// this avoid the nil in burn token
-			if proposalLast2 != nil {
-				lastProposal := types.PoolInfo{
-					BlockHeight: heightStr,
-					CreatePool:  proposalLast2,
-				}
-				allProposal = append(allProposal, &lastProposal)
-			}
-			break
-		}
-		loopHeight -= churnHeight
-		// the system will have the pool at height 10
-		if loopHeight < 10 {
-			break
-		}
-	}
 	return &types.QueryLastPoolResponse{Pools: allProposal}, nil
 }
 

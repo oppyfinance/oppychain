@@ -2,8 +2,9 @@ package keeper
 
 import (
 	"fmt"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"time"
+
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	db "github.com/tendermint/tm-db"
 
@@ -198,7 +199,6 @@ func (d *distributionInfo) addLockRewards(owner string, rewards sdk.Coins) error
 }
 
 func (k Keeper) SendCoinsFromModuleToManyAccounts(ctx sdk.Context, senderModule string, recipientAddrs []sdk.AccAddress, amts []sdk.Coins) error {
-
 	if len(recipientAddrs) != len(amts) {
 		panic(fmt.Errorf("addresses and amounts numbers does not match"))
 	}
@@ -218,7 +218,7 @@ func (k Keeper) SendCoinsFromModuleToManyAccounts(ctx sdk.Context, senderModule 
 	for _, amt := range amts {
 		totalAmt = sdk.Coins.Add(totalAmt, amt...)
 	}
-	//now we check whether the module has enough balance
+	// now we check whether the module has enough balance
 	for _, el := range totalAmt {
 		balance := k.bk.GetBalance(ctx, senderAddr, el.Denom)
 		if !balance.IsGTE(el) {

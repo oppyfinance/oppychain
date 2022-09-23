@@ -24,15 +24,15 @@ var (
 )
 
 const (
-	opWeightMsgCreateOutboundTx = "op_weight_msg_create_chain"
+	opWeightMsgCreateOutboundTx = "op_weight_msg_create_chain" //nolint:gosec
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgCreateOutboundTx int = 100
 
-	opWeightMsgUpdateOutboundTx = "op_weight_msg_create_chain"
+	opWeightMsgUpdateOutboundTx = "op_weight_msg_create_chain" //nolint:gosec
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgUpdateOutboundTx int = 100
 
-	opWeightMsgDeleteOutboundTx = "op_weight_msg_create_chain"
+	opWeightMsgDeleteOutboundTx = "op_weight_msg_create_chain" //nolint:gosec
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteOutboundTx int = 100
 
@@ -89,7 +89,6 @@ func (AppModule) ProposalContents(_ module.SimulationState) []simtypes.WeightedP
 
 // RandomizedParams creates randomized  param changes for the simulator
 func (am AppModule) RandomizedParams(_ *rand.Rand) []simtypes.ParamChange {
-
 	return []simtypes.ParamChange{}
 }
 

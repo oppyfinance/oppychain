@@ -58,7 +58,6 @@ func (k Keeper) ProcessQuota(ctx sdk.Context, totalCoins sdk.Coins) {
 	k.SetQuotaData(ctx, *newQuotaData)
 }
 
-//
 type VaultQuotaDecorator struct {
 	vaultKeeper Keeper
 }

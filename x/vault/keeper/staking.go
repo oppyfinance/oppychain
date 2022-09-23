@@ -14,9 +14,17 @@ import (
 	vaulttypes "gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
-func (k Keeper) StakingInfo(ctx sdk.Context) {
+func (k Keeper) UpdateStakingInfo(ctx sdk.Context) {
 	stakingKeeper := k.vaultStaking
 	params := k.GetParams(ctx)
+
+	allStandbyPowerHistory := k.DoGetAllStandbyPower(ctx)
+
+	existValidators := make(map[string]bool)
+	updatedValidators := make(map[string]bool)
+	for _, el := range allStandbyPowerHistory {
+		existValidators[el.Addr] = true
+	}
 
 	stakingKeeper.IterateLastValidators(ctx, func(index int64, validator stakingtypes.ValidatorI) (stop bool) {
 		consAddr, err := validator.GetConsAddr()
@@ -32,6 +40,7 @@ func (k Keeper) StakingInfo(ctx sdk.Context) {
 			k.SetStandbyPower(ctx, consAddr.String(), item)
 			return false
 		}
+		updatedValidators[consAddr.String()] = true
 		if current.Power < 0 {
 			k.DelStandbyPower(ctx, consAddr.String())
 			return false
@@ -40,6 +49,13 @@ func (k Keeper) StakingInfo(ctx sdk.Context) {
 		k.SetStandbyPower(ctx, consAddr.String(), current)
 		return false
 	})
+
+	for key := range existValidators {
+		_, exist := updatedValidators[key]
+		if !exist {
+			k.DelStandbyPower(ctx, key)
+		}
+	}
 }
 
 func (k Keeper) getEligibleValidators(ctx sdk.Context) ([]vaulttypes.ValidatorPowerInfo, error) {
@@ -56,7 +72,7 @@ func (k Keeper) getEligibleValidators(ctx sdk.Context) ([]vaulttypes.ValidatorPo
 	for _, validator := range boundedValidators {
 		validatorWithPower := vaulttypes.ValidatorPowerInfo{
 			Validator: validator,
-			Power:     validator.PotentialConsensusPower(sdk.DefaultPowerReduction),
+			Power:     validator.ConsensusPower(sdk.DefaultPowerReduction),
 		}
 		candidates = append(candidates, validatorWithPower)
 	}
@@ -118,6 +134,7 @@ func (k Keeper) NewUpdate(ctx sdk.Context) []abci.ValidatorUpdate {
 
 	blockHeight := k.GetParams(ctx).BlockChurnInterval
 	if ctx.BlockHeight()%blockHeight == 0 {
+		k.UpdateStakingInfo(ctx)
 		ctx.EventManager().EmitEvents(sdk.Events{
 			sdk.NewEvent(
 				vaulttypes.EventTypeCompleteChurn,

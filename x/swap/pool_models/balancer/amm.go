@@ -15,7 +15,7 @@ import (
 const (
 	errMsgFormatSharesAmountNotPositive = "shares amount must be positive, was %d"
 	errMsgFormatTokenAmountNotPositive  = "token amount must be positive, was %d"
-	//errMsgFormatTokensLargerThanMax           = "%d resulted tokens is larger than the max amount of %d"
+	// errMsgFormatTokensLargerThanMax           = "%d resulted tokens is larger than the max amount of %d"
 	errMsgFormatSharesLargerThanMax           = "%d resulted shares is larger than the max amount of %d"
 	errMsgFormatFailedInterimLiquidityUpdate  = "failed to update interim liquidity - pool asset %s does not exist"
 	errMsgFormatRepeatingPoolAssetsNotAllowed = "repeating pool assets not allowed, found %s"
@@ -403,7 +403,7 @@ func (p *Pool) CalcJoinPoolShares(ctx sdk.Context, tokensIn sdk.Coins, swapFee s
 	tokensJoined = tokensJoined.Add(newLiquidityFromRemaining...)
 
 	if tokensJoined.IsAnyGT(tokensIn) {
-		return sdk.ZeroInt(), sdk.NewCoins(), errors.New("An error has occurred, more coins joined than token In")
+		return sdk.ZeroInt(), sdk.NewCoins(), errors.New("an error has occurred, more coins joined than token In")
 	}
 
 	return numShares, tokensJoined, nil

@@ -33,6 +33,9 @@ go.sum: go.mod
 test:
 	@go test -v -mod=readonly $(PACKAGES) -coverprofile=$(COVERAGE) -covermode=atomic
 
+format:
+	@gofumpt -l -w .
+
 lint:
 	@echo "run go lint"
-	@golangci-lint run --out-format=tab
+	@golangci-lint run --out-format=tab  -v --timeout 3600s -c ./.golangci.yml
