@@ -6,7 +6,6 @@ before_script:
   - mkdir -p .cache
   - export GOPATH="$CI_PROJECT_DIR/.cache"
   - PATH="$GOPATH/bin:$PATH"
-  - go get -v -d ./...
 
 
 stages:          # List of stages for jobs, and their order of execution
