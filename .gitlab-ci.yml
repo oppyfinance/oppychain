@@ -16,12 +16,14 @@ build-job:       # This job runs in the build stage, which runs first.
     - make build
     - cp oppyChaind ${LINUX_AMD64_BINARY}
     - sha256sum ${LINUX_AMD64_BINARY} > checksum.txt
-    - mkdir bin
-    - cp ${LINUX_AMD64_BINARY} $bin/${LINUX_AMD64_BINARY}
-    - cp checksum.txt bin/checksum.txt
+    - ls
+    - mkdir release_files
+    - cp ${LINUX_AMD64_BINARY} release_files/${LINUX_AMD64_BINARY}
+    - cp checksum.txt release_files/checksum.txt
+    - ls release_files
   artifacts:
     paths:
-      - bin/
+      - release_files/
 
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
@@ -50,8 +52,8 @@ upload-job:
   rules:
     - if: $CI_COMMIT_TAG
   script:
-    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file ${CI_COMMIT_TAG}/${LINUX_AMD64_BINARY}  "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/files/${CI_COMMIT_TAG}/oppyChaind"'
-    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file ${CI_COMMIT_TAG}/checksum.txt  "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/files/${CI_COMMIT_TAG}/checksum.txt"'
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file release_files/${LINUX_AMD64_BINARY}  "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/files/${CI_COMMIT_TAG}/oppyChaind"'
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file release_files/checksum.txt  "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/files/${CI_COMMIT_TAG}/checksum.txt"'
 
 release-job:
   stage: release
