@@ -14,7 +14,7 @@ build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - make build
-    - sha256sum ${LINUX_AMD64_BINARY} > checksum.txt
+    - sha256sum oppyChaind > checksum.txt
     - mkdir release_files
     - cp oppyChaind release_files/oppyChaind
     - cp checksum.txt release_files/${LINUX_AMD64_BINARY}-checksum.txt
