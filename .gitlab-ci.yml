@@ -14,8 +14,10 @@ build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - make build
+    - sha256sum oppyChaind > checksum.txt
     - mkdir bin
     - cp oppyChaind bin/oppyChaind
+    - cp checksum.txt bin/checksum.txt
   artifacts:
     paths:
       - bin/
