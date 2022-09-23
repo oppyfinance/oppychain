@@ -7,6 +7,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 	tmcli "github.com/tendermint/tendermint/libs/cli"
 	"google.golang.org/grpc/codes"
@@ -24,6 +25,8 @@ var _ = strconv.IntSize
 func networkWithOutboundTxObjects(t *testing.T, n int) (*network.Network, []types.OutboundTx) {
 	t.Helper()
 	cfg := network.DefaultConfig()
+	cfg.BondedTokens = sdk.NewInt(10000000000000000)
+	cfg.StakingTokens = sdk.NewInt(100000000000000000)
 	state := types.GenesisState{}
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[types.ModuleName], &state))
 

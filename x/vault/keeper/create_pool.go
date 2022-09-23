@@ -64,10 +64,14 @@ func (k Keeper) GetLatestTwoPool(ctx sdk.Context) ([]*types.CreatePool, bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.LastTwoPoolKey))
 	previous := store.Get(types.KeyPrefix("old"))
 	latest := store.Get(types.KeyPrefix("new"))
-
 	// we MUST to have two pools to make the genesis valid
-	if previous == nil || latest == nil {
+	if latest == nil {
 		return nil, false
+	}
+	if previous == nil {
+		var n1 types.CreatePool
+		k.cdc.MustUnmarshal(latest, &n1)
+		return []*types.CreatePool{&n1}, true
 	}
 	var o1, n1 types.CreatePool
 	k.cdc.MustUnmarshal(previous, &o1)

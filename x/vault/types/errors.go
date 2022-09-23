@@ -10,5 +10,6 @@ import (
 var (
 	ErrFormat = sdkerrors.Register(ModuleName, 1, "format convert error")
 	ErrUpdate = sdkerrors.Register(ModuleName, 2, "error in update the validtor")
+	ErrPool   = sdkerrors.Register(ModuleName, 3, "fail to get two pools")
 	// this line is used by starport scaffolding # ibc/errors
 )
