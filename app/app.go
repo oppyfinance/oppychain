@@ -1,6 +1,7 @@
 package app
 
 import (
+	"gitlab.com/oppy-finance/oppychain/x/pricefeed"
 	"io"
 	"net/http"
 	"os"
@@ -110,6 +111,8 @@ import (
 	mintkeeper "gitlab.com/oppy-finance/oppychain/x/mint/keeper"
 	minttypes "gitlab.com/oppy-finance/oppychain/x/mint/types"
 	poolincentiveclient "gitlab.com/oppy-finance/oppychain/x/pool_incentives/client"
+	pricefeedkeeper "gitlab.com/oppy-finance/oppychain/x/pricefeed/keeper"
+	pricefeedtypes "gitlab.com/oppy-finance/oppychain/x/pricefeed/types"
 
 	vaultmodule "gitlab.com/oppy-finance/oppychain/x/vault"
 	vaultmodulekeeper "gitlab.com/oppy-finance/oppychain/x/vault/keeper"
@@ -182,6 +185,8 @@ var (
 		lockup.AppModuleBasic{},
 		incentives.AppModuleBasic{},
 		poolincentives.AppModuleBasic{},
+
+		pricefeed.AppModuleBasic{},
 	)
 
 	// module account permissions
@@ -268,6 +273,8 @@ type App struct {
 	IncentivesKeeper     incentiveskeeper.Keeper
 	PoolIncentivesKeeper poolincentiveskeeper.Keeper
 
+	PriceFeedKeeper pricefeedkeeper.Keeper
+
 	// mm is the module manager
 	mm *module.Manager
 
@@ -314,6 +321,7 @@ func New(
 		lockupmoduletypes.StoreKey,
 		incentivesmoduletypes.StoreKey,
 		poolincentivestypes.StoreKey,
+		pricefeedtypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -430,6 +438,12 @@ func New(
 	)
 	app.PoolIncentivesKeeper = poolIncentivesKeeper
 
+	app.PriceFeedKeeper = pricefeedkeeper.NewKeeper(
+		appCodec,
+		keys[pricefeedtypes.StoreKey],
+		app.GetSubspace(pricefeedtypes.ModuleName),
+	)
+
 	// Create Transfer Keepers
 	app.TransferKeeper = ibctransferkeeper.NewKeeper(
 		appCodec, keys[ibctransfertypes.StoreKey], app.GetSubspace(ibctransfertypes.ModuleName),
@@ -446,6 +460,8 @@ func New(
 	lockupModule := lockup.NewAppModule(appCodec, app.LockupKeeper, app.AccountKeeper, app.BankKeeper)
 	incentivesModule := incentives.NewAppModule(appCodec, app.IncentivesKeeper, app.AccountKeeper, app.BankKeeper, app.EpochsKeeper)
 	poolincentivesModule := poolincentives.NewAppModule(appCodec, app.PoolIncentivesKeeper)
+	priceFeedModule := pricefeed.NewAppModule(app.PriceFeedKeeper, app.AccountKeeper)
+
 	// ################################################################
 	transferModule := transfer.NewAppModule(app.TransferKeeper)
 
@@ -532,6 +548,7 @@ func New(
 		lockupModule,
 		incentivesModule,
 		poolincentivesModule,
+		priceFeedModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -562,6 +579,7 @@ func New(
 		monitoringptypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 		vaultmoduletypes.ModuleName,
+		pricefeedtypes.ModuleName,
 		swapmoduletypes.ModuleName,
 		incentivesmoduletypes.ModuleName,
 		lockupmoduletypes.ModuleName,
@@ -589,6 +607,7 @@ func New(
 		ibctransfertypes.ModuleName,
 		monitoringptypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
+		pricefeedtypes.ModuleName,
 		vaultmoduletypes.ModuleName,
 		swapmoduletypes.ModuleName,
 		incentivesmoduletypes.ModuleName,
@@ -625,6 +644,7 @@ func New(
 		// this is oppychain modules
 		incentivesmoduletypes.ModuleName,
 		epochsmoduletypes.ModuleName,
+		pricefeedtypes.ModuleName,
 		vaultmoduletypes.ModuleName,
 		swapmoduletypes.ModuleName,
 		lockupmoduletypes.ModuleName,
@@ -859,7 +879,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(lockupmoduletypes.ModuleName)
 	paramsKeeper.Subspace(incentivesmoduletypes.ModuleName)
 	paramsKeeper.Subspace(poolincentivestypes.ModuleName)
-
+	paramsKeeper.Subspace(pricefeedtypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper
