@@ -32,7 +32,7 @@ func createTestContext(t *testing.T) sdk.Context {
 	db := dbm.NewMemDB()
 	logger := log.NewNopLogger()
 
-	ms := rootmulti.NewStore(db)
+	ms := rootmulti.NewStore(db, logger)
 
 	return sdk.NewContext(ms, tmtypes.Header{}, false, logger)
 }
