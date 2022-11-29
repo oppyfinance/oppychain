@@ -101,3 +101,28 @@ func CmdShowLastPool() *cobra.Command {
 
 	return cmd
 }
+
+func CmdShowModuleAccount() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "show-module-account",
+		Short: "show the vault module account",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx := client.GetClientContextFromCmd(cmd)
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			params := &types.QueryModuleAccount{}
+
+			res, err := queryClient.GetModuleAddress(context.Background(), params)
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	flags.AddQueryFlagsToCmd(cmd)
+
+	return cmd
+}

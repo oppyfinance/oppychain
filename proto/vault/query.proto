@@ -73,6 +73,11 @@ service Query {
 	rpc GetPendingFee(QueryPendingFeeRequest) returns (QueryPendingFeeResponse) {
 		option (google.api.http).get = "/oppy/oppychain/vault/get_pending_fee";
 	}
+
+	// Queries a createPool by index.
+	rpc GetModuleAddress(QueryModuleAccount) returns (QueryModuleAccountResponse) {
+		option (google.api.http).get = "/oppy/oppychain/vault/get_module_account";
+	}
 }
 
 message QueryPendingFeeRequest{
@@ -164,6 +169,12 @@ message poolInfo {
 
 message QueryLastPoolResponse {
 	repeated poolInfo pools = 1;
+}
+
+message QueryModuleAccount{}
+
+message QueryModuleAccountResponse{
+	string address=1;
 }
 
 message QueryAllCreatePoolRequest {

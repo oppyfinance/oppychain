@@ -4,9 +4,9 @@ go 1.18
 
 require (
 	github.com/cosmos/cosmos-proto v1.0.0-alpha8
-	github.com/cosmos/cosmos-sdk v0.45.3
+	github.com/cosmos/cosmos-sdk v0.45.9
 	github.com/cosmos/gogoproto v1.4.3
-	github.com/cosmos/iavl v0.19.0
+	github.com/cosmos/iavl v0.19.3
 	github.com/cosmos/ibc-go/v2 v2.0.4
 	github.com/gogo/protobuf v1.3.3
 	github.com/golang/protobuf v1.5.2
@@ -167,6 +167,7 @@ require (
 	go.etcd.io/bbolt v1.3.6 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/crypto v0.3.0 // indirect
+	golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e // indirect
 	golang.org/x/mod v0.6.0 // indirect
 	golang.org/x/net v0.2.0 // indirect
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4 // indirect

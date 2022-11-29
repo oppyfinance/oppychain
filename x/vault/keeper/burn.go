@@ -34,11 +34,8 @@ func (k Keeper) BurnTokens(ctx sdk.Context, addr sdk.AccAddress) error {
 	return k.bankKeeper.BurnCoins(ctx, types.ModuleName, coins)
 }
 
-func (k Keeper) sendFeesToValidators(ctx sdk.Context, pool *types.PoolInfo) bool {
-	addr := pool.CreatePool.PoolAddr
-	if addr == nil {
-		return true
-	}
+func (k Keeper) sendFeesToValidators(ctx sdk.Context, addr sdk.AccAddress) bool {
+
 	coinsBalance := k.bankKeeper.GetAllBalances(ctx, addr)
 	fee := k.GetAllFeeAmount(ctx)
 	fee.Sort()
@@ -65,53 +62,35 @@ func (k Keeper) sendFeesToValidators(ctx sdk.Context, pool *types.PoolInfo) bool
 }
 
 func (k Keeper) ProcessAccountLeft(ctx sdk.Context) {
-	req := types.QueryLatestPoolRequest{}
 	wctx := sdk.WrapSDKContext(ctx)
-	ret, err := k.GetLastPool(wctx, &req)
+	moduleAccount, err := k.GetModuleAddress(wctx, &types.QueryModuleAccount{})
 	if err != nil {
-		k.Logger(ctx).Error("fail to get the last pool, skip", "err=", err)
+		k.Logger(ctx).Error("vault", "module acocunt", "incorrect module account")
 		return
 	}
 
-	if len(ret.Pools) != 2 {
-		return
+	acc, err := sdk.AccAddressFromBech32(moduleAccount.Address)
+	if err != nil {
+		panic("module account should never fail in conversion")
 	}
 
-	addr1 := ret.Pools[0].CreatePool.PoolAddr
-	addr2 := ret.Pools[1].CreatePool.PoolAddr
-
-	c1 := k.bankKeeper.GetAllBalances(ctx, addr1)
-	c2 := k.bankKeeper.GetAllBalances(ctx, addr2)
-	c1.Sort()
-	c2.Sort()
-	totalCoins := c1.Add(c2...)
+	totalCoins := k.bankKeeper.GetAllBalances(ctx, acc)
 	k.ProcessQuota(ctx, totalCoins)
 
 	// we only send fee to validators from the latest pool
-	if len(ret.Pools) != 0 {
-		transferred := k.sendFeesToValidators(ctx, ret.Pools[0])
-		if !transferred {
-			ctx.Logger().Info("vault", "send Fee to validator", "not enough token to be paid as fee")
-		}
+	transferred := k.sendFeesToValidators(ctx, acc)
+	if !transferred {
+		ctx.Logger().Info("vault", "send Fee to validator", "not enough token to be paid as fee")
 	}
 
-	for _, el := range ret.Pools {
-		if el.CreatePool == nil {
-			continue
-		}
-		addr := el.CreatePool.PoolAddr
-		if addr == nil {
-			continue
-		}
-		err := k.BurnTokens(ctx, addr)
-		if err != nil {
-			k.Logger(ctx).Error("fail to burn the token")
-		}
+	err = k.BurnTokens(ctx, acc)
+	if err != nil {
+		k.Logger(ctx).Error("fail to burn the token")
+		return
 	}
 
-	c1After := k.bankKeeper.GetAllBalances(ctx, addr1)
-	c2After := k.bankKeeper.GetAllBalances(ctx, addr2)
-	if (!c1After.Empty()) || (!c2After.Empty()) {
+	c1After := k.bankKeeper.GetAllBalances(ctx, acc)
+	if !c1After.Empty() {
 		panic("after burn the tokens, pool should have ZERO coins")
 	}
 }

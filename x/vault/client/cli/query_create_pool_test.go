@@ -221,3 +221,18 @@ func TestListCreatePool(t *testing.T) {
 		require.Equal(t, objs[0].Proposal[0].PoolPubKey, resp.CreatePool[0].GetPoolPubKey())
 	})
 }
+
+func TestShowModuleAccount(t *testing.T) {
+	utils.SetAddressPrefixes()
+	net, _ := networkWithCreatePoolObjects(t, 4, 3)
+
+	ctx := net.Validators[0].ClientCtx
+	t.Run("ShowModuleAccount", func(t *testing.T) {
+		out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdShowModuleAccount(), []string{})
+		require.NoError(t, err)
+		var resp types.QueryModuleAccountResponse
+		require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
+		require.Equal(t, resp.GetAddress(), "oppy1umc2r7a58jy3jmw0e0hctyy0rx45chmuxn9cu5")
+	})
+
+}

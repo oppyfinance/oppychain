@@ -112,3 +112,12 @@ func getProposal(proposals []*types.PoolProposal, minSupportNodes int32) *types.
 	}
 	return proposals[proposalIndex]
 }
+
+func (k Keeper) GetModuleAddress(c rawcontext.Context, _ *types.QueryModuleAccount) (*types.QueryModuleAccountResponse, error) {
+
+	ctx := sdk.UnwrapSDKContext(c)
+	acc := k.ak.GetModuleAccount(ctx, types.ModuleName)
+	return &types.QueryModuleAccountResponse{
+		Address: acc.GetAddress().String(),
+	}, nil
+}

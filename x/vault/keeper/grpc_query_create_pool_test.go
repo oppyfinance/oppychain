@@ -123,3 +123,11 @@ func TestCreatePoolQueryPaginated(t *testing.T) {
 		require.ErrorIs(t, err, status.Error(codes.InvalidArgument, "invalid request"))
 	})
 }
+
+func TestQueryModuleAddress(t *testing.T) {
+	app, _, wctx := setupMsgServer(t)
+	k := &app.VaultKeeper
+	resp, err := k.GetModuleAddress(wctx, &types.QueryModuleAccount{})
+	require.NoError(t, err)
+	require.Equal(t, resp.Address, "oppy1umc2r7a58jy3jmw0e0hctyy0rx45chmuxn9cu5")
+}
