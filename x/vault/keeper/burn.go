@@ -61,6 +61,40 @@ func (k Keeper) sendFeesToValidators(ctx sdk.Context, addr sdk.AccAddress) bool 
 	return false
 }
 
+func (k Keeper) MoveCoinsToLatestPool(ctx sdk.Context) error {
+	req := types.QueryLatestPoolRequest{}
+	wctx := sdk.WrapSDKContext(ctx)
+	ret, err := k.GetLastPool(wctx, &req)
+	if err != nil {
+		k.Logger(ctx).Error("fail to get the last pool, skip", "err=", err)
+		return err
+	}
+
+	if len(ret.Pools) != 2 {
+		return err
+	}
+
+	oldAddr := ret.Pools[1].CreatePool.PoolAddr
+	latestAddr := ret.Pools[0].CreatePool.PoolAddr
+	c1 := k.bankKeeper.GetAllBalances(ctx, oldAddr)
+	if c1.Empty() {
+		return nil
+	}
+
+	err = k.bankKeeper.SendCoinsFromAccountToModule(ctx, oldAddr, types.ModuleName, c1)
+	if err != nil {
+		k.Logger(ctx).Error("fail to send money from old address to module", "err=", err)
+		return err
+	}
+
+	err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, latestAddr, c1)
+	if err != nil {
+		k.Logger(ctx).Error("fail to send money from old address to module", "err=", err)
+		return err
+	}
+	return nil
+}
+
 func (k Keeper) ProcessAccountLeft(ctx sdk.Context) {
 	wctx := sdk.WrapSDKContext(ctx)
 	moduleAccount, err := k.GetModuleAddress(wctx, &types.QueryModuleAccount{})
