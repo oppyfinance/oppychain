@@ -879,4 +879,5 @@ func (app *App) setupUpgredeHandlers() {
 	app.UpgradeKeeper.SetUpgradeHandler(v1.V19UpgradeName, v1.CreateUpgradeHandlerForV19Upgrade(app.mm, app.configurator))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.V19UpgradeName, v1.CreateUpgradeHandlerForV19Upgrade(app.mm, app.configurator))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.V110UpgradeName, v1.CreateUpgradeHandlerForV110Upgrade(app.mm, app.configurator))
+	app.UpgradeKeeper.SetUpgradeHandler(v1.V111UpgradeName, v1.CreateUpgradeHandlerForV111Upgrade(app.mm, app.configurator))
 }
