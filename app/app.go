@@ -82,18 +82,18 @@ import (
 	upgradeclient "github.com/cosmos/cosmos-sdk/x/upgrade/client"
 	upgradekeeper "github.com/cosmos/cosmos-sdk/x/upgrade/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	"github.com/cosmos/ibc-go/v2/modules/apps/transfer"
-	ibctransferkeeper "github.com/cosmos/ibc-go/v2/modules/apps/transfer/keeper"
-	ibctransfertypes "github.com/cosmos/ibc-go/v2/modules/apps/transfer/types"
-	ibc "github.com/cosmos/ibc-go/v2/modules/core"
-	ibcclient "github.com/cosmos/ibc-go/v2/modules/core/02-client"
-	ibcclientclient "github.com/cosmos/ibc-go/v2/modules/core/02-client/client"
-	ibcclienttypes "github.com/cosmos/ibc-go/v2/modules/core/02-client/types"
-	ibcporttypes "github.com/cosmos/ibc-go/v2/modules/core/05-port/types"
-	ibchost "github.com/cosmos/ibc-go/v2/modules/core/24-host"
-	ibckeeper "github.com/cosmos/ibc-go/v2/modules/core/keeper"
-	"github.com/ignite-hq/cli/ignite/pkg/cosmoscmd"
-	"github.com/ignite-hq/cli/ignite/pkg/openapiconsole"
+	"github.com/cosmos/ibc-go/v3/modules/apps/transfer"
+	ibctransferkeeper "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
+	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	ibc "github.com/cosmos/ibc-go/v3/modules/core"
+	ibcclient "github.com/cosmos/ibc-go/v3/modules/core/02-client"
+	ibcclientclient "github.com/cosmos/ibc-go/v3/modules/core/02-client/client"
+	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
+	ibcporttypes "github.com/cosmos/ibc-go/v3/modules/core/05-port/types"
+	ibchost "github.com/cosmos/ibc-go/v3/modules/core/24-host"
+	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
+	"github.com/ignite/cli/ignite/pkg/cosmoscmd"
+	"github.com/ignite/cli/ignite/pkg/openapiconsole"
 	"github.com/spf13/cast"
 	monitoringp "github.com/tendermint/spn/x/monitoringp"
 	monitoringpkeeper "github.com/tendermint/spn/x/monitoringp/keeper"
@@ -433,9 +433,8 @@ func New(
 	// Create Transfer Keepers
 	app.TransferKeeper = ibctransferkeeper.NewKeeper(
 		appCodec, keys[ibctransfertypes.StoreKey], app.GetSubspace(ibctransfertypes.ModuleName),
-		app.IBCKeeper.ChannelKeeper, &app.IBCKeeper.PortKeeper,
-		app.AccountKeeper, app.BankKeeper, scopedTransferKeeper,
-	)
+		app.IBCKeeper.ChannelKeeper, app.IBCKeeper.ChannelKeeper, &app.IBCKeeper.PortKeeper,
+		app.AccountKeeper, app.BankKeeper, scopedTransferKeeper)
 
 	app.setupHooks()
 
@@ -447,7 +446,6 @@ func New(
 	incentivesModule := incentives.NewAppModule(appCodec, app.IncentivesKeeper, app.AccountKeeper, app.BankKeeper, app.EpochsKeeper)
 	poolincentivesModule := poolincentives.NewAppModule(appCodec, app.PoolIncentivesKeeper)
 	// ################################################################
-	transferModule := transfer.NewAppModule(app.TransferKeeper)
 
 	// register the proposal types
 	govRouter := govtypes.NewRouter()
@@ -488,9 +486,11 @@ func New(
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
 	// Create static IBC router, add transfer route, then set and seal it
+
+	transferIBCModule := transfer.NewIBCModule(app.TransferKeeper)
 	ibcRouter := ibcporttypes.NewRouter()
-	ibcRouter.AddRoute(ibctransfertypes.ModuleName, transferModule)
-	ibcRouter.AddRoute(monitoringptypes.ModuleName, monitoringModule)
+	ibcRouter.AddRoute(ibctransfertypes.ModuleName, transferIBCModule)
+	//ibcRouter.AddRoute(monitoringptypes.ModuleName, monitoringModule)
 	// this line is used by starport scaffolding # ibc/app/router
 	app.IBCKeeper.SetRouter(ibcRouter)
 
@@ -502,6 +502,7 @@ func New(
 
 	// NOTE: Any module instantiated in the module manager that is later modified
 	// must be passed by reference here.
+	transferModule := transfer.NewAppModule(app.TransferKeeper)
 
 	app.mm = module.NewManager(
 		genutil.NewAppModule(
@@ -873,11 +874,11 @@ func (app *App) SimulationManager() *module.SimulationManager {
 func (app *App) setupUpgredeHandlers() {
 	app.UpgradeKeeper.SetUpgradeHandler(v1.UpgradeName, v1.CreateUpgradeHandler(app.mm, app.configurator))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.ParamUpgradeName, v1.CreateUpgradeHandlerParamUpgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
-	app.UpgradeKeeper.SetUpgradeHandler(v1.FeeDistributionUpgradeName, v1.CreateUpgradeHandlerFeeDistributionUpgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
-	app.UpgradeKeeper.SetUpgradeHandler(v1.V18UpgradeName, v1.CreateUpgradeHandlerForV18Upgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
+	app.UpgradeKeeper.SetUpgradeHandler(v1.V171UpgradeName, v1.CreateUpgradeHandlerForV17Upgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.V181UpgradeName, v1.CreateUpgradeHandlerForV181Upgrade(app.mm, app.configurator, app.VaultKeeper, app.StakingKeeper))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.V19UpgradeName, v1.CreateUpgradeHandlerForV19Upgrade(app.mm, app.configurator))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.V19UpgradeName, v1.CreateUpgradeHandlerForV19Upgrade(app.mm, app.configurator))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.V110UpgradeName, v1.CreateUpgradeHandlerForV110Upgrade(app.mm, app.configurator))
 	app.UpgradeKeeper.SetUpgradeHandler(v1.V111UpgradeName, v1.CreateUpgradeHandlerForV111Upgrade(app.mm, app.configurator))
+	app.UpgradeKeeper.SetUpgradeHandler(v1.V1112UpgradeName, v1.CreateUpgradeHandlerForV1112Upgrade(app.mm, app.TransferKeeper, app.configurator))
 }

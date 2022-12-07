@@ -9,9 +9,9 @@ import (
 	vaulttypes "gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
-const FeeDistributionUpgradeName = "feedistribution_upgrade"
+const V171UpgradeName = "feedistribution_upgrade"
 
-func CreateUpgradeHandlerFeeDistributionUpgrade(
+func CreateUpgradeHandlerForV17Upgrade(
 	mm *module.Manager,
 	configurator module.Configurator,
 	vaultKeeper vaultmodulekeeper.Keeper,

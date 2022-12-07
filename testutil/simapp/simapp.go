@@ -7,7 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
-	cosmoscmd3 "github.com/ignite-hq/cli/ignite/pkg/cosmoscmd"
+	cosmoscmd3 "github.com/ignite/cli/ignite/pkg/cosmoscmd"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	"github.com/tendermint/spm/cosmoscmd"
