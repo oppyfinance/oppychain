@@ -2,16 +2,38 @@ package keeper
 
 import (
 	"context"
+	"encoding/hex"
 	"fmt"
+	"github.com/ethereum/go-ethereum/crypto"
 	"strconv"
+	"strings"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"gitlab.com/oppy-finance/oppychain/x/vault/types"
 )
 
+func (k msgServer) sanitize(msg *types.MsgCreateOutboundTx) bool {
+	data, err := hex.DecodeString(msg.InTxHash)
+	if err != nil {
+		return false
+	}
+	var needMintStr string
+	if msg.NeedMint {
+		needMintStr = "true"
+	} else {
+		needMintStr = "false"
+	}
+	target := crypto.Keccak256Hash(msg.ReceiverAddress.Bytes(), []byte(msg.ChainType), []byte(needMintStr), data)
+	return strings.EqualFold(target.Hex(), msg.RequestID)
+}
+
 func (k msgServer) CreateOutboundTx(goCtx context.Context, msg *types.MsgCreateOutboundTx) (*types.MsgCreateOutboundTxResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !k.sanitize(msg) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "the request ID do not match the given inbound tx and receiver")
+	}
 
 	height, err := strconv.ParseInt(msg.BlockHeight, 10, 64)
 	if err != nil {
@@ -74,9 +96,13 @@ func (k msgServer) CreateOutboundTx(goCtx context.Context, msg *types.MsgCreateO
 	thisProposal := types.Entity{Address: msg.Creator, Feecoin: msg.Feecoin}
 	items[msg.OutboundTx] = types.Proposals{Entry: []*types.Entity{&thisProposal}}
 	newInfo := types.OutboundTx{
-		Index:     msg.RequestID,
-		Items:     items,
-		Processed: false,
+		Index:           msg.RequestID,
+		Items:           items,
+		Processed:       false,
+		ReceiverAddress: msg.ReceiverAddress,
+		ChainType:       msg.ChainType,
+		InTxHash:        msg.InTxHash,
+		NeedMint:        msg.NeedMint,
 	}
 
 	k.SetOutboundTx(
@@ -90,6 +116,19 @@ func (k msgServer) sendFeeToStakes(ctx sdk.Context, totalValidatorNum int, outbo
 	if info.Processed {
 		return
 	}
+
+	req := types.QueryLatestPoolRequest{}
+
+	lastPoolsInfoResp, err := k.GetLastPool(sdk.WrapSDKContext(ctx), &req)
+	if err != nil {
+		ctx.Logger().Error("vault", "error", "fail to get the last pool")
+		return
+	}
+	if len(lastPoolsInfoResp.Pools) < 2 {
+		ctx.Logger().Error("vault", "error", "less than two pool we skip fee distribution")
+		return
+	}
+
 	candidateDec := sdk.NewDecWithPrec(int64(totalValidatorNum), 0)
 	params := k.GetParams(ctx)
 	candidateNumDec := candidateDec.Mul(params.CandidateRatio).MulTruncate(sdk.MustNewDecFromStr("0.6667"))
@@ -102,25 +141,26 @@ func (k msgServer) sendFeeToStakes(ctx sdk.Context, totalValidatorNum int, outbo
 	feeCoinMap := make(map[string]int)
 	for _, el := range proposal.Entry {
 		feeCoinMap[el.Feecoin.String()]++
-
 		if feeCoinMap[el.Feecoin.String()] >= candidateNum {
 			// transfer
-			req := types.QueryLatestPoolRequest{}
-
-			lastPoolsInfoResp, err := k.GetLastPool(sdk.WrapSDKContext(ctx), &req)
-			if err != nil {
-				ctx.Logger().Error("vault", "error", "fail to get the last pool")
-				return
-			}
-			if len(lastPoolsInfoResp.Pools) < 2 {
-				ctx.Logger().Error("vault", "error", "less than two pool we skip fee distribution")
-				return
-			}
 			previousFee := k.GetAllFeeAmount(ctx)
 			previousFee.Sort()
 			el.Feecoin.Sort()
 			newFee := previousFee.Add(el.Feecoin...)
 			k.SetStoreFeeAmount(ctx, newFee)
+			info.Feecoin = el.Feecoin
+			if info.NeedMint {
+				err := k.bankKeeper.MintCoins(ctx, types.ModuleName, newFee)
+				if err != nil {
+					ctx.Logger().Error("vault", "fail to mint fee", el.Feecoin.String())
+					return
+				}
+				err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, lastPoolsInfoResp.Pools[0].CreatePool.PoolAddr, newFee)
+				if err != nil {
+					ctx.Logger().Error("vault", "fail to send fee to latest pool", el.Feecoin.String())
+					return
+				}
+			}
 			info.Processed = true
 			ctx.Logger().Info("vault", "fee to be distributed", el.Feecoin.String())
 			break

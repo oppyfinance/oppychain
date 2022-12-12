@@ -6,7 +6,7 @@ option go_package = "gitlab.com/oppy-finance/oppychain/x/vault/types";
 import "gogoproto/gogo.proto";
 import "cosmos/base/v1beta1/coin.proto";
 
-message entity{
+message entityV120{
   bytes address= 1 [(gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress"];
   repeated cosmos.base.v1beta1.Coin feecoin = 2 [
     (gogoproto.nullable) = false,
@@ -14,21 +14,13 @@ message entity{
   ];
 }
 
-message proposals{
-  repeated entity entry= 1 ;
+message proposalsV120{
+  repeated entityV120 entry= 1 ;
 }
 
-message OutboundTx {
+message OutboundTxV120 {
   string index = 1;
   bool processed = 2;
-  map<string, proposals> items = 3 [(gogoproto.nullable) = false];
-  string chainType = 4;
-  string inTxHash = 5;
-  bytes receiverAddress= 6 [(gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress"];
-  bool needMint=7;
-  repeated cosmos.base.v1beta1.Coin feecoin = 8 [
-    (gogoproto.nullable) = false,
-    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
-  ];
+  map<string, proposalsV120> items = 3 [(gogoproto.nullable) = false];
 }
 

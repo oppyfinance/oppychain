@@ -26,6 +26,10 @@ message MsgCreateOutboundTx {
     (gogoproto.nullable) = false,
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
   ];
+  string chainType= 6;
+  bool needMint= 7;
+  string inTxHash= 8;
+  bytes receiverAddress= 9 [(gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress"];
 }
 
 message MsgCreateOutboundTxResponse {bool successful = 1;}

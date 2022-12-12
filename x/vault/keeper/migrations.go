@@ -3,6 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	v17 "gitlab.com/oppy-finance/oppychain/x/vault/migrations/v17"
+	v21 "gitlab.com/oppy-finance/oppychain/x/vault/migrations/v21"
 )
 
 // Migrator is a struct for handling in-place store migrations.
@@ -18,4 +19,9 @@ func NewMigrator(keeper Keeper) Migrator {
 // Migrate2to3 from version 2 to 3.
 func (m Migrator) Migrate2to3(ctx sdk.Context) error {
 	return v17.MigrateStore(ctx, m.keeper.storeKey, m.keeper.cdc)
+}
+
+// Migrate3to4 from version3 to 4.
+func (m Migrator) Migrate3to4(ctx sdk.Context) error {
+	return v21.MigrateStore(ctx, m.keeper.storeKey, m.keeper.cdc)
 }
