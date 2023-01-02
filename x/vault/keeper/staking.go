@@ -129,6 +129,26 @@ func (k Keeper) updateValidators(ctx sdk.Context) error {
 	return nil
 }
 
+func (k Keeper) FixPanic(ctx sdk.Context) {
+	iterator := k.vaultStaking.ValidatorsPowerStoreIterator(ctx)
+
+	defer iterator.Close()
+
+	for count := 0; iterator.Valid() && count < 6; iterator.Next() {
+		// everything that is iterated in this loop is becoming or already a
+		// part of the bonded validator set
+		valAddr := sdk.ValAddress(iterator.Value())
+
+		validator, found := k.vaultStaking.GetValidator(ctx, valAddr)
+		if !found {
+			panic("not found")
+		}
+		if validator.IsJailed() {
+			k.vaultStaking.DeleteValidatorByPowerIndex(ctx, validator)
+		}
+	}
+}
+
 func (k Keeper) NewUpdate(ctx sdk.Context) []abci.ValidatorUpdate {
 	defer telemetry.ModuleMeasureSince(vaulttypes.ModuleName, time.Now(), telemetry.MetricKeyEndBlocker)
 

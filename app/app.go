@@ -573,6 +573,7 @@ func New(
 		lockupmoduletypes.ModuleName,
 		crisistypes.ModuleName,
 		govtypes.ModuleName,
+		vaultmoduletypes.ModuleName,
 		stakingtypes.ModuleName,
 		capabilitytypes.ModuleName,
 		authtypes.ModuleName,
@@ -590,7 +591,6 @@ func New(
 		ibctransfertypes.ModuleName,
 		monitoringptypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
-		vaultmoduletypes.ModuleName,
 		swapmoduletypes.ModuleName,
 		incentivesmoduletypes.ModuleName,
 		poolincentivestypes.ModuleName,

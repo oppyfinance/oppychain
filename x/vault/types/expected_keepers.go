@@ -8,6 +8,9 @@ import (
 type VaultStaking interface {
 	IterateLastValidators(sdk.Context, func(index int64, validator stakingtypes.ValidatorI) (stop bool))
 
+	ValidatorsPowerStoreIterator(ctx sdk.Context) sdk.Iterator
+	DeleteValidatorByPowerIndex(ctx sdk.Context, validator stakingtypes.Validator)
+
 	GetBondedValidatorsByPower(ctx sdk.Context) []stakingtypes.Validator
 
 	GetParams(ctx sdk.Context) stakingtypes.Params
