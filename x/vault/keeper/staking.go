@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"fmt"
 	"sort"
 	"strconv"
 	"time"
@@ -143,8 +144,17 @@ func (k Keeper) FixPanic(ctx sdk.Context) {
 		if !found {
 			panic("not found")
 		}
+
 		if validator.IsJailed() {
-			k.vaultStaking.DeleteValidatorByPowerIndex(ctx, validator)
+			fmt.Printf(">>>>>>unbonding height %v\n", validator.UnbondingHeight)
+			fmt.Printf(">>>>>>tokens:%v\n", validator.Tokens.String())
+			fmt.Printf(">>>>>>>>>%v\n", validator.OperatorAddress)
+			if validator.OperatorAddress == "oppyvaloper1watqnxy6lvggcckutzawxkmlzz8fekchngvs6p" {
+				validator.Tokens = sdk.NewIntFromUint64(420000000000).Mul(sdk.DefaultPowerReduction)
+				k.vaultStaking.DeleteValidatorByPowerIndex(ctx, validator)
+				key := stakingtypes.GetValidatorsByPowerIndexKey(validator, sdk.DefaultPowerReduction)
+				fmt.Printf(">>>>>>>>>>>>%v==%v\n", key, iterator.Key())
+			}
 		}
 	}
 }
